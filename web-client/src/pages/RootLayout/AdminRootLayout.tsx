@@ -27,7 +27,7 @@ const AdminRootLayout = () => {
           <li>
             <NavLink to={"/disaster-alerts"}>Disaster Alerts</NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to={"/login"}>Login</NavLink>
           </li>
           <li>
@@ -35,7 +35,7 @@ const AdminRootLayout = () => {
           </li>
           <li>
             <NavLink to={"/forgot-password"}>Forgot Password</NavLink>
-          </li>
+          </li> */}
         </ul>
       </nav>
       <Outlet />
