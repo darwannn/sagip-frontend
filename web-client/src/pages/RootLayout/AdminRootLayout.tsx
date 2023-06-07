@@ -38,6 +38,7 @@ const AdminRootLayout = () => {
           </li> */}
         </ul>
       </nav>
+      <br />
       <Outlet />
     </>
   );
