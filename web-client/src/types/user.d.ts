@@ -29,4 +29,17 @@ export interface User {
   verificationRequestDate: string;
 }
 
-// type UserArray = User[];
+export interface UserDisplayInfo {
+  _id: string;
+  firstname: string;
+  middlename: string;
+  lastname: string;
+  // contactNumber: string;
+  // email: string;
+  // region: string;
+  // province: string;
+  // municipality: string;
+  // barangay: string;
+  // street: string;
+  // status: string;
+}
