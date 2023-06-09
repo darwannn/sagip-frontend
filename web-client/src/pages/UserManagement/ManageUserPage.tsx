@@ -1,47 +1,38 @@
-import { useEffect, useMemo, useState } from "react";
-import { User, UserDisplayInfo } from "../../types/user";
+import { useEffect, useState } from "react";
+import { User } from "../../types/user";
 import UserTable from "./UserTable";
-import { createColumnHelper } from "@tanstack/react-table";
 
 const ManageUserPage = () => {
   const [users, setUsers] = useState<User[]>([]);
-  // const [usersDisplayInfo, setUsersDisplayInfo] = useState<UserDisplayInfo[]>(
-  //   []
-  // );
+  const [isLoading, setIsLoading] = useState(false);
+
   const API_BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
   // FETCH USERS AT PAGE LOAD
   useEffect(() => {
-    // TODO: add error handling
     const fetchUsers = async () => {
-      const response = await fetch(`${API_BASE_URL}/account`);
-      const data = await response.json();
-      setUsers(data);
-      // setUsersDisplayInfo(
-      //   data.map((user: User) => {
-      //     return {
-      //       _id: user._id,
-      //       firstname: user.firstname,
-      //       lastname: user.lastname,
-      //       email: user.email,
-      //       region: user.region,
-      //       province: user.province,
-      //       municipality: user.municipality,
-      //       barangay: user.barangay,
-      //       street: user.street,
-      //       status: user.status,
-      //     };
-      //   })
-      // );
-      // print users after 5 seconds
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${API_BASE_URL}/account`);
+        const data = await response.json();
+        setUsers(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+        // TODO: Get error message
+      }
     };
     fetchUsers();
   }, [API_BASE_URL]);
 
+  const loadingElement = <p>Loading...</p>;
+
   return (
     <>
       <h1>User Management Page</h1>
-      <UserTable data={users} />
+      {/* <UserTable data={users} /> */}
+      {isLoading ? loadingElement : <UserTable data={users} />}
     </>
   );
 };
