@@ -1,43 +1,24 @@
 import {
-  createColumnHelper,
+  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { User, UserDisplayInfo } from "../../types/user";
+import { User } from "../../types/user";
 import { useState } from "react";
 
 type UserTableProps = {
   data: User[];
+  column: ColumnDef<User>[];
 };
-const UserTable = ({ data }: UserTableProps) => {
-  const columnHelper = createColumnHelper<UserDisplayInfo>();
-  const columns = [
-    columnHelper.accessor("_id", {
-      header: "ID",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("firstname", {
-      header: "First Name",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("middlename", {
-      header: "Middle Name",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("lastname", {
-      header: "Last Name",
-      cell: (info) => info.getValue(),
-    }),
-  ];
 
+const UserTable = ({ data, column }: UserTableProps) => {
   const [searchText, setSearchText] = useState("");
 
   const table = useReactTable({
     data,
-    columns,
+    columns: column,
     getCoreRowModel: getCoreRowModel(),
-    onGlobalFilterChange: setSearchText,
   });
 
   const searchTextChangeHandler = (
@@ -57,12 +38,12 @@ const UserTable = ({ data }: UserTableProps) => {
         value={searchText}
       />
       <div>
-        <table>
-          <thead>
+        <table className="rounded mx-auto">
+          <thead className="border">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
+                  <th key={header.id} className="px-3 py-3">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -76,9 +57,9 @@ const UserTable = ({ data }: UserTableProps) => {
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
+              <tr key={row.id} className="border">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="py-4 px-3">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
