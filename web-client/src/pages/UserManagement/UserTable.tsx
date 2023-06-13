@@ -48,7 +48,7 @@ const UserTable = ({ data, column }: UserTableProps) => {
           //   (table.getColumn("firstname")?.getFilterValue() as string) ?? ""
           // }
           onChange={(event) =>
-            table.getColumn("id")?.setFilterValue(event.target.value)
+            table.getColumn("_id")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
