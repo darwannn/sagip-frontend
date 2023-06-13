@@ -1,3 +1,7 @@
+//TODO:
+// 1. Extract table to a component
+// 2. Add pagination
+import { useState } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -7,8 +11,17 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
 } from "@tanstack/react-table";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../../components/ui/table";
+
 import { User } from "../../types/user";
-import { useState } from "react";
 
 type UserTableProps = {
   data: User[];
@@ -50,50 +63,55 @@ const UserTable = ({ data, column }: UserTableProps) => {
           onChange={(event) =>
             table.getColumn("_id")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm border rounded-md px-1 py-1"
         />
       </div>
-      <div>
-        <table className="rounded mx-auto">
-          <thead className="border">
+      <div className="rounded-md border mx-5">
+        <Table>
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="px-3 py-3">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
             ))}
-          </thead>
-          <tbody>
+          </TableHeader>
+          <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="border">
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="py-4 px-3">
+                    <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                    </td>
+                    </TableCell>
                   ))}
-                </tr>
+                </TableRow>
               ))
             ) : (
-              <tr>
-                <td colSpan={column.length} className="h-24 text-center">
-                  No data
-                </td>
-              </tr>
+              <TableRow>
+                <TableCell colSpan={column.length} className="h-24 text-center">
+                  No results.
+                </TableCell>
+              </TableRow>
             )}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </>
   );

@@ -25,4 +25,19 @@ export const userColumn: ColumnDef<User>[] = [
     accessorKey: "status",
     header: "Verification Status",
   },
+  {
+    id: "action",
+    header: "Action",
+    cell: ({ row }) => {
+      const id = row.original._id;
+      return (
+        <button
+          className="bg-indigo-500 rounded px-3 py-1 text-white"
+          onClick={() => console.log(id)}
+        >
+          Edit
+        </button>
+      );
+    },
+  },
 ];
