@@ -55,9 +55,7 @@ const UserTable = ({ data, column }: UserTableProps) => {
       <div className="flex items-center py-4 mx-5">
         <input
           placeholder="Search with ID"
-          // value={
-          //   (table.getColumn("firstname")?.getFilterValue() as string) ?? ""
-          // }
+          value={(table.getColumn("_id")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("_id")?.setFilterValue(event.target.value)
           }
