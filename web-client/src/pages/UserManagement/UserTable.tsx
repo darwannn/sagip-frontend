@@ -8,6 +8,9 @@ import {
   getFilteredRowModel,
   // For pagination:
   getPaginationRowModel,
+  // For sorting:
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 
 import { User } from "../../types/user";
@@ -20,6 +23,7 @@ type UserTableProps = {
 
 const UserTable = ({ data, column }: UserTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // For filtering data
+  const [sorting, setSorting] = useState<SortingState>([]); // For sorting data
 
   const table = useReactTable({
     data,
@@ -30,8 +34,12 @@ const UserTable = ({ data, column }: UserTableProps) => {
     getFilteredRowModel: getFilteredRowModel(),
     // For pagination
     getPaginationRowModel: getPaginationRowModel(),
+    //For sorting
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     state: {
       columnFilters,
+      sorting,
     },
     initialState: {
       pagination: {

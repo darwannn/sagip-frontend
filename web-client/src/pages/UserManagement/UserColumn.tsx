@@ -22,8 +22,28 @@ export const userColumn: ColumnDef<User>[] = [
     header: "Email",
   },
   {
+    accessorKey: "barangay",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Barangay
+        </button>
+      );
+    },
+  },
+  {
     accessorKey: "status",
-    header: "Verification Status",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Verification Status
+        </button>
+      );
+    },
   },
   {
     id: "action",
