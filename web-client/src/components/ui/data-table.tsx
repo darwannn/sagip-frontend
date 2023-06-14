@@ -9,6 +9,7 @@ import {
 } from "./table";
 
 type PROPS = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   table: Table<any>;
   columnLength?: number;
 };

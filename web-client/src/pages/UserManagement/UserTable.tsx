@@ -1,5 +1,3 @@
-//TODO:
-// 2. Add pagination
 import { useState } from "react";
 import {
   ColumnDef,
@@ -8,6 +6,8 @@ import {
   // For filtering data:
   ColumnFiltersState,
   getFilteredRowModel,
+  // For pagination:
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import { User } from "../../types/user";
@@ -28,8 +28,16 @@ const UserTable = ({ data, column }: UserTableProps) => {
     // For filtering data
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    // For pagination
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       columnFilters,
+    },
+    initialState: {
+      pagination: {
+        pageIndex: 0,
+        pageSize: 5,
+      },
     },
   });
 
@@ -50,6 +58,28 @@ const UserTable = ({ data, column }: UserTableProps) => {
       </div>
       <div className="rounded-md border mx-5">
         <DataTable table={table} columnLength={column.length} />
+      </div>
+      {/* PAGINATION CONTROLS */}
+      <div className="flex justify-between items-center px-5 py-3">
+        <button
+          className="border px-3 py-1 rounded"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </button>
+        <div>
+          <span className="text-sm">{`Page ${
+            table.getState().pagination.pageIndex + 1
+          } of ${table.getPageCount()}`}</span>
+        </div>
+        <button
+          className="border px-3 py-1 rounded"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </button>
       </div>
     </>
   );
