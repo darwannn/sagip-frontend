@@ -3,6 +3,11 @@ import { User } from "../../types/user";
 import UserTable from "./UserTable";
 import { userColumn } from "./UserColumn";
 
+// Redux
+// import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { useDispatch } from "react-redux";
+import { setUsers as setUsersRedux } from "../../store/slices/userManageSlice";
+
 import moment from "moment";
 
 const ManageUserPage = () => {
@@ -10,6 +15,9 @@ const ManageUserPage = () => {
   const [staffUsers, setStaffUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isStaff, setIsStaff] = useState(false);
+
+  // Redux
+  const dispatch = useDispatch();
 
   const API_BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
@@ -74,6 +82,7 @@ const ManageUserPage = () => {
       {isLoading ? (
         loadingElement
       ) : (
+        // Pwedeng di ko na ipasa ung column as props kasi pede ko naman iimport ung column sa UserTable.tsx
         <UserTable data={isStaff ? staffUsers : users} column={userColumn} />
       )}
     </>
