@@ -9,54 +9,26 @@ import UserTable from "./UserTable";
 // Redux
 import { useAppDispatch } from "../../store/hooks";
 import { setUsers, setTableContent } from "../../store/slices/userManageSlice";
+// Services
+import { useGetUsersDataQuery } from "../../services/usersApi";
 
 import moment from "moment";
 
 const ManageUserPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   // Redux
   const dispatch = useAppDispatch();
 
-  const API_BASE_URL = import.meta.env.VITE_BASE_API_URL;
+  // Service
 
-  // FETCH USERS AT PAGE LOAD
+  const { data: users, isLoading, error } = useGetUsersDataQuery(undefined);
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`${API_BASE_URL}/account`);
-        const data = await response.json();
-        dispatch(setUsers(data));
-        setIsLoading(false);
+    if (users) dispatch(setUsers(users));
+  }, [users, dispatch]);
 
-        // Count all users
-        console.log(`Total users: ${data.length}`);
-
-        // Count all unverified and verified user
-        const unverifiedUsers = data.filter(
-          (user: User) => user.status === "unverified"
-        );
-        const verifiedUsers = data.filter(
-          (user: User) => user.status === "verified"
-        );
-        console.log(`Unverified users: ${unverifiedUsers.length}`);
-        console.log(`Verified users: ${verifiedUsers.length}`);
-
-        // Count all the users that are created at the last month
-        const lastMonth = moment().subtract(1, "month");
-        const lastMonthUsers = data.filter((user: User) =>
-          moment(user.createdAt).isSameOrAfter(lastMonth)
-        );
-        console.log(`Last month users: ${lastMonthUsers.length}`);
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
-      }
-    };
-    fetchUsers();
-  }, [API_BASE_URL, dispatch]);
-
+  if (error) return <p>Oops! Something went wrong...</p>;
   const loadingElement = <p>Loading...</p>;
 
   return (

@@ -22,7 +22,6 @@ export const userManageSlice = createSlice({
   reducers: {
     setUsers: (state, action: PayloadAction<User[]>) => {
       state.users = action.payload;
-      console.log("setUsers", state.users);
     },
     setTableContent: (state, action: PayloadAction<boolean>) => {
       state.isStaff = action.payload;
