@@ -6,12 +6,16 @@ import { userColumn } from "./UserColumn";
 // Redux
 // import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { useDispatch } from "react-redux";
-import { setUsers as setUsersRedux } from "../../store/slices/userManageSlice";
+import { useAppSelector } from "../../store/hooks";
+import {
+  setUsers as setUsersRedux,
+  selectStaffUsers,
+} from "../../store/slices/userManageSlice";
 
 import moment from "moment";
 
 const ManageUserPage = () => {
-  const [staffUsers, setStaffUsers] = useState<User[]>([]);
+  // const [staffUsers, setStaffUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isStaff, setIsStaff] = useState(false);
 
@@ -27,11 +31,7 @@ const ManageUserPage = () => {
         setIsLoading(true);
         const response = await fetch(`${API_BASE_URL}/account`);
         const data = await response.json();
-        // setUsers(data);
         dispatch(setUsersRedux(data));
-
-        // Count all staff users
-        setStaffUsers(data.filter((user: User) => user.userType != "resident"));
         setIsLoading(false);
 
         // Count all users
@@ -60,7 +60,7 @@ const ManageUserPage = () => {
       }
     };
     fetchUsers();
-  }, [API_BASE_URL]);
+  }, [API_BASE_URL, dispatch]);
 
   const loadingElement = <p>Loading...</p>;
 
