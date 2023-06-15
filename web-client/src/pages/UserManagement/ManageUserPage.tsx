@@ -1,5 +1,4 @@
 // TODO:
-// 1. Refactor staff table rendering with redux
 // 2. Move fetchUsers logic to loader function with react-routers
 // 3. Add error handling for failed fetch
 
@@ -9,7 +8,7 @@ import UserTable from "./UserTable";
 
 // Redux
 import { useAppDispatch } from "../../store/hooks";
-import { setUsers as setUsersRedux } from "../../store/slices/userManageSlice";
+import { setUsers, setTableContent } from "../../store/slices/userManageSlice";
 
 import moment from "moment";
 
@@ -28,7 +27,7 @@ const ManageUserPage = () => {
         setIsLoading(true);
         const response = await fetch(`${API_BASE_URL}/account`);
         const data = await response.json();
-        dispatch(setUsersRedux(data));
+        dispatch(setUsers(data));
         setIsLoading(false);
 
         // Count all users
@@ -65,13 +64,13 @@ const ManageUserPage = () => {
       <h1>User Management Page</h1>
       <button
         className="border-b-2 px-3 py-1 m-1 rounded-sm text-indigo-500 border-indigo-500"
-        onClick={() => console.log("All Users")}
+        onClick={() => dispatch(setTableContent(false))}
       >
         All Users
       </button>
       <button
         className="border-b-2 px-3 py-1 m-1 rounded-sm text-indigo-500 border-indigo-500"
-        onClick={() => console.log("Staff Users")}
+        onClick={() => dispatch(setTableContent(true))}
       >
         Staff Users
       </button>

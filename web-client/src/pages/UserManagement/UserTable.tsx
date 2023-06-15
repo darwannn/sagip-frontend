@@ -17,14 +17,14 @@ import DataTable from "../../components/ui/data-table";
 
 // Redux
 import { useAppSelector } from "../../store/hooks";
+import { selectUserTableData } from "../../store/slices/userManageSlice";
 
 const UserTable = () => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // For filtering data
   const [sorting, setSorting] = useState<SortingState>([]); // For sorting data
 
   // Get the data from redux
-  const data = useAppSelector((state) => state.userManage.users);
-  // TODO: ERROR HANDLING IF DATA IS EMPTY
+  const data = useAppSelector(selectUserTableData);
 
   const table = useReactTable({
     data,
