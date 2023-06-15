@@ -1,26 +1,23 @@
+// TODO:
+// 1. Refactor staff table rendering with redux
+// 2. Move fetchUsers logic to loader function with react-routers
+// 3. Add error handling for failed fetch
+
 import { useEffect, useState } from "react";
 import { User } from "../../types/user";
 import UserTable from "./UserTable";
-import { userColumn } from "./UserColumn";
 
 // Redux
-// import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../store/hooks";
-import {
-  setUsers as setUsersRedux,
-  selectStaffUsers,
-} from "../../store/slices/userManageSlice";
+import { useAppDispatch } from "../../store/hooks";
+import { setUsers as setUsersRedux } from "../../store/slices/userManageSlice";
 
 import moment from "moment";
 
 const ManageUserPage = () => {
-  // const [staffUsers, setStaffUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isStaff, setIsStaff] = useState(false);
 
   // Redux
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const API_BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
@@ -56,7 +53,6 @@ const ManageUserPage = () => {
       } catch (error) {
         console.log(error);
         setIsLoading(false);
-        // TODO: Get error message
       }
     };
     fetchUsers();
@@ -67,16 +63,15 @@ const ManageUserPage = () => {
   return (
     <>
       <h1>User Management Page</h1>
-      {/* <UserTable data={users} /> */}
       <button
         className="border-b-2 px-3 py-1 m-1 rounded-sm text-indigo-500 border-indigo-500"
-        onClick={() => setIsStaff(false)}
+        onClick={() => console.log("All Users")}
       >
         All Users
       </button>
       <button
         className="border-b-2 px-3 py-1 m-1 rounded-sm text-indigo-500 border-indigo-500"
-        onClick={() => setIsStaff(true)}
+        onClick={() => console.log("Staff Users")}
       >
         Staff Users
       </button>
@@ -84,7 +79,7 @@ const ManageUserPage = () => {
         loadingElement
       ) : (
         // Pwedeng di ko na ipasa ung column as props kasi pede ko naman iimport ung column sa UserTable.tsx
-        <UserTable column={userColumn} />
+        <UserTable />
       )}
     </>
   );

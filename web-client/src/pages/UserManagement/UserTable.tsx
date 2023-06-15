@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  ColumnDef,
   getCoreRowModel,
   useReactTable,
   // For filtering data:
@@ -13,18 +12,13 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 
-import { User } from "../../types/user";
+import { userColumn } from "./UserColumn";
 import DataTable from "../../components/ui/data-table";
 
 // Redux
 import { useAppSelector } from "../../store/hooks";
 
-type UserTableProps = {
-  // data: User[];
-  column: ColumnDef<User>[];
-};
-
-const UserTable = ({ column }: UserTableProps) => {
+const UserTable = () => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // For filtering data
   const [sorting, setSorting] = useState<SortingState>([]); // For sorting data
 
@@ -34,7 +28,7 @@ const UserTable = ({ column }: UserTableProps) => {
 
   const table = useReactTable({
     data,
-    columns: column,
+    columns: userColumn,
     getCoreRowModel: getCoreRowModel(),
     // For filtering data
     onColumnFiltersChange: setColumnFilters,
@@ -58,7 +52,6 @@ const UserTable = ({ column }: UserTableProps) => {
 
   return (
     <>
-      <h1>TABLE HERE</h1>
       <div className="flex items-center py-4 mx-5">
         <input
           placeholder="Search with ID"
@@ -70,7 +63,7 @@ const UserTable = ({ column }: UserTableProps) => {
         />
       </div>
       <div className="rounded-md border mx-5">
-        <DataTable table={table} columnLength={column.length} />
+        <DataTable table={table} columnLength={userColumn.length} />
       </div>
       {/* PAGINATION CONTROLS */}
       <div className="flex justify-between items-center px-5 py-3">
