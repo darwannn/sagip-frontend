@@ -5,20 +5,20 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../types/user";
 
 export interface ManageUserState {
-  users: User[] | null;
+  users: User[];
 }
 
 const initialState: ManageUserState = {
-  users: null,
+  users: [],
 };
 
 export const userManageSlice = createSlice({
   name: "userManage",
   initialState,
   reducers: {
-    setUsers: (state) => {
-      state.users = [];
-      console.log("setUsers");
+    setUsers: (state, action: PayloadAction<User[]>) => {
+      state.users = action.payload;
+      console.log("setUsers", state.users);
     },
   },
 });

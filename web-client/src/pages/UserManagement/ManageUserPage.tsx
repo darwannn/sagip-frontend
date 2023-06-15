@@ -11,7 +11,6 @@ import { setUsers as setUsersRedux } from "../../store/slices/userManageSlice";
 import moment from "moment";
 
 const ManageUserPage = () => {
-  const [users, setUsers] = useState<User[]>([]);
   const [staffUsers, setStaffUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isStaff, setIsStaff] = useState(false);
@@ -28,8 +27,10 @@ const ManageUserPage = () => {
         setIsLoading(true);
         const response = await fetch(`${API_BASE_URL}/account`);
         const data = await response.json();
-        setUsers(data);
-        console.log(data);
+        // setUsers(data);
+        dispatch(setUsersRedux(data));
+
+        // Count all staff users
         setStaffUsers(data.filter((user: User) => user.userType != "resident"));
         setIsLoading(false);
 
@@ -83,7 +84,7 @@ const ManageUserPage = () => {
         loadingElement
       ) : (
         // Pwedeng di ko na ipasa ung column as props kasi pede ko naman iimport ung column sa UserTable.tsx
-        <UserTable data={isStaff ? staffUsers : users} column={userColumn} />
+        <UserTable column={userColumn} />
       )}
     </>
   );
