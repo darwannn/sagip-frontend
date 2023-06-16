@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
-
+// Types
 import { User } from "../../types/user";
+import UserRowAction from "./UserRowAction";
 
 export const userColumn: ColumnDef<User>[] = [
   {
@@ -79,19 +80,7 @@ export const userColumn: ColumnDef<User>[] = [
   {
     id: "action",
     header: "Action",
-    cell: ({ row }) => {
-      const id = row.original._id;
-      return (
-        <div className="w-max flex justify-center align-center">
-          <button
-            className="bg-indigo-500 rounded px-3 py-1 text-white"
-            onClick={() => console.log(id)}
-          >
-            Edit
-          </button>
-        </div>
-      );
-    },
+    cell: ({ row }) => <UserRowAction userId={row.original._id} />,
     meta: {
       width: "100px",
     },
