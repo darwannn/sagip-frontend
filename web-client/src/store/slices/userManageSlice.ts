@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import moment from "moment";
 
 // Types
 import { User } from "../../types/user";
@@ -49,5 +50,40 @@ export const selectUserTableData = createSelector(
     } else {
       return users;
     }
+  }
+);
+
+// -- Count number of users
+export const selectNumberOfUsers = createSelector(
+  (state: RootState) => state.userManage.users,
+  (users: User[]) => users.length
+);
+
+// -- Count number of new users this month
+export const selectNumberOfNewUsers = createSelector(
+  (state: RootState) => state.userManage.users,
+  (users: User[]) => {
+    const currentDate = moment();
+    const usersThisMonth = users.filter((user: User) =>
+      moment(user.createdAt).isSame(currentDate, "month")
+    );
+    return usersThisMonth.length;
+  }
+);
+
+// -- Count verified and unverified users
+export const selectVerifiedUsers = createSelector(
+  (state: RootState) => state.userManage.users,
+  (users: User[]) => {
+    const verifiedUsers = users.filter(
+      (user: User) => user.status === "verified"
+    );
+    const unverifiedUsers = users.filter(
+      (user: User) => user.status != "verified"
+    );
+    return {
+      verifiedCount: verifiedUsers.length,
+      unverifiedCount: unverifiedUsers.length,
+    };
   }
 );
