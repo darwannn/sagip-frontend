@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//Type
+//Types
 import { User } from "../../types/user";
 
 //Services
@@ -11,6 +11,8 @@ type PROPS = {
 
 const UserRowAction = ({ userId }: PROPS) => {
   const [userData, setUserData] = useState<User>();
+  // Services
+  // Use lazy query to prevent auto fetching of data when component is rendered.
   const [getUser, results] = useLazyGetUserByIdQuery();
 
   useEffect(() => {

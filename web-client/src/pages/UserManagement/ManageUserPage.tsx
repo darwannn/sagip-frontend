@@ -1,3 +1,5 @@
+// TODO: Extract user to a separate component.
+
 import { useEffect } from "react";
 import UserTable from "./UserTable";
 
