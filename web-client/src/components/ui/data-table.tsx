@@ -21,8 +21,9 @@ const DataTable = ({ table, columnLength }: PROPS) => {
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
+              const customStyle = header.column.columnDef.meta;
               return (
-                <TableHead key={header.id}>
+                <TableHead key={header.id} style={customStyle ?? undefined}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(

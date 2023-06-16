@@ -8,14 +8,45 @@ export const userColumn: ColumnDef<User>[] = [
     header: "ID",
   },
   {
-    id: "fullname",
-    header: "Full Name",
+    accessorKey: "profilePicture",
+    header: "",
     cell: ({ row }) => {
-      const firstName = row.original.firstname;
-      const middleName = row.original.middlename;
-      const lastName = row.original.lastname;
-      return `${firstName} ${middleName} ${lastName}`;
+      const displayPictureName = row.original.profilePicture;
+      const imgUrl = `https://sagip.onrender.com/images/User/${displayPictureName}`;
+      return (
+        <img
+          src={imgUrl}
+          alt="profile"
+          className="w-10 h-10 rounded-full mx-auto"
+        />
+      );
     },
+    meta: {
+      width: "80px",
+      minWidth: "80px",
+    },
+  },
+  {
+    id: "fullname",
+    // header: () => {
+    //   // Centered text "Full Name"
+    //   return <h2 className="">Full Name</h2>;
+    // },
+    header: "Full Name",
+    columns: [
+      {
+        accessorKey: "firstname",
+        header: "First Name",
+      },
+      {
+        accessorKey: "middlename",
+        header: "Middle Name",
+      },
+      {
+        accessorKey: "lastname",
+        header: "Last Name",
+      },
+    ],
   },
   {
     accessorKey: "email",
@@ -51,13 +82,18 @@ export const userColumn: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const id = row.original._id;
       return (
-        <button
-          className="bg-indigo-500 rounded px-3 py-1 text-white"
-          onClick={() => console.log(id)}
-        >
-          Edit
-        </button>
+        <div className="w-max flex justify-center align-center">
+          <button
+            className="bg-indigo-500 rounded px-3 py-1 text-white"
+            onClick={() => console.log(id)}
+          >
+            Edit
+          </button>
+        </div>
       );
+    },
+    meta: {
+      width: "100px",
     },
   },
 ];
