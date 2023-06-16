@@ -2,6 +2,9 @@ import { ColumnDef } from "@tanstack/react-table";
 // Types
 import { User } from "../../types/user";
 
+// API
+import { API_BASE_URL } from "../../api.config";
+
 import UserRowAction from "./UserRowAction";
 
 export const userColumn: ColumnDef<User>[] = [
@@ -14,7 +17,7 @@ export const userColumn: ColumnDef<User>[] = [
     header: "",
     cell: ({ row }) => {
       const displayPictureName = row.original.profilePicture;
-      const imgUrl = `https://sagip.onrender.com/images/User/${displayPictureName}`;
+      const imgUrl = `${API_BASE_URL}/images/User/${displayPictureName}`;
       return (
         <img
           src={imgUrl}
