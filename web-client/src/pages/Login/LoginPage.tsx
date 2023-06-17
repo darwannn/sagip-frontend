@@ -1,7 +1,15 @@
 import { useState } from "react";
+
+// REDUX
+import { useAppDispatch } from "../../store/hooks";
+import { login } from "../../store/slices/authSlice";
+
 import { API_BASE_URL } from "../../api.config";
 
 const LoginPage = () => {
+  // Redux
+  const dispatch = useAppDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +29,17 @@ const LoginPage = () => {
     });
     const data = await res.json();
 
-    console.log(data);
+    dispatch(
+      login({
+        token: data.token,
+        user: {
+          for: data.user.for,
+          id: data.user.id,
+          status: data.user.status,
+          userType: data.user.userType,
+        },
+      })
+    );
   };
 
   return (
