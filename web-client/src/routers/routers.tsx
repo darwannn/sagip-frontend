@@ -11,11 +11,13 @@ import EmergencyReportsPage from "../pages/EmergencyReports/EmergencyReportsPage
 import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
 import ManageMapPage from "../pages/MapManagement/ManageMapPage";
 import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
+import { checkAuth, isLoggedIn } from "../util/auth";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <AdminRootLayout />,
+    loader: checkAuth,
     children: [
       { index: true, element: <Home /> },
       {
@@ -48,7 +50,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  { path: "/login", element: <LoginPage /> },
+  { path: "/login", element: <LoginPage />, loader: isLoggedIn },
   { path: "/register", element: <RegistrationPage /> },
   { path: "/forgot-password", element: <ForgotPasswordPage /> },
 ]);
