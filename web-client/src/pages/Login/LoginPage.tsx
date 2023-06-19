@@ -16,7 +16,6 @@ import { setAuthToken } from "../../util/auth";
 const LoginPage = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  // const [isLoading, setIsLoading] = useState(false);
 
   /**
    * This is a temporary workaround for the issue
@@ -93,8 +92,7 @@ export const loginAction: ActionFunction = async ({
   const resData: AuthResponse = await res.json();
 
   if (!res.ok) {
-    console.log("Error: ");
-    console.log(resData);
+    console.log("Login Error");
     return resData;
   }
 
