@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
-import LoginPage from "../pages/Login/LoginPage";
+import LoginPage, { action as loginAction } from "../pages/Login/LoginPage";
 import RegistrationPage from "../pages/Register/RegisterPage";
 import ForgotPasswordPage from "../pages/Register/ForgotPasswordPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
@@ -11,11 +11,13 @@ import EmergencyReportsPage from "../pages/EmergencyReports/EmergencyReportsPage
 import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
 import ManageMapPage from "../pages/MapManagement/ManageMapPage";
 import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
+import { checkAuth, isLoggedIn } from "../util/auth";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <AdminRootLayout />,
+    loader: checkAuth,
     children: [
       { index: true, element: <Home /> },
       {
@@ -48,7 +50,16 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  { path: "/login", element: <LoginPage /> },
-  { path: "/register", element: <RegistrationPage /> },
-  { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  {
+    path: "/login",
+    element: <LoginPage />,
+    loader: isLoggedIn,
+    action: loginAction,
+  },
+  { path: "/register", element: <RegistrationPage />, loader: isLoggedIn },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
+    loader: isLoggedIn,
+  },
 ]);
