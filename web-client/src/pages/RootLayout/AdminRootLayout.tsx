@@ -3,8 +3,6 @@ import { NavLink, Outlet } from "react-router-dom";
 const AdminRootLayout = () => {
   return (
     <>
-      <h1>HELLO</h1>
-      {/* <h1>Admin Root Layout</h1> */}
       <nav>
         <ul>
           <li>

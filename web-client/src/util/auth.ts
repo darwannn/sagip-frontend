@@ -50,6 +50,12 @@ export const isLoggedIn = () => {
   return null;
 };
 
+/**
+ * It is usually not recommended to store tokens in local storage
+ * because of XSS attacks.
+ * For future improvements we can store the token in a cookie with
+ * httpOnly flag set to true.
+ */
 // Store token in local storage
 export const setAuthToken = ({ token, user }: AuthType) => {
   localStorage.setItem("token", token || "");

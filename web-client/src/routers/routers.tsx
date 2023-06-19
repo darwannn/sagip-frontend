@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
-import LoginPage, { loginAction } from "../pages/Login/LoginPage";
+import LoginPage, { action as loginAction } from "../pages/Login/LoginPage";
 import RegistrationPage from "../pages/Register/RegisterPage";
 import ForgotPasswordPage from "../pages/Register/ForgotPasswordPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
