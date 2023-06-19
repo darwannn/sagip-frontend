@@ -1,18 +1,23 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 // Slices
 import authSlice from "./slices/authSlice";
 import userManageSlice from "./slices/userManageSlice";
 // API / Services / Queries
 import { usersApi } from "../services/usersApi";
+import { articleQueryApi } from "../services/articleQuery";
 
 export const store = configureStore({
   reducer: {
     [usersApi.reducerPath]: usersApi.reducer,
+    [articleQueryApi.reducerPath]: articleQueryApi.reducer,
     userManage: userManageSlice,
     auth: authSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(usersApi.middleware),
+    getDefaultMiddleware().concat([
+      usersApi.middleware,
+      articleQueryApi.middleware,
+    ]),
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
