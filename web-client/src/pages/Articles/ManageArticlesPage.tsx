@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../store/hooks";
 // Services
 import { useGetArticlesQuery } from "../../services/articleQuery";
 import { useEffect } from "react";
+import ArticleTable from "./ArticleTable";
 
 const ManageArticlesPage = () => {
   const { data: articles, isLoading, error } = useGetArticlesQuery(undefined);
@@ -14,7 +15,11 @@ const ManageArticlesPage = () => {
   return (
     <>
       <h1>Manage Articles Page</h1>
-      {isLoading ? <p>Getting articles....</p> : null}
+      {isLoading ? (
+        <p>Getting articles....</p>
+      ) : (
+        <ArticleTable data={articles || []} />
+      )}
     </>
   );
 };
