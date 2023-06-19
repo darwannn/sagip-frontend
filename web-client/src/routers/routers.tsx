@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
-import LoginPage from "../pages/Login/LoginPage";
+import LoginPage, { loginAction } from "../pages/Login/LoginPage";
 import RegistrationPage from "../pages/Register/RegisterPage";
 import ForgotPasswordPage from "../pages/Register/ForgotPasswordPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
@@ -50,7 +50,12 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  { path: "/login", element: <LoginPage />, loader: isLoggedIn },
+  {
+    path: "/login",
+    element: <LoginPage />,
+    loader: isLoggedIn,
+    action: loginAction,
+  },
   { path: "/register", element: <RegistrationPage />, loader: isLoggedIn },
   {
     path: "/forgot-password",

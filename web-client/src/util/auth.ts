@@ -1,11 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { redirect } from "react-router-dom";
-
-type Token = {
-  exp: number;
-  iat: number;
-  id: string;
-};
+// Types
+import type { AuthType, Token } from "../types/auth";
 
 /**
  * Get token and check if it is expired
@@ -41,6 +37,7 @@ export const checkAuth = () => {
     console.log("No token found in local storage");
     return redirect("/login");
   }
+  // TODO: set a different error message for expired token
   return null;
 };
 
@@ -51,4 +48,10 @@ export const isLoggedIn = () => {
     return redirect("/");
   }
   return null;
+};
+
+// Store token in local storage
+export const setAuthToken = ({ token, user }: AuthType) => {
+  localStorage.setItem("token", token || "");
+  localStorage.setItem("user", JSON.stringify(user));
 };
