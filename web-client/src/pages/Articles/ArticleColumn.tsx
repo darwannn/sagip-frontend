@@ -1,3 +1,4 @@
+import moment from "moment";
 import { ColumnDef } from "@tanstack/react-table";
 // Types
 import { Article } from "../../types/article";
@@ -22,10 +23,18 @@ export const articleColumn: ColumnDef<Article>[] = [
   {
     accessorKey: "createdAt",
     header: "Published Date",
+    cell: ({ row }) => {
+      const data = moment(row.original.createdAt).format("MMM DD, YYYY");
+      return <span>{data}</span>;
+    },
   },
   {
     accessorKey: "updatedAt",
     header: "Last Updated",
+    cell: ({ row }) => {
+      const data = moment(row.original.updatedAt).format("MMM DD, YYYY");
+      return <span>{data}</span>;
+    },
   },
   {
     id: "actions",
