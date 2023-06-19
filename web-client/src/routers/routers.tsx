@@ -12,6 +12,8 @@ import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
 import ManageMapPage from "../pages/MapManagement/ManageMapPage";
 import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
 import { checkAuth, isLoggedIn } from "../util/auth";
+import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
+import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +49,13 @@ export const router = createBrowserRouter([
       {
         path: "disaster-alerts",
         element: <ManageAlertsPage />,
+      },
+      {
+        path: "articles",
+        children: [
+          { index: true, element: <ManageArticlesPage /> },
+          { path: "create", element: <CreateArticlesPage /> },
+        ],
       },
     ],
   },
