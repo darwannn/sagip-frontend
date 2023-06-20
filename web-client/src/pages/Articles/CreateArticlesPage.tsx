@@ -2,7 +2,7 @@ import { useEditor } from "@tiptap/react";
 import Tiptap from "../../components/tiptap-text-editor/Tiptap";
 import StarterKit from "@tiptap/starter-kit";
 import CustomMenuBar from "../../components/tiptap-text-editor/CustomMenuBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FileDropzone from "../../components/Form/FileDropzone";
 
 const CreateArticlesPage = () => {
@@ -34,6 +34,15 @@ const CreateArticlesPage = () => {
   return (
     <div className="m-5">
       <h1>Create Articles Page</h1>
+      <div className="articleDetails w-full flex flex-col">
+        <input
+          type="text-area"
+          id="articleTitle"
+          className="p-2 my-1"
+          style={{ fontSize: "2.2rem", fontWeight: "bold" }}
+          placeholder="Title of article"
+        />
+      </div>
       {imageName && imageSrc ? (
         <div>
           <img src={imageSrc} alt="preview" />
@@ -42,10 +51,6 @@ const CreateArticlesPage = () => {
       ) : (
         <FileDropzone handleFileChange={onFileChangeHandler} />
       )}
-      <div className="articleDetails w-full">
-        <label htmlFor="articleTitle">Title: </label>
-        <input type="text" id="articleTitle" placeholder="Title of article" />
-      </div>
       <div className="tiptapEditor">
         <CustomMenuBar editor={editor} />
         <Tiptap editor={editor} />

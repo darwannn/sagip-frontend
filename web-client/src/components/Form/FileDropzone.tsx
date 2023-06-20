@@ -30,12 +30,13 @@ export const FileDropzone = ({ handleFileChange }: PROPS) => {
             drop
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            SVG, PNG, JPG or GIF (MAX. 800x400px)
+            PNG and JPEG
           </p>
         </div>
         <input
           id="dropzone-file"
           type="file"
+          accept="image/png, image/jpeg"
           onChange={handleFileChange}
           className="hidden"
         />
