@@ -4,14 +4,14 @@
 
 /* Basic editor styles */
 .ProseMirror {
-  border-top: solid 2px #ddd;
+  border: solid 1px #ddd;
   min-height: 50vw;
   padding: 1em;
 }
 
-.ProseMirror:focus {
+/* .ProseMirror:focus {
   outline: solid 2px #ddd;
-}
+} */
 
 .ProseMirror > * + * {
   margin-top: 0.75em;
