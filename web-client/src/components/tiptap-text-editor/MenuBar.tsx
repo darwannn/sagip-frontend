@@ -1,5 +1,4 @@
 import { Editor } from "@tiptap/react";
-import "./styles.css";
 
 type MENU_PROPS = {
   editor: Editor | null;
