@@ -11,3 +11,7 @@ export type Article = {
   updatedAt: string;
   __v: number;
 };
+
+export type ArticleState = {
+  articles: Article[];
+};
