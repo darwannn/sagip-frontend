@@ -1,4 +1,14 @@
+/**
+ * Add 'all: revert' to remove Tailwind's default styles
+ */
+
 /* Basic editor styles */
+.ProseMirror {
+  border: solid 2px #ddd;
+  min-height: 8em;
+  padding: 1em;
+}
+
 .ProseMirror > * + * {
   margin-top: 0.75em;
 }
@@ -44,4 +54,3 @@
   border-top: 2px solid rgba(13, 13, 13, 0.1);
   margin: 2rem 0;
 }
-

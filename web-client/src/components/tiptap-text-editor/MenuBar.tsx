@@ -1,8 +1,8 @@
 import { Editor } from "@tiptap/react";
-import "./styles.scss";
+import "./styles.css";
 
 type MENU_PROPS = {
-  editor: Editor;
+  editor: Editor | null;
 };
 
 const MenuBar = ({ editor }: MENU_PROPS) => {

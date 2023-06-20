@@ -1,12 +1,10 @@
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { EditorContent, Editor } from "@tiptap/react";
 
-const Tiptap = () => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: "<p>Hello World!</p>",
-  });
+type PROPS = {
+  editor: Editor | null;
+};
 
+const Tiptap = ({ editor }: PROPS) => {
   return <EditorContent editor={editor} />;
 };
 
