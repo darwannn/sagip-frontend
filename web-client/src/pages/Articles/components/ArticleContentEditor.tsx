@@ -1,12 +1,17 @@
 import { useEditor } from "@tiptap/react";
+import { ControllerRenderProps } from "react-hook-form";
 import StarterKit from "@tiptap/starter-kit";
+
+// Components
 import CustomMenuBar from "../../../components/tiptap-text-editor/CustomMenuBar";
 import Tiptap from "../../../components/tiptap-text-editor/Tiptap";
-import { useState } from "react";
 
-const ArticleContentEditor = () => {
-  const [content, setContent] = useState<string>("<p>Start writing...</p>");
-  // const onEditorUpdateHandler = (conent: string) => {}
+type PROPS = {
+  content: string;
+  onChange: ControllerRenderProps["onChange"];
+};
+
+const ArticleContentEditor = ({ content, onChange }: PROPS) => {
   /**
    * Might encounter this error:
    * "Cannot read properties of null (reading 'matchesNode')"
@@ -16,7 +21,7 @@ const ArticleContentEditor = () => {
     extensions: [StarterKit],
     content,
     onUpdate: ({ editor }) => {
-      setContent(editor.getHTML());
+      onChange(editor.getHTML());
     },
   });
   return (
