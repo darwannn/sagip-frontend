@@ -2,7 +2,8 @@ import { useEditor } from "@tiptap/react";
 import Tiptap from "../../components/tiptap-text-editor/Tiptap";
 import StarterKit from "@tiptap/starter-kit";
 import CustomMenuBar from "../../components/tiptap-text-editor/CustomMenuBar";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import moment from "moment";
 // import FileDropzone from "../../components/Form/FileDropzone";
 
 const CreateArticlesPage = () => {
@@ -10,6 +11,8 @@ const CreateArticlesPage = () => {
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [imageSrc, setImageSrc] = useState<string>("");
   const [content, setContent] = useState<string>("<p>Start writing...</p>");
+
+  const currentDate = useMemo(() => moment().format("YYYY-MM-DD"), []);
 
   const onFileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -70,6 +73,17 @@ const CreateArticlesPage = () => {
        * 2. Author / User
        * 3. Creation Date (auto generated: Date.now())
        */}
+      <div className="flex flex-col">
+        <label htmlFor="category">Category</label>
+        <select name="category" id="category">
+          <option value="1">Category 1</option>
+          <option value="2">Category 2</option>
+        </select>
+        <label htmlFor="author">Author</label>
+        <span>Author Name</span>
+        <label htmlFor="date">Created:</label>
+        <span>{currentDate}</span>
+      </div>
     </div>
   );
 };
