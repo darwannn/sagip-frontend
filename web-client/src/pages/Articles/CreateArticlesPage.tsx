@@ -3,7 +3,7 @@ import Tiptap from "../../components/tiptap-text-editor/Tiptap";
 import StarterKit from "@tiptap/starter-kit";
 import CustomMenuBar from "../../components/tiptap-text-editor/CustomMenuBar";
 import { useState } from "react";
-import FileDropzone from "../../components/Form/FileDropzone";
+// import FileDropzone from "../../components/Form/FileDropzone";
 
 const CreateArticlesPage = () => {
   const [title, setTitle] = useState<string>("");
@@ -11,7 +11,6 @@ const CreateArticlesPage = () => {
   const [imageSrc, setImageSrc] = useState<string>("");
   const [content, setContent] = useState<string>("<p>Start writing...</p>");
 
-  console.log("hel;lo");
   const onFileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setImageFile(file);
@@ -52,13 +51,14 @@ const CreateArticlesPage = () => {
         />
       </div>
       {imageFile ? (
-        // TODO: Add a button to remove / replace the image
         <div>
           <img src={imageSrc} alt="preview" />
+          <button onClick={() => setImageFile(undefined)}>Remove</button>
           <p>{`Image Name: ${imageFile?.name}`}</p>
         </div>
       ) : (
-        <FileDropzone handleFileChange={onFileChangeHandler} />
+        <input type="file" onChange={onFileChangeHandler} />
+        // <FileDropzone handleFileChange={onFileChangeHandler} />
       )}
       <div className="tiptapEditor">
         <CustomMenuBar editor={editor} />
