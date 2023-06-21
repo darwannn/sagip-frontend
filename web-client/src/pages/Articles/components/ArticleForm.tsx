@@ -19,19 +19,11 @@ const ArticleForm = () => {
 
   return (
     <form>
-      <ArticleDetailsForm />
+      <ArticleDetailsForm user={user} currentDate={currentDate} />
       <ArticleContentEditor />
-      <div className="flex flex-col">
-        <label htmlFor="category">Category</label>
-        <select name="category" id="category">
-          <option value="1">Category 1</option>
-          <option value="2">Category 2</option>
-        </select>
-        <label htmlFor="author">Author</label>
-        <span>{`${user?.firstname} ${user?.lastname}`}</span>
-        <label htmlFor="date">Created:</label>
-        <span>{currentDate}</span>
-      </div>
+      <button className="bg-indigo-500 text-white px-5 py-1 my-2 rounded">
+        Submit
+      </button>
     </form>
   );
 };

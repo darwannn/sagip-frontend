@@ -1,6 +1,12 @@
 import { useState } from "react";
+import { User } from "../../../types/user";
 
-const ArticleDetailsForm = () => {
+type PROPS = {
+  user: User | undefined;
+  currentDate: string;
+};
+
+const ArticleDetailsForm = ({ user, currentDate }: PROPS) => {
   const [title, setTitle] = useState<string>("");
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [imageSrc, setImageSrc] = useState<string>("");
@@ -39,6 +45,21 @@ const ArticleDetailsForm = () => {
       ) : (
         <input type="file" onChange={onFileChangeHandler} />
       )}
+      <div className="flex flex-col">
+        <label htmlFor="category">Category</label>
+        <select name="category" id="category">
+          <option value="1">Category 1</option>
+          <option value="2">Category 2</option>
+        </select>
+        <label htmlFor="author">Author</label>
+        <span>
+          {user
+            ? `${user?.firstname} ${user?.lastname}`
+            : `Loading user detail...`}
+        </span>
+        <label htmlFor="date">Created:</label>
+        <span>{currentDate}</span>
+      </div>
     </>
   );
 };
