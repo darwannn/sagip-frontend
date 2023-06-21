@@ -7,13 +7,14 @@ import FileDropzone from "../../components/Form/FileDropzone";
 
 const CreateArticlesPage = () => {
   const [title, setTitle] = useState<string>("");
+  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [imageSrc, setImageSrc] = useState<string>("");
-  const [imageName, setImageName] = useState<string | undefined>("");
   const [content, setContent] = useState<string>("<p>Start writing...</p>");
 
+  console.log("hel;lo");
   const onFileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setImageName(file?.name);
+    setImageFile(file);
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -50,11 +51,11 @@ const CreateArticlesPage = () => {
           value={title}
         />
       </div>
-      {imageName && imageSrc ? (
+      {imageFile ? (
         // TODO: Add a button to remove / replace the image
         <div>
           <img src={imageSrc} alt="preview" />
-          <p>{`Image Name: ${imageName}`}</p>
+          <p>{`Image Name: ${imageFile?.name}`}</p>
         </div>
       ) : (
         <FileDropzone handleFileChange={onFileChangeHandler} />
