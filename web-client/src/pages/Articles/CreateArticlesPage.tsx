@@ -4,6 +4,7 @@ import StarterKit from "@tiptap/starter-kit";
 import CustomMenuBar from "../../components/tiptap-text-editor/CustomMenuBar";
 import { useEffect, useMemo, useState } from "react";
 import moment from "moment";
+import { useGetUserByIdQuery } from "../../services/usersApi";
 // import FileDropzone from "../../components/Form/FileDropzone";
 
 const CreateArticlesPage = () => {
@@ -12,6 +13,16 @@ const CreateArticlesPage = () => {
   const [imageSrc, setImageSrc] = useState<string>("");
   const [content, setContent] = useState<string>("<p>Start writing...</p>");
 
+  /**
+   * This way of getting user info might not be the best way.
+   * This should be changed in the future.
+   * Maybe use redux to store user info?
+   */
+  const userId = useMemo(() => {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user).id : "";
+  }, []);
+  const { data: user } = useGetUserByIdQuery(userId);
   const currentDate = useMemo(() => moment().format("YYYY-MM-DD"), []);
 
   const onFileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +91,7 @@ const CreateArticlesPage = () => {
           <option value="2">Category 2</option>
         </select>
         <label htmlFor="author">Author</label>
-        <span>Author Name</span>
+        <span>{`${user?.firstname} ${user?.lastname}`}</span>
         <label htmlFor="date">Created:</label>
         <span>{currentDate}</span>
       </div>
