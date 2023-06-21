@@ -1,9 +1,9 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import DataTable from "../../components/ui/data-table";
-import { articleColumn as columns } from "./ArticleColumn";
+import DataTable from "../../../components/ui/data-table";
+import { articleColumn as columns } from "../types/ArticleColumn";
 // Redux
-import { useAppSelector } from "../../store/hooks";
-import { selectArticles } from "../../store/slices/articleSlice";
+import { useAppSelector } from "../../../store/hooks";
+import { selectArticles } from "../../../store/slices/articleSlice";
 
 const ArticleTable = () => {
   // Get the table data from redux

@@ -1,7 +1,7 @@
 import moment from "moment";
 import { ColumnDef } from "@tanstack/react-table";
 // Types
-import { Article } from "../../types/article";
+import { Article } from "../../../types/article";
 
 export const articleColumn: ColumnDef<Article>[] = [
   {

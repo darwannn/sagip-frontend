@@ -6,7 +6,7 @@ import { setArticles } from "../../store/slices/articleSlice";
 // Services
 import { useGetArticlesQuery } from "../../services/articleQuery";
 import { useEffect } from "react";
-import ArticleTable from "./ArticleTable";
+import ArticleTable from "./components/ArticleTable";
 
 const ManageArticlesPage = () => {
   const dispatch = useAppDispatch();
