@@ -10,6 +10,7 @@ import moment from "moment";
 import { useGetUserByIdQuery } from "../../../services/usersApi";
 import ArticleContentEditor from "./ArticleContentEditor";
 import ArticleDetailsForm from "./ArticleDetails";
+import { API_BASE_URL } from "../../../api.config";
 
 const ArticleForm = () => {
   /**
@@ -25,8 +26,32 @@ const ArticleForm = () => {
   const currentDate = useMemo(() => moment().format("YYYY-MM-DD"), []);
 
   const { register, control, handleSubmit } = useForm();
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("content", data.content);
+    formData.append("category", data.category);
+    formData.append("hasChanged", "false");
+    formData.append("image", data.coverImage[0]);
+
+    const userToken = localStorage.getItem("token");
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/safety-tips/add`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: formData,
+      });
+      if (!response.ok) {
+        console.log(await response.json());
+        throw new Error();
+      }
+      const data = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
