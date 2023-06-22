@@ -6,11 +6,11 @@ import {
   useForm,
 } from "react-hook-form";
 import moment from "moment";
-import { useAddArticleMutation } from "../../../services/articleQuery";
 
+// Redux
+import { useAddArticleMutation } from "../../../services/articleQuery";
 // Services
 import { useGetUserByIdQuery } from "../../../services/usersApi";
-import { API_BASE_URL } from "../../../api.config";
 // Components
 import ArticleDetailsForm from "./ArticleDetails";
 import ArticleContentEditor from "./ArticleContentEditor";

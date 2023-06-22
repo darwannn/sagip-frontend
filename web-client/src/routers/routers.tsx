@@ -55,6 +55,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <ManageArticlesPage /> },
           { path: "create", element: <CreateArticlesPage /> },
+          { path: ":id", element: <CreateArticlesPage /> },
         ],
       },
     ],

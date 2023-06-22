@@ -2,6 +2,7 @@ import moment from "moment";
 import { ColumnDef } from "@tanstack/react-table";
 // Types
 import { Article } from "../../../types/article";
+import ArticleRowAction from "../components/ArticleRowAction";
 
 export const articleColumn: ColumnDef<Article>[] = [
   {
@@ -39,6 +40,6 @@ export const articleColumn: ColumnDef<Article>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => <button id={row.getValue("_id")}>Action</button>,
+    cell: ({ row }) => <ArticleRowAction rowId={row.getValue("_id")} />,
   },
 ];
