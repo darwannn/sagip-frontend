@@ -20,12 +20,7 @@ const ArticleDetailsForm = ({ user, currentDate, register }: PROPS) => {
           {...register("title")}
         />
       </div>
-      <input
-        type="file"
-        id="coverImage"
-        {...(register("coverImage"),
-        { onChange: (e) => console.log(e.target.value) })}
-      />
+      <input type="file" id="coverImage" {...register("coverImage")} />
       <div className="flex flex-col">
         <label htmlFor="category">Category</label>
         <select id="category" {...register("category")}>

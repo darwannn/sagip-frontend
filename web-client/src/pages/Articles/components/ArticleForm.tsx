@@ -6,6 +6,8 @@ import {
   useForm,
 } from "react-hook-form";
 import moment from "moment";
+import { useAddArticleMutation } from "../../../services/articleQuery";
+
 // Services
 import { useGetUserByIdQuery } from "../../../services/usersApi";
 import { API_BASE_URL } from "../../../api.config";
@@ -26,39 +28,26 @@ const ArticleForm = () => {
   const { data: user } = useGetUserByIdQuery(userId);
   const currentDate = useMemo(() => moment().format("YYYY-MM-DD"), []);
 
+  const [addArticle, result] = useAddArticleMutation();
+
   const { register, control, handleSubmit } = useForm();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("content", data.content);
-    formData.append("category", data.category);
-    formData.append("hasChanged", "false");
-    formData.append("image", data.coverImage[0]);
+    console.log(data);
+    const body = new FormData();
+    body.append("title", data.title);
+    body.append("content", data.content);
+    body.append("category", data.category);
+    body.append("hasChanged", "false");
+    body.append("image", data.coverImage[0]);
 
-    const userToken = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/safety-tips/add`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-        body: formData,
-      });
-      if (!response.ok) {
-        console.log(await response.json());
-        throw new Error();
-      }
-      // const data = await response.json();
-      /**
-       * Perform action with response data here.
-       * - Display the message
-       * - Redirect to preview page
-       */
-    } catch (error) {
-      console.log(error);
-    }
+    addArticle({ body, token });
   };
+
+  if (result.isLoading) console.log("Loading...");
+  if (result.isError) console.log(result.error);
+  if (result.isSuccess) console.log(result.data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
