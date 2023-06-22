@@ -7,7 +7,7 @@ const ArticleRowAction = ({ rowId }: TRowAction) => {
   const navigate = useNavigate();
 
   const onViewHandler = () => {
-    navigate(`/articles/${rowId}`);
+    navigate(`/articles/${rowId}?mode=view`);
   };
 
   return (

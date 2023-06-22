@@ -17,13 +17,16 @@ const ArticleContentEditor = ({ content, onChange }: PROPS) => {
    * "Cannot read properties of null (reading 'matchesNode')"
    * More info: https://github.com/ueberdosis/tiptap/issues/1451
    */
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content,
-    onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+  const editor = useEditor(
+    {
+      extensions: [StarterKit],
+      content: content,
+      onUpdate: ({ editor }) => {
+        onChange(editor.getHTML());
+      },
     },
-  });
+    []
+  );
   return (
     <div className="tiptapEditor">
       <CustomMenuBar editor={editor} />

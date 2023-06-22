@@ -10,6 +10,9 @@ export const articleQueryApi = createApi({
     getArticles: builder.query<Article[], void>({
       query: () => "safety-tips",
     }),
+    getArticleById: builder.query<Article, string | undefined>({
+      query: (id) => `safety-tips/${id}`,
+    }),
     addArticle: builder.mutation<
       void,
       { body: FormData; token: string | null }
@@ -26,4 +29,8 @@ export const articleQueryApi = createApi({
   }),
 });
 
-export const { useGetArticlesQuery, useAddArticleMutation } = articleQueryApi;
+export const {
+  useGetArticlesQuery,
+  useAddArticleMutation,
+  useGetArticleByIdQuery,
+} = articleQueryApi;

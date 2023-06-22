@@ -14,6 +14,7 @@ import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
 import { checkAuth, isLoggedIn } from "../util/auth";
 import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
 import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";
+import ViewArticlePage from "../pages/Articles/ViewArticlePage";
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +56,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <ManageArticlesPage /> },
           { path: "create", element: <CreateArticlesPage /> },
-          { path: ":id", element: <CreateArticlesPage /> },
+          { path: ":articleId", element: <ViewArticlePage /> },
         ],
       },
     ],

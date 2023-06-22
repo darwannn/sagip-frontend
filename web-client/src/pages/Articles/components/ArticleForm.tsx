@@ -6,7 +6,8 @@ import {
   useForm,
 } from "react-hook-form";
 import moment from "moment";
-
+//Types
+import { Article } from "../../../types/article";
 // Redux
 import { useAddArticleMutation } from "../../../services/articleQuery";
 // Services
@@ -15,7 +16,11 @@ import { useGetUserByIdQuery } from "../../../services/usersApi";
 import ArticleDetailsForm from "./ArticleDetails";
 import ArticleContentEditor from "./ArticleContentEditor";
 
-const ArticleForm = () => {
+type TProps = {
+  articleData?: Article;
+};
+
+const ArticleForm = ({ articleData }: TProps) => {
   /**
    * This way of getting user info might not be the best way.
    * This should be changed in the future.
@@ -27,10 +32,19 @@ const ArticleForm = () => {
   }, []);
   const { data: user } = useGetUserByIdQuery(userId);
   const currentDate = useMemo(() => moment().format("YYYY-MM-DD"), []);
-
+  // Query
   const [addArticle, result] = useAddArticleMutation();
 
-  const { register, control, handleSubmit } = useForm();
+  const { register, control, handleSubmit } = useForm<FieldValues>({
+    /**
+     * If articleData is passed in props, set the default values to the article data.
+     */
+    defaultValues: {
+      title: articleData?.title,
+      category: articleData?.category,
+      content: articleData?.content,
+    },
+  });
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
     const body = new FormData();
@@ -42,7 +56,7 @@ const ArticleForm = () => {
 
     const token = localStorage.getItem("token");
 
-    addArticle({ body, token });
+    // addArticle({ body, token });
   };
 
   if (result.isLoading) console.log("Loading...");
