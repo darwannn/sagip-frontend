@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { User } from "../../../types/user";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
@@ -9,22 +8,6 @@ type PROPS = {
 };
 
 const ArticleDetailsForm = ({ user, currentDate, register }: PROPS) => {
-  const [title, setTitle] = useState<string>("");
-  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
-  const [imageSrc, setImageSrc] = useState<string>("");
-
-  const onFileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setImageFile(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        setImageSrc(e.target?.result as string);
-      };
-    }
-  };
-
   return (
     <>
       <div className="articleDetails w-full flex flex-col">
@@ -37,15 +20,12 @@ const ArticleDetailsForm = ({ user, currentDate, register }: PROPS) => {
           {...register("title")}
         />
       </div>
-      {imageFile ? (
-        <div>
-          <img src={imageSrc} alt="preview" />
-          <button onClick={() => setImageFile(undefined)}>Remove</button>
-          <p>{`Image Name: ${imageFile?.name}`}</p>
-        </div>
-      ) : (
-        <input type="file" id="coverImage" {...register("coverImage")} />
-      )}
+      <input
+        type="file"
+        id="coverImage"
+        {...(register("coverImage"),
+        { onChange: (e) => console.log(e.target.value) })}
+      />
       <div className="flex flex-col">
         <label htmlFor="category">Category</label>
         <select id="category" {...register("category")}>

@@ -8,9 +8,10 @@ import {
 import moment from "moment";
 // Services
 import { useGetUserByIdQuery } from "../../../services/usersApi";
-import ArticleContentEditor from "./ArticleContentEditor";
-import ArticleDetailsForm from "./ArticleDetails";
 import { API_BASE_URL } from "../../../api.config";
+// Components
+import ArticleDetailsForm from "./ArticleDetails";
+import ArticleContentEditor from "./ArticleContentEditor";
 
 const ArticleForm = () => {
   /**
@@ -48,7 +49,12 @@ const ArticleForm = () => {
         console.log(await response.json());
         throw new Error();
       }
-      const data = await response.json();
+      // const data = await response.json();
+      /**
+       * Perform action with response data here.
+       * - Display the message
+       * - Redirect to preview page
+       */
     } catch (error) {
       console.log(error);
     }
