@@ -24,8 +24,10 @@ const ArticleDetailsForm = ({ user, currentDate, register }: PROPS) => {
       <div className="flex flex-col">
         <label htmlFor="category">Category</label>
         <select id="category" {...register("category")}>
-          <option value="1">Category 1</option>
-          <option value="2">Category 2</option>
+          <option value="General Tips">General Tips</option>
+          <option value="Preparedness">Preparedness</option>
+          <option value="Flood Safety">Flood Safety</option>
+          <option value="Head Safety">Heat Safety</option>
         </select>
         <label htmlFor="author">Author</label>
         <input
