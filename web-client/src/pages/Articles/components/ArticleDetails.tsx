@@ -1,13 +1,22 @@
+import { Control, FieldValues, UseFormRegister } from "react-hook-form";
+import { Controller } from "react-hook-form";
+// Types
 import { User } from "../../../types/user";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import FileDropzone from "../../../components/Form/FileDropzone";
 
 type PROPS = {
   user: User | undefined;
   currentDate: string;
   register: UseFormRegister<FieldValues>;
+  control: Control<FieldValues>;
 };
 
-const ArticleDetailsForm = ({ user, currentDate, register }: PROPS) => {
+const ArticleDetailsForm = ({
+  user,
+  currentDate,
+  register,
+  control,
+}: PROPS) => {
   return (
     <>
       <div className="articleDetails w-full flex flex-col">
@@ -20,7 +29,12 @@ const ArticleDetailsForm = ({ user, currentDate, register }: PROPS) => {
           {...register("title")}
         />
       </div>
-      <input type="file" id="coverImage" {...register("coverImage")} />
+      {/* <input type="file" id="coverImage" {...register("coverImage")} /> */}
+      <Controller
+        name="coverImage"
+        control={control}
+        render={({ field }) => <FileDropzone onChange={field.onChange} />}
+      />
       <div className="flex flex-col">
         <label htmlFor="category">Category</label>
         <select id="category" {...register("category")}>

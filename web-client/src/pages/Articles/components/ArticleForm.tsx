@@ -68,6 +68,7 @@ const ArticleForm = ({ articleData }: TProps) => {
       <ArticleDetailsForm
         user={user}
         currentDate={currentDate}
+        control={control}
         register={register}
       />
       <Controller
