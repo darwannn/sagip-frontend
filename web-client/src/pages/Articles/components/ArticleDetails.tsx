@@ -1,4 +1,9 @@
-import { Control, FieldValues, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  FieldValues,
+  UseFormRegister,
+  useWatch,
+} from "react-hook-form";
 import { Controller } from "react-hook-form";
 // Types
 import { User } from "../../../types/user";
@@ -17,6 +22,7 @@ const ArticleDetailsForm = ({
   register,
   control,
 }: PROPS) => {
+  const imageState = useWatch({ control, name: "coverImage" });
   return (
     <>
       <div className="articleDetails w-full flex flex-col">
@@ -30,6 +36,11 @@ const ArticleDetailsForm = ({
         />
       </div>
       {/* <input type="file" id="coverImage" {...register("coverImage")} /> */}
+      {imageState && (
+        <div>
+          <img src={URL.createObjectURL(imageState)} alt="cover" />
+        </div>
+      )}
       <Controller
         name="coverImage"
         control={control}

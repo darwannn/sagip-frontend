@@ -35,7 +35,7 @@ const ArticleForm = ({ articleData }: TProps) => {
   // Query
   const [addArticle, result] = useAddArticleMutation();
 
-  const { register, control, handleSubmit } = useForm<FieldValues>({
+  const { register, control, handleSubmit, reset } = useForm<FieldValues>({
     /**
      * If articleData is passed in props, set the default values to the article data.
      */
@@ -52,7 +52,7 @@ const ArticleForm = ({ articleData }: TProps) => {
     body.append("content", data.content);
     body.append("category", data.category);
     body.append("hasChanged", "false");
-    body.append("image", data.coverImage[0]);
+    body.append("image", data.coverImage);
 
     const token = localStorage.getItem("token");
 
