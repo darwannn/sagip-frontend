@@ -9,7 +9,10 @@ import moment from "moment";
 //Types
 import { Article } from "../../../types/article";
 // Redux
-import { useAddArticleMutation } from "../../../services/articleQuery";
+import {
+  useAddArticleMutation,
+  useUpdateArticleMutation,
+} from "../../../services/articleQuery";
 // Services
 import { useGetUserByIdQuery } from "../../../services/usersApi";
 // Components
@@ -33,9 +36,10 @@ const ArticleForm = ({ articleData }: TProps) => {
   const { data: user } = useGetUserByIdQuery(userId);
   const currentDate = useMemo(() => moment().format("YYYY-MM-DD"), []);
   // Query
-  const [addArticle, result] = useAddArticleMutation();
+  const [addArticle, addResult] = useAddArticleMutation();
+  const [updateArticle, updateResult] = useUpdateArticleMutation();
 
-  const { register, control, handleSubmit, reset } = useForm<FieldValues>({
+  const { register, control, handleSubmit } = useForm<FieldValues>({
     /**
      * If articleData is passed in props, set the default values to the article data.
      */
@@ -46,22 +50,44 @@ const ArticleForm = ({ articleData }: TProps) => {
     },
   });
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     const body = new FormData();
     body.append("title", data.title);
     body.append("content", data.content);
     body.append("category", data.category);
-    body.append("hasChanged", "false");
-    body.append("image", data.coverImage);
+    /**
+     * If the user is in edit mode and the image input is changed,
+     * set the hasChanged to true.
+     */
+    body.append(
+      "hasChanged",
+      `${articleData && data.coverImage != null ? true : false}`
+    );
+    if (articleData) {
+      body.append(
+        "image",
+        data.coverImage ? data.coverImage : articleData.image
+      );
+    } else {
+      body.append("image", data.coverImage);
+    }
 
     const token = localStorage.getItem("token");
 
-    addArticle({ body, token });
+    if (articleData) {
+      updateArticle({ body, token, id: articleData._id });
+      if (updateResult.isError) {
+        console.log("shet may error");
+        console.log(updateResult.data);
+      }
+    } else {
+      addArticle({ body, token });
+      if (addResult.isError) console.log(addResult.error);
+    }
   };
 
-  if (result.isLoading) console.log("Loading...");
-  if (result.isError) console.log(result.error);
-  if (result.isSuccess) console.log(result.data);
+  if (addResult.isLoading) console.log("Loading...");
+  if (addResult.isError) console.log(addResult.error);
+  if (addResult.isSuccess) console.log(addResult.data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

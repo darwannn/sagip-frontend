@@ -26,11 +26,25 @@ export const articleQueryApi = createApi({
         },
       }),
     }),
+    updateArticle: builder.mutation<
+      void,
+      { body: FormData; token: string | null; id: string }
+    >({
+      query: ({ body, token, id }) => ({
+        url: `safety-tips/update/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
 export const {
   useGetArticlesQuery,
-  useAddArticleMutation,
   useGetArticleByIdQuery,
+  useAddArticleMutation,
+  useUpdateArticleMutation,
 } = articleQueryApi;
