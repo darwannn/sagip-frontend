@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { set } from "react-hook-form";
 
 type TProps = {
   onChange: (file: File | undefined) => void;
@@ -14,7 +13,7 @@ export const FileDropzone = ({ onChange }: TProps) => {
     onChange(acceptedFiles[0]);
   };
 
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false,
   });

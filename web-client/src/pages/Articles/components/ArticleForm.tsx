@@ -56,7 +56,7 @@ const ArticleForm = ({ articleData }: TProps) => {
 
     const token = localStorage.getItem("token");
 
-    // addArticle({ body, token });
+    addArticle({ body, token });
   };
 
   if (result.isLoading) console.log("Loading...");
@@ -70,6 +70,7 @@ const ArticleForm = ({ articleData }: TProps) => {
         currentDate={currentDate}
         control={control}
         register={register}
+        imageFromDb={articleData?.image}
       />
       <Controller
         name="content"

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Control,
   FieldValues,
@@ -8,12 +9,14 @@ import { Controller } from "react-hook-form";
 // Types
 import { User } from "../../../types/user";
 import FileDropzone from "../../../components/Form/FileDropzone";
+import { API_BASE_URL } from "../../../api.config";
 
 type PROPS = {
   user: User | undefined;
   currentDate: string;
   register: UseFormRegister<FieldValues>;
   control: Control<FieldValues>;
+  imageFromDb?: string;
 };
 
 const ArticleDetailsForm = ({
@@ -21,7 +24,9 @@ const ArticleDetailsForm = ({
   currentDate,
   register,
   control,
+  imageFromDb,
 }: PROPS) => {
+  const [editImage, setEditImage] = useState(false);
   const imageState = useWatch({ control, name: "coverImage" });
   return (
     <>
@@ -35,17 +40,32 @@ const ArticleDetailsForm = ({
           {...register("title")}
         />
       </div>
-      {/* <input type="file" id="coverImage" {...register("coverImage")} /> */}
-      {imageState && (
+      {imageFromDb && !editImage ? (
         <div>
-          <img src={URL.createObjectURL(imageState)} alt="cover" />
+          <img
+            src={`${API_BASE_URL}/images/Safety Tip/${imageFromDb}`}
+            alt="cover"
+          />
+          <button type="button" onClick={() => setEditImage(true)}>
+            Replace
+          </button>
         </div>
+      ) : (
+        <Controller
+          name="coverImage"
+          control={control}
+          render={({ field }) => (
+            <>
+              {imageState && (
+                <div>
+                  <img src={URL.createObjectURL(imageState)} alt="cover" />
+                </div>
+              )}
+              <FileDropzone onChange={field.onChange} />
+            </>
+          )}
+        />
       )}
-      <Controller
-        name="coverImage"
-        control={control}
-        render={({ field }) => <FileDropzone onChange={field.onChange} />}
-      />
       <div className="flex flex-col">
         <label htmlFor="category">Category</label>
         <select id="category" {...register("category")}>
