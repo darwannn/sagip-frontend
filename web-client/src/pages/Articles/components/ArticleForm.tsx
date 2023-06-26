@@ -70,6 +70,7 @@ const ArticleForm = ({ articleData }: TProps) => {
     } else {
       body.append("image", data.coverImage);
     }
+    body.append("status", "draft");
 
     const token = localStorage.getItem("token");
 

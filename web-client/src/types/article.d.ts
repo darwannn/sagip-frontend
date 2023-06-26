@@ -7,6 +7,7 @@ export type Article = {
   category: string;
   views: number;
   saves: string[];
+  status: string;
   createdAt: string;
   updatedAt: string;
   __v: number;

@@ -18,8 +18,8 @@ export const articleColumn: ColumnDef<Article>[] = [
     header: "Category",
   },
   {
-    accessorKey: "views",
-    header: "Views Count",
+    accessorKey: "status",
+    header: "Status",
   },
   {
     accessorKey: "createdAt",
