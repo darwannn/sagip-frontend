@@ -9,7 +9,7 @@ import { Controller } from "react-hook-form";
 // Types
 import { User } from "../../../types/user";
 import FileDropzone from "../../../components/Form/FileDropzone";
-import { API_BASE_URL } from "../../../api.config";
+import { IMAGE_BASE_URL } from "../../../api.config";
 
 type PROPS = {
   user: User | undefined;
@@ -43,7 +43,7 @@ const ArticleDetailsForm = ({
       {imageFromDb && !editImage ? (
         <div>
           <img
-            src={`${API_BASE_URL}/images/Safety Tip/${imageFromDb}`}
+            src={`${IMAGE_BASE_URL}/images/Safety Tip/${imageFromDb}`}
             alt="cover"
           />
           <button type="button" onClick={() => setEditImage(true)}>
