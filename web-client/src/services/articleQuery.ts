@@ -7,9 +7,11 @@ export const articleQueryApi = createApi({
   reducerPath: "articleQuery",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   endpoints: (builder) => ({
+    // Get all articles
     getArticles: builder.query<Article[], void>({
       query: () => "safety-tips",
     }),
+    // Get specific article with id
     getArticleById: builder.query<Article, string | undefined>({
       query: (id) => `safety-tips/${id}`,
     }),
@@ -26,6 +28,7 @@ export const articleQueryApi = createApi({
         },
       }),
     }),
+    // Update article
     updateArticle: builder.mutation<
       void,
       { body: FormData; token: string | null; id: string }
@@ -39,6 +42,18 @@ export const articleQueryApi = createApi({
         },
       }),
     }),
+    // Delete article
+    deleteArticle: builder.mutation<void, { token: string | null; id: string }>(
+      {
+        query: ({ token, id }) => ({
+          url: `safety-tips/delete/${id}`,
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+      }
+    ),
   }),
 });
 
@@ -47,4 +62,5 @@ export const {
   useGetArticleByIdQuery,
   useAddArticleMutation,
   useUpdateArticleMutation,
+  useDeleteArticleMutation,
 } = articleQueryApi;
