@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import {
   Controller,
+  Field,
   FieldValues,
   SubmitHandler,
   useForm,
@@ -39,7 +40,12 @@ const ArticleForm = ({ articleData }: TProps) => {
   const [addArticle, addResult] = useAddArticleMutation();
   const [updateArticle, updateResult] = useUpdateArticleMutation();
 
-  const { register, control, handleSubmit } = useForm<FieldValues>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { isDirty },
+  } = useForm<FieldValues>({
     /**
      * If articleData is passed in props, set the default values to the article data.
      */
@@ -49,7 +55,13 @@ const ArticleForm = ({ articleData }: TProps) => {
       content: articleData?.content,
     },
   });
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+
+  const SubmitArticleData = async (data: FieldValues, status: string) => {
+    if (!isDirty) {
+      console.log("No changes made");
+      return;
+    }
+    // Prepare the data to be sent to the server
     const body = new FormData();
     body.append("title", data.title);
     body.append("content", data.content);
@@ -70,20 +82,28 @@ const ArticleForm = ({ articleData }: TProps) => {
     } else {
       body.append("image", data.coverImage);
     }
-    body.append("status", "draft");
+    body.append("status", status);
 
     const token = localStorage.getItem("token");
 
     if (articleData) {
-      updateArticle({ body, token, id: articleData._id });
-      if (updateResult.isError) {
-        console.log("shet may error");
-        console.log(updateResult.data);
-      }
+      const updateData = await updateArticle({
+        body,
+        token,
+        id: articleData._id,
+      });
+      console.log(updateData);
     } else {
       addArticle({ body, token });
-      if (addResult.isError) console.log(addResult.error);
+      // TODO: Navigate to the article page after adding the article
     }
+  };
+
+  const onPublish: SubmitHandler<FieldValues> = async (data) => {
+    SubmitArticleData(data, "published");
+  };
+  const onSaveDraft: SubmitHandler<FieldValues> = async (data) => {
+    SubmitArticleData(data, "draft");
   };
 
   if (addResult.isLoading) console.log("Loading...");
@@ -91,7 +111,7 @@ const ArticleForm = ({ articleData }: TProps) => {
   if (addResult.isSuccess) console.log(addResult.data);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <ArticleDetailsForm
         user={user}
         currentDate={currentDate}
@@ -110,8 +130,20 @@ const ArticleForm = ({ articleData }: TProps) => {
           />
         )}
       />
-      <button className="bg-indigo-500 text-white px-5 py-1 my-2 rounded">
+      {/* <button className="bg-indigo-500 text-white px-5 py-1 my-2 rounded">
         Submit
+      </button> */}
+      <button
+        className="bg-indigo-500 text-white px-5 py-1 my-2 rounded"
+        onClick={handleSubmit(onSaveDraft)}
+      >
+        Save as Draft
+      </button>
+      <button
+        className="bg-green-500 text-white px-5 py-1 my-2 rounded"
+        onClick={handleSubmit(onPublish)}
+      >
+        Publish
       </button>
     </form>
   );
