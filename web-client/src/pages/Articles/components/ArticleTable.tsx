@@ -4,6 +4,7 @@ import {
   useReactTable,
   ColumnFiltersState,
   getFilteredRowModel,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 import DataTable from "../../../components/ui/data-table";
 import { articleColumn as columns } from "../types/ArticleColumn";
@@ -23,8 +24,16 @@ const ArticleTable = () => {
     // For filtering data
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    // For pagination
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       columnFilters,
+    },
+    initialState: {
+      pagination: {
+        pageIndex: 0,
+        pageSize: 10,
+      },
     },
   });
 
@@ -62,6 +71,27 @@ const ArticleTable = () => {
       </div>
       <div className="rounded-md border ">
         <DataTable table={table} columnLength={columns.length} />
+      </div>
+      <div className="flex justify-between items-center px-5 py-3">
+        <button
+          className="border px-3 py-1 rounded"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </button>
+        <div>
+          <span className="text-sm">{`Page ${
+            table.getState().pagination.pageIndex + 1
+          } of ${table.getPageCount()}`}</span>
+        </div>
+        <button
+          className="border px-3 py-1 rounded"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
