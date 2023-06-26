@@ -72,7 +72,7 @@ const ArticleDetailsForm = ({
           <option value="General Tips">General Tips</option>
           <option value="Preparedness">Preparedness</option>
           <option value="Flood Safety">Flood Safety</option>
-          <option value="Head Safety">Heat Safety</option>
+          <option value="Heat Safety">Heat Safety</option>
         </select>
         <label htmlFor="author">Author</label>
         <input

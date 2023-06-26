@@ -15,3 +15,10 @@ export type Article = {
 export type ArticleState = {
   articles: Article[];
 };
+
+export const ArticleTypes = [
+  "General Tips",
+  "Preparedness",
+  "Flood Safety",
+  "Heat Safety",
+];

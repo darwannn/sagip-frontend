@@ -31,6 +31,7 @@ const ArticleTable = () => {
   return (
     <div className="mx-5">
       <div className="my-2">
+        {/* Search table with id  */}
         <input
           className="p-1"
           value={(table.getColumn("_id")?.getFilterValue() as string) ?? ""}
@@ -39,6 +40,25 @@ const ArticleTable = () => {
           }
           placeholder="Search with ID"
         />
+        {/* Filter the table by category */}
+        <select
+          id="category"
+          className="p-1 ml-2 border rounded-md"
+          value={
+            (table.getColumn("category")?.getFilterValue() as string) ?? ""
+          }
+          onChange={(e) =>
+            table.getColumn("category")?.setFilterValue(e.target.value)
+          }
+        >
+          <option value="" disabled>
+            Filter by category
+          </option>
+          <option value="General Tips">General Tips</option>
+          <option value="Preparedness">Preparedness</option>
+          <option value="Flood Safety">Flood Safety</option>
+          <option value="Heat Safety">Heat Safety</option>
+        </select>
       </div>
       <div className="rounded-md border ">
         <DataTable table={table} columnLength={columns.length} />
