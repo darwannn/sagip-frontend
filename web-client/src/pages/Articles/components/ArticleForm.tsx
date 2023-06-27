@@ -1,11 +1,9 @@
-import { useMemo } from "react";
 import {
   Controller,
   FieldValues,
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import moment from "moment";
 //Types
 import { Article } from "../types/article";
 // Redux
@@ -13,8 +11,6 @@ import {
   useAddArticleMutation,
   useUpdateArticleMutation,
 } from "../../../services/articleQuery";
-// Services
-import { useGetUserByIdQuery } from "../../../services/usersApi";
 // Components
 import ArticleDetailsForm from "./ArticleDetails";
 import ArticleContentEditor from "./ArticleContentEditor";
@@ -25,17 +21,6 @@ type TProps = {
 };
 
 const ArticleForm = ({ articleData }: TProps) => {
-  /**
-   * This way of getting user info might not be the best way.
-   * This should be changed in the future.
-   * Maybe use redux to store user info?
-   */
-  const userId = useMemo(() => {
-    const user = localStorage.getItem("user");
-    return user ? JSON.parse(user).id : "";
-  }, []);
-  const { data: user } = useGetUserByIdQuery(userId);
-  const currentDate = useMemo(() => moment().format("YYYY-MM-DD"), []);
   // Query
   const [addArticle, addResult] = useAddArticleMutation();
   const [updateArticle] = useUpdateArticleMutation();
@@ -115,8 +100,6 @@ const ArticleForm = ({ articleData }: TProps) => {
   return (
     <form>
       <ArticleDetailsForm
-        user={user}
-        currentDate={currentDate}
         control={control}
         register={register}
         imageFromDb={articleData?.image}

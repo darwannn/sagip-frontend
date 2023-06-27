@@ -7,25 +7,16 @@ import {
 } from "react-hook-form";
 import { Controller } from "react-hook-form";
 // Types
-import { User } from "../../../types/user";
 import FileDropzone from "../../../components/Form/FileDropzone";
 import { API_BASE_URL } from "../../../api.config";
 
 type PROPS = {
-  user: User | undefined;
-  currentDate: string;
   register: UseFormRegister<FieldValues>;
   control: Control<FieldValues>;
   imageFromDb?: string;
 };
 
-const ArticleDetailsForm = ({
-  user,
-  currentDate,
-  register,
-  control,
-  imageFromDb,
-}: PROPS) => {
+const ArticleDetailsForm = ({ register, control, imageFromDb }: PROPS) => {
   const [editImage, setEditImage] = useState(false);
   const imageState = useWatch({ control, name: "coverImage" });
   return (
@@ -74,15 +65,6 @@ const ArticleDetailsForm = ({
           <option value="Flood Safety">Flood Safety</option>
           <option value="Heat Safety">Heat Safety</option>
         </select>
-        <label htmlFor="author">Author</label>
-        <input
-          type="text"
-          id="userId"
-          value={user ? `${user.firstname} ${user.lastname}` : ""}
-          readOnly
-        />
-        <label htmlFor="date">Created:</label>
-        <span>{currentDate}</span>
       </div>
     </>
   );
