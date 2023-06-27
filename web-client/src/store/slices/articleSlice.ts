@@ -1,6 +1,6 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 // Types
-import type { Article, ArticleState } from "../../types/article";
+import type { Article, ArticleState } from "../../pages/Articles/types/article";
 import { RootState } from "../store";
 
 const initialState: ArticleState = {

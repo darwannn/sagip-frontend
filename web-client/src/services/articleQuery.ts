@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { API_BASE_URL } from "../api.config";
-import { Article } from "../types/article";
+import { Article } from "../pages/Articles/types/article";
 
 export const articleQueryApi = createApi({
   reducerPath: "articleQuery",

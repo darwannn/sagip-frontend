@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 import moment from "moment";
 //Types
-import { Article } from "../../../types/article";
+import { Article } from "../types/article";
 // Redux
 import {
   useAddArticleMutation,
