@@ -5,7 +5,7 @@ import {
   useForm,
 } from "react-hook-form";
 //Types
-import { Article } from "../types/article";
+import { Article, TArticleResData } from "../types/article";
 // Redux
 import {
   useAddArticleMutation,
@@ -22,7 +22,16 @@ type TProps = {
 
 const ArticleForm = ({ articleData }: TProps) => {
   // Query
-  const [addArticle, addResult] = useAddArticleMutation();
+  const [
+    addArticle,
+    {
+      isSuccess: addIsSuccess,
+      isError: addIsError,
+      isLoading: addIsLoading,
+      error: addErr,
+      data: addData,
+    },
+  ] = useAddArticleMutation();
   const [updateArticle] = useUpdateArticleMutation();
 
   const navigate = useNavigate();
@@ -31,7 +40,7 @@ const ArticleForm = ({ articleData }: TProps) => {
     register,
     control,
     handleSubmit,
-    formState: { isDirty },
+    formState: { isDirty, errors },
   } = useForm<FieldValues>({
     /**
      * If articleData is passed in props, set the default values to the article data.
@@ -81,8 +90,10 @@ const ArticleForm = ({ articleData }: TProps) => {
       });
       console.log(updateData);
     } else {
-      addArticle({ body, token });
-      navigate("/articles");
+      const res = await addArticle({ body, token });
+      if (res && addIsSuccess) {
+        navigate("/articles");
+      }
     }
   };
 
@@ -93,9 +104,14 @@ const ArticleForm = ({ articleData }: TProps) => {
     SubmitArticleData(data, "draft");
   };
 
-  if (addResult.isLoading) console.log("Loading...");
-  if (addResult.isError) console.log(addResult.error);
-  if (addResult.isSuccess) console.log(addResult.data);
+  if (addIsLoading) console.log("Loading...");
+  if (addIsError) {
+    if (addErr && "status" in addErr) {
+      const data = "data" in addErr ? (addErr.data as TArticleResData) : null;
+      console.log(data?.title);
+    }
+  }
+  if (addIsSuccess) console.log(addData);
 
   return (
     <form>
@@ -103,16 +119,22 @@ const ArticleForm = ({ articleData }: TProps) => {
         control={control}
         register={register}
         imageFromDb={articleData?.image}
+        errors={errors}
       />
       <Controller
         name="content"
         control={control}
         rules={{ required: true }}
         render={({ field }) => (
-          <ArticleContentEditor
-            content={field.value}
-            onChange={field.onChange}
-          />
+          <>
+            {errors.content && (
+              <span className="text-red-500">Content is required</span>
+            )}
+            <ArticleContentEditor
+              content={field.value}
+              onChange={field.onChange}
+            />
+          </>
         )}
       />
       <button

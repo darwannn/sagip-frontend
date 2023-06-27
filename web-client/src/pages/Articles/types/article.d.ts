@@ -17,6 +17,15 @@ export type ArticleState = {
   articles: Article[];
 };
 
+export type TArticleResData = {
+  safetyTip: Article;
+  message: string;
+  success: boolean;
+  image?: string;
+  title?: string;
+  contents?: string;
+};
+
 export const ArticleTypes = [
   "General Tips",
   "Preparedness",

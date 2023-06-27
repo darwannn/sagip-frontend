@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   Control,
+  FieldErrors,
   FieldValues,
   UseFormRegister,
   useWatch,
@@ -10,25 +11,34 @@ import { Controller } from "react-hook-form";
 import FileDropzone from "../../../components/Form/FileDropzone";
 import { API_BASE_URL } from "../../../api.config";
 
-type PROPS = {
+type TProps = {
   register: UseFormRegister<FieldValues>;
   control: Control<FieldValues>;
   imageFromDb?: string;
+  errors: FieldErrors<FieldValues>;
 };
 
-const ArticleDetailsForm = ({ register, control, imageFromDb }: PROPS) => {
+const ArticleDetailsForm = ({
+  register,
+  control,
+  imageFromDb,
+  errors,
+}: TProps) => {
   const [editImage, setEditImage] = useState(false);
   const imageState = useWatch({ control, name: "coverImage" });
   return (
     <>
       <div className="articleDetails w-full flex flex-col">
+        {errors.title && (
+          <span className="text-red-500">Title is required</span>
+        )}
         <input
           type="text-area"
           id="articleTitle"
           className="p-2 my-1"
           style={{ fontSize: "2.2rem", fontWeight: "bold" }}
           placeholder="Title of article"
-          {...register("title")}
+          {...register("title", { required: true })}
         />
       </div>
       {imageFromDb && !editImage ? (
@@ -45,8 +55,12 @@ const ArticleDetailsForm = ({ register, control, imageFromDb }: PROPS) => {
         <Controller
           name="coverImage"
           control={control}
+          rules={{ required: true }}
           render={({ field }) => (
             <>
+              {errors.coverImage && (
+                <span className="text-red-500">Cover Image is required</span>
+              )}
               {imageState && (
                 <div>
                   <img src={URL.createObjectURL(imageState)} alt="cover" />
