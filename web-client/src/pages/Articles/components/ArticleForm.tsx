@@ -132,9 +132,6 @@ const ArticleForm = ({ articleData }: TProps) => {
           />
         )}
       />
-      {/* <button className="bg-indigo-500 text-white px-5 py-1 my-2 rounded">
-        Submit
-      </button> */}
       <button
         className="bg-indigo-500 text-white px-5 py-1 my-2 rounded"
         onClick={handleSubmit(onSaveDraft)}

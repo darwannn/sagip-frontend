@@ -26,6 +26,9 @@ const AdminRootLayout = () => {
           <li>
             <NavLink to={"/disaster-alerts"}>Disaster Alerts</NavLink>
           </li>
+          <li>
+            <NavLink to={"/articles"}>Articles</NavLink>
+          </li>
           {/* <li>
             <NavLink to={"/login"}>Login</NavLink>
           </li>
