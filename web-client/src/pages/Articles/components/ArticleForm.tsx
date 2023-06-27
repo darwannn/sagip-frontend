@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import {
   Controller,
-  Field,
   FieldValues,
   SubmitHandler,
   useForm,
@@ -19,6 +18,7 @@ import { useGetUserByIdQuery } from "../../../services/usersApi";
 // Components
 import ArticleDetailsForm from "./ArticleDetails";
 import ArticleContentEditor from "./ArticleContentEditor";
+import { useNavigate } from "react-router-dom";
 
 type TProps = {
   articleData?: Article;
@@ -38,7 +38,9 @@ const ArticleForm = ({ articleData }: TProps) => {
   const currentDate = useMemo(() => moment().format("YYYY-MM-DD"), []);
   // Query
   const [addArticle, addResult] = useAddArticleMutation();
-  const [updateArticle, updateResult] = useUpdateArticleMutation();
+  const [updateArticle] = useUpdateArticleMutation();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -95,7 +97,7 @@ const ArticleForm = ({ articleData }: TProps) => {
       console.log(updateData);
     } else {
       addArticle({ body, token });
-      // TODO: Navigate to the article page after adding the article
+      navigate("/articles");
     }
   };
 

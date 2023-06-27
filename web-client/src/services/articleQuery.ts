@@ -6,14 +6,17 @@ import { Article } from "../types/article";
 export const articleQueryApi = createApi({
   reducerPath: "articleQuery",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
+  tagTypes: ["Article", "SelectedArticle"],
   endpoints: (builder) => ({
     // Get all articles
     getArticles: builder.query<Article[], void>({
       query: () => "safety-tips",
+      providesTags: ["Article"],
     }),
     // Get specific article with id
     getArticleById: builder.query<Article, string | undefined>({
       query: (id) => `safety-tips/${id}`,
+      providesTags: ["SelectedArticle"],
     }),
     addArticle: builder.mutation<
       void,
@@ -27,6 +30,7 @@ export const articleQueryApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ["Article"],
     }),
     // Update article
     updateArticle: builder.mutation<
@@ -41,6 +45,7 @@ export const articleQueryApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ["SelectedArticle"],
     }),
     // Delete article
     deleteArticle: builder.mutation<void, { token: string | null; id: string }>(
@@ -52,6 +57,7 @@ export const articleQueryApi = createApi({
             Authorization: `Bearer ${token}`,
           },
         }),
+        invalidatesTags: ["Article"],
       }
     ),
   }),

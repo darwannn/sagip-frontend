@@ -9,14 +9,15 @@ import {
 import DataTable from "../../../components/ui/data-table";
 import { articleColumn as columns } from "../types/ArticleColumn";
 // Redux
-import { useAppSelector } from "../../../store/hooks";
-import { selectArticles } from "../../../store/slices/articleSlice";
 import PaginationControls from "../../../components/ui/PaginationControl";
+import { Article } from "../../../types/article";
 
-const ArticleTable = () => {
+type TProps = {
+  articleData: Article[];
+};
+
+const ArticleTable = ({ articleData: data }: TProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // For filtering data
-  // Get the table data from redux
-  const data = useAppSelector(selectArticles);
   // Initialiaze table configuration
   const table = useReactTable({
     data,

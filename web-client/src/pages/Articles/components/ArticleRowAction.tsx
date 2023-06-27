@@ -26,16 +26,6 @@ const ArticleRowAction = ({ rowId }: TRowAction) => {
     if (isError) {
       console.log(error);
     }
-
-    /**
-     * Reload the page to show the updated data
-     * This is not the best way to do it.
-     */
-    window.location.reload();
-    /**
-     * Use redux to do optimistic update
-     * and show the updated data without reloading the page
-     */
   };
 
   return (
