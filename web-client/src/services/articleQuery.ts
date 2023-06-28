@@ -34,7 +34,7 @@ export const articleQueryApi = createApi({
     }),
     // Update article
     updateArticle: builder.mutation<
-      void,
+      TArticleResData,
       { body: FormData; token: string | null; id: string }
     >({
       query: ({ body, token, id }) => ({

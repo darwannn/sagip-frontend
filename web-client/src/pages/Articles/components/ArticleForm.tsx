@@ -26,7 +26,14 @@ const ArticleForm = ({ articleData }: TProps) => {
     addArticle,
     { isError: addIsError, isLoading: addIsLoading, error: addErr },
   ] = useAddArticleMutation();
-  const [updateArticle] = useUpdateArticleMutation();
+  const [
+    updateArticle,
+    {
+      isError: updateIsError,
+      isLoading: updateIsLoading,
+      isSuccess: updateIsSuccess,
+    },
+  ] = useUpdateArticleMutation();
 
   const navigate = useNavigate();
 
@@ -77,12 +84,11 @@ const ArticleForm = ({ articleData }: TProps) => {
     const token = localStorage.getItem("token");
 
     if (articleData) {
-      const updateData = await updateArticle({
+      updateArticle({
         body,
         token,
         id: articleData._id,
       });
-      console.log(updateData);
     } else {
       const res = await addArticle({ body, token });
       if (res && "data" in res) {
@@ -108,6 +114,10 @@ const ArticleForm = ({ articleData }: TProps) => {
       console.log(data?.title);
     }
   }
+
+  if (updateIsLoading) console.log("Updating...");
+  if (updateIsError) console.log("Error updating");
+  if (updateIsSuccess) console.log("Updated successfully");
 
   return (
     <form>
@@ -136,12 +146,14 @@ const ArticleForm = ({ articleData }: TProps) => {
       <button
         className="bg-indigo-500 text-white px-5 py-1 my-2 rounded"
         onClick={handleSubmit(onSaveDraft)}
+        disabled={addIsLoading || updateIsLoading}
       >
         Save as Draft
       </button>
       <button
         className="bg-green-500 text-white px-5 py-1 my-2 rounded"
         onClick={handleSubmit(onPublish)}
+        disabled={addIsLoading || updateIsLoading}
       >
         Publish
       </button>
