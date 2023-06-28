@@ -36,7 +36,6 @@ const ManageUserPage = () => {
 
   return (
     <>
-      <h1>User Management Page</h1>
       <div className="statistics flex flex-row">
         <div className="border-2 rounded p-3 m-2">
           <span>{totalUsersCount}</span>

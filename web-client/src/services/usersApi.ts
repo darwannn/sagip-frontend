@@ -17,4 +17,8 @@ export const usersApi = createApi({
   }),
 });
 
-export const { useGetUsersDataQuery, useLazyGetUserByIdQuery } = usersApi;
+export const {
+  useGetUsersDataQuery,
+  useLazyGetUserByIdQuery,
+  useGetUserByIdQuery,
+} = usersApi;
