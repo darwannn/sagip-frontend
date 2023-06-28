@@ -24,13 +24,7 @@ const ArticleForm = ({ articleData }: TProps) => {
   // Query
   const [
     addArticle,
-    {
-      isSuccess: addIsSuccess,
-      isError: addIsError,
-      isLoading: addIsLoading,
-      error: addErr,
-      data: addData,
-    },
+    { isError: addIsError, isLoading: addIsLoading, error: addErr },
   ] = useAddArticleMutation();
   const [updateArticle] = useUpdateArticleMutation();
 
@@ -91,8 +85,10 @@ const ArticleForm = ({ articleData }: TProps) => {
       console.log(updateData);
     } else {
       const res = await addArticle({ body, token });
-      if (res && addIsSuccess) {
-        navigate("/articles");
+      if (res && "data" in res) {
+        if (res.data.success) {
+          navigate(`/articles/${data.safetyTip._id}?mode=view`);
+        }
       }
     }
   };
@@ -104,6 +100,7 @@ const ArticleForm = ({ articleData }: TProps) => {
     SubmitArticleData(data, "draft");
   };
 
+  // TODO: Add a loading indicator
   if (addIsLoading) console.log("Loading...");
   if (addIsError) {
     if (addErr && "status" in addErr) {
@@ -111,7 +108,6 @@ const ArticleForm = ({ articleData }: TProps) => {
       console.log(data?.title);
     }
   }
-  if (addIsSuccess) console.log(addData);
 
   return (
     <form>

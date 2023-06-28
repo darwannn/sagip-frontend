@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { API_BASE_URL } from "../api.config";
-import { Article } from "../pages/Articles/types/article";
+import { Article, TArticleResData } from "../pages/Articles/types/article";
 
 export const articleQueryApi = createApi({
   reducerPath: "articleQuery",
@@ -19,7 +19,7 @@ export const articleQueryApi = createApi({
       providesTags: ["SelectedArticle"],
     }),
     addArticle: builder.mutation<
-      void,
+      TArticleResData,
       { body: FormData; token: string | null }
     >({
       query: ({ body, token }) => ({
