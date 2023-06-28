@@ -9,7 +9,8 @@ import {
 import { Controller } from "react-hook-form";
 // Types
 import FileDropzone from "../../../components/Form/FileDropzone";
-import { API_BASE_URL } from "../../../api.config";
+
+import { BASE_IMAGE_URL } from "../../../api.config";
 
 type TProps = {
   register: UseFormRegister<FieldValues>;
@@ -44,7 +45,7 @@ const ArticleDetailsForm = ({
       {imageFromDb && !editImage ? (
         <div>
           <img
-            src={`${API_BASE_URL}/images/Safety Tip/${imageFromDb}`}
+            src={`${BASE_IMAGE_URL}/safety-tips/${imageFromDb}`}
             alt="cover"
           />
           <button type="button" onClick={() => setEditImage(true)}>
