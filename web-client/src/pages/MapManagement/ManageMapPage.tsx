@@ -1,5 +1,6 @@
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { GOOGLE_MAP_API_KEY } from "../../api.config";
+import { lightMapTheme } from "./mapStyle";
 
 const containerStyle = {
   width: "100vw",
@@ -16,7 +17,12 @@ const ManageMapPage = () => {
     <>
       <h1>Manage Map Page</h1>
       <LoadScript googleMapsApiKey={GOOGLE_MAP_API_KEY}>
-        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={15}
+          options={{ styles: lightMapTheme }}
+        >
           {/* Child components, such as markers, info windows, etc. */}
           <></>
         </GoogleMap>
