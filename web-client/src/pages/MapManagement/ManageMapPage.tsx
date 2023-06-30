@@ -1,7 +1,8 @@
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { API_BASE_URL, GOOGLE_MAP_API_KEY } from "../../api.config";
 import { lightMapTheme } from "./mapStyle";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import type { TFacility } from "./Types/emergencyFacility";
 
 const containerStyle = {
   width: "100vw",
@@ -14,11 +15,19 @@ const center = {
 };
 
 const ManageMapPage = () => {
+  const [facilities, setFacilities] = useState<TFacility[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     const fetchFacilities = async () => {
+      setIsLoading(true);
       const response = await fetch(`${API_BASE_URL}/emergency-facility/`);
       const data = await response.json();
+      if (!response.ok) {
+        console.log(data);
+      }
       console.log(data);
+      setFacilities(data);
+      setIsLoading(false);
     };
 
     fetchFacilities();
@@ -27,6 +36,7 @@ const ManageMapPage = () => {
   return (
     <>
       <h1>Manage Map Page</h1>
+      {isLoading && <p>Loading map details...</p>}
       <LoadScript googleMapsApiKey={GOOGLE_MAP_API_KEY}>
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -39,7 +49,15 @@ const ManageMapPage = () => {
           }}
         >
           {/* Child components, such as markers, info windows, etc. */}
-          <></>
+          {facilities.map((facility) => (
+            <Marker
+              key={facility._id}
+              position={{
+                lat: facility.latitude,
+                lng: facility.longitude,
+              }}
+            />
+          ))}
         </GoogleMap>
       </LoadScript>
     </>

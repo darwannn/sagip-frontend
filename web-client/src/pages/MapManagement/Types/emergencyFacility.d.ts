@@ -1,4 +1,4 @@
-type TFacility = {
+export type TFacility = {
   category: string;
   contactNumber: string;
   createdAt: string;
