@@ -1,6 +1,7 @@
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
-import { GOOGLE_MAP_API_KEY } from "../../api.config";
+import { API_BASE_URL, GOOGLE_MAP_API_KEY } from "../../api.config";
 import { lightMapTheme } from "./mapStyle";
+import { useEffect } from "react";
 
 const containerStyle = {
   width: "100vw",
@@ -13,6 +14,16 @@ const center = {
 };
 
 const ManageMapPage = () => {
+  useEffect(() => {
+    const fetchFacilities = async () => {
+      const response = await fetch(`${API_BASE_URL}/emergency-facility/`);
+      const data = await response.json();
+      console.log(data);
+    };
+
+    fetchFacilities();
+  }, []);
+
   return (
     <>
       <h1>Manage Map Page</h1>
