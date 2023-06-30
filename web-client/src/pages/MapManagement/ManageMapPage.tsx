@@ -21,7 +21,11 @@ const ManageMapPage = () => {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={15}
-          options={{ styles: lightMapTheme }}
+          options={{
+            styles: lightMapTheme,
+            minZoom: 13,
+            maxZoom: 16,
+          }}
         >
           {/* Child components, such as markers, info windows, etc. */}
           <></>
