@@ -1,8 +1,13 @@
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import { API_BASE_URL, GOOGLE_MAP_API_KEY } from "../../api.config";
 import { lightMapTheme } from "./mapStyle";
 import { useEffect, useState } from "react";
-import type { TFacility } from "./Types/emergencyFacility";
+import type { TFacility } from "./types/emergencyFacility";
 
 const containerStyle = {
   width: "100vw",
@@ -16,6 +21,11 @@ const center = {
 
 const ManageMapPage = () => {
   const [facilities, setFacilities] = useState<TFacility[]>([]);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const { isLoaded: isMapLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: GOOGLE_MAP_API_KEY,
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     const fetchFacilities = async () => {
@@ -37,7 +47,23 @@ const ManageMapPage = () => {
     <>
       <h1>Manage Map Page</h1>
       {isLoading && <p>Loading map details...</p>}
-      <LoadScript googleMapsApiKey={GOOGLE_MAP_API_KEY}>
+      {facilities.length != 0 &&
+        !isLoading &&
+        facilities.map((facility) => (
+          <div
+            key={facility._id}
+            className="border"
+            onClick={() => {
+              map?.panTo({ lat: facility.latitude, lng: facility.longitude });
+            }}
+          >
+            <p>{facility.name}</p>
+            <p>{facility.contactNumber}</p>
+            <p>{facility.latitude}</p>
+            <p>{facility.longitude}</p>
+          </div>
+        ))}
+      {isMapLoaded && (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
@@ -46,6 +72,13 @@ const ManageMapPage = () => {
             styles: lightMapTheme,
             minZoom: 13,
             maxZoom: 16,
+            zoomControl: false,
+            streetViewControl: false,
+            fullscreenControl: false,
+            mapTypeControl: false,
+          }}
+          onLoad={(map) => {
+            setMap(map);
           }}
         >
           {/* Child components, such as markers, info windows, etc. */}
@@ -56,10 +89,13 @@ const ManageMapPage = () => {
                 lat: facility.latitude,
                 lng: facility.longitude,
               }}
+              onClick={() => {
+                map?.panTo({ lat: facility.latitude, lng: facility.longitude });
+              }}
             />
           ))}
         </GoogleMap>
-      </LoadScript>
+      )}
     </>
   );
 };
