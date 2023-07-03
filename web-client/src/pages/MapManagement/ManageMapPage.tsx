@@ -27,6 +27,13 @@ const ManageMapPage = () => {
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [addMode, setAddMode] = useState<boolean>(false);
+  const [tempMarker, setTempMarker] = useState<{
+    lat: number | undefined;
+    lang: number | undefined;
+  } | null>(null);
+
   useEffect(() => {
     const fetchFacilities = async () => {
       setIsLoading(true);
@@ -43,10 +50,30 @@ const ManageMapPage = () => {
     fetchFacilities();
   }, []);
 
+  const onMapClickHandler = (event: google.maps.MapMouseEvent) => {
+    if (!addMode || !map) return;
+    setTempMarker({
+      lat: event.latLng?.lat(),
+      lang: event.latLng?.lng(),
+    });
+  };
+
   return (
     <div className="relative">
       <h1>Manage Map Page</h1>
       {isLoading && <p>Loading map details...</p>}
+      {/* ACTIONS */}
+      <div className="flex flex-col w-1/6 relative z-10 bg-white p-2 gap-2">
+        <button
+          className={`${addMode ? "bg-red-200" : "bg-green-500"} p-2`}
+          onClick={() => {
+            setAddMode(!addMode);
+            setTempMarker(null);
+          }}
+        >
+          {addMode ? "Cancel" : "Add"}
+        </button>
+      </div>
       <div className="flex flex-col w-1/6 relative z-10 bg-white p-2 gap-2">
         {facilities.length != 0 &&
           !isLoading &&
@@ -83,6 +110,7 @@ const ManageMapPage = () => {
             onLoad={(map) => {
               setMap(map);
             }}
+            onClick={(event) => onMapClickHandler(event)}
           >
             {/* Child components, such as markers, info windows, etc. */}
             {facilities.map((facility) => (
@@ -100,6 +128,15 @@ const ManageMapPage = () => {
                 }}
               />
             ))}
+            {tempMarker && addMode && (
+              <Marker
+                key={"Hello"}
+                position={{
+                  lat: tempMarker.lat ?? 0,
+                  lng: tempMarker.lang ?? 0,
+                }}
+              />
+            )}
           </GoogleMap>
         </div>
       )}
