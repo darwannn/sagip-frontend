@@ -44,59 +44,66 @@ const ManageMapPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="relative">
       <h1>Manage Map Page</h1>
       {isLoading && <p>Loading map details...</p>}
-      {facilities.length != 0 &&
-        !isLoading &&
-        facilities.map((facility) => (
-          <div
-            key={facility._id}
-            className="border"
-            onClick={() => {
-              map?.panTo({ lat: facility.latitude, lng: facility.longitude });
-            }}
-          >
-            <p>{facility.name}</p>
-            <p>{facility.contactNumber}</p>
-            <p>{facility.latitude}</p>
-            <p>{facility.longitude}</p>
-          </div>
-        ))}
-      {isMapLoaded && (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={15}
-          options={{
-            styles: lightMapTheme,
-            minZoom: 13,
-            maxZoom: 16,
-            zoomControl: false,
-            streetViewControl: false,
-            fullscreenControl: false,
-            mapTypeControl: false,
-          }}
-          onLoad={(map) => {
-            setMap(map);
-          }}
-        >
-          {/* Child components, such as markers, info windows, etc. */}
-          {facilities.map((facility) => (
-            <Marker
+      <div className="flex flex-col w-1/6 relative z-10 bg-white p-2 gap-2">
+        {facilities.length != 0 &&
+          !isLoading &&
+          facilities.map((facility) => (
+            <div
               key={facility._id}
-              position={{
-                lat: facility.latitude,
-                lng: facility.longitude,
-              }}
+              className="border p-1 hover:bg-gray-200 cursor-pointer"
               onClick={() => {
                 map?.panTo({ lat: facility.latitude, lng: facility.longitude });
               }}
-            />
+            >
+              <p>{facility.name}</p>
+              <p>{facility.contactNumber}</p>
+              <p>{facility.latitude}</p>
+              <p>{facility.longitude}</p>
+            </div>
           ))}
-        </GoogleMap>
+      </div>
+      {isMapLoaded && (
+        <div className="absolute top-0 left-0 z-0">
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={15}
+            options={{
+              styles: lightMapTheme,
+              minZoom: 13,
+              maxZoom: 16,
+              zoomControl: false,
+              streetViewControl: false,
+              fullscreenControl: false,
+              mapTypeControl: false,
+            }}
+            onLoad={(map) => {
+              setMap(map);
+            }}
+          >
+            {/* Child components, such as markers, info windows, etc. */}
+            {facilities.map((facility) => (
+              <Marker
+                key={facility._id}
+                position={{
+                  lat: facility.latitude,
+                  lng: facility.longitude,
+                }}
+                onClick={() => {
+                  map?.panTo({
+                    lat: facility.latitude,
+                    lng: facility.longitude,
+                  });
+                }}
+              />
+            ))}
+          </GoogleMap>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 
