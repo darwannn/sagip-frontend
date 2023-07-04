@@ -56,7 +56,35 @@ const ManageMapPage = () => {
   };
 
   const onSubmitMapHandler: SubmitHandler<FieldValues> = async (data) => {
+    if (!tempMarker) return;
     console.log(data);
+
+    const body = new FormData();
+    body.append("image", data.image[0]);
+    body.append("name", data.name);
+    body.append("latitude", data.latitude);
+    body.append("longitude", data.longitude);
+    body.append("contactNumber", data.contact);
+    body.append("category", data.category);
+    body.append("status", data.status);
+    body.append("hasChanged", "false");
+
+    const response = await fetch(`${API_BASE_URL}/emergency-facility/add`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body,
+    });
+    const responseData = await response.json();
+    if (!response.ok) {
+      console.log(responseData);
+      return;
+    }
+    console.log(responseData);
+    setFacilities((prev) => [...prev, responseData.emergencyFacility]);
+    setAddMode(false);
+    setTempMarker(null);
   };
 
   return (

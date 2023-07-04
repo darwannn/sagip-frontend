@@ -11,7 +11,9 @@ const MapForm = ({ lat, lng, onSubmit }: TProps) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>();
+  } = useForm<FieldValues>({
+    defaultValues: { latitude: lat, longitude: lng },
+  });
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -35,14 +37,14 @@ const MapForm = ({ lat, lng, onSubmit }: TProps) => {
             className="border p-1"
             type="text"
             id="lng"
-            {...register("lng", { required: true })}
+            {...register("longitude", { required: true })}
             disabled
           />
           <input
             className="border p-1"
             type="text"
             id="lat"
-            {...register("lat", { required: true })}
+            {...register("latitude", { required: true })}
             disabled
           />
           <label htmlFor="contact">Contact Number</label>
