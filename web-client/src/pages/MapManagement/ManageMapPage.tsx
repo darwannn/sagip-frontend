@@ -1,13 +1,10 @@
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  useJsApiLoader,
-} from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { API_BASE_URL, GOOGLE_MAP_API_KEY } from "../../api.config";
 import { lightMapTheme } from "./mapStyle";
 import { useEffect, useState } from "react";
 import type { TFacility } from "./types/emergencyFacility";
+import MapForm from "./components/MapForm";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const containerStyle = {
   width: "100vw",
@@ -58,39 +55,57 @@ const ManageMapPage = () => {
     });
   };
 
+  const onSubmitMapHandler: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="relative">
       <h1>Manage Map Page</h1>
       {isLoading && <p>Loading map details...</p>}
-      {/* ACTIONS */}
-      <div className="flex flex-col w-1/6 relative z-10 bg-white p-2 gap-2">
-        <button
-          className={`${addMode ? "bg-red-200" : "bg-green-500"} p-2`}
-          onClick={() => {
-            setAddMode(!addMode);
-            setTempMarker(null);
-          }}
-        >
-          {addMode ? "Cancel" : "Add"}
-        </button>
-      </div>
-      <div className="flex flex-col w-1/6 relative z-10 bg-white p-2 gap-2">
-        {facilities.length != 0 &&
-          !isLoading &&
-          facilities.map((facility) => (
-            <div
-              key={facility._id}
-              className="border p-1 hover:bg-gray-200 cursor-pointer"
-              onClick={() => {
-                map?.panTo({ lat: facility.latitude, lng: facility.longitude });
-              }}
-            >
-              <p>{facility.name}</p>
-              <p>{facility.contactNumber}</p>
-              <p>{facility.latitude}</p>
-              <p>{facility.longitude}</p>
-            </div>
-          ))}
+      <div className="flex flex-col w-1/4 relative z-10 bg-white p-2 gap-2">
+        {/* ACTIONS */}
+        <div className="">
+          <button
+            className={`${addMode ? "bg-red-200" : "bg-green-500"} p-2`}
+            onClick={() => {
+              setAddMode(!addMode);
+              setTempMarker(null);
+            }}
+          >
+            {addMode ? "Cancel" : "Add"}
+          </button>
+        </div>
+        {/* IF ADD MODE, new facility form show */}
+        {addMode && tempMarker && (
+          <MapForm
+            lat={tempMarker.lat || 0}
+            lng={tempMarker.lang || 0}
+            onSubmit={onSubmitMapHandler}
+          />
+        )}
+        {/* Facilities List */}
+        <div className="flex flex-col p-2 gap-2">
+          {facilities.length != 0 &&
+            !isLoading &&
+            facilities.map((facility) => (
+              <div
+                key={facility._id}
+                className="border p-1 hover:bg-gray-200 cursor-pointer"
+                onClick={() => {
+                  map?.panTo({
+                    lat: facility.latitude,
+                    lng: facility.longitude,
+                  });
+                }}
+              >
+                <p>{facility.name}</p>
+                <p>{facility.contactNumber}</p>
+                <p>{facility.latitude}</p>
+                <p>{facility.longitude}</p>
+              </div>
+            ))}
+        </div>
       </div>
       {isMapLoaded && (
         <div className="absolute top-0 left-0 z-0">
