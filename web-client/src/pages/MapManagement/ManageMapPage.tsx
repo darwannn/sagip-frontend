@@ -1,11 +1,17 @@
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { API_BASE_URL, GOOGLE_MAP_API_KEY } from "../../api.config";
+import { GOOGLE_MAP_API_KEY } from "../../api.config";
 // import { lightMapTheme } from "./mapStyle";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { TFacility } from "./types/emergencyFacility";
 import FacilityForm from "./components/FacilityForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import FacilitiesList from "./components/FacilitiesList";
+import {
+  useAddFacilityMutation,
+  useDeleteFacilityMutation,
+  useGetFacilitiesQuery,
+  useUpdateFacilityMutation,
+} from "../../services/facilityQuery";
 
 const containerStyle = {
   width: "100vw",
@@ -18,7 +24,7 @@ const center = {
 };
 
 const ManageMapPage = () => {
-  const [facilities, setFacilities] = useState<TFacility[]>([]);
+  // const [facilities, setFacilities] = useState<TFacility[]>([]);
   const [selectedFacility, setSelectedFacility] = useState<TFacility | null>(
     null
   );
@@ -28,7 +34,7 @@ const ManageMapPage = () => {
     id: "google-map-script",
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [addMode, setAddMode] = useState<boolean>(false);
   const [tempMarker, setTempMarker] = useState<{
@@ -36,22 +42,38 @@ const ManageMapPage = () => {
     lang: number | undefined;
   } | null>(null);
 
+  const [
+    addFacility,
+    {
+      isError: isAddFacilityError,
+      isLoading: isAddFacilityLoading,
+      error: addFacilityError,
+    },
+  ] = useAddFacilityMutation();
+  const [updateFacility, updateFacilityState] = useUpdateFacilityMutation();
+  const [deleteFacility, deleteFacilityState] = useDeleteFacilityMutation();
   // Get all the facilities
-  useEffect(() => {
-    const fetchFacilities = async () => {
-      setIsLoading(true);
-      const response = await fetch(`${API_BASE_URL}/emergency-facility/`);
-      const data = await response.json();
-      if (!response.ok) {
-        console.log(data);
-      }
-      console.log(data);
-      setFacilities(data);
-      setIsLoading(false);
-    };
+  const {
+    data: facilities,
+    isLoading: isFacilitiesLoading,
+    error: isFacilitiesFetchError,
+  } = useGetFacilitiesQuery(undefined);
 
-    fetchFacilities();
-  }, []);
+  if (isFacilitiesFetchError) {
+    return <p>Something went wrong...</p>;
+  }
+
+  // Adding facility error handling
+  if (isAddFacilityLoading) console.log("Loading...");
+  if (isAddFacilityError) console.log(addFacilityError);
+
+  // Updating facility error handling
+  if (updateFacilityState.isLoading) console.log("Loading...");
+  if (updateFacilityState.isError) console.log(updateFacilityState.error);
+
+  // Deleting facility error handling
+  if (deleteFacilityState.isLoading) console.log("Loading...");
+  if (deleteFacilityState.isError) console.log(deleteFacilityState.error);
 
   const onMapClickHandler = (event: google.maps.MapMouseEvent) => {
     if (!addMode || !map) return;
@@ -74,23 +96,7 @@ const ManageMapPage = () => {
     body.append("category", data.category);
     body.append("status", data.status);
     body.append("hasChanged", "false");
-
-    const response = await fetch(`${API_BASE_URL}/emergency-facility/add`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body,
-    });
-    const responseData = await response.json();
-    if (!response.ok) {
-      console.log(responseData);
-      return;
-    }
-    console.log(responseData);
-    setFacilities((prev) => [...prev, responseData.emergencyFacility]);
-    setAddMode(false);
-    setTempMarker(null);
+    addFacility({ body });
   };
 
   const onUpdateFacilityHandler: SubmitHandler<FieldValues> = async (data) => {
@@ -106,47 +112,11 @@ const ManageMapPage = () => {
     body.append("status", data.status);
     body.append("hasChanged", "true");
 
-    const response = await fetch(
-      `${API_BASE_URL}/emergency-facility/update/${selectedFacility._id}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body,
-      }
-    );
-    const responseData = await response.json();
-    if (!response.ok) {
-      console.log(responseData);
-      return;
-    }
-    console.log(responseData);
-    setFacilities((prev) => {
-      // Replace the old facility with the new one
-      const index = prev.findIndex((f) => f._id === selectedFacility?._id);
-      const newFacilities = [...prev];
-      newFacilities[index] = responseData.emergencyFacility;
-      return newFacilities;
-    });
+    updateFacility({ body, id: selectedFacility._id });
   };
 
   const onDeleteFacilityHandler = async (facilityId: string) => {
-    const response = await fetch(
-      `${API_BASE_URL}/emergency-facility/delete/${facilityId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-    const responseData = await response.json();
-    if (!response.ok) {
-      console.log(responseData);
-      return;
-    }
-    setFacilities((prev) => prev.filter((f) => f._id !== facilityId));
+    deleteFacility({ id: facilityId });
   };
 
   const panMapTo = (lat: number, lng: number) => {
@@ -164,7 +134,7 @@ const ManageMapPage = () => {
   return (
     <div className="relative">
       <h1>Manage Map Page</h1>
-      {isLoading && <p>Loading map details...</p>}
+      {isFacilitiesLoading && <p>Loading map details...</p>}
       <div className="flex flex-col w-1/4 relative z-10 bg-white p-2 gap-2">
         {/* ACTIONS */}
         <div className="">
@@ -173,6 +143,7 @@ const ManageMapPage = () => {
             onClick={() => {
               setAddMode(!addMode);
               setTempMarker(null);
+              if (selectedFacility) setSelectedFacility(null);
             }}
           >
             {addMode ? "Cancel" : "Add"}
@@ -196,11 +167,11 @@ const ManageMapPage = () => {
           />
         )}
         {/* Facilities List */}
-        {isLoading ? (
+        {isFacilitiesLoading ? (
           <p> Fetching facilities </p>
         ) : (
           <FacilitiesList
-            facilities={facilities}
+            facilities={facilities || []}
             selectFacilityHandler={selectFacility}
             onDeleteFacilityHandler={onDeleteFacilityHandler}
           />
@@ -228,21 +199,22 @@ const ManageMapPage = () => {
             onClick={(event) => onMapClickHandler(event)}
           >
             {/* Child components, such as markers, info windows, etc. */}
-            {facilities.map((facility) => (
-              <Marker
-                key={facility._id}
-                position={{
-                  lat: facility.latitude,
-                  lng: facility.longitude,
-                }}
-                onClick={() => {
-                  map?.panTo({
+            {!isFacilitiesLoading &&
+              facilities?.map((facility) => (
+                <Marker
+                  key={facility._id}
+                  position={{
                     lat: facility.latitude,
                     lng: facility.longitude,
-                  });
-                }}
-              />
-            ))}
+                  }}
+                  onClick={() => {
+                    map?.panTo({
+                      lat: facility.latitude,
+                      lng: facility.longitude,
+                    });
+                  }}
+                />
+              ))}
             {tempMarker && addMode && (
               <Marker
                 key={"Hello"}
