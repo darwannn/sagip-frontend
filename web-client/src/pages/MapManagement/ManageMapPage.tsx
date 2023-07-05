@@ -3,8 +3,8 @@ import { API_BASE_URL, GOOGLE_MAP_API_KEY } from "../../api.config";
 // import { lightMapTheme } from "./mapStyle";
 import { useEffect, useState } from "react";
 import type { TFacility } from "./types/emergencyFacility";
-import MapForm from "./components/MapForm";
-import { FieldValues, SubmitHandler, set } from "react-hook-form";
+import FacilityForm from "./components/FacilityForm";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import FacilitiesList from "./components/FacilitiesList";
 
 const containerStyle = {
@@ -93,6 +93,44 @@ const ManageMapPage = () => {
     setTempMarker(null);
   };
 
+  const onUpdateFacilityHandler: SubmitHandler<FieldValues> = async (data) => {
+    if (!selectedFacility) return;
+
+    const body = new FormData();
+    data.image && body.append("image", data.image[0]);
+    body.append("name", data.name);
+    body.append("latitude", data.latitude);
+    body.append("longitude", data.longitude);
+    body.append("contactNumber", data.contact);
+    body.append("category", data.category);
+    body.append("status", data.status);
+    body.append("hasChanged", "true");
+
+    const response = await fetch(
+      `${API_BASE_URL}/emergency-facility/update/${selectedFacility._id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body,
+      }
+    );
+    const responseData = await response.json();
+    if (!response.ok) {
+      console.log(responseData);
+      return;
+    }
+    console.log(responseData);
+    setFacilities((prev) => {
+      // Replace the old facility with the new one
+      const index = prev.findIndex((f) => f._id === selectedFacility?._id);
+      const newFacilities = [...prev];
+      newFacilities[index] = responseData.emergencyFacility;
+      return newFacilities;
+    });
+  };
+
   const onDeleteFacilityHandler = async (facilityId: string) => {
     const response = await fetch(
       `${API_BASE_URL}/emergency-facility/delete/${facilityId}`,
@@ -142,10 +180,19 @@ const ManageMapPage = () => {
         </div>
         {/* IF ADD MODE, new facility form show */}
         {addMode && tempMarker && (
-          <MapForm
+          <FacilityForm
             lat={tempMarker.lat || 0}
             lng={tempMarker.lang || 0}
             onSubmit={onSubmitMapHandler}
+          />
+        )}
+        {/* IF SELECTED FACILITY, show facility form */}
+        {selectedFacility && (
+          <FacilityForm
+            lat={selectedFacility.latitude}
+            lng={selectedFacility.longitude}
+            onSubmit={onUpdateFacilityHandler}
+            facility={selectedFacility}
           />
         )}
         {/* Facilities List */}

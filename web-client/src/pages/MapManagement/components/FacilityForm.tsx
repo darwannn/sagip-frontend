@@ -1,19 +1,38 @@
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { TFacility } from "../types/emergencyFacility";
+import { useEffect } from "react";
 
 type TProps = {
   onSubmit: SubmitHandler<FieldValues>;
   lat: number;
   lng: number;
+  facility?: TFacility;
 };
 
-const MapForm = ({ lat, lng, onSubmit }: TProps) => {
+const FacilityForm = ({ lat, lng, onSubmit, facility }: TProps) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FieldValues>({
-    defaultValues: { latitude: lat, longitude: lng },
+    defaultValues: {
+      latitude: lat,
+      longitude: lng,
+    },
   });
+
+  useEffect(() => {
+    if (facility) {
+      setValue("name", facility.name);
+      setValue("latitude", facility.latitude);
+      setValue("longitude", facility.longitude);
+      setValue("contact", facility.contactNumber);
+      setValue("category", facility.category);
+      setValue("status", facility.status);
+    }
+  }, [facility, setValue]);
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -22,7 +41,7 @@ const MapForm = ({ lat, lng, onSubmit }: TProps) => {
           <input
             type="file"
             id="image"
-            {...register("image", { required: true })}
+            {...register("image", { required: facility ? false : true })}
           />
           <label htmlFor="name">Name</label>
           <input
@@ -74,11 +93,15 @@ const MapForm = ({ lat, lng, onSubmit }: TProps) => {
             {...register("status", { required: true })}
           >
             <option value="Operational">Operational</option>
-            <option value="Non-operational">Non Operational</option>
+            <option value="Non-operational">Non-Operational</option>
           </select>
-          <button className="bg-green-500 p-2 rounded" type="submit">
-            {" "}
-            Submit{" "}
+          <button
+            className={`${
+              facility ? "bg-indigo-500" : "bg-green-500"
+            } p-2 rounded text-white`}
+            type="submit"
+          >
+            {facility ? "Update" : "Add"}
           </button>
         </div>
       </form>
@@ -86,4 +109,4 @@ const MapForm = ({ lat, lng, onSubmit }: TProps) => {
   );
 };
 
-export default MapForm;
+export default FacilityForm;
