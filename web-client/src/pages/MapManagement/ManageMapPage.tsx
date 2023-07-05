@@ -1,10 +1,10 @@
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { API_BASE_URL, GOOGLE_MAP_API_KEY } from "../../api.config";
-import { lightMapTheme } from "./mapStyle";
+// import { lightMapTheme } from "./mapStyle";
 import { useEffect, useState } from "react";
 import type { TFacility } from "./types/emergencyFacility";
 import MapForm from "./components/MapForm";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { FieldValues, SubmitHandler, set } from "react-hook-form";
 import FacilitiesList from "./components/FacilitiesList";
 
 const containerStyle = {
@@ -19,6 +19,10 @@ const center = {
 
 const ManageMapPage = () => {
   const [facilities, setFacilities] = useState<TFacility[]>([]);
+  const [selectedFacility, setSelectedFacility] = useState<TFacility | null>(
+    null
+  );
+
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const { isLoaded: isMapLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -32,6 +36,7 @@ const ManageMapPage = () => {
     lang: number | undefined;
   } | null>(null);
 
+  // Get all the facilities
   useEffect(() => {
     const fetchFacilities = async () => {
       setIsLoading(true);
@@ -88,11 +93,34 @@ const ManageMapPage = () => {
     setTempMarker(null);
   };
 
+  const onDeleteFacilityHandler = async (facilityId: string) => {
+    const response = await fetch(
+      `${API_BASE_URL}/emergency-facility/delete/${facilityId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const responseData = await response.json();
+    if (!response.ok) {
+      console.log(responseData);
+      return;
+    }
+    setFacilities((prev) => prev.filter((f) => f._id !== facilityId));
+  };
+
   const panMapTo = (lat: number, lng: number) => {
     map?.panTo({
       lat,
       lng,
     });
+  };
+
+  const selectFacility = (facility: TFacility) => {
+    setSelectedFacility(facility);
+    panMapTo(facility.latitude, facility.longitude);
   };
 
   return (
@@ -124,7 +152,11 @@ const ManageMapPage = () => {
         {isLoading ? (
           <p> Fetching facilities </p>
         ) : (
-          <FacilitiesList facilities={facilities} panMapHandler={panMapTo} />
+          <FacilitiesList
+            facilities={facilities}
+            selectFacilityHandler={selectFacility}
+            onDeleteFacilityHandler={onDeleteFacilityHandler}
+          />
         )}
       </div>
       {isMapLoaded && (
@@ -134,7 +166,8 @@ const ManageMapPage = () => {
             center={center}
             zoom={15}
             options={{
-              styles: lightMapTheme,
+              mapId: "ca99ebef66d0dc2e",
+              // styles: lightMapTheme,
               minZoom: 13,
               maxZoom: 16,
               zoomControl: false,
