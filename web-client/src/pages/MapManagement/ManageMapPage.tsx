@@ -2,7 +2,6 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAP_API_KEY } from "../../api.config";
 // import { lightMapTheme } from "./mapStyle";
 import { useState } from "react";
-import type { TFacility } from "./types/emergencyFacility";
 import FacilityForm from "./components/FacilityForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import FacilitiesList from "./components/FacilitiesList";
@@ -12,6 +11,13 @@ import {
   useGetFacilitiesQuery,
   useUpdateFacilityMutation,
 } from "../../services/facilityQuery";
+
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  setSelectedFacility,
+  unsetSelectedFacility,
+  selectionFacility,
+} from "../../store/slices/facilitySlice";
 
 const containerStyle = {
   width: "100vw",
@@ -25,16 +31,15 @@ const center = {
 
 const ManageMapPage = () => {
   // const [facilities, setFacilities] = useState<TFacility[]>([]);
-  const [selectedFacility, setSelectedFacility] = useState<TFacility | null>(
-    null
-  );
+  // const [selectedFacility, setSelectedFacility] = useState<TFacility | null>(
+  //   null
+  // );
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const { isLoaded: isMapLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
   });
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [addMode, setAddMode] = useState<boolean>(false);
   const [tempMarker, setTempMarker] = useState<{
@@ -42,11 +47,15 @@ const ManageMapPage = () => {
     lang: number | undefined;
   } | null>(null);
 
+  const dispatch = useAppDispatch();
+  const selectedFacility = useAppSelector(selectionFacility);
+
   const [
     addFacility,
     {
       isError: isAddFacilityError,
       isLoading: isAddFacilityLoading,
+      isSuccess: isAddFacilitySuccess,
       error: addFacilityError,
     },
   ] = useAddFacilityMutation();
@@ -66,6 +75,10 @@ const ManageMapPage = () => {
   // Adding facility error handling
   if (isAddFacilityLoading) console.log("Loading...");
   if (isAddFacilityError) console.log(addFacilityError);
+  if (isAddFacilitySuccess) {
+    setAddMode(false);
+    setTempMarker(null);
+  }
 
   // Updating facility error handling
   if (updateFacilityState.isLoading) console.log("Loading...");
@@ -116,6 +129,8 @@ const ManageMapPage = () => {
   };
 
   const onDeleteFacilityHandler = async (facilityId: string) => {
+    const confirm = window.confirm("Are you sure you want to delete?");
+    if (!confirm) return;
     deleteFacility({ id: facilityId });
   };
 
@@ -126,28 +141,46 @@ const ManageMapPage = () => {
     });
   };
 
-  const selectFacility = (facility: TFacility) => {
-    setSelectedFacility(facility);
-    panMapTo(facility.latitude, facility.longitude);
-  };
+  if (selectedFacility)
+    panMapTo(selectedFacility.latitude, selectedFacility.longitude);
 
   return (
     <div className="relative">
       <h1>Manage Map Page</h1>
       {isFacilitiesLoading && <p>Loading map details...</p>}
-      <div className="flex flex-col w-1/4 relative z-10 bg-white p-2 gap-2">
-        {/* ACTIONS */}
-        <div className="">
-          <button
-            className={`${addMode ? "bg-red-200" : "bg-green-500"} p-2`}
-            onClick={() => {
-              setAddMode(!addMode);
-              setTempMarker(null);
-              if (selectedFacility) setSelectedFacility(null);
-            }}
-          >
-            {addMode ? "Cancel" : "Add"}
-          </button>
+      <div className="relative z-10 flex flex-row gap-2 w-max">
+        <div className="flex flex-col z-10 bg-white p-2 gap-2">
+          {/* ACTIONS */}
+          <div className="">
+            {selectedFacility && (
+              <button
+                className="bg-red-500 p-2"
+                onClick={() => dispatch(unsetSelectedFacility())}
+              >
+                Close
+              </button>
+            )}
+            <button
+              className={`${addMode ? "bg-red-200" : "bg-green-500"} p-2`}
+              onClick={() => {
+                setAddMode(!addMode);
+                setTempMarker(null);
+                // if (selectedFacility) setSelectedFacility(null);
+              }}
+            >
+              {addMode ? "Cancel" : "Add"}
+            </button>
+          </div>
+
+          {/* Facilities List */}
+          {isFacilitiesLoading ? (
+            <p> Fetching facilities </p>
+          ) : (
+            <FacilitiesList
+              facilities={facilities || []}
+              onDeleteFacilityHandler={onDeleteFacilityHandler}
+            />
+          )}
         </div>
         {/* IF ADD MODE, new facility form show */}
         {addMode && tempMarker && (
@@ -164,16 +197,6 @@ const ManageMapPage = () => {
             lng={selectedFacility.longitude}
             onSubmit={onUpdateFacilityHandler}
             facility={selectedFacility}
-          />
-        )}
-        {/* Facilities List */}
-        {isFacilitiesLoading ? (
-          <p> Fetching facilities </p>
-        ) : (
-          <FacilitiesList
-            facilities={facilities || []}
-            selectFacilityHandler={selectFacility}
-            onDeleteFacilityHandler={onDeleteFacilityHandler}
           />
         )}
       </div>
@@ -208,6 +231,7 @@ const ManageMapPage = () => {
                     lng: facility.longitude,
                   }}
                   onClick={() => {
+                    dispatch(setSelectedFacility(facility));
                     map?.panTo({
                       lat: facility.latitude,
                       lng: facility.longitude,

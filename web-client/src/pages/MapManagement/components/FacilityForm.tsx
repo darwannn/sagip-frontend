@@ -34,7 +34,7 @@ const FacilityForm = ({ lat, lng, onSubmit, facility }: TProps) => {
   }, [facility, setValue]);
 
   return (
-    <div>
+    <div className="bg-white">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2">
           <label htmlFor="image">Image</label>
@@ -92,8 +92,9 @@ const FacilityForm = ({ lat, lng, onSubmit, facility }: TProps) => {
             id="status"
             {...register("status", { required: true })}
           >
-            <option value="Operational">Operational</option>
-            <option value="Non-operational">Non-Operational</option>
+            <option value="operational">Operational</option>
+            <option value="non-operational">Non-Operational</option>
+            <option value="non-operational">Full</option>
           </select>
           <button
             className={`${
