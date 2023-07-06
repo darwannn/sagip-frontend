@@ -21,7 +21,7 @@ import {
 
 const containerStyle = {
   width: "100vw",
-  height: "700px",
+  height: "100vh",
 };
 // ,
 const center = {
@@ -145,7 +145,7 @@ const ManageMapPage = () => {
     panMapTo(selectedFacility.latitude, selectedFacility.longitude);
 
   return (
-    <div className="relative">
+    <div className="relative h-screen">
       <h1>Manage Map Page</h1>
       {isFacilitiesLoading && <p>Loading map details...</p>}
       <div className="relative z-10 flex flex-row gap-2 w-max">
@@ -201,7 +201,7 @@ const ManageMapPage = () => {
         )}
       </div>
       {isMapLoaded && (
-        <div className="absolute top-0 left-0 z-0">
+        <div className="absolute top-0 z-0">
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
