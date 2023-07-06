@@ -1,4 +1,4 @@
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAP_API_KEY } from "../../api.config";
 // import { lightMapTheme } from "./mapStyle";
 import { useState } from "react";
@@ -224,7 +224,7 @@ const ManageMapPage = () => {
             {/* Child components, such as markers, info windows, etc. */}
             {!isFacilitiesLoading &&
               facilities?.map((facility) => (
-                <Marker
+                <MarkerF
                   key={facility._id}
                   position={{
                     lat: facility.latitude,
@@ -240,7 +240,7 @@ const ManageMapPage = () => {
                 />
               ))}
             {tempMarker && addMode && (
-              <Marker
+              <MarkerF
                 key={"Hello"}
                 position={{
                   lat: tempMarker.lat ?? 0,
