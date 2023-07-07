@@ -9,10 +9,7 @@ import { GOOGLE_MAP_API_KEY } from "../../api.config";
 import { useState } from "react";
 import FacilityForm from "./components/FacilityForm";
 import FacilitiesList from "./components/FacilitiesList";
-import {
-  useDeleteFacilityMutation,
-  useGetFacilitiesQuery,
-} from "../../services/facilityQuery";
+import { useGetFacilitiesQuery } from "../../services/facilityQuery";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
@@ -47,7 +44,6 @@ const ManageMapPage = () => {
   const addMode = useAppSelector(selectAddMode);
   const tempMarkerPos = useAppSelector(selectTempMarkerPos);
 
-  const [deleteFacility, deleteFacilityState] = useDeleteFacilityMutation();
   // Get all the facilities
   const {
     data: facilities,
@@ -59,21 +55,11 @@ const ManageMapPage = () => {
     return <p>Something went wrong...</p>;
   }
 
-  // Deleting facility error handling
-  if (deleteFacilityState.isLoading) console.log("Loading...");
-  if (deleteFacilityState.isError) console.log(deleteFacilityState.error);
-
   const onMapClickHandler = (event: google.maps.MapMouseEvent) => {
     if (!addMode || !map) return;
     dispatch(
       setTempMarkerPos({ lat: event.latLng?.lat(), lng: event.latLng?.lng() })
     );
-  };
-
-  const onDeleteFacilityHandler = async (facilityId: string) => {
-    const confirm = window.confirm("Are you sure you want to delete?");
-    if (!confirm) return;
-    deleteFacility({ id: facilityId });
   };
 
   const panMapTo = (lat: number, lng: number) => {
@@ -116,10 +102,7 @@ const ManageMapPage = () => {
           {isFacilitiesLoading ? (
             <p> Fetching facilities </p>
           ) : (
-            <FacilitiesList
-              facilities={facilities || []}
-              onDeleteFacilityHandler={onDeleteFacilityHandler}
-            />
+            <FacilitiesList facilities={facilities || []} />
           )}
         </div>
         {/* IF ADD MODE, new facility form show */}
