@@ -7,7 +7,7 @@ type TProps = {
 
 const FacilitiesList = ({ facilities }: TProps) => {
   return (
-    <div className="flex flex-col p-2 gap-2 max-h-[700px] overflow-y-auto bg-white shadow-md rounded-md">
+    <div className="flex flex-col p-3 gap-3 max-h-[700px] w-[350px] overflow-y-auto bg-gray-50 shadow-md rounded-md">
       {facilities.length != 0 &&
         facilities.map((facility) => (
           <FacilityItem key={facility._id} facility={facility} />

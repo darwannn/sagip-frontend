@@ -6,8 +6,6 @@ import { useGetFacilitiesQuery } from "../../services/facilityQuery";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   setSelectedFacility,
-  unsetSelectedFacility,
-  setAddMode,
   selectAddMode,
   selectionFacility,
   selectTempMarkerPos,
