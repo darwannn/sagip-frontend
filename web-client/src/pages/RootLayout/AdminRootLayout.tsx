@@ -42,7 +42,7 @@ const AdminRootLayout = () => {
           </ul>
         </nav>
       </div>
-      <div className="outlet grow">
+      <div className="outlet grow overflow-y-auto">
         <Outlet />
       </div>
     </div>

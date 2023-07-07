@@ -1,26 +1,32 @@
-import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  Marker,
+  MarkerF,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import { GOOGLE_MAP_API_KEY } from "../../api.config";
 // import { lightMapTheme } from "./mapStyle";
 import { useState } from "react";
 import FacilityForm from "./components/FacilityForm";
-import { FieldValues, SubmitHandler } from "react-hook-form";
 import FacilitiesList from "./components/FacilitiesList";
 import {
-  useAddFacilityMutation,
   useDeleteFacilityMutation,
   useGetFacilitiesQuery,
-  useUpdateFacilityMutation,
 } from "../../services/facilityQuery";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   setSelectedFacility,
   unsetSelectedFacility,
+  setAddMode,
+  selectAddMode,
   selectionFacility,
+  setTempMarkerPos,
+  selectTempMarkerPos,
 } from "../../store/slices/facilitySlice";
 
 const containerStyle = {
-  width: "100vw",
+  width: "100%",
   height: "100vh",
 };
 // ,
@@ -30,36 +36,17 @@ const center = {
 };
 
 const ManageMapPage = () => {
-  // const [facilities, setFacilities] = useState<TFacility[]>([]);
-  // const [selectedFacility, setSelectedFacility] = useState<TFacility | null>(
-  //   null
-  // );
-
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const { isLoaded: isMapLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
   });
 
-  const [addMode, setAddMode] = useState<boolean>(false);
-  const [tempMarker, setTempMarker] = useState<{
-    lat: number | undefined;
-    lang: number | undefined;
-  } | null>(null);
-
   const dispatch = useAppDispatch();
   const selectedFacility = useAppSelector(selectionFacility);
+  const addMode = useAppSelector(selectAddMode);
+  const tempMarkerPos = useAppSelector(selectTempMarkerPos);
 
-  const [
-    addFacility,
-    {
-      isError: isAddFacilityError,
-      isLoading: isAddFacilityLoading,
-      isSuccess: isAddFacilitySuccess,
-      error: addFacilityError,
-    },
-  ] = useAddFacilityMutation();
-  const [updateFacility, updateFacilityState] = useUpdateFacilityMutation();
   const [deleteFacility, deleteFacilityState] = useDeleteFacilityMutation();
   // Get all the facilities
   const {
@@ -72,60 +59,15 @@ const ManageMapPage = () => {
     return <p>Something went wrong...</p>;
   }
 
-  // Adding facility error handling
-  if (isAddFacilityLoading) console.log("Loading...");
-  if (isAddFacilityError) console.log(addFacilityError);
-  if (isAddFacilitySuccess) {
-    setAddMode(false);
-    setTempMarker(null);
-  }
-
-  // Updating facility error handling
-  if (updateFacilityState.isLoading) console.log("Loading...");
-  if (updateFacilityState.isError) console.log(updateFacilityState.error);
-
   // Deleting facility error handling
   if (deleteFacilityState.isLoading) console.log("Loading...");
   if (deleteFacilityState.isError) console.log(deleteFacilityState.error);
 
   const onMapClickHandler = (event: google.maps.MapMouseEvent) => {
     if (!addMode || !map) return;
-    setTempMarker({
-      lat: event.latLng?.lat(),
-      lang: event.latLng?.lng(),
-    });
-  };
-
-  const onSubmitMapHandler: SubmitHandler<FieldValues> = async (data) => {
-    if (!tempMarker) return;
-    console.log(data);
-
-    const body = new FormData();
-    body.append("image", data.image[0]);
-    body.append("name", data.name);
-    body.append("latitude", data.latitude);
-    body.append("longitude", data.longitude);
-    body.append("contactNumber", data.contact);
-    body.append("category", data.category);
-    body.append("status", data.status);
-    body.append("hasChanged", "false");
-    addFacility({ body });
-  };
-
-  const onUpdateFacilityHandler: SubmitHandler<FieldValues> = async (data) => {
-    if (!selectedFacility) return;
-
-    const body = new FormData();
-    data.image && body.append("image", data.image[0]);
-    body.append("name", data.name);
-    body.append("latitude", data.latitude);
-    body.append("longitude", data.longitude);
-    body.append("contactNumber", data.contact);
-    body.append("category", data.category);
-    body.append("status", data.status);
-    body.append("hasChanged", "true");
-
-    updateFacility({ body, id: selectedFacility._id });
+    dispatch(
+      setTempMarkerPos({ lat: event.latLng?.lat(), lng: event.latLng?.lng() })
+    );
   };
 
   const onDeleteFacilityHandler = async (facilityId: string) => {
@@ -163,9 +105,7 @@ const ManageMapPage = () => {
             <button
               className={`${addMode ? "bg-red-200" : "bg-green-500"} p-2`}
               onClick={() => {
-                setAddMode(!addMode);
-                setTempMarker(null);
-                // if (selectedFacility) setSelectedFacility(null);
+                dispatch(setAddMode(!addMode));
               }}
             >
               {addMode ? "Cancel" : "Add"}
@@ -183,25 +123,12 @@ const ManageMapPage = () => {
           )}
         </div>
         {/* IF ADD MODE, new facility form show */}
-        {addMode && tempMarker && (
-          <FacilityForm
-            lat={tempMarker.lat || 0}
-            lng={tempMarker.lang || 0}
-            onSubmit={onSubmitMapHandler}
-          />
-        )}
+        {addMode && tempMarkerPos && <FacilityForm />}
         {/* IF SELECTED FACILITY, show facility form */}
-        {selectedFacility && (
-          <FacilityForm
-            lat={selectedFacility.latitude}
-            lng={selectedFacility.longitude}
-            onSubmit={onUpdateFacilityHandler}
-            facility={selectedFacility}
-          />
-        )}
+        {selectedFacility && <FacilityForm facility={selectedFacility} />}
       </div>
       {isMapLoaded && (
-        <div className="absolute top-0 z-0">
+        <div className="absolute top-0 z-0 w-full">
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
@@ -239,12 +166,12 @@ const ManageMapPage = () => {
                   }}
                 />
               ))}
-            {tempMarker && addMode && (
-              <MarkerF
+            {tempMarkerPos && addMode && (
+              <Marker
                 key={"Hello"}
                 position={{
-                  lat: tempMarker.lat ?? 0,
-                  lng: tempMarker.lang ?? 0,
+                  lat: tempMarkerPos.lat ?? 0,
+                  lng: tempMarkerPos.lng ?? 0,
                 }}
               />
             )}
