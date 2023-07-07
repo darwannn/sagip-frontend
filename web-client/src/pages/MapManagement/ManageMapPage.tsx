@@ -14,6 +14,7 @@ import {
 } from "../../store/slices/facilitySlice";
 import MapComponent from "./components/MapComponent";
 import { useState } from "react";
+import FacilityActions from "./components/FacilityActionBar";
 
 const ManageMapPage = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -51,35 +52,15 @@ const ManageMapPage = () => {
   return (
     <div className="relative h-screen">
       {isFacilitiesLoading && <p>Loading map details...</p>}
-      <div className="relative z-10 flex flex-row gap-2 w-max">
-        <div className="flex flex-col z-10 bg-white p-2 gap-2">
-          {/* ACTIONS */}
-          <div className="">
-            {selectedFacility && (
-              <button
-                className="bg-red-500 p-2"
-                onClick={() => dispatch(unsetSelectedFacility())}
-              >
-                Close
-              </button>
-            )}
-            <button
-              className={`${addMode ? "bg-red-200" : "bg-green-500"} p-2`}
-              onClick={() => {
-                dispatch(setAddMode(!addMode));
-              }}
-            >
-              {addMode ? "Cancel" : "Add"}
-            </button>
-          </div>
-
-          {/* Facilities List */}
-          {isFacilitiesLoading ? (
-            <p> Fetching facilities </p>
-          ) : (
-            <FacilitiesList facilities={facilities || []} />
-          )}
-        </div>
+      <div className="relative z-10 flex flex-col gap-2 p-2 w-max items-start">
+        {/* Facility Actions */}
+        <FacilityActions />
+        {/* Facilities List */}
+        {isFacilitiesLoading ? (
+          <p> Fetching facilities </p>
+        ) : (
+          <FacilitiesList facilities={facilities || []} />
+        )}
         {/* IF ADD MODE, new facility form show */}
         {addMode && tempMarkerPos && <FacilityForm />}
         {/* IF SELECTED FACILITY, show facility form */}
