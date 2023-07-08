@@ -1,6 +1,12 @@
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from "react-hook-form";
 import { TFacility } from "../types/emergencyFacility";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   useAddFacilityMutation,
   useUpdateFacilityMutation,
@@ -10,6 +16,8 @@ import {
   selectTempMarkerPos,
   setAddMode,
 } from "../../../store/slices/facilitySlice";
+import FileDropzone from "../../../components/Form/FileDropzone";
+import { BASE_IMAGE_URL } from "../../../api.config";
 
 type TProps = {
   facility?: TFacility;
@@ -20,12 +28,17 @@ const FacilityForm = ({ facility }: TProps) => {
   const tempMarkerPos = useAppSelector(selectTempMarkerPos);
   const {
     register,
+    control,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<FieldValues>();
 
+  const [editImage, setEditImage] = useState(false);
+  const imageState = useWatch({ control, name: "coverImage" });
+
   useEffect(() => {
+    setEditImage(false);
     if (facility) {
       setValue("name", facility.name);
       setValue("latitude", facility.latitude);
@@ -37,7 +50,7 @@ const FacilityForm = ({ facility }: TProps) => {
       setValue("latitude", tempMarkerPos.lat);
       setValue("longitude", tempMarkerPos.lng);
     }
-  }, [facility, setValue, tempMarkerPos]);
+  }, [facility, imageState, setValue, tempMarkerPos]);
 
   const [
     addFacility,
@@ -79,15 +92,59 @@ const FacilityForm = ({ facility }: TProps) => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-gray-50 mx-2 p-3 w-[400px] fixed right-0 top-[50%] translate-y-[-50%] z-10 rounded-md shadow-md">
+      {facility && (
+        <div className="py-3">
+          {/* <span>
+            <FacilityIcon facilityType={facility.category} />
+          </span> */}
+          <span className="text-2xl font-bold">Facility Details</span>
+        </div>
+      )}
       <form onSubmit={handleSubmit(onSubmitMapHandler)}>
         <div className="flex flex-col gap-2">
-          <label htmlFor="image">Image</label>
+          {facility && !editImage ? (
+            <div className="group relative w-full h-52 border rounded-md">
+              <img
+                className="w-full h-full rounded object-cover"
+                src={`${BASE_IMAGE_URL}/emergency-facility/${facility.image}`}
+                alt={facility.name}
+              />
+              <div
+                className="absolute top-0 z-10 w-full h-full rounded bg-black bg-opacity-70 flex flex-col justify-center items-center cursor-pointer invisible transition-all group-hover:visible"
+                onClick={() => setEditImage(true)}
+              >
+                <span className="text-white"> Click to change image </span>
+              </div>
+            </div>
+          ) : (
+            <Controller
+              name="coverImage"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <>
+                  {errors.coverImage && (
+                    <span className="text-red-500">
+                      Cover Image is required
+                    </span>
+                  )}
+                  {imageState && (
+                    <div>
+                      <img src={URL.createObjectURL(imageState)} alt="cover" />
+                    </div>
+                  )}
+                  <FileDropzone onChange={field.onChange} />
+                </>
+              )}
+            />
+          )}
+          {/* <label htmlFor="image">Image</label>
           <input
             type="file"
             id="image"
             {...register("image", { required: facility ? false : true })}
-          />
+          /> */}
           <label htmlFor="name">Name</label>
           <input
             className="border p-1"

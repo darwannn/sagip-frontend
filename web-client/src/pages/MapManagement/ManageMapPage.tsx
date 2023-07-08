@@ -67,7 +67,6 @@ const ManageMapPage = () => {
   if (isFacilitiesFetchError) {
     return <p>Something went wrong...</p>;
   }
-  console.log("render");
 
   return (
     <div className="relative h-screen">
@@ -81,10 +80,10 @@ const ManageMapPage = () => {
           <FacilitiesList facilities={facilities || []} />
         )}
         {/* IF ADD MODE, new facility form show */}
-        {addMode && tempMarkerPos && <FacilityForm />}
         {/* IF SELECTED FACILITY, show facility form */}
-        {selectedFacility && <FacilityForm facility={selectedFacility} />}
       </div>
+      {addMode && tempMarkerPos && <FacilityForm />}
+      {selectedFacility && <FacilityForm facility={selectedFacility} />}
       <div className="absolute top-0 z-0 w-full">
         <MapComponent onSetMapHandler={onMapLoad}>
           {/* Child components, such as markers, info windows, etc. */}
