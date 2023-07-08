@@ -11,8 +11,9 @@ import {
   selectTempMarkerPos,
 } from "../../store/slices/facilitySlice";
 import MapComponent from "./components/MapComponent";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import FacilityActions from "./components/FacilityActionBar";
+import { TFacility } from "./types/emergencyFacility";
 
 const ManageMapPage = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -29,13 +30,10 @@ const ManageMapPage = () => {
     error: isFacilitiesFetchError,
   } = useGetFacilitiesQuery(undefined);
 
-  if (isFacilitiesFetchError) {
-    return <p>Something went wrong...</p>;
-  }
   // Set map state
-  const onMapLoad = (map: google.maps.Map) => {
+  const onMapLoad = useCallback((map: google.maps.Map) => {
     setMap(map);
-  };
+  }, []);
 
   const panMapTo = (lat: number, lng: number) => {
     map?.panTo({
@@ -44,15 +42,38 @@ const ManageMapPage = () => {
     });
   };
 
+  const recenterMap = useCallback(() => {
+    map?.panTo({
+      lat: 14.860767193574064,
+      lng: 120.81013409214616,
+    });
+  }, [map]);
+
+  const onClickMarkerHandler = useCallback(
+    (facility: TFacility) => {
+      dispatch(setSelectedFacility(facility));
+      map?.panTo({
+        lat: facility.latitude,
+        lng: facility.longitude,
+      });
+    },
+
+    [dispatch, map]
+  );
+
   if (selectedFacility)
     panMapTo(selectedFacility.latitude, selectedFacility.longitude);
 
+  if (isFacilitiesFetchError) {
+    return <p>Something went wrong...</p>;
+  }
+  console.log("render");
+
   return (
     <div className="relative h-screen">
-      {isFacilitiesLoading && <p>Loading map details...</p>}
       <div className="relative z-10 flex flex-col gap-2 p-2 w-max items-start">
         {/* Facility Actions */}
-        <FacilityActions />
+        <FacilityActions recenterMapHandler={recenterMap} />
         {/* Facilities List */}
         {isFacilitiesLoading ? (
           <p> Fetching facilities </p>
@@ -75,13 +96,7 @@ const ManageMapPage = () => {
                   lat: facility.latitude,
                   lng: facility.longitude,
                 }}
-                onClick={() => {
-                  dispatch(setSelectedFacility(facility));
-                  map?.panTo({
-                    lat: facility.latitude,
-                    lng: facility.longitude,
-                  });
-                }}
+                onClick={() => onClickMarkerHandler(facility)}
               />
             ))}
         </MapComponent>

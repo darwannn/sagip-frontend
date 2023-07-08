@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAP_API_KEY } from "../../../api.config";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -22,7 +23,7 @@ type TProps = {
   onSetMapHandler: (map: google.maps.Map) => void;
 };
 
-const MapComponent = ({ children, onSetMapHandler }: TProps) => {
+const MapComponent = memo(({ children, onSetMapHandler }: TProps) => {
   const { isLoaded: isMapLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
@@ -74,6 +75,6 @@ const MapComponent = ({ children, onSetMapHandler }: TProps) => {
       )}
     </>
   );
-};
+});
 
 export default MapComponent;
