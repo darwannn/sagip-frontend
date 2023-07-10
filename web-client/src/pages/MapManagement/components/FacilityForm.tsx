@@ -15,9 +15,12 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectTempMarkerPos,
   setAddMode,
+  unsetSelectedFacility,
 } from "../../../store/slices/facilitySlice";
 import FileDropzone from "../../../components/Form/FileDropzone";
 import { BASE_IMAGE_URL } from "../../../api.config";
+
+import { MdClose } from "react-icons/md";
 
 type TProps = {
   facility?: TFacility;
@@ -93,14 +96,24 @@ const FacilityForm = ({ facility }: TProps) => {
 
   return (
     <div className="bg-gray-50 mx-2 p-3 w-[400px] fixed right-0 top-[50%] translate-y-[-50%] z-10 rounded-md shadow-md">
-      {facility && (
-        <div className="py-3">
-          {/* <span>
+      <div className="py-3 flex justify-between items-center ">
+        {/* <span>
             <FacilityIcon facilityType={facility.category} />
           </span> */}
-          <span className="text-2xl font-bold">Facility Details</span>
-        </div>
-      )}
+        <span className="text-2xl font-bold">Facility Details</span>
+        <button
+          className="hover:bg-gray-300 rounded p-1 text-gray-500"
+          onClick={() => {
+            if (facility) {
+              dispatch(unsetSelectedFacility());
+            }
+            dispatch(setAddMode(false));
+          }}
+        >
+          <MdClose />
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit(onSubmitMapHandler)}>
         <div className="flex flex-col gap-2">
           {facility && !editImage ? (
