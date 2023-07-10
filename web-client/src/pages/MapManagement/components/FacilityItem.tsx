@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { TFacility } from "../types/emergencyFacility";
 import { useAppDispatch } from "../../../store/hooks";
 import { setSelectedFacility } from "../../../store/slices/facilitySlice";
@@ -8,7 +9,7 @@ type TProps = {
   facility: TFacility;
 };
 
-const FacilityItem = ({ facility }: TProps) => {
+const FacilityItem = memo(({ facility }: TProps) => {
   const dispatch = useAppDispatch();
   const [deleteFacility, deleteFacilityState] = useDeleteFacilityMutation();
 
@@ -64,6 +65,6 @@ const FacilityItem = ({ facility }: TProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default FacilityItem;

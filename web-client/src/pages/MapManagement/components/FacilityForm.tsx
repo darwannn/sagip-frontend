@@ -73,7 +73,7 @@ const FacilityForm = ({ facility }: TProps) => {
   const onSubmitMapHandler: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
     const body = new FormData();
-    body.append("image", data.image[0]);
+    body.append("image", data.coverImage);
     body.append("name", data.name);
     body.append("latitude", data.latitude);
     body.append("longitude", data.longitude);
