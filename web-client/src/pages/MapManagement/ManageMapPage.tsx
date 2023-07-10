@@ -15,8 +15,13 @@ import { useCallback, useState } from "react";
 import FacilityActions from "./components/FacilityActionBar";
 import { TFacility } from "./types/emergencyFacility";
 
+import Select, { MultiValue } from "react-select";
+
 const ManageMapPage = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
+
+  const [search, setSearch] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
 
   const dispatch = useAppDispatch();
   const selectedFacility = useAppSelector(selectionFacility);
@@ -61,6 +66,29 @@ const ManageMapPage = () => {
     [dispatch, map]
   );
 
+  const filterdFacilities = () => {
+    let filteredFacilities = facilities?.filter((facility) =>
+      facility.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    if (selectedCategory.length > 0) {
+      filteredFacilities = filteredFacilities?.filter((facility) =>
+        selectedCategory.includes(facility.category.toLowerCase())
+      );
+    }
+
+    return filteredFacilities;
+  };
+
+  const onSelectChange = (
+    data: MultiValue<{
+      value: string;
+      label: string;
+    }>
+  ) => {
+    setSelectedCategory(data.map((d) => d.value));
+  };
+
   if (selectedFacility)
     panMapTo(selectedFacility.latitude, selectedFacility.longitude);
 
@@ -77,7 +105,24 @@ const ManageMapPage = () => {
         {isFacilitiesLoading ? (
           <p> Fetching facilities </p>
         ) : (
-          <FacilitiesList facilities={facilities || []} />
+          <>
+            <div>
+              <input
+                type="text"
+                placeholder="Search Facility"
+                className="w-full p-2 my-2 border border-gray-300 rounded-md"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <Select
+                placeholder="Filter by Category"
+                options={options}
+                onChange={onSelectChange}
+                isMulti={true}
+              />
+            </div>
+            <FacilitiesList facilities={filterdFacilities() || []} />
+          </>
         )}
         {/* IF ADD MODE, new facility form show */}
         {/* IF SELECTED FACILITY, show facility form */}
@@ -88,7 +133,7 @@ const ManageMapPage = () => {
         <MapComponent onSetMapHandler={onMapLoad}>
           {/* Child components, such as markers, info windows, etc. */}
           {!isFacilitiesLoading &&
-            facilities?.map((facility) => (
+            filterdFacilities()?.map((facility) => (
               <MarkerF
                 key={facility._id}
                 position={{
@@ -105,3 +150,10 @@ const ManageMapPage = () => {
 };
 
 export default ManageMapPage;
+
+const options = [
+  { value: "police station", label: "Police Station" },
+  { value: "hospital", label: "Hospital" },
+  { value: "fire station", label: "Fire Station" },
+  { value: "evacuation center", label: "Evacuation Center" },
+];
