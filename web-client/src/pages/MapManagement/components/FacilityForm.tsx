@@ -53,6 +53,10 @@ const FacilityForm = ({ facility }: TProps) => {
       setValue("latitude", tempMarkerPos.lat);
       setValue("longitude", tempMarkerPos.lng);
     }
+
+    return () => {
+      imageState && setValue("coverImage", null);
+    };
   }, [facility, imageState, setValue, tempMarkerPos]);
 
   const [
@@ -76,20 +80,21 @@ const FacilityForm = ({ facility }: TProps) => {
   const onSubmitMapHandler: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
     const body = new FormData();
-    body.append("image", data.coverImage);
     body.append("name", data.name);
     body.append("latitude", data.latitude);
     body.append("longitude", data.longitude);
     body.append("contactNumber", data.contact);
     body.append("category", data.category);
     body.append("status", data.status);
-    body.append("hasChanged", "false");
+    body.append("hasChanged", `${facility && imageState ? true : false}`);
 
     if (facility) {
+      body.append("image", data.coverImage ? data.coverImage : facility.image);
       console.log("updating");
       updateFacility({ body, id: facility._id });
       return;
     }
+    body.append("image", data.coverImage);
     addFacility({ body });
     dispatch(setAddMode(false));
   };
@@ -97,9 +102,6 @@ const FacilityForm = ({ facility }: TProps) => {
   return (
     <div className="bg-gray-50 mx-2 p-3 w-[400px] fixed right-0 top-[50%] translate-y-[-50%] z-10 rounded-md shadow-md">
       <div className="py-3 flex justify-between items-center ">
-        {/* <span>
-            <FacilityIcon facilityType={facility.category} />
-          </span> */}
         <span className="text-2xl font-bold">Facility Details</span>
         <button
           className="hover:bg-gray-300 rounded p-1 text-gray-500"
@@ -116,7 +118,7 @@ const FacilityForm = ({ facility }: TProps) => {
 
       <form onSubmit={handleSubmit(onSubmitMapHandler)}>
         <div className="flex flex-col gap-2">
-          {facility && !editImage ? (
+          {facility && !editImage && !imageState ? (
             <div className="group relative w-full h-52 border rounded-md">
               <img
                 className="w-full h-full rounded object-cover"
@@ -152,12 +154,6 @@ const FacilityForm = ({ facility }: TProps) => {
               )}
             />
           )}
-          {/* <label htmlFor="image">Image</label>
-          <input
-            type="file"
-            id="image"
-            {...register("image", { required: facility ? false : true })}
-          /> */}
           <label htmlFor="name">Name</label>
           <input
             className="border p-1"
@@ -217,7 +213,13 @@ const FacilityForm = ({ facility }: TProps) => {
             } p-2 rounded text-white`}
             type="submit"
           >
-            {facility ? "Update" : "Add"}
+            {facility
+              ? updateFacilityState.isLoading
+                ? "Updating ...."
+                : "Update"
+              : isAddFacilityLoading
+              ? "Adding ...."
+              : "Add"}
           </button>
         </div>
       </form>
