@@ -24,13 +24,15 @@ export const facilitySlice = createSlice({
   reducers: {
     setSelectedFacility: (state, action: PayloadAction<TFacility>) => {
       state.selectedFacility = action.payload;
+      if (state.isAddMode) state.isAddMode = false;
+      if (state.tempMarkerPos) state.tempMarkerPos = null;
     },
     unsetSelectedFacility: (state) => {
       state.selectedFacility = null;
     },
     setAddMode: (state, action: PayloadAction<boolean>) => {
       state.isAddMode = action.payload;
-      state.tempMarkerPos = null;
+      if (state.tempMarkerPos) state.tempMarkerPos = null;
     },
     setTempMarkerPos: (
       state,
