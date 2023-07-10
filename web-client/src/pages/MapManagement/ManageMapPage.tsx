@@ -106,22 +106,24 @@ const ManageMapPage = () => {
           <p> Fetching facilities </p>
         ) : (
           <>
-            <div>
-              <input
-                type="text"
-                placeholder="Search Facility"
-                className="w-full p-2 my-2 border border-gray-300 rounded-md"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <Select
-                placeholder="Filter by Category"
-                options={options}
-                onChange={onSelectChange}
-                isMulti={true}
-              />
+            <div className="flex flex-col p-3 gap-2 bg-gray-50 shadow-md rounded-md">
+              <div className="flex flex-col gap-2">
+                <input
+                  type="text"
+                  placeholder="Search Facility"
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <Select
+                  placeholder="Filter by Category"
+                  options={options}
+                  onChange={onSelectChange}
+                  isMulti={true}
+                />
+              </div>
+              <FacilitiesList facilities={filterdFacilities() || []} />
             </div>
-            <FacilitiesList facilities={filterdFacilities() || []} />
           </>
         )}
         {/* IF ADD MODE, new facility form show */}

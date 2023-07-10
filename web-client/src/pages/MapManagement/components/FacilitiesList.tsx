@@ -8,11 +8,14 @@ type TProps = {
 
 const FacilitiesList = memo(({ facilities }: TProps) => {
   return (
-    <div className="flex flex-col p-3 gap-3 max-h-[700px] w-[350px] overflow-y-auto bg-gray-50 shadow-md rounded-md">
-      {facilities.length != 0 &&
+    <div className="flex flex-col gap-3 max-h-[70vh] w-[350px] overflow-y-auto">
+      {facilities.length != 0 ? (
         facilities.map((facility) => (
           <FacilityItem key={facility._id} facility={facility} />
-        ))}
+        ))
+      ) : (
+        <p className="text-center">No Results</p>
+      )}
     </div>
   );
 });
