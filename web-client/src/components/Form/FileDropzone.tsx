@@ -19,9 +19,12 @@ export const FileDropzone = ({ onChange }: TProps) => {
   });
 
   const file = (
-    <div className="flex flex-row space-between">
-      <span>{acceptedFile?.name}</span>
+    <div className="flex flex-row justify-between items-center">
+      <span className="text-gray-500 text-[16px] w-1/2 truncate">
+        {acceptedFile?.name}
+      </span>
       <button
+        className="px-3 py-1 text-sm rounded-md border border-gray-300 border-dashed text-gray-800 hover:border-transparent hover:bg-red-300 hover:text-black transition-all duration-200"
         type="button"
         onClick={() => {
           setAcceptedFile(undefined);

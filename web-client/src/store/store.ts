@@ -6,11 +6,15 @@ import articleSlice from "./slices/articleSlice";
 // API / Services / Queries
 import { usersApi } from "../services/usersApi";
 import { articleQueryApi } from "../services/articleQuery";
+import { facilityQueryApi } from "../services/facilityQuery";
+import facilitySlice from "./slices/facilitySlice";
 
 export const store = configureStore({
   reducer: {
     [usersApi.reducerPath]: usersApi.reducer,
     [articleQueryApi.reducerPath]: articleQueryApi.reducer,
+    [facilityQueryApi.reducerPath]: facilityQueryApi.reducer,
+    facility: facilitySlice,
     userManage: userManageSlice,
     auth: authSlice,
     articles: articleSlice,
@@ -19,6 +23,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat([
       usersApi.middleware,
       articleQueryApi.middleware,
+      facilityQueryApi.middleware,
     ]),
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself

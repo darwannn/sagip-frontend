@@ -20,7 +20,7 @@ const ManageArticlesPage = () => {
   );
 
   return (
-    <>
+    <div>
       <h1>Manage Articles Page</h1>
       <div className="mx-5">
         <Link
@@ -31,7 +31,7 @@ const ManageArticlesPage = () => {
         </Link>
       </div>
       {isLoading ? <p>Getting articles....</p> : tableComponent}
-    </>
+    </div>
   );
 };
 
