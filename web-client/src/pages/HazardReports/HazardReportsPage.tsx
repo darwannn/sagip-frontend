@@ -1,4 +1,5 @@
 import { useGetHazardReportsQuery } from "../../services/hazardReportsQuery";
+import HazardMap from "./components/HazardMap";
 import { THazardReport } from "./types/hazardReport";
 import moment from "moment";
 
@@ -19,7 +20,7 @@ const HazardReportsPage = () => {
     <div className="relative h-screen">
       <div className="relative z-10 flex flex-col gap-2 p-2 w-max items-start">
         <h1>Hazard Reports Page</h1>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 bg-gray-50 p-3 shadow-md rounded-md">
           {isReportsLoading ? (
             <p className="text-center">Loading Reports</p>
           ) : (
@@ -36,6 +37,7 @@ const HazardReportsPage = () => {
           )}
         </div>
       </div>
+      <HazardMap />
     </div>
   );
 };
