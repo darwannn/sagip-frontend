@@ -1,3 +1,4 @@
+import { MarkerF } from "@react-google-maps/api";
 import { useGetHazardReportsQuery } from "../../services/hazardReportsQuery";
 import HazardMap from "./components/HazardMap";
 import { THazardReport } from "./types/hazardReport";
@@ -37,7 +38,19 @@ const HazardReportsPage = () => {
           )}
         </div>
       </div>
-      <HazardMap />
+      <HazardMap>
+        {/* Child components, such as markers, info windows, etc. */}
+        {!isReportsLoading &&
+          reportsData?.map((report) => (
+            <MarkerF
+              key={report._id}
+              position={{
+                lat: report.latitude,
+                lng: report.longitude,
+              }}
+            />
+          ))}
+      </HazardMap>
     </div>
   );
 };
