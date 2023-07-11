@@ -1,18 +1,20 @@
 import { memo } from "react";
-import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
-import { GOOGLE_MAP_API_KEY } from "../../../api.config";
+// Services / API
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectAddMode,
   selectTempMarkerPos,
   setTempMarkerPos,
 } from "../../../store/slices/facilitySlice";
+// Google Maps API
+import { GOOGLE_MAP_API_KEY } from "../../../api.config";
+import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 
 const containerStyle = {
   width: "100%",
   height: "100vh",
 };
-// ,
+
 const center = {
   lat: 14.860767193574064,
   lng: 120.81013409214616,

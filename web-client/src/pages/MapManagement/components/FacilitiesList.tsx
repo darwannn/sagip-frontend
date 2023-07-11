@@ -1,6 +1,8 @@
 import { memo } from "react";
-import type { TFacility } from "../types/emergencyFacility";
+// Functional Components
 import FacilityItem from "./FacilityItem";
+// Types
+import type { TFacility } from "../types/emergencyFacility";
 
 type TProps = {
   facilities: TFacility[];

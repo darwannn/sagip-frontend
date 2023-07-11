@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Controller,
   FieldValues,
@@ -5,21 +6,23 @@ import {
   useForm,
   useWatch,
 } from "react-hook-form";
-import { TFacility } from "../types/emergencyFacility";
-import { useEffect, useState } from "react";
+// Services / API
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   useAddFacilityMutation,
   useUpdateFacilityMutation,
 } from "../../../services/facilityQuery";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectTempMarkerPos,
   setAddMode,
   unsetSelectedFacility,
 } from "../../../store/slices/facilitySlice";
+// Functional Components
 import FileDropzone from "../../../components/Form/FileDropzone";
+// Types
+import type { TFacility } from "../types/emergencyFacility";
 import { BASE_IMAGE_URL } from "../../../api.config";
-
+// Icons
 import { MdClose } from "react-icons/md";
 
 type TProps = {

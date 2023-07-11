@@ -9,7 +9,7 @@ import VerifyUserPage from "../pages/UserManagement/VerifyUserPage";
 import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
 import EmergencyReportsPage from "../pages/EmergencyReports/EmergencyReportsPage";
 import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
-import ManageMapPage from "../pages/MapManagement/ManageMapPage";
+import ManageFacilitiesPage from "../pages/MapManagement/ManageFacilitiesPage";
 import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
 import { checkAuth, isLoggedIn } from "../util/auth";
 import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "facility-map",
-        element: <ManageMapPage />,
+        element: <ManageFacilitiesPage />,
       },
       {
         path: "disaster-alerts",

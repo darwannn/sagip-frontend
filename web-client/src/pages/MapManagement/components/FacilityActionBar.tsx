@@ -1,12 +1,14 @@
 import { memo } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
-import { MdMyLocation } from "react-icons/md";
+// Services / API
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectAddMode,
   selectionFacility,
   setAddMode,
 } from "../../../store/slices/facilitySlice";
+// Icons
+import { MdMyLocation } from "react-icons/md";
+import { AiOutlinePlus } from "react-icons/ai";
 
 type TProps = {
   recenterMapHandler: () => void;

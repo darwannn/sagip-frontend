@@ -1,8 +1,11 @@
 import { memo } from "react";
-import type { TFacility } from "../types/emergencyFacility";
+// Services / API
 import { useAppDispatch } from "../../../store/hooks";
 import { setSelectedFacility } from "../../../store/slices/facilitySlice";
 import { useDeleteFacilityMutation } from "../../../services/facilityQuery";
+// Types
+import type { TFacility } from "../types/emergencyFacility";
+// Icons
 import FacilityIcon from "./FacilityIcon";
 import { MdLocationOn, MdDelete } from "react-icons/md";
 type TProps = {

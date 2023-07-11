@@ -1,28 +1,30 @@
-import { MarkerF } from "@react-google-maps/api";
-import FacilityForm from "./components/FacilityForm";
-import FacilitiesList from "./components/FacilitiesList";
-import { useGetFacilitiesQuery } from "../../services/facilityQuery";
-
+import { useCallback, useState } from "react";
+// Services / API
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useGetFacilitiesQuery } from "../../services/facilityQuery";
 import {
   setSelectedFacility,
   selectAddMode,
   selectionFacility,
   selectTempMarkerPos,
 } from "../../store/slices/facilitySlice";
+// Functional Componenents
+import { MarkerF } from "@react-google-maps/api";
 import MapComponent from "./components/MapComponent";
-import { useCallback, useState } from "react";
 import FacilityActions from "./components/FacilityActionBar";
-import { TFacility } from "./types/emergencyFacility";
-
+import FacilitiesList from "./components/FacilitiesList";
+import FacilityForm from "./components/FacilityForm";
 import Select, { MultiValue } from "react-select";
+// Types
+import type { TFacility } from "./types/emergencyFacility";
 
-const ManageMapPage = () => {
+const ManageFacilitiesPage = () => {
+  // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
-
+  // Filter State
   const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
-
+  // Services / Redux
   const dispatch = useAppDispatch();
   const selectedFacility = useAppSelector(selectionFacility);
   const addMode = useAppSelector(selectAddMode);
@@ -39,21 +41,21 @@ const ManageMapPage = () => {
   const onMapLoad = useCallback((map: google.maps.Map) => {
     setMap(map);
   }, []);
-
+  // Pan map to specific location
   const panMapTo = (lat: number, lng: number) => {
     map?.panTo({
       lat,
       lng,
     });
   };
-
+  // Recenter map to default
   const recenterMap = useCallback(() => {
     map?.panTo({
       lat: 14.860767193574064,
       lng: 120.81013409214616,
     });
   }, [map]);
-
+  // Select facility on marker click
   const onClickMarkerHandler = useCallback(
     (facility: TFacility) => {
       dispatch(setSelectedFacility(facility));
@@ -65,7 +67,7 @@ const ManageMapPage = () => {
 
     [dispatch, map]
   );
-
+  // Filter facilities base on states
   const filterdFacilities = () => {
     let filteredFacilities = facilities?.filter((facility) =>
       facility.name.toLowerCase().includes(search.toLowerCase())
@@ -126,10 +128,10 @@ const ManageMapPage = () => {
             </div>
           </>
         )}
-        {/* IF ADD MODE, new facility form show */}
-        {/* IF SELECTED FACILITY, show facility form */}
       </div>
+      {/* IF ADD MODE, new facility form show */}
       {addMode && tempMarkerPos && <FacilityForm />}
+      {/* IF SELECTED FACILITY, show facility form */}
       {selectedFacility && <FacilityForm facility={selectedFacility} />}
       <div className="absolute top-0 z-0 w-full">
         <MapComponent onSetMapHandler={onMapLoad}>
@@ -151,7 +153,7 @@ const ManageMapPage = () => {
   );
 };
 
-export default ManageMapPage;
+export default ManageFacilitiesPage;
 
 const options = [
   { value: "police station", label: "Police Station" },
