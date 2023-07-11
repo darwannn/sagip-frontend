@@ -7,7 +7,7 @@ export type THazardReport = {
   longitude: number;
   municipality: string;
   proof: string;
-  status: string;
+  status: string; // unverified, ongoing, resolved
   street: string;
   updatedAt: string;
   __v: number;

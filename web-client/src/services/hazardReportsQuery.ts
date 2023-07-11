@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../api.config";
 import { THazardReport } from "../pages/HazardReports/types/hazardReport";
 
 export const hazardReportsQueryApi = createApi({
-  reducerPath: "facilityQuery",
+  reducerPath: "hazardReportsQuery",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   tagTypes: ["HazardReports", "SelectedHazardReport"],
   endpoints: (builder) => ({
