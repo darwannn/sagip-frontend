@@ -1,8 +1,7 @@
 import { MarkerF } from "@react-google-maps/api";
 import { useGetHazardReportsQuery } from "../../services/hazardReportsQuery";
 import HazardMap from "./components/HazardMap";
-import { THazardReport } from "./types/hazardReport";
-import moment from "moment";
+import HazardReportsList from "./components/HazardReportsList";
 
 const HazardReportsPage = () => {
   const {
@@ -25,16 +24,7 @@ const HazardReportsPage = () => {
           {isReportsLoading ? (
             <p className="text-center">Loading Reports</p>
           ) : (
-            reportsData?.map((report: THazardReport) => (
-              <div key={report._id} className="border rounded p-2">
-                <span>{report._id}</span>
-                <br />
-                <span>
-                  {moment(report.updatedAt).format("MMM DD, YYYY - ddd")}
-                </span>
-                <span>{moment(report.updatedAt).format("HH:mm")}</span>
-              </div>
-            ))
+            <HazardReportsList reportsData={reportsData || []} />
           )}
         </div>
       </div>
