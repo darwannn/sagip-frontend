@@ -25,4 +25,5 @@ export const hazardReportsQueryApi = createApi({
   }),
 });
 
-export const { useGetHazardReportsQuery } = hazardReportsQueryApi;
+export const { useGetHazardReportsQuery, useGetHazardReportQuery } =
+  hazardReportsQueryApi;

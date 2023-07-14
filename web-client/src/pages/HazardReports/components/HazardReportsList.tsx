@@ -1,5 +1,5 @@
-import moment from "moment";
 import { THazardReport } from "../types/hazardReport";
+import HazardReportItem from "./HazardReportItem";
 
 type TProps = {
   reportsData: THazardReport[];
@@ -10,12 +10,7 @@ const HazardReportsList = ({ reportsData }: TProps) => {
     <>
       {reportsData.length !== 0 ? (
         reportsData?.map((report: THazardReport) => (
-          <div key={report._id} className="border rounded p-2">
-            <span>{report._id}</span>
-            <br />
-            <span>{moment(report.updatedAt).format("MMM DD, YYYY - ddd")}</span>
-            <span>{moment(report.updatedAt).format("HH:mm")}</span>
-          </div>
+          <HazardReportItem key={report._id} report={report} />
         ))
       ) : (
         <p className="text-center">No Reports</p>
