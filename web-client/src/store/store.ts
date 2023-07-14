@@ -3,11 +3,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice";
 import userManageSlice from "./slices/userManageSlice";
 import articleSlice from "./slices/articleSlice";
+import facilitySlice from "./slices/facilitySlice";
+import hazardReportSlice from "./slices/hazardReportSlice";
 // API / Services / Queries
 import { usersApi } from "../services/usersApi";
 import { articleQueryApi } from "../services/articleQuery";
 import { facilityQueryApi } from "../services/facilityQuery";
-import facilitySlice from "./slices/facilitySlice";
 import { hazardReportsQueryApi } from "../services/hazardReportsQuery";
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
     userManage: userManageSlice,
     auth: authSlice,
     articles: articleSlice,
+    hazardReports: hazardReportSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
