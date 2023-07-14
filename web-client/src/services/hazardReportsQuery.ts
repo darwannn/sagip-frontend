@@ -12,6 +12,14 @@ export const hazardReportsQueryApi = createApi({
     // Get all hazard reports
     getHazardReports: builder.query<THazardReport[], void>({
       query: () => "hazard-report",
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({ type: "HazardReports", _id }))
+          : ["HazardReports"],
+    }),
+    // Get a single hazard report
+    getHazardReport: builder.query<THazardReport, string>({
+      query: (id) => `hazard-report/${id}`,
       providesTags: ["HazardReports"],
     }),
   }),
