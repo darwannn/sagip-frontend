@@ -25,7 +25,7 @@ export const { setSelectedHazardReport } = hazardReportSlice.actions;
 export default hazardReportSlice.reducer;
 
 // Selectors
-export const selectionHazardReport = createSelector(
+export const selectHazardReport = createSelector(
   (state: RootState) => state.hazardReports.selectedHazardReport,
   (selectedHazardReport) => selectedHazardReport
 );

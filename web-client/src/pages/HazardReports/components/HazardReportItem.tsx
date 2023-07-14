@@ -1,13 +1,19 @@
 import moment from "moment";
-import { THazardReport } from "../types/hazardReport";
+import { setSelectedHazardReport } from "../../../store/slices/hazardReportSlice";
+import { useAppDispatch } from "../../../store/hooks";
+import type { THazardReport } from "../types/hazardReport";
 
 type TProps = {
   report: THazardReport;
 };
 
 const HazardReportItem = ({ report }: TProps) => {
+  const dispatch = useAppDispatch();
+  const clickHandler = () => {
+    dispatch(setSelectedHazardReport(report._id));
+  };
   return (
-    <div>
+    <div className="hover:bg-gray-300 cursor-pointer" onClick={clickHandler}>
       <div key={report._id} className="border rounded p-2">
         <span>{report._id}</span>
         <br />

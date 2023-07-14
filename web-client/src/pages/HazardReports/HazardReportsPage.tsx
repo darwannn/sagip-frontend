@@ -2,19 +2,21 @@ import { MarkerF } from "@react-google-maps/api";
 import { useGetHazardReportsQuery } from "../../services/hazardReportsQuery";
 import HazardMap from "./components/HazardMap";
 import HazardReportsList from "./components/HazardReportsList";
+import { useAppSelector } from "../../store/hooks";
+import { selectHazardReport } from "../../store/slices/hazardReportSlice";
 
 const HazardReportsPage = () => {
+  const selectedReport = useAppSelector(selectHazardReport);
+  console.log(selectedReport);
   const {
     data: reportsData,
     isLoading: isReportsLoading,
-    isSuccess: isReportsSuccess,
     isError: isReportsError,
     error,
   } = useGetHazardReportsQuery(undefined);
 
   if (isReportsLoading) console.log("Loading...");
   if (isReportsError) console.log(error);
-  if (isReportsSuccess) console.log(reportsData);
 
   return (
     <div className="relative h-screen">
@@ -28,6 +30,7 @@ const HazardReportsPage = () => {
           )}
         </div>
       </div>
+
       <HazardMap>
         {/* Child components, such as markers, info windows, etc. */}
         {!isReportsLoading &&
