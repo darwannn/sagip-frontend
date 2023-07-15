@@ -1,3 +1,5 @@
+import { User } from "../../../types/user";
+
 export type THazardReport = {
   category: string;
   createdAt: string;
@@ -10,6 +12,7 @@ export type THazardReport = {
   status: string; // unverified, ongoing, resolved
   street: string;
   updatedAt: string;
+  userId: User;
   __v: number;
   _id: string;
 };
