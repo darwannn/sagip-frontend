@@ -10,7 +10,7 @@ type TProps = {
 const HazardReportItem = ({ report }: TProps) => {
   const dispatch = useAppDispatch();
   const clickHandler = () => {
-    dispatch(setSelectedHazardReport(report._id));
+    dispatch(setSelectedHazardReport(report));
   };
   return (
     <div className="hover:bg-gray-300 cursor-pointer" onClick={clickHandler}>

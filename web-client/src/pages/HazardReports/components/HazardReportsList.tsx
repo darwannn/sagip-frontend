@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { THazardReport } from "../types/hazardReport";
 import HazardReportItem from "./HazardReportItem";
 
@@ -5,7 +6,7 @@ type TProps = {
   reportsData: THazardReport[];
 };
 
-const HazardReportsList = ({ reportsData }: TProps) => {
+const HazardReportsList = memo(({ reportsData }: TProps) => {
   return (
     <>
       {reportsData.length !== 0 ? (
@@ -17,6 +18,6 @@ const HazardReportsList = ({ reportsData }: TProps) => {
       )}
     </>
   );
-};
+});
 
 export default HazardReportsList;
