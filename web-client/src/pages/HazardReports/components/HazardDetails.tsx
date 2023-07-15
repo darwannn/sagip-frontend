@@ -1,4 +1,6 @@
+import moment from "moment";
 import type { THazardReport } from "../types/hazardReport";
+import { BASE_IMAGE_URL } from "../../../api.config";
 
 type TProps = {
   reportData: THazardReport;
@@ -26,7 +28,40 @@ const HazardDetails = ({ reportData }: TProps) => {
         </div>
       </div>
       {/* REPORT INFO */}
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
+          <p className="font-bold">{reportData.category}</p>
+          <div className="">
+            <span>Address:</span>
+            <p>{reportData.street}</p>
+            <span>Reported On:</span>
+            <p>
+              {moment(reportData.updatedAt).format("MMM DD, YYYY - ddd HH:mm")}
+            </p>
+          </div>
+        </div>
+        <div>
+          <span className="text-gray-400">Additional Info:</span>
+          <div className="group relative w-full h-52 border rounded-md">
+            <img
+              className="w-full h-full rounded object-cover"
+              src={`${BASE_IMAGE_URL}/hazard-report/${reportData.proof}`}
+              alt={reportData.category}
+            />
+          </div>
+          <span>Description:</span>
+          <p>{reportData.description}</p>
+        </div>
+      </div>
       {/* REPORT ACTION */}
+      <div className="flex flex-col gap-2">
+        <button className="bg-green-500 text-white rounded-md px-2 py-1">
+          {reportData.status === "verified" ? "Mark as Resolved" : "Verify"}
+        </button>
+        <button className="bg-red-300 text-white rounded-md px-2 py-1">
+          Delete
+        </button>
+      </div>
     </div>
   );
 };
