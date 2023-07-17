@@ -9,12 +9,12 @@ import {
   setSelectedHazardReport,
 } from "../../store/slices/hazardReportSlice";
 import { useCallback, useState } from "react";
+import { THazardReport } from "./types/hazardReport";
 
 const HazardReportsPage = () => {
   // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
   // Hooks
-  const [mapState, setMapState] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("All"); // ["All", "Review", "Ongoing", "Resolved"]
   // Redux
   const dispatch = useAppDispatch();
@@ -36,13 +36,21 @@ const HazardReportsPage = () => {
     setSelectedFilter(filter);
   };
 
-  const filteredReports = reportsData?.filter((report) => {
+  const filteredReports = reportsData?.filter((report: THazardReport) => {
     if (selectedFilter === "All") return true;
     else if (selectedFilter === "Review") return report.status === "unverified";
     else if (selectedFilter === "Ongoing") return report.status === "ongoing";
     else if (selectedFilter === "Resolved") return report.status === "resolved";
     else return false;
   });
+
+  // Pan map on selected report
+  if (selectedReport) {
+    map?.panTo({
+      lat: selectedReport.latitude,
+      lng: selectedReport.longitude,
+    });
+  }
 
   if (isReportsLoading) console.log("Loading...");
   if (isReportsError) console.log(error);
