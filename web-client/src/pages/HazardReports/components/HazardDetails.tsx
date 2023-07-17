@@ -16,6 +16,24 @@ const HazardDetails = ({ reportData }: TProps) => {
   const [deleteHazardReport, { isLoading: isDeleteLoading }] =
     useDeleteHazardReportMutation();
 
+  let action;
+
+  if (reportData.status === "unverified") {
+    action = (
+      <button className="bg-green-500 text-white rounded-md px-2 py-2">
+        Verify
+      </button>
+    );
+  } else if (reportData.status === "ongoing") {
+    action = (
+      <button className="bg-blue-500 text-white rounded-md px-2 py-2">
+        Resolve
+      </button>
+    );
+  } else if (reportData.status === "resolved") {
+    action = <></>;
+  }
+
   return (
     <div className="border rounded-md shadow-sm p-2 mx-2  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">
       <div className="flex flex-row justify-between items-center">
@@ -77,12 +95,15 @@ const HazardDetails = ({ reportData }: TProps) => {
       </div>
       {/* REPORT ACTION */}
       <div className="flex flex-col gap-2">
-        <button className="bg-green-500 text-white rounded-md px-2 py-1">
+        {/* <button className="bg-green-500 text-white rounded-md px-2 py-1">
           {reportData.status === "verified" ? "Mark as Resolved" : "Verify"}
-        </button>
+        </button> */}
+        {action}
         <button
-          className="bg-red-300 text-white rounded-md px-2 py-1"
+          className="bg-gray-300 text-gray-500 rounded-md px-2 py-1 hover:text-white hover:bg-red-500 transition-all duration-200"
           onClick={() => {
+            const deleteReport = confirm("Are you sure you want to delete?");
+            if (!deleteReport) return;
             dispatch(setSelectedHazardReport(null));
             deleteHazardReport(reportData._id);
           }}
