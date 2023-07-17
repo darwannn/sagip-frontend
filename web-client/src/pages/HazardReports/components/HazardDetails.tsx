@@ -4,6 +4,7 @@ import { BASE_IMAGE_URL } from "../../../api.config";
 import { MdClose } from "react-icons/md";
 import { useAppDispatch } from "../../../store/hooks";
 import { unselectHazardReport } from "../../../store/slices/hazardReportSlice";
+import { useDeleteHazardReportMutation } from "../../../services/hazardReportsQuery";
 
 type TProps = {
   reportData: THazardReport;
@@ -11,6 +12,10 @@ type TProps = {
 
 const HazardDetails = ({ reportData }: TProps) => {
   const dispatch = useAppDispatch();
+
+  const [deleteHazardReport, { isLoading: isDeleteLoading }] =
+    useDeleteHazardReportMutation();
+
   return (
     <div className="border rounded-md shadow-sm p-2 mx-2  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">
       <div className="flex flex-row justify-between items-center">
@@ -75,8 +80,14 @@ const HazardDetails = ({ reportData }: TProps) => {
         <button className="bg-green-500 text-white rounded-md px-2 py-1">
           {reportData.status === "verified" ? "Mark as Resolved" : "Verify"}
         </button>
-        <button className="bg-red-300 text-white rounded-md px-2 py-1">
-          Delete
+        <button
+          className="bg-red-300 text-white rounded-md px-2 py-1"
+          onClick={() => {
+            dispatch(unselectHazardReport());
+            deleteHazardReport(reportData._id);
+          }}
+        >
+          {isDeleteLoading ? "Deleting..." : "Delete"}
         </button>
       </div>
     </div>
