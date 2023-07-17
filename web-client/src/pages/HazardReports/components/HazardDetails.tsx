@@ -3,7 +3,7 @@ import type { THazardReport } from "../types/hazardReport";
 import { BASE_IMAGE_URL } from "../../../api.config";
 import { MdClose } from "react-icons/md";
 import { useAppDispatch } from "../../../store/hooks";
-import { unselectHazardReport } from "../../../store/slices/hazardReportSlice";
+import { setSelectedHazardReport } from "../../../store/slices/hazardReportSlice";
 import { useDeleteHazardReportMutation } from "../../../services/hazardReportsQuery";
 
 type TProps = {
@@ -25,7 +25,7 @@ const HazardDetails = ({ reportData }: TProps) => {
         <button
           className="hover:bg-gray-300 rounded p-1 text-gray-500"
           onClick={() => {
-            dispatch(unselectHazardReport());
+            dispatch(setSelectedHazardReport(null));
           }}
         >
           <MdClose />
@@ -83,7 +83,7 @@ const HazardDetails = ({ reportData }: TProps) => {
         <button
           className="bg-red-300 text-white rounded-md px-2 py-1"
           onClick={() => {
-            dispatch(unselectHazardReport());
+            dispatch(setSelectedHazardReport(null));
             deleteHazardReport(reportData._id);
           }}
         >

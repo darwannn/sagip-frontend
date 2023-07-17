@@ -3,14 +3,18 @@ import { useGetHazardReportsQuery } from "../../services/hazardReportsQuery";
 import HazardMap from "./components/HazardMap";
 import HazardReportsList from "./components/HazardReportsList";
 import HazardDetails from "./components/HazardDetails";
-import { useAppSelector } from "../../store/hooks";
-import { selectHazardReport } from "../../store/slices/hazardReportSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  selectHazardReport,
+  setSelectedHazardReport,
+} from "../../store/slices/hazardReportSlice";
 import { useState } from "react";
 
 const HazardReportsPage = () => {
   // Hooks
   const [selectedFilter, setSelectedFilter] = useState("All"); // ["All", "Review", "Ongoing", "Resolved"]
   // Redux
+  const dispatch = useAppDispatch();
   const selectedReport = useAppSelector(selectHazardReport);
   const {
     data: reportsData,
@@ -18,6 +22,11 @@ const HazardReportsPage = () => {
     isError: isReportsError,
     error,
   } = useGetHazardReportsQuery(undefined);
+
+  const changeFilter = (filter: string) => {
+    if (selectedReport) dispatch(setSelectedHazardReport(null));
+    setSelectedFilter(filter);
+  };
 
   const filteredReports = reportsData?.filter((report) => {
     if (selectedFilter === "All") return true;
@@ -38,25 +47,25 @@ const HazardReportsPage = () => {
           <div className="flex flex-row w-full overflow-x-auto gap-2">
             <button
               className="p-2 bg-gray-200 rounded-md"
-              onClick={() => setSelectedFilter("All")}
+              onClick={() => changeFilter("All")}
             >
               All
             </button>
             <button
               className="p-2 bg-gray-200 rounded-md"
-              onClick={() => setSelectedFilter("Review")}
+              onClick={() => changeFilter("Review")}
             >
               Review
             </button>
             <button
               className="p-2 bg-gray-200 rounded-md"
-              onClick={() => setSelectedFilter("Ongoing")}
+              onClick={() => changeFilter("Ongoing")}
             >
               Ongoing
             </button>
             <button
               className="p-2 bg-gray-200 rounded-md"
-              onClick={() => setSelectedFilter("Resolved")}
+              onClick={() => changeFilter("Resolved")}
             >
               Resolved
             </button>
