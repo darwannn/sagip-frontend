@@ -8,10 +8,13 @@ import {
   selectHazardReport,
   setSelectedHazardReport,
 } from "../../store/slices/hazardReportSlice";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const HazardReportsPage = () => {
+  // Map State / Instance
+  const [map, setMap] = useState<google.maps.Map | null>(null);
   // Hooks
+  const [mapState, setMapState] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("All"); // ["All", "Review", "Ongoing", "Resolved"]
   // Redux
   const dispatch = useAppDispatch();
@@ -22,6 +25,11 @@ const HazardReportsPage = () => {
     isError: isReportsError,
     error,
   } = useGetHazardReportsQuery(undefined);
+
+  // Set map state
+  const onMapLoad = useCallback((map: google.maps.Map) => {
+    setMap(map);
+  }, []);
 
   const changeFilter = (filter: string) => {
     if (selectedReport) dispatch(setSelectedHazardReport(null));
@@ -78,7 +86,7 @@ const HazardReportsPage = () => {
         </div>
       </div>
       {selectedReport && <HazardDetails reportData={selectedReport} />}
-      <HazardMap>
+      <HazardMap onMapLoadHandler={onMapLoad}>
         {/* Child components, such as markers, info windows, etc. */}
         {!isReportsLoading &&
           filteredReports?.map((report) => (

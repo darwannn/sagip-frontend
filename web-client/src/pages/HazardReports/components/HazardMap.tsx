@@ -15,9 +15,10 @@ const center = {
 
 type TProps = {
   children?: React.ReactNode;
+  onMapLoadHandler: (map: google.maps.Map) => void;
 };
 
-const HazardMap = memo(({ children }: TProps) => {
+const HazardMap = memo(({ children, onMapLoadHandler }: TProps) => {
   const { isLoaded: isMapLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
@@ -37,6 +38,9 @@ const HazardMap = memo(({ children }: TProps) => {
             streetViewControl: false,
             fullscreenControl: false,
             mapTypeControl: false,
+          }}
+          onLoad={(map) => {
+            onMapLoadHandler(map);
           }}
         >
           {children}
