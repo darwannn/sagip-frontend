@@ -18,10 +18,14 @@ const hazardReportSlice = createSlice({
     setSelectedHazardReport: (state, action: PayloadAction<THazardReport>) => {
       state.selectedHazardReport = action.payload;
     },
+    unselectHazardReport: (state) => {
+      state.selectedHazardReport = null;
+    },
   },
 });
 
-export const { setSelectedHazardReport } = hazardReportSlice.actions;
+export const { setSelectedHazardReport, unselectHazardReport } =
+  hazardReportSlice.actions;
 
 export default hazardReportSlice.reducer;
 

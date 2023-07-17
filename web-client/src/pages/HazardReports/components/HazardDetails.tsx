@@ -1,16 +1,31 @@
 import moment from "moment";
 import type { THazardReport } from "../types/hazardReport";
 import { BASE_IMAGE_URL } from "../../../api.config";
+import { MdClose } from "react-icons/md";
+import { useAppDispatch } from "../../../store/hooks";
+import { unselectHazardReport } from "../../../store/slices/hazardReportSlice";
 
 type TProps = {
   reportData: THazardReport;
 };
 
 const HazardDetails = ({ reportData }: TProps) => {
-  console.log(reportData);
+  const dispatch = useAppDispatch();
   return (
     <div className="border rounded-md shadow-sm p-2 mx-2  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">
-      <span className="text-gray-400 text-sm">Hazard ID: {reportData._id}</span>
+      <div className="flex flex-row justify-between items-center">
+        <span className="text-gray-400 text-sm">
+          Hazard ID: {reportData._id}
+        </span>
+        <button
+          className="hover:bg-gray-300 rounded p-1 text-gray-500"
+          onClick={() => {
+            dispatch(unselectHazardReport());
+          }}
+        >
+          <MdClose />
+        </button>
+      </div>
       {/* USER INFO */}
       <div className="flex flex-row items-center gap-2">
         <div className="img-container">
