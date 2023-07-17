@@ -31,7 +31,7 @@ export const hazardReportsQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: (result, error, id) => {
+      invalidatesTags: (_result, _error, id) => {
         return [{ type: "HazardReports", id }];
       },
     }),
@@ -44,7 +44,7 @@ export const hazardReportsQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: (result, error, id) => {
+      invalidatesTags: (_result, _error, id) => {
         return [{ type: "HazardReports", id }];
       },
     }),
@@ -57,7 +57,7 @@ export const hazardReportsQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: (result, error, id) => {
+      invalidatesTags: (_result, _error, id) => {
         return [{ type: "HazardReports", id }];
       },
     }),
