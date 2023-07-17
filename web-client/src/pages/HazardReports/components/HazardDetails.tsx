@@ -4,7 +4,10 @@ import { BASE_IMAGE_URL } from "../../../api.config";
 import { MdClose } from "react-icons/md";
 import { useAppDispatch } from "../../../store/hooks";
 import { setSelectedHazardReport } from "../../../store/slices/hazardReportSlice";
-import { useDeleteHazardReportMutation } from "../../../services/hazardReportsQuery";
+import {
+  useDeleteHazardReportMutation,
+  useVerifyHazardReportMutation,
+} from "../../../services/hazardReportsQuery";
 
 type TProps = {
   reportData: THazardReport;
@@ -15,13 +18,20 @@ const HazardDetails = ({ reportData }: TProps) => {
 
   const [deleteHazardReport, { isLoading: isDeleteLoading }] =
     useDeleteHazardReportMutation();
+  const [verifyHazardReport, { isLoading: isVerifyLoading, isError, error }] =
+    useVerifyHazardReportMutation();
 
   let action;
 
   if (reportData.status === "unverified") {
     action = (
-      <button className="bg-green-500 text-white rounded-md px-2 py-2">
-        Verify
+      <button
+        className="bg-green-500 text-white rounded-md px-2 py-2"
+        onClick={() => {
+          verifyHazardReport(reportData._id);
+        }}
+      >
+        {isVerifyLoading ? "Loading" : "Verify"}
       </button>
     );
   } else if (reportData.status === "ongoing") {
@@ -33,6 +43,8 @@ const HazardDetails = ({ reportData }: TProps) => {
   } else if (reportData.status === "resolved") {
     action = <></>;
   }
+
+  if (isError) console.log(error);
 
   return (
     <div className="border rounded-md shadow-sm p-2 mx-2  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">

@@ -16,7 +16,7 @@ export const hazardReportsQueryApi = createApi({
       query: () => "hazard-report",
       providesTags: (result) =>
         result
-          ? result.map(({ _id }) => ({ type: "HazardReports", _id }))
+          ? result.map(({ _id }) => ({ type: "HazardReports", id: _id }))
           : ["HazardReports"],
     }),
     // Get a single hazard report
@@ -27,24 +27,30 @@ export const hazardReportsQueryApi = createApi({
     // Verify a hazard report
     verifyHazardReport: builder.mutation<void, string>({
       query: (id) => ({
-        url: `hazard-report/verify/${id}`,
+        url: `hazard-report/update/verify/${id}`,
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: (result, error, id) => [{ type: "HazardReports", id }],
+      invalidatesTags: (result, error, id) => {
+        console.log(id);
+        return [{ type: "HazardReports", id }];
+      },
     }),
     // Resolve a hazard report
     resolveHazardReport: builder.mutation<void, string>({
       query: (id) => ({
-        url: `hazard-report/resolve/${id}`,
+        url: `hazard-report/update/resolve/${id}`,
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: (result, error, id) => [{ type: "HazardReports", id }],
+      invalidatesTags: (result, error, id) => {
+        console.log(id);
+        return [{ type: "HazardReports", id }];
+      },
     }),
     // Delete a hazard report
     deleteHazardReport: builder.mutation<void, string>({
@@ -55,7 +61,10 @@ export const hazardReportsQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: (result, error, id) => [{ type: "HazardReports", id }],
+      invalidatesTags: (result, error, id) => {
+        console.log(id);
+        return [{ type: "HazardReports", id }];
+      },
     }),
   }),
 });
