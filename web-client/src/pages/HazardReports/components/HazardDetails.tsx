@@ -53,6 +53,8 @@ const HazardDetails = ({ reportData }: TProps) => {
             <p>
               {moment(reportData.updatedAt).format("MMM DD, YYYY - ddd HH:mm")}
             </p>
+            <span>Status:</span>
+            <p>{reportData.status}</p>
           </div>
         </div>
         <div>
