@@ -1,5 +1,3 @@
-// TODO:
-// - Delete doesn't invalidate the cache
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { API_BASE_URL } from "../api.config";
@@ -34,7 +32,6 @@ export const hazardReportsQueryApi = createApi({
         },
       }),
       invalidatesTags: (result, error, id) => {
-        console.log(id);
         return [{ type: "HazardReports", id }];
       },
     }),
@@ -48,7 +45,6 @@ export const hazardReportsQueryApi = createApi({
         },
       }),
       invalidatesTags: (result, error, id) => {
-        console.log(id);
         return [{ type: "HazardReports", id }];
       },
     }),
@@ -62,7 +58,6 @@ export const hazardReportsQueryApi = createApi({
         },
       }),
       invalidatesTags: (result, error, id) => {
-        console.log(id);
         return [{ type: "HazardReports", id }];
       },
     }),

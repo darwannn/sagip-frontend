@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../../store/hooks";
 import { setSelectedHazardReport } from "../../../store/slices/hazardReportSlice";
 import {
   useDeleteHazardReportMutation,
+  useResolveHazardReportMutation,
   useVerifyHazardReportMutation,
 } from "../../../services/hazardReportsQuery";
 
@@ -18,8 +19,18 @@ const HazardDetails = ({ reportData }: TProps) => {
 
   const [deleteHazardReport, { isLoading: isDeleteLoading }] =
     useDeleteHazardReportMutation();
-  const [verifyHazardReport, { isLoading: isVerifyLoading, isError, error }] =
-    useVerifyHazardReportMutation();
+  const [
+    verifyHazardReport,
+    { isLoading: isVerifyLoading, isError: isVerifyError, error: verifyError },
+  ] = useVerifyHazardReportMutation();
+  const [
+    resolveHazardReport,
+    {
+      isLoading: isResolveLoading,
+      isError: isResolveError,
+      error: resolveError,
+    },
+  ] = useResolveHazardReportMutation();
 
   let action;
 
@@ -36,7 +47,12 @@ const HazardDetails = ({ reportData }: TProps) => {
     );
   } else if (reportData.status === "ongoing") {
     action = (
-      <button className="bg-blue-500 text-white rounded-md px-2 py-2">
+      <button
+        className="bg-blue-500 text-white rounded-md px-2 py-2"
+        onClick={() => {
+          resolveHazardReport(reportData._id);
+        }}
+      >
         Resolve
       </button>
     );
@@ -44,7 +60,13 @@ const HazardDetails = ({ reportData }: TProps) => {
     action = <></>;
   }
 
-  if (isError) console.log(error);
+  // Verify Error Handling
+  if (isVerifyLoading) console.log("Verify Loading");
+  if (isVerifyError) console.log("Verify Error: ", verifyError);
+
+  // Resolve Error Handling
+  if (isResolveLoading) console.log("Resolve Loading");
+  if (isResolveError) console.log("Resolve Error: ", resolveError);
 
   return (
     <div className="border rounded-md shadow-sm p-2 mx-2  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">
