@@ -52,6 +52,14 @@ const HazardReportsPage = () => {
     });
   }
 
+  const onMarkerClick = (report: THazardReport) => {
+    map?.panTo({
+      lat: report.latitude,
+      lng: report.longitude,
+    });
+    dispatch(setSelectedHazardReport(report));
+  };
+
   if (isReportsLoading) console.log("Loading...");
   if (isReportsError) console.log(error);
 
@@ -104,6 +112,7 @@ const HazardReportsPage = () => {
                 lat: report.latitude,
                 lng: report.longitude,
               }}
+              onClick={() => onMarkerClick(report)}
             />
           ))}
       </HazardMap>
