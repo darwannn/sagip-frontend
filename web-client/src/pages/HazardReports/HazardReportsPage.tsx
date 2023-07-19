@@ -15,7 +15,7 @@ const HazardReportsPage = () => {
   // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
   // Hooks
-  const [selectedFilter, setSelectedFilter] = useState("All"); // ["All", "Review", "Ongoing", "Resolved"]
+  const [selectedFilter, setSelectedFilter] = useState("Review"); // ["All", "Review", "Ongoing", "Resolved"]
   // Redux
   const dispatch = useAppDispatch();
   const selectedReport = useAppSelector(selectHazardReport);
