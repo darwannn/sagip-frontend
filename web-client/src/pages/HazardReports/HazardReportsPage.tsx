@@ -10,6 +10,7 @@ import {
 } from "../../store/slices/hazardReportSlice";
 import { useCallback, useState } from "react";
 import { THazardReport } from "./types/hazardReport";
+import HazardFilters from "./components/HazardFilters";
 
 const HazardReportsPage = () => {
   // Map State / Instance
@@ -66,34 +67,8 @@ const HazardReportsPage = () => {
   return (
     <div className="relative h-screen">
       <div className="relative z-10 flex flex-col gap-2 w-max items-start">
-        <h1>Hazard Reports Page</h1>
         <div className="flex flex-col gap-2 bg-gray-50 p-3 shadow-md rounded-md">
-          <div className="flex flex-row w-full overflow-x-auto gap-2">
-            <button
-              className="p-2 bg-gray-200 rounded-md"
-              onClick={() => changeFilter("All")}
-            >
-              All
-            </button>
-            <button
-              className="p-2 bg-gray-200 rounded-md"
-              onClick={() => changeFilter("Review")}
-            >
-              Review
-            </button>
-            <button
-              className="p-2 bg-gray-200 rounded-md"
-              onClick={() => changeFilter("Ongoing")}
-            >
-              Ongoing
-            </button>
-            <button
-              className="p-2 bg-gray-200 rounded-md"
-              onClick={() => changeFilter("Resolved")}
-            >
-              Resolved
-            </button>
-          </div>
+          <HazardFilters onChangeFilter={changeFilter} />
           {isReportsLoading ? (
             <p className="text-center">Loading Reports</p>
           ) : (
