@@ -8,7 +8,7 @@ type TProps = {
 
 const HazardReportsList = memo(({ reportsData }: TProps) => {
   return (
-    <>
+    <div className="flex flex-col gap-2 max-h-[70vh] overflow-y-auto">
       {reportsData.length !== 0 ? (
         reportsData?.map((report: THazardReport) => (
           <HazardReportItem key={report._id} report={report} />
@@ -16,7 +16,7 @@ const HazardReportsList = memo(({ reportsData }: TProps) => {
       ) : (
         <p className="text-center">No Reports</p>
       )}
-    </>
+    </div>
   );
 });
 

@@ -66,8 +66,8 @@ const HazardReportsPage = () => {
 
   return (
     <div className="relative h-screen">
-      <div className="relative z-10 flex flex-col gap-2 w-max items-start">
-        <div className="flex flex-col gap-2 bg-gray-50 p-3 shadow-md rounded-md">
+      <div className="relative z-10 flex flex-col gap-2 p-2 items-start">
+        <div className="flex flex-col gap-2 bg-gray-50 mt-10 p-3 shadow-md rounded-md">
           <HazardFilters onChangeFilter={changeFilter} />
           {isReportsLoading ? (
             <p className="text-center">Loading Reports</p>
