@@ -3,27 +3,32 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice";
 import userManageSlice from "./slices/userManageSlice";
 import articleSlice from "./slices/articleSlice";
+import facilitySlice from "./slices/facilitySlice";
+import hazardReportSlice from "./slices/hazardReportSlice";
 // API / Services / Queries
 import { usersApi } from "../services/usersApi";
 import { articleQueryApi } from "../services/articleQuery";
 import { facilityQueryApi } from "../services/facilityQuery";
-import facilitySlice from "./slices/facilitySlice";
+import { hazardReportsQueryApi } from "../services/hazardReportsQuery";
 
 export const store = configureStore({
   reducer: {
     [usersApi.reducerPath]: usersApi.reducer,
     [articleQueryApi.reducerPath]: articleQueryApi.reducer,
     [facilityQueryApi.reducerPath]: facilityQueryApi.reducer,
+    [hazardReportsQueryApi.reducerPath]: hazardReportsQueryApi.reducer,
     facility: facilitySlice,
     userManage: userManageSlice,
     auth: authSlice,
     articles: articleSlice,
+    hazardReports: hazardReportSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       usersApi.middleware,
       articleQueryApi.middleware,
       facilityQueryApi.middleware,
+      hazardReportsQueryApi.middleware,
     ]),
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
