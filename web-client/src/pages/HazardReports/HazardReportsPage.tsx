@@ -1,16 +1,18 @@
+import { useCallback, useState } from "react";
+// Components
 import { MarkerF } from "@react-google-maps/api";
-import { useGetHazardReportsQuery } from "../../services/hazardReportsQuery";
 import HazardMap from "./components/HazardMap";
 import HazardReportsList from "./components/HazardReportsList";
 import HazardDetails from "./components/HazardDetails";
+import HazardFilters from "./components/HazardFilters";
+// Redux / Services / API
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   selectHazardReport,
   setSelectedHazardReport,
 } from "../../store/slices/hazardReportSlice";
-import { useCallback, useState } from "react";
+import { useGetHazardReportsQuery } from "../../services/hazardReportsQuery";
 import { THazardReport } from "./types/hazardReport";
-import HazardFilters from "./components/HazardFilters";
 
 const HazardReportsPage = () => {
   // Map State / Instance
@@ -61,7 +63,6 @@ const HazardReportsPage = () => {
     dispatch(setSelectedHazardReport(report));
   };
 
-  if (isReportsLoading) console.log("Loading...");
   if (isReportsError) console.log(error);
 
   return (
