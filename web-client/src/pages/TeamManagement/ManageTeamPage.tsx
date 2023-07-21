@@ -11,6 +11,19 @@ const ManageTeamPage = () => {
   return (
     <>
       <h1>Manage Team Page</h1>
+      <div>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            {data?.map((team) => (
+              <div key={team._id}>
+                <p>{team.name}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 };
