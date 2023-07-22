@@ -11,6 +11,7 @@ import { articleQueryApi } from "../services/articleQuery";
 import { facilityQueryApi } from "../services/facilityQuery";
 import { hazardReportsQueryApi } from "../services/hazardReportsQuery";
 import { teamQueryApi } from "../services/teamQuery";
+import teamSlice from "./slices/teamSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     auth: authSlice,
     articles: articleSlice,
     hazardReports: hazardReportSlice,
+    team: teamSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
