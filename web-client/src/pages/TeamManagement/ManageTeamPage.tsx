@@ -3,12 +3,10 @@ import {
   useCreateTeamMutation,
   useGetTeamsQuery,
 } from "../../services/teamQuery";
+import TeamList from "./Components/TeamList";
 
 const ManageTeamPage = () => {
   const [teamName, setTeamName] = useState("");
-
-  const { data, isSuccess, isLoading, isError, error } =
-    useGetTeamsQuery(undefined);
 
   const [createTeam, createTeamState] = useCreateTeamMutation();
 
@@ -16,14 +14,6 @@ const ManageTeamPage = () => {
     createTeam({ name: teamName });
     setTeamName("");
   };
-
-  if (isLoading) console.log("Loading...");
-  if (isSuccess) console.log(data);
-  if (isError) console.log(error);
-
-  if (createTeamState.isSuccess) console.log(createTeamState.data);
-  if (createTeamState.isError) console.log(createTeamState.error);
-  if (createTeamState.isLoading) console.log("Creating...");
 
   return (
     <>
@@ -46,19 +36,7 @@ const ManageTeamPage = () => {
           Create Team
         </button>
       </div>
-      <div>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <div>
-            {data?.map((team) => (
-              <div key={team._id}>
-                <p>{team.name}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      <TeamList />
     </>
   );
 };
