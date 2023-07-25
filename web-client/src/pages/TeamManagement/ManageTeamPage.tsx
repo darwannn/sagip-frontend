@@ -3,6 +3,7 @@ import CreateTeamForm from "./Components/CreateTeamForm";
 import TeamList from "./Components/TeamList";
 import { useAppSelector } from "../../store/hooks";
 import { selectSelectedTeam } from "../../store/slices/teamSlice";
+import TeamDetails from "./Components/TeamDetails";
 
 const ManageTeamPage = () => {
   const [isCreateTeam, setIsCreateTeam] = useState(false);
@@ -28,19 +29,7 @@ const ManageTeamPage = () => {
       <div>
         <h1>Team Details</h1>
         {selectedTeam ? (
-          <div>
-            <p>{selectedTeam.name}</p>
-            <div>
-              <p>Head:</p>
-              <p>{selectedTeam.head?.firstname}</p>
-            </div>
-            <div>
-              <p>Members:</p>
-              {selectedTeam.members?.map((member) => (
-                <p key={member._id}>{member.firstname}</p>
-              ))}
-            </div>
-          </div>
+          <TeamDetails selectedTeam={selectedTeam} />
         ) : (
           <p>Select a team to view the details</p>
         )}
