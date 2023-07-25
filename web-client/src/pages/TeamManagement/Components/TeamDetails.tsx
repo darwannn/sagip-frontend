@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetTeamQuery } from "../../../services/teamQuery";
-import { BASE_IMAGE_URL } from "../../../api.config";
+import UserCard from "./UserCard";
 
 const TeamDetails = () => {
   const { id } = useParams();
@@ -34,23 +34,8 @@ const TeamDetails = () => {
       {/* Team Leader */}
       <div>
         <span>Team Leader: </span>
-        {teamData?.head !== null ? (
-          <div className="flex flex-row gap-2">
-            <div>
-              <img
-                src={`${BASE_IMAGE_URL}/user/${teamData?.head.profilePicture}`}
-                alt="Team Leader"
-                className="w-14 h-14 rounded-full"
-              />
-            </div>
-            <div>
-              <span className="text-sm text-gray-500">
-                {teamData?.head._id}
-              </span>
-              <p className="font-bold">{`${teamData?.head.lastname}, ${teamData?.head.firstname} ${teamData?.head.middlename} 
-          `}</p>
-            </div>
-          </div>
+        {teamData && teamData.head !== null ? (
+          <UserCard user={teamData.head} />
         ) : (
           <div className="border px-3 py-1 cursor-pointer rounded-md">
             <p className="text-gray-700 text-[16px] leading-tight">
@@ -66,24 +51,8 @@ const TeamDetails = () => {
           <div>
             <span>Team Members</span>
             <div className="">
-              {teamData?.members.map((member) => (
-                <div
-                  key={member._id}
-                  className="flex flex-row items-center justify-center gap-2"
-                >
-                  <div>
-                    <img
-                      src={`${BASE_IMAGE_URL}/user/${member.profilePicture}`}
-                      alt="Team Leader"
-                      className="w-16 h-16 rounded-full"
-                    />
-                  </div>
-                  <div>
-                    <span className="text-sm text-gray-500">{member._id}</span>
-                    <p className="font-bold">{`${member.lastname}, ${member.firstname} ${member.middlename} 
-          `}</p>
-                  </div>
-                </div>
+              {teamData.members.map((member) => (
+                <UserCard key={member._id} user={member} />
               ))}
             </div>
           </div>
