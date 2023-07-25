@@ -1,25 +1,8 @@
-import { TTeam } from "../Types/Team";
+import { useParams } from "react-router-dom";
 
-type TProps = {
-  selectedTeam: TTeam;
-};
-
-const TeamDetails = ({ selectedTeam }: TProps) => {
-  return (
-    <div>
-      <p>{selectedTeam.name}</p>
-      <div>
-        <p>Head:</p>
-        <p>{selectedTeam.head?.firstname}</p>
-      </div>
-      <div>
-        <p>Members:</p>
-        {selectedTeam.members?.map((member) => (
-          <p key={member._id}>{member.firstname}</p>
-        ))}
-      </div>
-    </div>
-  );
+const TeamDetails = () => {
+  const { id } = useParams();
+  return <div>TeamDetails: {id}</div>;
 };
 
 export default TeamDetails;

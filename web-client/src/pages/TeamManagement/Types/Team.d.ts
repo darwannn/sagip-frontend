@@ -10,3 +10,20 @@ export type TTeam = {
   updatedAt: string;
   __v?: number;
 };
+
+type TResponder = {
+  _id: string;
+  firstname: string;
+  middlename?: string;
+  lastname: string;
+  email: string;
+  teamName?: string;
+  teamId?: string;
+};
+
+type TResponders = {
+  success: boolean;
+  assignedResponders: Responder[];
+  unassignedResponders: Responder[];
+  responders: Responder[];
+};

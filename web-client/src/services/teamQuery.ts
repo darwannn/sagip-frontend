@@ -2,7 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { API_BASE_URL } from "../api.config";
 
-import type { TTeam } from "../pages/TeamManagement/Types/Team";
+import type {
+  TResponder,
+  TResponders,
+  TTeam,
+} from "../pages/TeamManagement/Types/Team";
 
 export const teamQueryApi = createApi({
   reducerPath: "teamQuery",
@@ -29,7 +33,23 @@ export const teamQueryApi = createApi({
       }),
       invalidatesTags: ["Teams"],
     }),
+    //Get Unassigned Responders
+    getUnassignedResponders: builder.query<TResponder[], string>({
+      query: () => ({
+        url: "team/responder",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      transformResponse: (response: TResponders) => {
+        return response.unassignedResponders;
+      },
+    }),
   }),
 });
 
-export const { useGetTeamsQuery, useCreateTeamMutation } = teamQueryApi;
+export const {
+  useGetTeamsQuery,
+  useCreateTeamMutation,
+  useLazyGetUnassignedRespondersQuery,
+} = teamQueryApi;

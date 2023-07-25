@@ -1,14 +1,10 @@
 import { useState } from "react";
 import CreateTeamForm from "./Components/CreateTeamForm";
 import TeamList from "./Components/TeamList";
-import { useAppSelector } from "../../store/hooks";
-import { selectSelectedTeam } from "../../store/slices/teamSlice";
-import TeamDetails from "./Components/TeamDetails";
+import { Outlet } from "react-router-dom";
 
 const ManageTeamPage = () => {
   const [isCreateTeam, setIsCreateTeam] = useState(false);
-  const selectedTeam = useAppSelector(selectSelectedTeam);
-  console.log(selectedTeam);
 
   return (
     <div className="flex flex-row h-screen">
@@ -26,14 +22,7 @@ const ManageTeamPage = () => {
         )}
         <TeamList />
       </div>
-      <div>
-        <h1>Team Details</h1>
-        {selectedTeam ? (
-          <TeamDetails selectedTeam={selectedTeam} />
-        ) : (
-          <p>Select a team to view the details</p>
-        )}
-      </div>
+      <Outlet />
     </div>
   );
 };

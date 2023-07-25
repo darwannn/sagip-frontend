@@ -1,11 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useGetTeamsQuery } from "../../../services/teamQuery";
-import { useAppDispatch } from "../../../store/hooks";
-import { setSelectedTeam } from "../../../store/slices/teamSlice";
 
 const TeamList = () => {
+  const navigate = useNavigate();
   const { data, isSuccess, isLoading, isError, error } =
     useGetTeamsQuery(undefined);
-  const dispatch = useAppDispatch();
 
   if (isLoading) console.log("Loading...");
   if (isSuccess) console.log(data);
@@ -17,7 +16,12 @@ const TeamList = () => {
       ) : (
         <div>
           {data?.map((team) => (
-            <div key={team._id} onClick={() => dispatch(setSelectedTeam(team))}>
+            <div
+              key={team._id}
+              onClick={() => {
+                navigate(`${team._id}`);
+              }}
+            >
               <p>{team.name}</p>
             </div>
           ))}
