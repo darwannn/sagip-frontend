@@ -21,6 +21,16 @@ export const teamQueryApi = createApi({
           ? results.map(({ _id }) => ({ type: "Teams", id: _id }))
           : ["Teams"],
     }),
+    //Get a specific team
+    getTeam: builder.query<TTeam, string>({
+      query: (id) => ({
+        url: `team/${id}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: (_result, _error, id) => [{ type: "Teams", id }],
+    }),
     // Add a team
     createTeam: builder.mutation<TTeam, Partial<TTeam>>({
       query: (body) => ({
@@ -50,6 +60,7 @@ export const teamQueryApi = createApi({
 
 export const {
   useGetTeamsQuery,
+  useGetTeamQuery,
   useCreateTeamMutation,
   useLazyGetUnassignedRespondersQuery,
 } = teamQueryApi;
