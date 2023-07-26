@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-  useGetAlertsQuery,
-  useGetAlertByIdQuery,
-} from "../../services/alertQuery";
+import { useGetAlertsQuery } from "../../services/alertQuery";
 import AlertTable from "./components/AlertTable";
 import SMSAlertForm from "./components/AlertSMSForm";
 

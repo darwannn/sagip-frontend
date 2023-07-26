@@ -127,7 +127,7 @@ const ViewAlertPage = () => {
           {/* page number */}
           <Text
             style={styles.page}
-            render={({ pageNumber, totalPages }) =>
+            render={({ pageNumber }) =>
               /*  `${pageNumber} / ${totalPages}` */
               `${pageNumber}`
             }

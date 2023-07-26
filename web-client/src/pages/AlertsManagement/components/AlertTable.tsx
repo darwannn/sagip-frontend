@@ -10,8 +10,7 @@ import DataTable from "../../../components/ui/data-table";
 import { alertColumn as columns } from "../types/AlertColumn";
 // Redux
 import PaginationControls from "../../../components/ui/PaginationControl";
-import { TSurvey, TSurveyResData } from "../types/alert";
-import AlertActive from "./AlertActive";
+import { TSurvey } from "../types/alert";
 type TProps = {
   alertData: TSurvey[];
 };

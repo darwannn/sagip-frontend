@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  Controller,
-  FieldValues,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { useState, useEffect } from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { TActiveSurvey, TSurvey, TSurveyResData } from "../types/alert";
 
@@ -51,7 +46,6 @@ const AlertForm = ({ alertData }: TProps) => {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { isDirty, errors },
   } = useForm<FieldValues>({

@@ -9,7 +9,7 @@ import {
 import { useSendAlertMutation } from "../../../services/alertQuery";
 
 import { useState } from "react";
-import Select, { MultiValue } from "react-select";
+import Select from "react-select";
 
 const AlertForm = () => {
   const [formMessage, setFormMessage] = useState<string>("");
