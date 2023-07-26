@@ -4,6 +4,7 @@ import UserCard from "./UserCard";
 import { useLazyGetRespondersQuery } from "../../../services/responderQuery";
 import { useState } from "react";
 import { User } from "../../../types/user";
+import MembersTable from "./TeamMembersTable";
 
 const TeamDetails = () => {
   const { id } = useParams();
@@ -32,7 +33,7 @@ const TeamDetails = () => {
   }
 
   return (
-    <div className="p-5">
+    <div className="p-5 flex-grow">
       <div>
         <span className="text-sm text-gray-400">{teamData?._id}</span>
         <h1 className="text-3xl font-bold">{teamData?.name}</h1>
@@ -91,8 +92,8 @@ const TeamDetails = () => {
         )}
       </div>
       {/* Team Members */}
-      <div>
-        {teamData?.members && teamData.members.length > 0 ? (
+      <MembersTable membersData={teamData?.members || []} />
+      {/* {teamData?.members && teamData.members.length > 0 ? (
           <div>
             <span>Team Members</span>
             <div className="">
@@ -103,8 +104,7 @@ const TeamDetails = () => {
           </div>
         ) : (
           <></>
-        )}
-      </div>
+        )} */}
     </div>
   );
 };
