@@ -10,11 +10,15 @@ import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
 import EmergencyReportsPage from "../pages/EmergencyReports/EmergencyReportsPage";
 import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
 import ManageFacilitiesPage from "../pages/MapManagement/ManageFacilitiesPage";
-import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
 import { checkAuth, isLoggedIn } from "../util/auth";
 import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
 import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";
 import ViewArticlePage from "../pages/Articles/ViewArticlePage";
+
+import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
+import CreateAlertPage from "../pages/AlertsManagement/CreateAlertsPage";
+import ViewAlertsPage from "../pages/AlertsManagement/ViewAlertsPage";
+import AlertReport from "../pages/AlertsManagement/components/AlertReport";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +53,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "disaster-alerts",
-        element: <ManageAlertsPage />,
+        children: [
+          { index: true, element: <ManageAlertsPage /> },
+          { path: "create", element: <CreateAlertPage /> },
+          { path: ":alertId", element: <ViewAlertsPage /> },
+          /* { path: "report/:alertId", element: <AlertReport /> }, */
+        ],
       },
       {
         path: "articles",
@@ -72,5 +81,11 @@ export const router = createBrowserRouter([
     path: "/forgot-password",
     element: <ForgotPasswordPage />,
     loader: isLoggedIn,
+  },
+  /* temporary, so the report will open in new tab (without side navigation menu) */
+  {
+    path: "/disaster-alerts/report/:alertId",
+    element: <AlertReport />,
+    loader: checkAuth,
   },
 ]);
