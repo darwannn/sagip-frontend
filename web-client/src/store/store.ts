@@ -12,6 +12,7 @@ import { facilityQueryApi } from "../services/facilityQuery";
 import { hazardReportsQueryApi } from "../services/hazardReportsQuery";
 import { teamQueryApi } from "../services/teamQuery";
 import teamSlice from "./slices/teamSlice";
+import { responderQueryApi } from "../services/responderQuery";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     [facilityQueryApi.reducerPath]: facilityQueryApi.reducer,
     [hazardReportsQueryApi.reducerPath]: hazardReportsQueryApi.reducer,
     [teamQueryApi.reducerPath]: teamQueryApi.reducer,
+    [responderQueryApi.reducerPath]: responderQueryApi.reducer,
     facility: facilitySlice,
     userManage: userManageSlice,
     auth: authSlice,
@@ -34,6 +36,7 @@ export const store = configureStore({
       facilityQueryApi.middleware,
       hazardReportsQueryApi.middleware,
       teamQueryApi.middleware,
+      responderQueryApi.middleware,
     ]),
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
