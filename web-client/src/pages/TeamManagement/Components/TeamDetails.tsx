@@ -6,6 +6,7 @@ import { useState } from "react";
 import { User } from "../../../types/user";
 import MembersTable from "./TeamMembersTable";
 import Modal from "../../../components/Modal/Modal";
+import Select from "react-select";
 
 const TeamDetails = () => {
   const { id } = useParams();
@@ -94,7 +95,15 @@ const TeamDetails = () => {
             </>
           )}
         </div>
-        <button onClick={() => setShowModal(true)}>Hello</button>
+        <button
+          className="bg-indigo-500 text-white px-6 py-2 rounded mt-2"
+          onClick={() => {
+            getResponders();
+            setShowModal(true);
+          }}
+        >
+          Edit Team
+        </button>
 
         {/* Team Members */}
         <MembersTable membersData={teamData?.members || []} />
@@ -104,7 +113,63 @@ const TeamDetails = () => {
         modalShow={showModal}
         modalClose={() => setShowModal(false)}
       >
-        <span> Hello World</span>
+        <div className="w-[600px]">
+          {/* Search */}
+          <div className="flex flex-row gap-1">
+            <input
+              type="text"
+              placeholder="Search for a user"
+              className="border p-2 rounded-md flex-grow text-sm"
+            />
+            <Select
+              className="w-[140px] text-sm"
+              options={[
+                { value: "member", label: "Member" },
+                { value: "head", label: "Head" },
+              ]}
+              defaultValue={{ value: "member", label: "Member" }}
+            />
+            <button className="text-base bg-indigo-500 text-white px-6 rounded">
+              Add
+            </button>
+          </div>
+          <div className="m-3">
+            {/* Head */}
+            <span className="font-semibold">Head</span>
+            <div className="flex flex-row justify-between items-center p-2 my-3">
+              {teamData?.head ? (
+                <>
+                  <UserCard user={teamData.head} />
+                  <div>{/* ACTIONS */}</div>
+                </>
+              ) : (
+                <>
+                  <span className="text-gray-500 text-center">
+                    No Head assigned for this team yet
+                  </span>
+                </>
+              )}
+            </div>
+            {/* Members */}
+            <span className="font-semibold">Members</span>
+            <div className="flex flex-col gap-2 my-3 p-2">
+              {teamData?.members.map((member) => (
+                <div
+                  key={member._id}
+                  className="flex flex-row justify-between items-center"
+                >
+                  <UserCard user={member} />
+                  <div>{/* ACTIONS */}</div>
+                </div>
+              ))}
+              {teamData?.members.length === 0 && (
+                <span className="text-gray-500">
+                  No members assigned for this team yet
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
       </Modal>
     </>
   );

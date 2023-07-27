@@ -7,17 +7,17 @@ type TProps = {
 
 const UserCard = ({ user }: TProps) => {
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row items-center gap-2">
       <div>
         <img
           src={`${BASE_IMAGE_URL}/user/${user.profilePicture}`}
           alt="Team Leader"
-          className="w-14 h-14 rounded-full"
+          className="w-11 h-11 rounded-full"
         />
       </div>
       <div>
         <span className="text-sm text-gray-500">{user._id}</span>
-        <p className="font-bold">{`${user.lastname}, ${user.firstname} ${user.middlename} 
+        <p className="font-semibold">{`${user.lastname}, ${user.firstname} ${user.middlename} 
           `}</p>
       </div>
     </div>
