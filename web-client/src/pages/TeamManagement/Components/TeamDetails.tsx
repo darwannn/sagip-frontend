@@ -7,12 +7,14 @@ import { User } from "../../../types/user";
 import MembersTable from "./TeamMembersTable";
 import Modal from "../../../components/Modal/Modal";
 import Select from "react-select";
+import { BASE_IMAGE_URL } from "../../../api.config";
 
 const TeamDetails = () => {
   const { id } = useParams();
+  const [searchUser, setSearchUser] = useState("");
+  const [selectedHead, setSelectedHead] = useState<User | null>(null); //
   const [showModal, setShowModal] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
-  const [selectedHead, setSelectedHead] = useState<User | null>(null); //
   const {
     data: teamData,
     isFetching,
@@ -34,6 +36,17 @@ const TeamDetails = () => {
       </div>
     );
   }
+
+  const getFilteredResponders = () => {
+    if (searchUser !== "") {
+      // Filter unassigned responders by name using searchUser
+      return results.data?.unassignedResponders.filter((responder) => {
+        const fullname = `${responder.lastname} ${responder.firstname} ${responder.middlename}`;
+        return fullname.toLowerCase().includes(searchUser.toLowerCase());
+      });
+    }
+    return results.data?.unassignedResponders;
+  };
 
   return (
     <>
@@ -71,7 +84,7 @@ const TeamDetails = () => {
               )}
 
               {/* RESPONDERS SELECTION */}
-              {isAddMode && (
+              {/* {isAddMode && (
                 <div className="border bg-white absolute left-0 max-h-40 overflow-x-auto flex flex-col gap-2">
                   {results.isLoading ? (
                     <p>Loading Responders</p>
@@ -91,7 +104,7 @@ const TeamDetails = () => {
                     ))
                   )}
                 </div>
-              )}
+              )} */}
             </>
           )}
         </div>
@@ -116,11 +129,59 @@ const TeamDetails = () => {
         <div className="w-[600px]">
           {/* Search */}
           <div className="flex flex-row gap-1">
-            <input
-              type="text"
-              placeholder="Search for a user"
-              className="border p-2 rounded-md flex-grow text-sm"
-            />
+            <div className="flex-grow relative">
+              <input
+                type="text"
+                placeholder="Search for a user"
+                className="border p-2 rounded-md w-full text-sm"
+                value={searchUser}
+                onChange={(e) => setSearchUser(e.target.value)}
+                onFocus={() => setIsAddMode(true)}
+                onBlur={() => setIsAddMode(false)}
+              />
+              {/* Suggestions */}
+              {isAddMode && (
+                <div className="border rounded shadow-sm w-full bg-white absolute left-0 max-h-40 overflow-x-auto flex flex-col gap-1">
+                  {results.isLoading ? (
+                    <>
+                      <span className="text-gray-500 text-center">
+                        Users Loading...
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {getFilteredResponders()?.map((responder) => (
+                        <div
+                          key={responder._id}
+                          className="flex flex-row items-center gap-1 p-1 hover:bg-gray-300 cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedHead(responder);
+                            setIsAddMode(false);
+                          }}
+                        >
+                          {/* Image Container  */}
+                          <div>
+                            <img
+                              src={`${BASE_IMAGE_URL}/user/${responder.profilePicture}`}
+                              alt="profile"
+                              className="w-10 h-10 rounded-full"
+                            />
+                          </div>
+                          {/* User Details */}
+                          <div className="flex flex-col">
+                            <span>{`${responder.lastname}, ${responder.firstname} ${responder.middlename}`}</span>
+                            <span className="text-sm text-gray-500">
+                              {responder.email}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
             <Select
               className="w-[140px] text-sm"
               options={[
