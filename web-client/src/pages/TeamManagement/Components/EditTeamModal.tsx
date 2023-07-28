@@ -7,6 +7,7 @@ import Select from "react-select";
 import { AiOutlineMinus } from "react-icons/ai";
 import {
   useAddTeamHeadMutation,
+  useAddTeamMemberMutation,
   useLazyGetUnassignedRespondersQuery,
 } from "../../../services/teamQuery";
 type TProps = {
@@ -29,6 +30,7 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
   };
 
   const [addTeamHead, addTeamHeadState] = useAddTeamHeadMutation();
+  const [addTeamMember, addTeamMemberState] = useAddTeamMemberMutation();
 
   const [isAddMode, setIsAddMode] = useState(false);
   const [searchUser, setSearchUser] = useState("");
@@ -39,6 +41,11 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
     if (!selectedUser) return;
     if (teamRole === "head") {
       addTeamHead({ teamId: teamData?._id || "", userId: selectedUser._id });
+    } else {
+      addTeamMember({
+        teamId: teamData?._id || "",
+        userId: selectedUser._id,
+      });
     }
   };
 
@@ -46,6 +53,9 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
 
   if (addTeamHeadState.isError) console.log(addTeamHeadState.data);
   if (addTeamHeadState.isSuccess) console.log(addTeamHeadState.data);
+
+  if (addTeamMemberState.isError) console.log(addTeamMemberState.error);
+  if (addTeamMemberState.isSuccess) console.log(addTeamMemberState.data);
 
   return (
     <div className="w-[600px]">

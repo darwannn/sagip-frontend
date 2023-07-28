@@ -61,7 +61,22 @@ export const teamQueryApi = createApi({
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: { head: userId, members: [] },
+        body: { head: userId },
+      }),
+      invalidatesTags: (_result, _error, { teamId }) => [
+        { type: "Teams", id: teamId },
+        "Responders",
+      ],
+    }),
+    // Add a member to a team
+    addTeamMember: builder.mutation<TTeam, { teamId: string; userId: string }>({
+      query: ({ teamId, userId }) => ({
+        url: `team/update/${teamId}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: { members: [userId] },
       }),
       invalidatesTags: (_result, _error, { teamId }) => [
         { type: "Teams", id: teamId },
@@ -77,4 +92,5 @@ export const {
   useCreateTeamMutation,
   useLazyGetUnassignedRespondersQuery,
   useAddTeamHeadMutation,
+  useAddTeamMemberMutation,
 } = teamQueryApi;
