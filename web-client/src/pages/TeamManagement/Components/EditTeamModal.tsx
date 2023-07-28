@@ -1,36 +1,51 @@
 import { useState } from "react";
 import { User } from "../../../types/user";
-import { useLazyGetRespondersQuery } from "../../../services/responderQuery";
 import { BASE_IMAGE_URL } from "../../../api.config";
 import UserCard from "./UserCard";
 import { TTeam } from "../Types/Team";
 import Select from "react-select";
 import { AiOutlineMinus } from "react-icons/ai";
+import {
+  useAddTeamHeadMutation,
+  useLazyGetUnassignedRespondersQuery,
+} from "../../../services/teamQuery";
 type TProps = {
   teamData?: TTeam;
 };
 
 const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
-  const [getResponders, results] = useLazyGetRespondersQuery();
+  // const [getResponders, results] = useLazyGetRespondersQuery();
+  const [getResponders, results] = useLazyGetUnassignedRespondersQuery();
 
   const getFilteredResponders = () => {
     if (searchUser !== "") {
       // Filter unassigned responders by name using searchUser
-      return results.data?.unassignedResponders.filter((responder) => {
+      return results.data?.filter((responder) => {
         const fullname = `${responder.lastname} ${responder.firstname} ${responder.middlename}`;
         return fullname.toLowerCase().includes(searchUser.toLowerCase());
       });
     }
-    return results.data?.unassignedResponders;
+    return results.data;
   };
+
+  const [addTeamHead, addTeamHeadState] = useAddTeamHeadMutation();
 
   const [isAddMode, setIsAddMode] = useState(false);
   const [searchUser, setSearchUser] = useState("");
+  const [teamRole, setTeamRole] = useState("");
   const [selectedUser, setSelectedUser] = useState<User | null>(null); //
 
-  // useEffect(() => {
-  //   getResponders();
-  // }, [getResponders]);
+  const onClickAddResponder = () => {
+    if (!selectedUser) return;
+    if (teamRole === "head") {
+      addTeamHead({ teamId: teamData?._id || "", userId: selectedUser._id });
+    }
+  };
+
+  if (results.isError) console.log(results.error);
+
+  if (addTeamHeadState.isError) console.log(addTeamHeadState.data);
+  if (addTeamHeadState.isSuccess) console.log(addTeamHeadState.data);
 
   return (
     <div className="w-[600px]">
@@ -116,9 +131,15 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
             { value: "head", label: "Head" },
           ]}
           defaultValue={{ value: "member", label: "Member" }}
+          onChange={(e) => setTeamRole(e?.value || "")}
+          isDisabled={addTeamHeadState.isLoading}
         />
-        <button className="text-base bg-indigo-500 text-white px-6 py-2 rounded">
-          Add
+        <button
+          className="text-base bg-indigo-500 text-white px-6 py-2 rounded disabled:bg-indigo-300 disabled:cursor-wait"
+          onClick={onClickAddResponder}
+          disabled={addTeamHeadState.isLoading}
+        >
+          {addTeamHeadState.isLoading ? "Adding..." : "Add"}
         </button>
       </div>
       <div className="m-3">

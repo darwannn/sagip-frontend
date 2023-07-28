@@ -2,16 +2,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { API_BASE_URL } from "../api.config";
 
-import type {
-  TResponder,
-  TResponders,
-  TTeam,
-} from "../pages/TeamManagement/Types/Team";
+import type { TResponders, TTeam } from "../pages/TeamManagement/Types/Team";
+import { User } from "../types/user";
 
 export const teamQueryApi = createApi({
   reducerPath: "teamQuery",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["Teams"],
+  tagTypes: ["Teams", "Responders"],
   endpoints: (builder) => ({
     // Get all teams
     getTeams: builder.query<TTeam[], void>({
@@ -44,7 +41,7 @@ export const teamQueryApi = createApi({
       invalidatesTags: ["Teams"],
     }),
     //Get Unassigned Responders
-    getUnassignedResponders: builder.query<TResponder[], string>({
+    getUnassignedResponders: builder.query<User[], void>({
       query: () => ({
         url: "team/responder",
         headers: {
@@ -54,6 +51,22 @@ export const teamQueryApi = createApi({
       transformResponse: (response: TResponders) => {
         return response.unassignedResponders;
       },
+      providesTags: ["Responders"],
+    }),
+    // Add a head to a team
+    addTeamHead: builder.mutation<TTeam, { teamId: string; userId: string }>({
+      query: ({ teamId, userId }) => ({
+        url: `team/update/${teamId}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: { head: userId, members: [] },
+      }),
+      invalidatesTags: (_result, _error, { teamId }) => [
+        { type: "Teams", id: teamId },
+        "Responders",
+      ],
     }),
   }),
 });
@@ -63,4 +76,5 @@ export const {
   useGetTeamQuery,
   useCreateTeamMutation,
   useLazyGetUnassignedRespondersQuery,
+  useAddTeamHeadMutation,
 } = teamQueryApi;

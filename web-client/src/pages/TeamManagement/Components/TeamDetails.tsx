@@ -20,7 +20,6 @@ const TeamDetails = () => {
   const [getResponders, results] = useLazyGetRespondersQuery();
 
   if (results.isError) console.log(results.error);
-  if (results.isSuccess) console.log(results.data);
 
   if (isError) console.log(error);
 

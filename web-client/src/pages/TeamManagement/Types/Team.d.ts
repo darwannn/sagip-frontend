@@ -24,6 +24,7 @@ type TResponder = {
 type TResponders = {
   success: boolean;
   assignedResponders: Responder[];
-  unassignedResponders: Responder[];
+  // unassignedResponders: Responder[];
+  unassignedResponders: User[];
   responders: Responder[];
 };

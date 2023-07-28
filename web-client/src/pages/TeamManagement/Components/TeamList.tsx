@@ -3,11 +3,8 @@ import { useGetTeamsQuery } from "../../../services/teamQuery";
 
 const TeamList = () => {
   const navigate = useNavigate();
-  const { data, isSuccess, isLoading, isError, error } =
-    useGetTeamsQuery(undefined);
+  const { data, isLoading, isError, error } = useGetTeamsQuery(undefined);
 
-  if (isLoading) console.log("Loading...");
-  if (isSuccess) console.log(data);
   if (isError) console.log(error);
   return (
     <div>
