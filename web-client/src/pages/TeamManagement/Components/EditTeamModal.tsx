@@ -9,13 +9,14 @@ import {
   useAddTeamHeadMutation,
   useAddTeamMemberMutation,
   useLazyGetUnassignedRespondersQuery,
+  useUnassignHeadMutation,
+  useUnassignMemberMutation,
 } from "../../../services/teamQuery";
 type TProps = {
   teamData?: TTeam;
 };
 
 const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
-  // const [getResponders, results] = useLazyGetRespondersQuery();
   const [getResponders, results] = useLazyGetUnassignedRespondersQuery();
 
   const getFilteredResponders = () => {
@@ -31,6 +32,8 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
 
   const [addTeamHead, addTeamHeadState] = useAddTeamHeadMutation();
   const [addTeamMember, addTeamMemberState] = useAddTeamMemberMutation();
+  const [unassignMember, unassignMemberState] = useUnassignMemberMutation();
+  const [unassignHead, unassignHeadState] = useUnassignHeadMutation();
 
   const [isAddMode, setIsAddMode] = useState(false);
   const [searchUser, setSearchUser] = useState("");
@@ -49,6 +52,27 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
     }
   };
 
+  const onClickUnassignResponder = (responder: User, type: string) => {
+    const confirm = window.confirm(
+      "Are you sure you want to unassign this responder?"
+    );
+    if (!confirm) return;
+    console.log("unassigning responder");
+
+    if (type === "member") {
+      unassignMember({
+        userId: responder._id,
+        prevTeamId: teamData?._id || "",
+      });
+    } else if (type === "head") {
+      console.log("unassigning head");
+      unassignHead({
+        userId: responder._id,
+        prevTeamId: teamData?._id || "",
+      });
+    }
+  };
+
   if (results.isError) console.log(results.error);
 
   if (addTeamHeadState.isError) console.log(addTeamHeadState.data);
@@ -56,6 +80,12 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
 
   if (addTeamMemberState.isError) console.log(addTeamMemberState.error);
   if (addTeamMemberState.isSuccess) console.log(addTeamMemberState.data);
+
+  if (unassignMemberState.isError) console.log(unassignMemberState.error);
+  if (unassignMemberState.isSuccess) console.log(unassignMemberState.data);
+
+  if (unassignHeadState.isError) console.log(unassignHeadState.error);
+  if (unassignHeadState.isSuccess) console.log(unassignHeadState.data);
 
   return (
     <div className="w-[600px]">
@@ -159,7 +189,16 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
           {teamData?.head ? (
             <>
               <UserCard user={teamData.head} />
-              <div>{/* ACTIONS */}</div>
+              <div>
+                <button
+                  className="text-gray-300 bg-gray-100 p-0.5 rounded-full hover:bg-red-200 hover:text-red-500 transition duration-200"
+                  onClick={() =>
+                    onClickUnassignResponder(teamData.head, "head")
+                  }
+                >
+                  <AiOutlineMinus />
+                </button>
+              </div>
             </>
           ) : (
             <>
@@ -178,7 +217,14 @@ const EditTeamModal: React.FC<TProps> = ({ teamData }) => {
               className="flex flex-row justify-between items-center"
             >
               <UserCard user={member} />
-              <div>{/* ACTIONS */}</div>
+              <div>
+                <button
+                  className="text-gray-300 bg-gray-100 p-0.5 rounded-full hover:bg-red-200 hover:text-red-500 transition duration-200"
+                  onClick={() => onClickUnassignResponder(member, "member")}
+                >
+                  <AiOutlineMinus />
+                </button>
+              </div>
             </div>
           ))}
           {teamData?.members.length === 0 && (
