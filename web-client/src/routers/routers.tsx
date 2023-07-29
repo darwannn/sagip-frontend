@@ -4,8 +4,7 @@ import LoginPage, { action as loginAction } from "../pages/Login/LoginPage";
 import RegistrationPage from "../pages/Register/RegisterPage";
 import ForgotPasswordPage from "../pages/Register/ForgotPasswordPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
-import ManageUserPage from "../pages/UserManagement/ManageUserPage";
-import VerifyUserPage from "../pages/UserManagement/VerifyUserPage";
+
 import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
 import EmergencyReportsPage from "../pages/EmergencyReports/EmergencyReportsPage";
 import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
@@ -20,6 +19,11 @@ import CreateAlertPage from "../pages/AlertsManagement/CreateAlertsPage";
 import ViewAlertsPage from "../pages/AlertsManagement/ViewAlertsPage";
 import AlertReport from "../pages/AlertsManagement/components/AlertReport";
 
+import ManageUserPage from "../pages/UserManagement/ManageUserPage";
+import VerifyUserPage from "../pages/UserManagement/VerifyUserPage";
+import CreateUserPage from "../pages/UserManagement/CreateUserPage";
+import ViewUserPage from "../pages/UserManagement/ViewUserPage";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -32,6 +36,8 @@ export const router = createBrowserRouter([
         // loader:
         children: [
           { index: true, element: <ManageUserPage /> },
+          { path: "create", element: <CreateUserPage /> },
+          { path: ":userId", element: <ViewUserPage /> },
           { path: "verify-users", element: <VerifyUserPage /> },
         ],
       },

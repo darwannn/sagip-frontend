@@ -1,9 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 // Types
-import { User } from "../../types/user";
+import { User } from "../../../types/user";
 
 // API
-import { API_BASE_URL } from "../../api.config";
+import { BASE_IMAGE_URL } from "../../../api.config";
 
 import UserRowAction from "./UserRowAction";
 
@@ -17,7 +17,7 @@ export const userColumn: ColumnDef<User>[] = [
     header: "",
     cell: ({ row }) => {
       const displayPictureName = row.original.profilePicture;
-      const imgUrl = `${API_BASE_URL}/images/User/${displayPictureName}`;
+      const imgUrl = `${BASE_IMAGE_URL}/user/${displayPictureName}`;
       return (
         <img
           src={imgUrl}
@@ -31,8 +31,8 @@ export const userColumn: ColumnDef<User>[] = [
       minWidth: "80px",
     },
   },
-  {
-    id: "fullname",
+  /*  {
+    accessorKey: "fullname",
     // header: () => {
     //   // Centered text "Full Name"
     //   return <h2 className="">Full Name</h2>;
@@ -52,6 +52,14 @@ export const userColumn: ColumnDef<User>[] = [
         header: "Last Name",
       },
     ],
+  }, */
+  {
+    accessorKey: "firstname",
+    header: "Name",
+    cell: ({ row }) => {
+      const { firstname, middlename, lastname } = row.original;
+      return `${firstname} ${middlename} ${lastname}`;
+    },
   },
   {
     accessorKey: "email",
@@ -80,11 +88,14 @@ export const userColumn: ColumnDef<User>[] = [
         </button>
       );
     },
+    cell: ({ row }) => {
+      return row.original.status.toUpperCase();
+    },
   },
   {
     id: "action",
     header: "Action",
-    cell: ({ row }) => <UserRowAction userId={row.original._id} />,
+    cell: ({ row }) => <UserRowAction rowId={row.original._id} />,
     meta: {
       width: "100px",
     },

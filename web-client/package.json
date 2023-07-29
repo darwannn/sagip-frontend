@@ -22,6 +22,7 @@
     "dotenv": "^16.1.4",
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
+    "lightgallery": "^2.7.1",
     "lucide-react": "^0.244.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
