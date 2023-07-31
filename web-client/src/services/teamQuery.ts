@@ -94,7 +94,7 @@ export const teamQueryApi = createApi({
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: { userId, prevTeamId },
+        body: { newTeamId: "unassigned", userId, prevTeamId },
       }),
       invalidatesTags: (_result, _error, { prevTeamId }) => [
         { type: "Teams", id: prevTeamId },
@@ -111,7 +111,7 @@ export const teamQueryApi = createApi({
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: { userId, prevTeamId },
+        body: { newTeamId: "unassigned", userId, prevTeamId },
       }),
       invalidatesTags: (_result, _error, { prevTeamId }) => [
         { type: "Teams", id: prevTeamId },

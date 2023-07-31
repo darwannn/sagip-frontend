@@ -13,7 +13,6 @@ const TeamDetails = () => {
   const {
     data: teamData,
     isFetching,
-    isSuccess,
     isError,
     error,
   } = useGetTeamQuery(id || "");
@@ -21,7 +20,6 @@ const TeamDetails = () => {
   const [getResponders, results] = useLazyGetRespondersQuery();
 
   if (results.isError) console.log(results.error);
-  if (isSuccess) console.log(teamData);
   if (isError) console.log(error);
 
   if (isFetching) {
