@@ -40,6 +40,19 @@ export const teamQueryApi = createApi({
       }),
       invalidatesTags: ["Teams"],
     }),
+    deleteTeam: builder.mutation<TTeam, string>({
+      query: (id) => ({
+        url: `team/delete/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: (_result, _error, id) => [
+        { type: "Teams", id },
+        "Responders",
+      ],
+    }),
     //Get Unassigned Responders
     getUnassignedResponders: builder.query<User[], void>({
       query: () => ({
@@ -125,6 +138,7 @@ export const {
   useGetTeamsQuery,
   useGetTeamQuery,
   useCreateTeamMutation,
+  useDeleteTeamMutation,
   useLazyGetUnassignedRespondersQuery,
   useAddTeamHeadMutation,
   useAddTeamMemberMutation,

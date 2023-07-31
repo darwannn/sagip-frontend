@@ -1,5 +1,8 @@
-import { useParams } from "react-router-dom";
-import { useGetTeamQuery } from "../../../services/teamQuery";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useDeleteTeamMutation,
+  useGetTeamQuery,
+} from "../../../services/teamQuery";
 import UserCard from "./UserCard";
 import { useLazyGetRespondersQuery } from "../../../services/responderQuery";
 import { useState } from "react";
@@ -9,6 +12,7 @@ import EditTeamModal from "./EditTeamModal";
 
 const TeamDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const {
     data: teamData,
@@ -17,10 +21,23 @@ const TeamDetails = () => {
     error,
   } = useGetTeamQuery(id || "");
 
+  const [deleteTeam, deleteState] = useDeleteTeamMutation();
   const [getResponders, results] = useLazyGetRespondersQuery();
+
+  const onDeleteTeamHandler = async () => {
+    const cont = confirm("Are you sure you want to delete this team?");
+    if (!cont) return;
+    const res = await deleteTeam(id || "");
+    if ("data" in res) {
+      if ("success" in res.data && res.data.success === true)
+        navigate("/teams");
+    }
+  };
 
   if (results.isError) console.log(results.error);
   if (isError) console.log(error);
+
+  if (deleteState.error) console.log(deleteState.error);
 
   if (isFetching) {
     return (
@@ -38,15 +55,23 @@ const TeamDetails = () => {
             <span className="text-sm text-gray-400">{teamData?._id}</span>
             <h1 className="text-3xl font-bold">{teamData?.name}</h1>
           </div>
-          <button
-            className="bg-indigo-500 text-white px-6 py-2 rounded mt-2"
-            onClick={() => {
-              getResponders();
-              setShowModal(true);
-            }}
-          >
-            Edit Team
-          </button>
+          <div>
+            <button
+              className="bg-indigo-500 text-white px-6 py-2 rounded mt-2"
+              onClick={() => {
+                getResponders();
+                setShowModal(true);
+              }}
+            >
+              Edit
+            </button>
+            <button
+              className="bg-red-500 text-white px-6 py-2 rounded mt-2 ml-2"
+              onClick={onDeleteTeamHandler}
+            >
+              Delete
+            </button>
+          </div>
         </div>
         {/* Team Leader */}
         <div className="relative">
