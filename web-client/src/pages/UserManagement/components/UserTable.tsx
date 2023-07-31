@@ -45,9 +45,6 @@ const UserTable = () => {
     error: isVerificationRequestsFetchError,
   } = useGetVerificationRequestsQuery({ token });
 
-  if (isVerificationRequestsFetchError) {
-    return <p>Something went wrong...</p>;
-  }
   const table = useReactTable({
     data,
     columns: userColumn,
@@ -71,6 +68,10 @@ const UserTable = () => {
       },
     },
   });
+
+  if (isVerificationRequestsFetchError) {
+    return <p>Something went wrong...</p>;
+  }
 
   return (
     <>

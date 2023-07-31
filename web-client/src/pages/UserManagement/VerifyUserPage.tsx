@@ -27,7 +27,7 @@ const VerifyUserPage = () => {
 
   // Filter verificationRequests base on name
   const filterdVerificationRequests = () => {
-    let filteredVerificationRequests = verificationRequests?.filter(
+    const filteredVerificationRequests = verificationRequests?.filter(
       (VerificationRequest) => {
         const fullName = `${VerificationRequest.firstname} ${VerificationRequest.middlename} ${VerificationRequest.lastname}`;
         const name = `${VerificationRequest.firstname} ${VerificationRequest.lastname}`;
