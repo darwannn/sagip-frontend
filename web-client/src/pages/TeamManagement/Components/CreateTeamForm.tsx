@@ -9,7 +9,9 @@ type TProps = {
 const CreateTeamForm: React.FC<TProps> = memo(({ closeForm }) => {
   const [teamName, setTeamName] = useState("");
 
-  const [createTeam, createTeamState] = useCreateTeamMutation();
+  const [createTeam, createTeamState] = useCreateTeamMutation({
+    fixedCacheKey: "createTeam",
+  });
 
   const onCreatTeamHandler = () => {
     createTeam({ name: teamName });

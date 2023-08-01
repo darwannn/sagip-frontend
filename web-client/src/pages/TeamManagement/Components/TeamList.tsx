@@ -1,10 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetTeamsQuery } from "../../../services/teamQuery";
+import {
+  useCreateTeamMutation,
+  useGetTeamsQuery,
+} from "../../../services/teamQuery";
 
 const TeamList = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data, isLoading, isError, error } = useGetTeamsQuery(undefined);
+
+  const [, createTeamState] = useCreateTeamMutation({
+    fixedCacheKey: "createTeam",
+  });
 
   if (isError) console.log(error);
   return (
@@ -31,6 +38,12 @@ const TeamList = () => {
                 <p className="text-lg">{team.name}</p>
               </div>
             ))}
+            {!createTeamState.isLoading && (
+              <div className="animate-pulse w-full h-16 my-2 p-2 rounded-md bg-gray-200">
+                <div className="w-32 h-3 bg-gray-300 rounded-full"></div>
+                <div className="w-full h-6 mt-2 bg-gray-300 rounded-md"></div>
+              </div>
+            )}
           </div>
         )}
       </div>
