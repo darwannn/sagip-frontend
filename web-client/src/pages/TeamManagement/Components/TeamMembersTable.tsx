@@ -13,7 +13,7 @@ const MembersTable = ({ membersData }: TProps) => {
   });
 
   return (
-    <div className="border rounded">
+    <div className="border rounded my-3">
       <DataTable table={table} columnLength={columns.length} />
     </div>
   );

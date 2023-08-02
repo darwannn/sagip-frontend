@@ -3,12 +3,12 @@ import {
   useDeleteTeamMutation,
   useGetTeamQuery,
 } from "../../../services/teamQuery";
-import UserCard from "./UserCard";
 import { useLazyGetRespondersQuery } from "../../../services/responderQuery";
 import { useState } from "react";
 import MembersTable from "./TeamMembersTable";
 import Modal from "../../../components/Modal/Modal";
 import EditTeamModal from "./EditTeamModal";
+import TeamHeadInformation from "./TeamHeadInformation";
 
 const TeamDetails = () => {
   const { id } = useParams();
@@ -53,7 +53,9 @@ const TeamDetails = () => {
         <div className="flex flex-row justify-between items-center mb-10">
           <div>
             <span className="text-sm text-gray-400">{teamData?._id}</span>
-            <h1 className="text-3xl font-bold">{teamData?.name}</h1>
+            <h1 className="text-4xl font-bold text-blue-500">
+              {teamData?.name}
+            </h1>
           </div>
           <div>
             <button
@@ -74,10 +76,10 @@ const TeamDetails = () => {
           </div>
         </div>
         {/* Team Leader */}
-        <div className="relative">
+        <div className="relative mb-10">
           <span className="font-semibold text-lg">Team Leader </span>
           {teamData && teamData.head !== null ? (
-            <UserCard user={teamData.head} />
+            <TeamHeadInformation user={teamData.head} />
           ) : (
             <div className="my-2">
               <p className="text-gray-700 text-[16px] leading-tight">
