@@ -34,6 +34,9 @@ const TeamDetails = () => {
     }
   };
 
+  const isTeamIncomplete =
+    teamData?.head === null || teamData?.members.length === 0;
+
   if (results.isError) console.log(results.error);
   if (isError) console.log(error);
 
@@ -50,6 +53,15 @@ const TeamDetails = () => {
   return (
     <>
       <div className="p-5 flex-grow">
+        {isTeamIncomplete && (
+          <div className="bg-yellow-100 border-l-4 border-yellow-500 rounded text-yellow-700 p-4 my-2">
+            <p className="font-bold">Incomplete Team</p>
+            <p>
+              This team is incomplete. Please assign a team leader and add
+              members to this team.
+            </p>
+          </div>
+        )}
         <div className="flex flex-row justify-between items-center mb-10">
           <div>
             <span className="text-sm text-gray-400">{teamData?._id}</span>

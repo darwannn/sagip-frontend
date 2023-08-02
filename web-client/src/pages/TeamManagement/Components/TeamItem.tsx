@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { TTeam } from "../Types/Team";
-
+import { PiWarningCircleFill } from "react-icons/pi";
 type TProps = {
   team: TTeam;
 };
@@ -9,6 +9,8 @@ type TProps = {
 const TeamItem: React.FC<TProps> = memo(({ team }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const isTeamIncomplete = team.head === null || team.members.length === 0;
 
   return (
     <div
@@ -23,7 +25,12 @@ const TeamItem: React.FC<TProps> = memo(({ team }) => {
       <div className="w-32 truncate">
         <span className="text-sm text-gray-300">{team._id}</span>
       </div>
-      <p className="text-lg">{team.name}</p>
+      <div className="flex flex-row justify-between items-center">
+        <p className="text-lg">{team.name}</p>
+        {isTeamIncomplete && (
+          <PiWarningCircleFill className="text-yellow-500 text-xl" />
+        )}
+      </div>
     </div>
   );
 });
