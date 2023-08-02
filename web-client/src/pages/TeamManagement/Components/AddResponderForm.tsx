@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Select from "react-select";
 import UserCard from "./UserCard";
 import { AiOutlineMinus } from "react-icons/ai";
+import { ImSpinner8 } from "react-icons/im";
 import {
   useAddTeamHeadMutation,
   useAddTeamMemberMutation,
@@ -55,11 +56,15 @@ const AddResponderForm: React.FC = () => {
   if (addTeamMemberState.isSuccess) console.log(addTeamMemberState.data);
 
   return (
-    <div className="flex flex-row gap-1 items-center">
+    <div
+      className={`flex flex-row gap-1 p-2 items-center rounded-md relative  ${
+        selectedUser ? "border-2 border-gray-200" : ""
+      }`}
+    >
       <div className="flex-grow relative">
         {selectedUser ? (
           <>
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-row justify-between items-center bg-gray-50 p-2 rounded-md">
               <UserCard user={selectedUser} />
               <button
                 className="text-gray-300 bg-gray-100 p-1 rounded-full hover:bg-red-200 hover:text-red-500 transition duration-200"
@@ -143,8 +148,16 @@ const AddResponderForm: React.FC = () => {
         onClick={onClickAddResponder}
         disabled={addTeamHeadState.isLoading}
       >
-        {addTeamHeadState.isLoading ? "Adding..." : "Add"}
+        Add
       </button>
+      {/* Loading */}
+      {addTeamHeadState.isLoading ||
+        (addTeamMemberState.isLoading && (
+          <div className="absolute w-full h-full top-0 left-0 bg-black opacity-30 flex justify-center items-center gap-2">
+            <ImSpinner8 className="animate-spin text-white" />
+            <span className="text-white text-lg">Adding ...</span>
+          </div>
+        ))}
     </div>
   );
 };
