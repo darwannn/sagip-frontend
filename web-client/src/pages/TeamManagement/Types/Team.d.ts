@@ -28,3 +28,10 @@ type TResponders = {
   unassignedResponders: User[];
   responders: Responder[];
 };
+
+export type TTeamResponse = {
+  message: string;
+  success: boolean;
+  team?: TTeam;
+  name?: string;
+};

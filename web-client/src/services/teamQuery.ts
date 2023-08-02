@@ -2,7 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { API_BASE_URL } from "../api.config";
 
-import type { TResponders, TTeam } from "../pages/TeamManagement/Types/Team";
+import type {
+  TResponders,
+  TTeam,
+  TTeamResponse,
+} from "../pages/TeamManagement/Types/Team";
 import { User } from "../types/user";
 
 export const teamQueryApi = createApi({
@@ -29,7 +33,7 @@ export const teamQueryApi = createApi({
       providesTags: (_result, _error, id) => [{ type: "Teams", id }],
     }),
     // Add a team
-    createTeam: builder.mutation<TTeam, Partial<TTeam>>({
+    createTeam: builder.mutation<TTeamResponse, Partial<TTeam>>({
       query: (body) => ({
         url: "team/add",
         method: "POST",

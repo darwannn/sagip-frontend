@@ -1,28 +1,45 @@
-import { useState, memo } from "react";
+import React, { useState, memo } from "react";
 import { useCreateTeamMutation } from "../../../services/teamQuery";
 import { MdClose } from "react-icons/md";
+import { TTeamResponse } from "../Types/Team";
+import { useNavigate } from "react-router-dom";
 
 type TProps = {
   closeForm: () => void;
 };
 
 const CreateTeamForm: React.FC<TProps> = memo(({ closeForm }) => {
+  const navigate = useNavigate();
   const [teamName, setTeamName] = useState("");
 
   const [createTeam, createTeamState] = useCreateTeamMutation({
     fixedCacheKey: "createTeam",
   });
 
-  const onCreatTeamHandler = () => {
-    createTeam({ name: teamName });
+  const onCreatTeamHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = await createTeam({ name: teamName });
     setTeamName("");
+    // closeForm();
+    if ("data" in res) {
+      if (res.data.success) {
+        closeForm();
+        navigate(`${res.data.team?._id}`);
+      }
+    }
   };
 
   if (createTeamState.isLoading) console.log("Loading...");
   if (createTeamState.isSuccess) console.log(createTeamState.data);
-  if (createTeamState.isError) console.log(createTeamState.error);
+  if (createTeamState.isError && "data" in createTeamState.error) {
+    const errData = createTeamState.error.data as TTeamResponse;
+    console.log(errData);
+  }
   return (
-    <div className="flex flex-col gap-1 my-2">
+    <form
+      onSubmit={(e) => onCreatTeamHandler(e)}
+      className="flex flex-col gap-1 my-2"
+    >
       <div>
         <input
           type="text"
@@ -38,7 +55,6 @@ const CreateTeamForm: React.FC<TProps> = memo(({ closeForm }) => {
         <button
           type="submit"
           className="bg-indigo-500 text-white py-1 px-3 rounded-md"
-          onClick={onCreatTeamHandler}
         >
           Add Team
         </button>
@@ -49,7 +65,7 @@ const CreateTeamForm: React.FC<TProps> = memo(({ closeForm }) => {
           <MdClose />
         </button>
       </div>
-    </div>
+    </form>
   );
 });
 
