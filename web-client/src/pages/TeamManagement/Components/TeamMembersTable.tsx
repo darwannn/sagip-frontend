@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { User } from "../../../types/user";
 import { membersColumn as columns } from "../Types/MembersColumn";
@@ -5,7 +6,7 @@ import DataTable from "../../../components/ui/data-table";
 type TProps = {
   membersData: User[];
 };
-const MembersTable = ({ membersData }: TProps) => {
+const MembersTable = memo(({ membersData }: TProps) => {
   const table = useReactTable({
     data: membersData,
     columns,
@@ -17,6 +18,6 @@ const MembersTable = ({ membersData }: TProps) => {
       <DataTable table={table} columnLength={columns.length} />
     </div>
   );
-};
+});
 
 export default MembersTable;

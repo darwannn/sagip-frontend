@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useCreateTeamMutation,
   useGetTeamsQuery,
 } from "../../../services/teamQuery";
 
-const TeamList = () => {
+const TeamList = memo(() => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data, isLoading, isError, error } = useGetTeamsQuery(undefined);
@@ -49,6 +50,6 @@ const TeamList = () => {
       </div>
     </div>
   );
-};
+});
 
 export default TeamList;
