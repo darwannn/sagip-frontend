@@ -16,6 +16,7 @@ import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
 import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";
 import ViewArticlePage from "../pages/Articles/ViewArticlePage";
 import TeamDetails from "../pages/TeamManagement/Components/TeamDetails";
+import ManageRespondersPage from "../pages/TeamManagement/ManageRespondersPage";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "teams",
         element: <ManageTeamPage />,
-        children: [{ path: ":id", element: <TeamDetails /> }],
+        children: [
+          { path: "responders", element: <ManageRespondersPage /> },
+          { path: ":id", element: <TeamDetails /> },
+        ],
       },
       {
         path: "emergency-reports",

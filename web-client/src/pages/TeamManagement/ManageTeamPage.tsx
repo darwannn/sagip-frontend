@@ -1,8 +1,9 @@
 import { useState } from "react";
 import CreateTeamForm from "./Components/CreateTeamForm";
 import TeamList from "./Components/TeamList";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { IoAddSharp } from "react-icons/io5";
+import { MdManageAccounts } from "react-icons/md";
 const ManageTeamPage = () => {
   const [isCreateTeam, setIsCreateTeam] = useState(false);
 
@@ -10,6 +11,13 @@ const ManageTeamPage = () => {
     <div className="flex flex-row h-screen">
       <div className="p-5 bg-gray-50 shadow-md w-[300px] flex flex-col">
         <h1 className="text-xl font-bold">Manage Team</h1>
+        <Link
+          to="/teams/responders"
+          className="text-center bg-blue-500 py-2 border rounded-md text-white"
+        >
+          <MdManageAccounts className="inline-block mr-2 text-xl" />
+          Manage Responders
+        </Link>
         {isCreateTeam ? (
           <CreateTeamForm closeForm={() => setIsCreateTeam(false)} />
         ) : (
