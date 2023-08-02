@@ -1,13 +1,11 @@
 import { memo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import {
   useCreateTeamMutation,
   useGetTeamsQuery,
 } from "../../../services/teamQuery";
+import TeamItem from "./TeamItem";
 
 const TeamList = memo(() => {
-  const navigate = useNavigate();
-  const { id } = useParams();
   const { data, isLoading, isError, error } = useGetTeamsQuery(undefined);
 
   const [, createTeamState] = useCreateTeamMutation({
@@ -24,20 +22,7 @@ const TeamList = memo(() => {
         ) : (
           <div>
             {data?.map((team) => (
-              <div
-                className={`my-2 p-2 rounded-md bg-gray-100 cursor-pointer hover:bg-gray-200 transition-all duration-100 ${
-                  id ? (id === team._id ? "bg-gray-200" : "") : ""
-                }`}
-                key={team._id}
-                onClick={() => {
-                  navigate(`${team._id}`);
-                }}
-              >
-                <div className="w-32 truncate">
-                  <span className="text-sm text-gray-300">{team._id}</span>
-                </div>
-                <p className="text-lg">{team.name}</p>
-              </div>
+              <TeamItem key={team._id} team={team} />
             ))}
             {createTeamState.isLoading && (
               <div className="animate-pulse w-full h-16 my-2 p-2 rounded-md bg-gray-200">
