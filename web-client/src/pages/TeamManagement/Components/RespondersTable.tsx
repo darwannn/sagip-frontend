@@ -6,7 +6,7 @@ import DataTable from "../../../components/ui/data-table";
 type TProps = {
   membersData: User[];
 };
-const MembersTable = memo(({ membersData }: TProps) => {
+const RespondersTable = memo(({ membersData }: TProps) => {
   const table = useReactTable({
     data: membersData,
     columns,
@@ -20,4 +20,4 @@ const MembersTable = memo(({ membersData }: TProps) => {
   );
 });
 
-export default MembersTable;
+export default RespondersTable;

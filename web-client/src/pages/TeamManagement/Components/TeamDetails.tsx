@@ -5,7 +5,7 @@ import {
 } from "../../../services/teamQuery";
 import { useLazyGetRespondersQuery } from "../../../services/responderQuery";
 import { useState } from "react";
-import MembersTable from "./TeamMembersTable";
+import RespondersTable from "./RespondersTable";
 import Modal from "../../../components/Modal/Modal";
 import EditTeamModal from "./EditTeamModal";
 import TeamHeadInformation from "./TeamHeadInformation";
@@ -103,7 +103,7 @@ const TeamDetails = () => {
         <div className="">
           {/* Team Members */}
           <span className="font-semibold text-lg">Team Members </span>
-          <MembersTable membersData={teamData?.members || []} />
+          <RespondersTable membersData={teamData?.members || []} />
         </div>
       </div>
       <Modal

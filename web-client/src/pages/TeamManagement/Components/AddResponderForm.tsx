@@ -151,13 +151,14 @@ const AddResponderForm: React.FC = () => {
         Add
       </button>
       {/* Loading */}
-      {addTeamHeadState.isLoading ||
-        (addTeamMemberState.isLoading && (
-          <div className="absolute w-full h-full top-0 left-0 bg-black opacity-30 flex justify-center items-center gap-2">
-            <ImSpinner8 className="animate-spin text-white" />
-            <span className="text-white text-lg">Adding ...</span>
-          </div>
-        ))}
+      {addTeamHeadState.isLoading || addTeamMemberState.isLoading ? (
+        <div className="absolute w-full h-full top-0 left-0 bg-black opacity-30 flex justify-center items-center gap-2">
+          <ImSpinner8 className="animate-spin text-white" />
+          <span className="text-white text-lg">Adding ...</span>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

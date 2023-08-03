@@ -23,10 +23,10 @@ type TResponder = {
 
 type TResponders = {
   success: boolean;
-  assignedResponders: Responder[];
+  assignedResponders: User[];
   // unassignedResponders: Responder[];
   unassignedResponders: User[];
-  responders: Responder[];
+  responders: User[];
 };
 
 export type TTeamResponse = {

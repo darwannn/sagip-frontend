@@ -12,7 +12,7 @@ const ManageTeamPage = () => {
       <div className="p-5 bg-gray-50 shadow-md w-[300px] flex flex-col">
         <h1 className="text-xl font-bold">Manage Team</h1>
         <Link
-          to="/teams/responders"
+          to="/teams"
           className="text-center bg-blue-500 py-2 border rounded-md text-white"
         >
           <MdManageAccounts className="inline-block mr-2 text-xl" />

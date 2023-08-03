@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
         path: "teams",
         element: <ManageTeamPage />,
         children: [
-          { path: "responders", element: <ManageRespondersPage /> },
+          { index: true, element: <ManageRespondersPage /> },
           { path: ":id", element: <TeamDetails /> },
         ],
       },
