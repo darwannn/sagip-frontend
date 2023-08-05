@@ -13,6 +13,8 @@ import { checkAuth, isLoggedIn } from "../util/auth";
 import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
 import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";
 import ViewArticlePage from "../pages/Articles/ViewArticlePage";
+import TeamDetails from "../pages/TeamManagement/Components/TeamDetails";
+import ManageRespondersPage from "../pages/TeamManagement/ManageRespondersPage";
 
 import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
 import CreateAlertPage from "../pages/AlertsManagement/CreateAlertsPage";
@@ -44,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "teams",
         element: <ManageTeamPage />,
+        children: [
+          { index: true, element: <ManageRespondersPage /> },
+          { path: ":id", element: <TeamDetails /> },
+        ],
       },
       {
         path: "emergency-reports",
