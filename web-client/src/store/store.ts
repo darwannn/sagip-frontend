@@ -5,6 +5,7 @@ import userManageSlice from "./slices/userManageSlice";
 import articleSlice from "./slices/articleSlice";
 import facilitySlice from "./slices/facilitySlice";
 import hazardReportSlice from "./slices/hazardReportSlice";
+import alertSlice from "./slices/alertSlice";
 // API / Services / Queries
 import { usersApi } from "../services/usersApi";
 import { articleQueryApi } from "../services/articleQuery";
@@ -13,6 +14,7 @@ import { hazardReportsQueryApi } from "../services/hazardReportsQuery";
 import { teamQueryApi } from "../services/teamQuery";
 import teamSlice from "./slices/teamSlice";
 import { responderQueryApi } from "../services/responderQuery";
+import { alertQueryApi } from "../services/alertQuery";
 
 export const store = configureStore({
   reducer: {
@@ -22,12 +24,14 @@ export const store = configureStore({
     [hazardReportsQueryApi.reducerPath]: hazardReportsQueryApi.reducer,
     [teamQueryApi.reducerPath]: teamQueryApi.reducer,
     [responderQueryApi.reducerPath]: responderQueryApi.reducer,
+    [alertQueryApi.reducerPath]: alertQueryApi.reducer,
     facility: facilitySlice,
     userManage: userManageSlice,
     auth: authSlice,
     articles: articleSlice,
     hazardReports: hazardReportSlice,
     team: teamSlice,
+    alerts: alertSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -37,6 +41,7 @@ export const store = configureStore({
       hazardReportsQueryApi.middleware,
       teamQueryApi.middleware,
       responderQueryApi.middleware,
+      alertQueryApi.middleware,
     ]),
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
