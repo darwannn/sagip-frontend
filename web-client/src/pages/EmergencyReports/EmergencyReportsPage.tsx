@@ -2,6 +2,7 @@ import { useState } from "react";
 import MapComponent from "../MapManagement/components/MapComponent";
 import { useGetAllAssistanceRequestsQuery } from "../../services/assistanceRequestQuery";
 import AssistanceList from "./components/AssistanceList";
+import { MarkerF } from "@react-google-maps/api";
 const EmergencyReportsPage = () => {
   // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -21,6 +22,16 @@ const EmergencyReportsPage = () => {
       <div className="absolute top-0 z-0 w-full">
         <MapComponent onSetMapHandler={setMap}>
           {/* Child components, such as markers, info windows, etc. */}
+          {!isLoading &&
+            data?.map((assistance) => (
+              <MarkerF
+                key={assistance._id}
+                position={{
+                  lat: assistance.latitude,
+                  lng: assistance.longitude,
+                }}
+              />
+            ))}
         </MapComponent>
       </div>
     </div>
