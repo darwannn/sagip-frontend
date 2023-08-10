@@ -2,6 +2,7 @@ import { useGetAllAssistanceRequestsQuery } from "../../../services/assistanceRe
 // React Icons
 import { TbTextCaption } from "react-icons/tb";
 import { MdLocationOn } from "react-icons/md";
+import moment from "moment";
 const AssistanceList = () => {
   const { data } = useGetAllAssistanceRequestsQuery();
 
@@ -13,7 +14,13 @@ const AssistanceList = () => {
             <span className="text-gray-500 text-xs">{assistance._id}</span>
           </div>
           <div className="emergency-info-container mt-2 p-2">
-            <span className="font-semibold text-md">Trapped</span>
+            <div className="flex flex-col">
+              <span className="font-semibold text-md">Trapped</span>
+              {/* Extract the time */}
+              <span className="text-sm">
+                {moment(assistance.createdAt).format("llll")}
+              </span>
+            </div>
             <div className="description mt-2">
               <span className="">
                 <TbTextCaption className="inline text-gray-500 text-lg mr-1" />
