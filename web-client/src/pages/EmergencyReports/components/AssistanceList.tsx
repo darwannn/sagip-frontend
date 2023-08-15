@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { useGetAllAssistanceRequestsQuery } from "../../../services/assistanceRequestQuery";
 import AssistanceItem from "./AssistanceItem";
-const AssistanceList = () => {
+const AssistanceList = memo(() => {
   const { data } = useGetAllAssistanceRequestsQuery();
 
   return (
@@ -10,6 +11,6 @@ const AssistanceList = () => {
       ))}
     </div>
   );
-};
+});
 
 export default AssistanceList;

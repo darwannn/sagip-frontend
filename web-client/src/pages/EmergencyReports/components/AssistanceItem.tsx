@@ -2,14 +2,23 @@ import moment from "moment";
 import { TAssistanceRequest } from "../types/assistanceRequest";
 import { TbTextCaption } from "react-icons/tb";
 import { MdLocationOn } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 type AssistanceItemProps = {
   assistance: TAssistanceRequest;
 };
 
 const AssistanceItem: React.FC<AssistanceItemProps> = ({ assistance }) => {
+  const navigate = useNavigate();
+  const handleOnClick = (emergencyId: string) => {
+    navigate(`?emergencyId=${emergencyId}`);
+  };
+
   return (
-    <div className="flex flex-col border rounded cursor-pointer">
+    <div
+      className="flex flex-col border rounded cursor-pointer hover:bg-gray-100"
+      onClick={() => handleOnClick(assistance._id)}
+    >
       <div className="id-container border-b p-2">
         <span className="text-gray-500 text-xs">{assistance._id}</span>
       </div>
