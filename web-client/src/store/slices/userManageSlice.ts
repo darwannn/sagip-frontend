@@ -87,6 +87,18 @@ export const selectNumberOfNewUsers = createSelector(
   }
 );
 
+// -- Count the number of active users this month
+export const selectNumberOfActiveUsers = createSelector(
+  (state: RootState) => state.userManage.users,
+  (users: User[]) => {
+    const currentDate = moment();
+    const activeUsersThisMonth = users.filter((user: User) =>
+      moment(user.updatedAt).isSame(currentDate, "month")
+    );
+    return activeUsersThisMonth.length;
+  }
+);
+
 // -- Count verified and unverified users
 export const selectVerifiedUsers = createSelector(
   (state: RootState) => state.userManage.users,

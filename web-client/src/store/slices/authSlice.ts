@@ -10,6 +10,10 @@ const initialState: AuthState = {
     status: "",
     userType: "",
   },
+  passwordVerificationRes: null,
+  contactVerificationRes: null,
+  identifier: null,
+  newPasswordRes: null,
 };
 
 export const authSlice = createSlice({
@@ -25,8 +29,33 @@ export const authSlice = createSlice({
       localStorage.setItem("token", action.payload.token || "");
       localStorage.setItem("user", JSON.stringify(action.payload.user));
     },
+
+    /* holds the server response obtained from the usePasswordVerificationMutation function in the authQuery  */
+    setPasswordVerificationRes: (state, action: PayloadAction<any>) => {
+      state.passwordVerificationRes = action.payload;
+    },
+
+    /* holds the server response obtained from the useContactVerificationMutation function in the authQuery  */
+    setcontactVerificationRes: (state, action: PayloadAction<any>) => {
+      state.contactVerificationRes = action.payload;
+    },
+    /* holds the new email address/contact number */
+    setIdentifier: (state, action: PayloadAction<any>) => {
+      state.identifier = action.payload;
+    },
+
+    /* holds the server response obtained from the useForgotPasswordMutation function in the authQuery  */
+    setNewPasswordRes: (state, action: PayloadAction<any>) => {
+      state.newPasswordRes = action.payload;
+    },
   },
 });
 
-export const { login } = authSlice.actions;
+export const {
+  login,
+  setPasswordVerificationRes,
+  setcontactVerificationRes,
+  setIdentifier,
+  setNewPasswordRes,
+} = authSlice.actions;
 export default authSlice.reducer;

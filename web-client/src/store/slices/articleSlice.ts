@@ -17,6 +17,23 @@ export const articleSlice = createSlice({
   },
 });
 
+// -- Count number of articles
+export const selectNumberOfArticles = createSelector(
+  (state: RootState) => state.articles.articles,
+  (articles: Article[]) => articles.length
+);
+
+// -- Count number of published articles
+export const selectNumberOfPublishedArticles = createSelector(
+  (state: RootState) => state.articles.articles,
+  (articles: Article[]) => {
+    const publishedArticle = articles.filter(
+      (article: Article) => article.status === "published"
+    );
+    return publishedArticle.length;
+  }
+);
+
 export const { setArticles } = articleSlice.actions;
 export default articleSlice.reducer;
 

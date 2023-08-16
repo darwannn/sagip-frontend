@@ -7,12 +7,11 @@ import { API_BASE_URL } from "../../api.config";
 import { setAuthToken } from "../../util/auth";
 import LoginForm from "./LoginForm";
 
+import AuthForm from "../../components/AuthForm/AuthForm";
+
 const LoginPage = () => {
   return (
-    <>
-      <h1>Login Page</h1>
-      <LoginForm />
-    </>
+    <AuthForm pageTitle="Login" navigateTo="/" component={<LoginForm />} />
   );
 };
 
@@ -47,7 +46,13 @@ export const action: ActionFunction = async ({
   // Manage token here
   setAuthToken({
     token: resData.token || "",
-    user: resData.user || { for: "", id: "", status: "", userType: "" },
+    user: resData.user || {
+      for: "",
+      id: "",
+      status: "",
+      userType: "",
+      identifier: "",
+    },
   });
 
   return redirect("/");

@@ -25,6 +25,7 @@ export interface User {
   verificationPicture: string[];
   createdAt: string;
   updatedAt: string;
+  emailStatus: string;
   __v: number;
   verificationRequestDate: string;
 }
@@ -59,6 +60,7 @@ export type TUserResData = {
   verificationPicture: string[];
   createdAt: string;
   updatedAt: string;
+  emailStatus: string;
   __v: number;
   verificationRequestDate: string;
 };

@@ -30,6 +30,9 @@ const AdminRootLayout = () => {
             <li>
               <NavLink to={"/articles"}>Articles</NavLink>
             </li>
+            <li>
+              <NavLink to={"/account-settings"}>Account Settings</NavLink>
+            </li>
             {/* <li>
             <NavLink to={"/login"}>Login</NavLink>
           </li>

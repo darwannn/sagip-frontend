@@ -6,6 +6,10 @@ export type AuthType = {
     status: string;
     userType: string;
   };
+  passwordVerificationRes: any;
+  contactVerificationRes: any;
+  identifier: any;
+  newPasswordRes: any;
 };
 
 export type Token = {
