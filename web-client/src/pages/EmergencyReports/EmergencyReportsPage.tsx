@@ -4,6 +4,7 @@ import { useGetAllAssistanceRequestsQuery } from "../../services/assistanceReque
 import AssistanceList from "./components/AssistanceList";
 import { MarkerF } from "@react-google-maps/api";
 import { useSearchParams } from "react-router-dom";
+import AssistanceDetails from "./components/AssistanceDetails";
 const EmergencyReportsPage = () => {
   // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -32,13 +33,14 @@ const EmergencyReportsPage = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) console.log(error);
-  if (isSuccess) console.log(data);
+  // if (isSuccess) console.log(data);
 
   return (
     <div className="relative h-screen">
       <div className="relative z-10 flex w-max items-start p-2">
         <AssistanceList />
       </div>
+      {emergencyId && <AssistanceDetails />}
       <div className="absolute top-0 z-0 w-full">
         <MapComponent onSetMapHandler={setMap}>
           {/* Child components, such as markers, info windows, etc. */}

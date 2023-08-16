@@ -15,8 +15,21 @@ export const assistanceRequestQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
+      // Provide tags for each query result
+    }),
+    getAssistanceRequestById: builder.query<TAssistanceRequest, string>({
+      query: (id) => ({
+        url: `assistance-request/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
     }),
   }),
 });
 
-export const { useGetAllAssistanceRequestsQuery } = assistanceRequestQueryApi;
+export const {
+  useGetAllAssistanceRequestsQuery,
+  useGetAssistanceRequestByIdQuery,
+} = assistanceRequestQueryApi;
