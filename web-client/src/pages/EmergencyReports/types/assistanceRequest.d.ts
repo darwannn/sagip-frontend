@@ -16,7 +16,7 @@ type TAssistanceRequest = {
   proof: string;
   status: string;
   street: string;
-  userId: User[];
+  userId: User;
 };
 
 type TAssistanceRequestState = {
