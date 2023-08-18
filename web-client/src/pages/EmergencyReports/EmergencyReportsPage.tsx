@@ -3,33 +3,22 @@ import MapComponent from "../MapManagement/components/MapComponent";
 import { useGetAllAssistanceRequestsQuery } from "../../services/assistanceRequestQuery";
 import AssistanceList from "./components/AssistanceList";
 import { MarkerF } from "@react-google-maps/api";
-import { useSearchParams } from "react-router-dom";
 import AssistanceDetails from "./components/AssistanceDetails";
+import { useAppSelector } from "../../store/hooks";
+import { selectAssistanceReq } from "../../store/slices/assistanceReqSlice";
 const EmergencyReportsPage = () => {
   // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [searchParams] = useSearchParams();
-  const emergencyId = searchParams.get("emergencyId");
+  const selectedAssistance = useAppSelector(selectAssistanceReq);
   const { data, isError, isLoading, isSuccess, error } =
     useGetAllAssistanceRequestsQuery();
 
   useEffect(() => {
-    if (map && emergencyId) {
-      const assistance = data?.find((a) => a._id === emergencyId);
-      if (assistance) {
-        map.panTo({
-          lat: assistance.latitude,
-          lng: assistance.longitude,
-        });
-      } else {
-        console.log("Assistance not found");
-      }
+    if (selectedAssistance) {
+      const { latitude, longitude } = selectedAssistance;
+      map?.panTo({ lat: latitude, lng: longitude });
     }
-    return () => {
-      // clear the search params
-      searchParams.delete("emergencyId");
-    };
-  }, [map, emergencyId, data, searchParams]);
+  }, [selectedAssistance, map]);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) console.log(error);
@@ -40,7 +29,7 @@ const EmergencyReportsPage = () => {
       <div className="relative z-10 flex w-max items-start p-2">
         <AssistanceList />
       </div>
-      {emergencyId && <AssistanceDetails />}
+      {selectedAssistance && <AssistanceDetails />}
       <div className="absolute top-0 z-0 w-full">
         <MapComponent onSetMapHandler={setMap}>
           {/* Child components, such as markers, info windows, etc. */}
