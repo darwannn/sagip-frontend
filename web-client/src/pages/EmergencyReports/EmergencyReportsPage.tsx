@@ -33,7 +33,7 @@ const EmergencyReportsPage = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) console.log(error);
-  // if (isSuccess) console.log(data);
+  if (isSuccess) console.log(data);
 
   return (
     <div className="relative h-screen">

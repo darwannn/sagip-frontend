@@ -18,3 +18,7 @@ type TAssistanceRequest = {
   street: string;
   userId: User[];
 };
+
+type TAssistanceRequestState = {
+  selectedAssistanceRequest: TAssistanceRequest | null;
+};
