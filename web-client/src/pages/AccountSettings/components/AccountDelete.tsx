@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { setDeleteAccountRes } from "../../../store/slices/accountSlice";
 
 import moment from "moment";
 
@@ -9,6 +10,7 @@ import Password from "../../../components/Verification/Password";
 
 const AccountDelete = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const passwordVerificationRes = useAppSelector(
     (state) => state.auth.passwordVerificationRes
   );
@@ -18,6 +20,8 @@ const AccountDelete = () => {
   useEffect(() => {
     if (passwordVerificationRes) {
       /* setShowModal(false); */
+      console.log("424");
+      dispatch(setDeleteAccountRes(passwordVerificationRes));
       navigate("/login");
       /* TODO: remove token and user data from local storage */
     }

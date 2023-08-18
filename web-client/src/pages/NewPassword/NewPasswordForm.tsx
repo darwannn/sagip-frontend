@@ -11,7 +11,7 @@ import PasswordField from "../../components/PasswordField/PasswordField";
 const NewPasswordForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
   const [
     newPassword,
     { isError: isError, isLoading: isLoading, isSuccess: isSuccess },
@@ -35,13 +35,13 @@ const NewPasswordForm = () => {
     });
 
     if (res && "data" in res) {
-      setServerResponse(res);
+      setServerRes(res.data);
       if (res.data.success) {
         dispatch(setNewPasswordRes(res.data));
         navigate("/login");
       }
     } else {
-      setServerResponse(res.error);
+      setServerRes(res.error);
     }
   };
 
@@ -58,7 +58,7 @@ const NewPasswordForm = () => {
         <PasswordField
           register={register}
           errors={errors}
-          serverResponse={serverResponse}
+          serverRes={serverRes}
           fieldName="password"
           fieldLabel="Password"
           passwordRequirement={true}
@@ -68,7 +68,7 @@ const NewPasswordForm = () => {
         <PasswordField
           register={register}
           errors={errors}
-          serverResponse={serverResponse}
+          serverRes={serverRes}
           fieldName="confirmPassword"
           fieldLabel="Confirm Password"
           passwordRequirement={false}

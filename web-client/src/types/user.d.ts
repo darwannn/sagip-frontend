@@ -27,7 +27,6 @@ export interface User {
   updatedAt: string;
   emailStatus: string;
   __v: number;
-  verificationRequestDate: string;
 }
 
 export type TUserResData = {

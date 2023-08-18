@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-
+import { setIdentifier } from "../../../store/slices/authSlice";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { User } from "../../../types/user";
 
 import { useSendVerificationCodeMutation } from "../../../services/authQuery";
-import { setIdentifier } from "../../../store/slices/authSlice";
 
 import { MdClose } from "react-icons/md";
 
@@ -23,7 +22,7 @@ const AccountEmailForm = ({ userData }: TProps) => {
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes
   );
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -75,13 +74,16 @@ const AccountEmailForm = ({ userData }: TProps) => {
       });
 
       if (res && "data" in res) {
-        setServerResponse(res);
+        setServerRes(res.data);
         if (res.data.success) {
           setShowModal(true);
           dispatch(setIdentifier(data.email));
+          /* setAuthToken({
+            token: res.data.token || "",
+          }); */
         }
       } else {
-        setServerResponse(res.error);
+        setServerRes(res.error);
       }
       console.log(res);
     }
@@ -138,9 +140,9 @@ const AccountEmailForm = ({ userData }: TProps) => {
           {...register("email", { required: true })}
         />
 
-        {(errors.email || !serverResponse?.success) && (
+        {(errors.email || !serverRes?.success) && (
           <span className="text-red-500">
-            {errors.email ? "Email is required" : serverResponse?.data.email}
+            {errors.email ? "Email is required" : serverRes?.email}
           </span>
         )}
       </div>

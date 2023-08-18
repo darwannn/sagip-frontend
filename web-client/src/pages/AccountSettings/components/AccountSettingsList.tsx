@@ -27,7 +27,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
         <div
           /* highlight the current displayed component */
           className={` ${
-            page === "profile" && "font-semibold text-indigo-600"
+            page === "profile" && "font-semibold text-black"
           } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
           onClick={() => navigate("/account-settings/profile")}
         >
@@ -36,7 +36,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
         <hr className="border border-gray-200" />
         <div
           className={` ${
-            page === "contact-number" && "font-semibold text-indigo-600"
+            page === "contact-number" && "font-semibold text-black"
           } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
           onClick={() => navigate("/account-settings/contact-number")}
         >
@@ -45,14 +45,14 @@ const AccountSettingsList = ({ userData }: TProps) => {
         <hr className="border border-gray-200" />
         <div
           className={` ${
-            page === "email" && "font-semibold text-indigo-600"
+            page === "email" && "font-semibold text-black"
           } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
           onClick={() => navigate("/account-settings/email")}
         >
           Email{" "}
           <div className="flex items-center">
             {userData?.emailStatus !== "unverified" && (
-              <div className="rounded-xl bg-red-300  px-3 py-1 text-xs mr-1 cursor-pointer font-normal text-black">
+              <div className="rounded-xl bg-red-500 text-white px-3 py-1 text-xs mr-1 cursor-pointer font-normal ">
                 Unverified
               </div>
             )}
@@ -61,7 +61,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
         <hr className="border border-gray-200" />
         <div
           className={` ${
-            page === "password" && "font-semibold text-indigo-600"
+            page === "password" && "font-semibold text-black"
           } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
           onClick={() => navigate("/account-settings/password")}
         >

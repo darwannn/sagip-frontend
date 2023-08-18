@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 
+// Images
+import SAGIP_Logo from "../../assets/img/SAGIP_Logo.png";
+import Malolos_City_Hall from "../../assets/img/Malolos_City_Hall.jpg";
+
 type TProp = {
   pageTitle: string;
   navigateTo: string;
@@ -28,18 +32,13 @@ const AuthenticationForm = ({ pageTitle, navigateTo, component }: TProp) => {
       <div
         className="hidden w-full  sm:flex sm:flex-col sm:justify-center text-white text-xl p-5"
         style={{
-          background:
-            "linear-gradient(90deg, rgba(151, 32, 32, 0.90) 0%, rgba(41, 59, 149, 0.90) 100%), url('https://res.cloudinary.com/dantwvqrv/image/upload/v1691812484/sagip/media/others/Malolos%20City%20Hall.jpg')",
+          background: `linear-gradient(90deg, rgba(151, 32, 32, 0.90) 0%, rgba(41, 59, 149, 0.90) 100%), url(${Malolos_City_Hall})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "50% 50%",
         }}
       >
-        <img
-          src="https://res.cloudinary.com/dantwvqrv/image/upload/v1691892526/sagip/media/others/SAGIP.png"
-          className="w-40 mx-auto"
-          alt="Logo"
-        />
+        <img src={SAGIP_Logo} className="w-40 mx-auto" alt="Logo" />
 
         <div className="text-5xl font-bold mt-4 text-center">SAGIP</div>
         <div className="mt-4 text-center px-0 ">

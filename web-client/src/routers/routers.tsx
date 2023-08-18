@@ -31,6 +31,8 @@ import NewPasswordPage from "../pages/NewPassword/NewPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
 import ForgotPasswordContactVerification from "../pages/ForgotPassword/ForgotPasswordContactVerification";
 
+/* import LoginContactVerification from "../pages/Login/LoginContactVerification"; */
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -90,6 +92,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <ManageAccountPage /> },
           { path: ":page", element: <ManageAccountPage /> },
+          { path: ":page", element: <ManageAccountPage /> },
         ],
       },
     ],
@@ -100,10 +103,11 @@ export const router = createBrowserRouter([
     loader: isLoggedIn,
     action: loginAction,
   },
+
   { path: "/register", element: <RegistrationPage />, loader: isLoggedIn },
   {
     path: "forgot-password",
-    loader: isLoggedIn,
+    /* loader: isLoggedIn, */
     children: [
       { index: true, element: <ForgotPasswordPage /> },
       {
@@ -115,7 +119,7 @@ export const router = createBrowserRouter([
   {
     path: "/new-password",
     element: <NewPasswordPage />,
-    loader: isLoggedIn,
+    /* loader: isLoggedIn, */
   },
   /* temporary, so the report will open in new tab (without side navigation menu) */
   {

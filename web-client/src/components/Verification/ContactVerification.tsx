@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import { setAuthToken } from "../../util/auth";
+import { AuthResponse } from "../../types/auth";
+
+import type { Token } from "../../types/auth";
+import jwtDecode from "jwt-decode";
 
 import {
   Controller,
@@ -11,7 +15,7 @@ import {
   useForm,
 } from "react-hook-form";
 import { setcontactVerificationRes } from "../../store/slices/authSlice";
-import { useAppSelector } from "../../store/hooks";
+
 import {
   useContactVerificationMutation,
   useResendVerificationCodeMutation,
@@ -28,15 +32,14 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const user = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
+  const decodedToken = jwtDecode<Token>(token || "");
   const identifier =
     action != "forgot-password"
       ? useAppSelector((state) => state.auth.identifier)
-      : user
-      ? JSON.parse(user).identifier
-      : "";
+      : decodedToken.identifier;
 
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
   const [resendCountdown, setResendCountdown] = useState(10);
 
   const [
@@ -94,18 +97,12 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
     });
 
     if (res && "data" in res) {
-      setServerResponse(res);
-      if (res.data.success) {
+      setServerRes(res.data);
+      const resData: AuthResponse = res.data;
+      if (resData.success) {
         if (navigateTo !== "") {
           setAuthToken({
-            token: res.data.token || "",
-            user: res.data.user || {
-              for: "",
-              id: "",
-              status: "",
-              userType: "",
-              identifier: "",
-            },
+            token: resData.token || "",
           });
           navigate(navigateTo);
         } else {
@@ -113,7 +110,7 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
         }
       }
     } else {
-      setServerResponse(res.error);
+      setServerRes(res.error);
     }
   };
 
@@ -127,12 +124,12 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
     };
     const res = await resendVerificationCode({ body });
     if (res && "data" in res) {
-      setServerResponse(res);
+      setServerRes(res.data);
       if (res.data.success) {
         setResendCountdown(10);
       }
     } else {
-      setServerResponse(res.error);
+      setServerRes(res.error);
     }
   };
 
@@ -189,11 +186,9 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
                         "text-indigo-600 outline-indigo-600 outline-2 ",
                     }}
                   />
-                  {(errors.code || !serverResponse?.success) && (
+                  {(errors.code || !serverRes?.success) && (
                     <span className="text-red-500 mt-2">
-                      {errors.code
-                        ? "Code is required"
-                        : serverResponse?.data.code}
+                      {errors.code ? "Code is required" : serverRes?.code}
                     </span>
                   )}
                 </>

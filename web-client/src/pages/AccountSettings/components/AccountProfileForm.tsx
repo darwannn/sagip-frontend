@@ -28,7 +28,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(`
   ${BASE_IMAGE_URL}/user/${userData?.profilePicture}
   `);
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
 
   const [
     updateProfile,
@@ -117,11 +117,11 @@ const AccountProfileForm = ({ userData }: TProps) => {
 
         if (res.data.success) {
           if (action === "info") {
-            setServerResponse(res.data);
+            setServerRes(res.data);
           }
         }
       } else {
-        setServerResponse(res.error);
+        setServerRes(res.error);
       }
     }
   };
@@ -169,9 +169,9 @@ const AccountProfileForm = ({ userData }: TProps) => {
       </button>
       <div className="text-3xl font-bold ">Update Profile</div>
       <form>
-        {serverResponse?.success && (
+        {serverRes?.success && (
           <div className="w-full bg-green-500 text-white p-2 my-3 rounded-md text-center">
-            {serverResponse?.message}
+            {serverRes?.message}
           </div>
         )}
         <div className="w-full flex flex-col items-center justify-center mb-10 mt-5">
@@ -196,11 +196,11 @@ const AccountProfileForm = ({ userData }: TProps) => {
             />
             <img className="" id="profilePictureImg" src={selectedImage} />
           </div>
-          {(errors.profilePicture || !serverResponse?.success) && (
+          {(errors.profilePicture || !serverRes?.success) && (
             <span className="text-red-500">
               {errors.profilePicture
                 ? "Picture is required"
-                : serverResponse?.data.profilePicture}
+                : serverRes?.profilePicture}
             </span>
           )}
         </div>

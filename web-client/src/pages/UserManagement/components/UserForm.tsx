@@ -15,7 +15,7 @@ type TProps = {
 };
 
 const UserForm = ({ userData }: TProps) => {
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
   const [
     addUser,
     { isError: addIsError, isLoading: addIsLoading, error: addErr },
@@ -101,12 +101,12 @@ const UserForm = ({ userData }: TProps) => {
     console.log(res);
 
     if (res && "data" in res) {
-      setServerResponse(res);
+      setServerRes(res.data);
       if (res.data.success) {
         navigate(`/users`);
       }
     } else {
-      setServerResponse(res.error);
+      setServerRes(res.error);
     }
   };
 
@@ -184,11 +184,9 @@ const UserForm = ({ userData }: TProps) => {
           {...register("email", { required: true })}
         />
 
-        {(errors.email || !serverResponse?.success) && (
+        {(errors.email || !serverRes?.success) && (
           <span className="text-red-500">
-            {errors.email
-              ? "Email Number is required"
-              : serverResponse?.data.email}
+            {errors.email ? "Email Number is required" : serverRes?.email}
           </span>
         )}
       </div>
@@ -203,11 +201,11 @@ const UserForm = ({ userData }: TProps) => {
           maxLength={11}
           {...register("contactNumber", { required: true })}
         />
-        {(errors.contactNumber || !serverResponse?.success) && (
+        {(errors.contactNumber || !serverRes?.success) && (
           <span className="text-red-500">
             {errors.contactNumber
               ? "Contact Number is required"
-              : serverResponse?.data.contactNumber}
+              : serverRes?.contactNumber}
           </span>
         )}
       </div>

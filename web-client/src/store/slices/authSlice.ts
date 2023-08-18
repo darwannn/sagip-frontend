@@ -4,12 +4,7 @@ import type { AuthType as AuthState } from "../../types/auth";
 
 const initialState: AuthState = {
   token: null,
-  user: {
-    for: "",
-    id: "",
-    status: "",
-    userType: "",
-  },
+
   passwordVerificationRes: null,
   contactVerificationRes: null,
   identifier: null,
@@ -24,10 +19,8 @@ export const authSlice = createSlice({
       localStorage.clear();
       // Store token and user in state / redux slice
       state.token = action.payload.token;
-      state.user = action.payload.user;
       // Store token in local storage
       localStorage.setItem("token", action.payload.token || "");
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
     },
 
     /* holds the server response obtained from the usePasswordVerificationMutation function in the authQuery  */

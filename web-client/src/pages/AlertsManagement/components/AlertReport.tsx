@@ -14,6 +14,8 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 
+import Malolos_CDRRMO_Logo from "../../../assets/img/Malolos_CDRRMO_Logo.png";
+
 const styles = StyleSheet.create({
   body: {
     paddingVertical: 30,
@@ -136,10 +138,7 @@ const ViewAlertPage = () => {
 
           {/* header */}
           <View style={styles.header}>
-            <Image
-              src="https://res.cloudinary.com/dantwvqrv/image/upload/v1690083706/sagip/media/others/Malolos%20CDRRMO%20logo.png"
-              style={styles.logo}
-            />
+            <Image src={Malolos_CDRRMO_Logo} style={styles.logo} />
 
             <View>
               {/* <Text>SAGIP</Text> */}

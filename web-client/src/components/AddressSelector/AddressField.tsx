@@ -43,6 +43,7 @@ const AddressField: React.FC<TProps> = ({
   const selectedBarangay = document.querySelector(
     "#barangay"
   ) as HTMLSelectElement;
+  const selectedStreet = document.querySelector("#street") as HTMLSelectElement;
   const getRegionsData = async () => {
     setRegionsData(await getRegions());
   };
@@ -54,11 +55,13 @@ const AddressField: React.FC<TProps> = ({
       selectedRegion &&
       selectedProvince &&
       selectedCity &&
-      selectedBarangay
+      selectedBarangay &&
+      selectedStreet
     ) {
       selectedProvince.value = "";
       selectedCity.value = "";
       selectedBarangay.value = "";
+      selectedStreet.value = "";
 
       selectedProvince?.setAttribute("data-code", "000000");
       selectedCity?.setAttribute("data-code", "000000");
@@ -70,6 +73,7 @@ const AddressField: React.FC<TProps> = ({
         province: "",
         municipality: "",
         barangay: "",
+        street: "",
       });
     }
     dataCode && setProvincesData(await getProvinces(dataCode));
@@ -80,10 +84,12 @@ const AddressField: React.FC<TProps> = ({
       action === "reset" &&
       selectedProvince &&
       selectedCity &&
-      selectedBarangay
+      selectedBarangay &&
+      selectedStreet
     ) {
       selectedCity.value = "";
       selectedBarangay.value = "";
+      selectedStreet.value = "";
       selectedCity?.setAttribute("data-code", "000000");
       selectedBarangay?.setAttribute("data-code", "000000");
       setCitiesData([]);
@@ -91,18 +97,28 @@ const AddressField: React.FC<TProps> = ({
       reset({
         municipality: "",
         barangay: "",
+        street: "",
       });
     }
     dataCode && setCitiesData(await getCities(dataCode));
   };
 
   const getBarangaysData = async (dataCode: string | null, action: string) => {
-    if (action === "reset" && selectedCity && selectedBarangay) {
+    if (
+      action === "reset" &&
+      selectedCity &&
+      selectedBarangay &&
+      selectedStreet
+    ) {
       selectedBarangay.value = "";
+      selectedStreet.value = "";
+      console.log("selectedBarangay");
+
       selectedBarangay.setAttribute("data-code", "000000");
       setBarangaysData([]);
       reset({
         barangay: "",
+        street: "",
       });
     }
     dataCode && setBarangaysData(await getBarangays(dataCode));
@@ -284,6 +300,14 @@ const AddressField: React.FC<TProps> = ({
           className="border p-1 w-full"
           id="barangay"
           {...register("barangay", { required: true })}
+          onInput={() => {
+            if (selectedStreet) {
+              selectedStreet.value = "";
+              reset({
+                street: "",
+              });
+            }
+          }}
         >
           {barangaysData.length === 0 ? (
             <option value="" hidden>

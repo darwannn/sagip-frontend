@@ -6,6 +6,7 @@ import articleSlice from "./slices/articleSlice";
 import facilitySlice from "./slices/facilitySlice";
 import hazardReportSlice from "./slices/hazardReportSlice";
 import alertSlice from "./slices/alertSlice";
+import accountSlice from "./slices/accountSlice";
 // API / Services / Queries
 import { usersApi } from "../services/usersApi";
 import { articleQueryApi } from "../services/articleQuery";
@@ -36,6 +37,7 @@ export const store = configureStore({
     hazardReports: hazardReportSlice,
     team: teamSlice,
     alerts: alertSlice,
+    account: accountSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([

@@ -16,7 +16,7 @@ type TProps = {
 
 const AccountPasswordForm = ({ userData }: TProps) => {
   const navigate = useNavigate();
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
 
   const [
     updatePassword,
@@ -57,7 +57,7 @@ const AccountPasswordForm = ({ userData }: TProps) => {
 
       if (res && "data" in res) {
         if (res.data.success) {
-          setServerResponse(res.data);
+          setServerRes(res.data);
           /* navigate(`/account`); */
           reset({
             confirmPassword: "",
@@ -66,7 +66,7 @@ const AccountPasswordForm = ({ userData }: TProps) => {
           });
         }
       } else {
-        setServerResponse(res.error);
+        setServerRes(res.error);
       }
     }
   };
@@ -90,16 +90,16 @@ const AccountPasswordForm = ({ userData }: TProps) => {
         <MdClose />
       </button>
       <div className="text-3xl font-bold">Update Password</div>
-      {serverResponse?.success && (
+      {serverRes?.success && (
         <div className="w-full bg-green-500 text-white p-2 my-3 rounded-md text-center">
-          {serverResponse?.message}
+          {serverRes?.message}
         </div>
       )}
       <form className="flex flex-wrap">
         <PasswordField
           register={register}
           errors={errors}
-          serverResponse={serverResponse}
+          serverRes={serverRes}
           fieldName="oldPassword"
           fieldLabel="Current Password"
           passwordRequirement={false}
@@ -109,7 +109,7 @@ const AccountPasswordForm = ({ userData }: TProps) => {
         <PasswordField
           register={register}
           errors={errors}
-          serverResponse={serverResponse}
+          serverRes={serverRes}
           fieldName="password"
           fieldLabel="Password"
           passwordRequirement={true}
@@ -119,7 +119,7 @@ const AccountPasswordForm = ({ userData }: TProps) => {
         <PasswordField
           register={register}
           errors={errors}
-          serverResponse={serverResponse}
+          serverRes={serverRes}
           fieldName="confirmPassword"
           fieldLabel="Confirm Password"
           passwordRequirement={false}

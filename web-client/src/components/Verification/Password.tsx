@@ -10,7 +10,7 @@ type TProps = {
 };
 const Password = ({ action }: TProps) => {
   const dispatch = useAppDispatch();
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
 
   const [
     passwordVerification,
@@ -42,12 +42,12 @@ const Password = ({ action }: TProps) => {
     });
 
     if (res && "data" in res) {
-      setServerResponse(res);
+      setServerRes(res.data);
       if (res.data.success) {
         dispatch(setPasswordVerificationRes(res.data));
       }
     } else {
-      setServerResponse(res.error);
+      setServerRes(res.error);
     }
   };
 
@@ -66,7 +66,7 @@ const Password = ({ action }: TProps) => {
           <PasswordField
             register={register}
             errors={errors}
-            serverResponse={serverResponse}
+            serverRes={serverRes}
             fieldName="password"
             fieldLabel="Password"
             passwordRequirement={false}

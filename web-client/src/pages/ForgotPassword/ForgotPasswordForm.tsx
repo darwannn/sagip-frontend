@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { setAuthToken } from "../../util/auth";
+import { AuthResponse } from "../../types/auth";
+
 import { useForgotPasswordMutation } from "../../services/authQuery";
+
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const ForgotPasswordForm = () => {
   const navigate = useNavigate();
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
   const [
     forgotPassword,
     { isError: isError, isLoading: isLoading, isSuccess: isSuccess },
@@ -29,22 +32,17 @@ const ForgotPasswordForm = () => {
     });
 
     if (res && "data" in res) {
-      setServerResponse(res);
-      if (res.data.success) {
+      const resData: AuthResponse = res.data;
+      setServerRes(res.data);
+      if (resData.success) {
         setAuthToken({
-          token: res.data.token || "",
-          user: res.data.user || {
-            for: "",
-            id: "",
-            status: "",
-            userType: "",
-            identifier: "",
-          },
+          token: resData.token || "",
         });
+
         navigate("/forgot-password/contact-verification");
       }
     } else {
-      setServerResponse(res.error);
+      setServerRes(res.error);
     }
   };
 
@@ -68,11 +66,11 @@ const ForgotPasswordForm = () => {
             className="w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
             {...register("identifier", { required: true })}
           />
-          {(errors.identifier || !serverResponse?.success) && (
+          {(errors.identifier || !serverRes?.success) && (
             <span className="text-red-500">
               {errors.identifier
                 ? "This field is required"
-                : serverResponse?.data.identifier}
+                : serverRes?.identifier}
             </span>
           )}
         </div>

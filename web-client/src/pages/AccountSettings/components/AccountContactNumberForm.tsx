@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { setIdentifier } from "../../../store/slices/authSlice";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-
+import { setIdentifier } from "../../../store/slices/authSlice";
 import { User } from "../../../types/user";
 
 import { useSendVerificationCodeMutation } from "../../../services/authQuery";
@@ -25,7 +23,7 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes
   );
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<any>();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -75,13 +73,16 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
       });
 
       if (res && "data" in res) {
-        setServerResponse(res);
+        setServerRes(res.data);
         if (res.data.success) {
           setShowModal(true);
           dispatch(setIdentifier(data.contactNumber));
+          /* setAuthToken({
+            token: res.data.token || "",
+          }); */
         }
       } else {
-        setServerResponse(res.error);
+        setServerRes(res.error);
       }
     }
   };
@@ -122,11 +123,11 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
           maxLength={11}
           {...register("contactNumber", { required: true })}
         />
-        {(errors.contactNumber || !serverResponse?.success) && (
+        {(errors.contactNumber || !serverRes?.success) && (
           <span className="text-red-500">
             {errors.contactNumber
               ? "Contact Number is required"
-              : serverResponse?.data.contactNumber}
+              : serverRes?.contactNumber}
           </span>
         )}
       </div>

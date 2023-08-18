@@ -9,7 +9,7 @@ type TProps = {
   errors: FieldErrors<FieldValues>;
   fieldName: string;
   fieldLabel: string;
-  serverResponse: any;
+  serverRes: any;
   passwordRequirement: boolean;
 };
 
@@ -18,7 +18,7 @@ const PasswordField: React.FC<TProps> = ({
   errors,
   fieldName,
   fieldLabel,
-  serverResponse,
+  serverRes,
   passwordRequirement,
   style,
 }) => {
@@ -90,12 +90,12 @@ const PasswordField: React.FC<TProps> = ({
         </button>
       </div>
 
-      {(errors[fieldName] || !serverResponse?.success) && (
+      {(errors[fieldName] || !serverRes?.success) && (
         <span className="text-red-500">
           {errors[fieldName]
             ? `${fieldLabel} is required`
             : (!passwordRequirement || areRequirementsMet) &&
-              serverResponse?.data[fieldName]}
+              serverRes?.data[fieldName]}
         </span>
       )}
 
