@@ -2,6 +2,7 @@ import { BASE_IMAGE_URL } from "../../../api.config";
 import { useGetActiveTeamsQuery } from "../../../services/teamQuery";
 import { useAppSelector } from "../../../store/hooks";
 import { selectAssistanceReq } from "../../../store/slices/assistanceReqSlice";
+import Select from "react-select";
 import moment from "moment";
 
 const AssistanceDetails = () => {
@@ -14,16 +15,22 @@ const AssistanceDetails = () => {
     error,
   } = useGetActiveTeamsQuery();
 
+  // Get the names of the rescue team and put it in the select options
+  const rescueTeamNames = rescueTeam?.map((team) => ({
+    value: team._id,
+    label: team.name,
+  }));
+
   if (isLoading) console.log("Loading...");
   if (isError) console.log(error);
   if (isSuccess) console.log(rescueTeam);
 
   return (
     <div className="border rounded-md shadow-sm p-2 mx-2 h-[80vh]  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">
-      <div className="">
+      <div className="flex flex-col gap-2 h-full">
         <span>{assistanceReq?._id}</span>
         {/* USER DETAILS */}
-        <div className="user-info flex flex-row items-center gap-2 p-2 my-2">
+        <div className="user-info flex flex-row items-center gap-2 p-2">
           <div className="pic-container">
             <img
               src={`${BASE_IMAGE_URL}/user/${assistanceReq?.userId.profilePicture}`}
@@ -49,7 +56,7 @@ const AssistanceDetails = () => {
           </div>
         </div>
         {/* EMERGENCY / ASSISTANCE DETAILS */}
-        <div className="emergency-details bg-red-100 p-2 my-2 rounded-md">
+        <div className="emergency-details bg-red-100 p-2 rounded-md">
           <div className="flex flex-row items-center gap-3">
             <div className="emergency-icon">
               <div className="bg-red-300 w-20 h-20 rounded-full"></div>
@@ -73,7 +80,7 @@ const AssistanceDetails = () => {
           </div>
         </div>
         {/* ADDITIONAL DETAILS */}
-        <div className="additional-details bg-blue-200 p-2">
+        <div className="additional-details bg-blue-200 p-2 flex-grow rounded-md">
           <span className="text-sm text-gray-500">Additional Details</span>
           <div className="image-container max-h-[200px] overflow-hidden">
             <img
@@ -83,6 +90,19 @@ const AssistanceDetails = () => {
             />
           </div>
           <p>{assistanceReq?.description}</p>
+        </div>
+        {/* EMERGENCY ACTION */}
+        <div className="emergency-action p-2">
+          <span>Emergency Action</span>
+          <Select options={rescueTeamNames} />
+          <div className="flex flex-row justify-end mt-5 gap-2">
+            <button className="bg-red-500 text-white px-3 py-2 rounded-md">
+              Dismiss
+            </button>
+            <button className="bg-green-500 text-white px-3 py-2 rounded-md">
+              Send Rescue
+            </button>
+          </div>
         </div>
       </div>
     </div>
