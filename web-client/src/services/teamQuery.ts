@@ -12,7 +12,7 @@ import { User } from "../types/user";
 export const teamQueryApi = createApi({
   reducerPath: "teamQuery",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["Teams", "Responders"],
+  tagTypes: ["Teams", "Responders", "ActiveTeams"],
   endpoints: (builder) => ({
     // Get all teams
     getTeams: builder.query<TTeam[], void>({
@@ -21,6 +21,13 @@ export const teamQueryApi = createApi({
         results
           ? results.map(({ _id }) => ({ type: "Teams", id: _id }))
           : ["Teams"],
+    }),
+    getActiveTeams: builder.query<TTeam[], void>({
+      query: () => "team/active",
+      providesTags: (results) =>
+        results
+          ? results.map(({ _id }) => ({ type: "ActiveTeams", id: _id }))
+          : ["ActiveTeams"],
     }),
     //Get a specific team
     getTeam: builder.query<TTeam, string>({
@@ -141,6 +148,7 @@ export const teamQueryApi = createApi({
 export const {
   useGetTeamsQuery,
   useGetTeamQuery,
+  useGetActiveTeamsQuery,
   useCreateTeamMutation,
   useDeleteTeamMutation,
   useLazyGetUnassignedRespondersQuery,

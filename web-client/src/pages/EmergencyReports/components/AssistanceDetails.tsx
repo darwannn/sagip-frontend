@@ -1,12 +1,22 @@
 import { BASE_IMAGE_URL } from "../../../api.config";
+import { useGetActiveTeamsQuery } from "../../../services/teamQuery";
 import { useAppSelector } from "../../../store/hooks";
 import { selectAssistanceReq } from "../../../store/slices/assistanceReqSlice";
 import moment from "moment";
 
 const AssistanceDetails = () => {
   const assistanceReq = useAppSelector(selectAssistanceReq);
+  const {
+    data: rescueTeam,
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+  } = useGetActiveTeamsQuery();
 
-  console.log(assistanceReq);
+  if (isLoading) console.log("Loading...");
+  if (isError) console.log(error);
+  if (isSuccess) console.log(rescueTeam);
 
   return (
     <div className="border rounded-md shadow-sm p-2 mx-2 h-[80vh]  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">
