@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
@@ -17,6 +17,7 @@ type TProps = {
 const AccountPasswordForm = ({ userData }: TProps) => {
   const navigate = useNavigate();
   const [serverRes, setServerRes] = useState<any>();
+  const successMessageRef = useRef<HTMLDivElement | null>(null);
 
   const [
     updatePassword,
@@ -64,6 +65,9 @@ const AccountPasswordForm = ({ userData }: TProps) => {
             password: "",
             oldPassword: "",
           });
+          successMessageRef.current?.scrollIntoView({
+            behavior: "smooth",
+          });
         }
       } else {
         setServerRes(res.error);
@@ -80,7 +84,7 @@ const AccountPasswordForm = ({ userData }: TProps) => {
   if (updateIsSuccess) console.log("Updated successfully");
 
   return (
-    <div className="bg-white p-8 rounded-xl relative">
+    <div className="bg-white p-8 rounded-xl relative" ref={successMessageRef}>
       <button
         className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
         onClick={() => {
@@ -126,7 +130,7 @@ const AccountPasswordForm = ({ userData }: TProps) => {
           style="account"
         />
 
-        <div className="w-full mt-5">
+        <div className="w-full mt-5 ">
           <button
             className="w-full md:w-auto bg-indigo-500 text-white px-5 py-1 my-2 rounded disabled:bg-indigo-300"
             onClick={handleSubmit(onSubmit)}

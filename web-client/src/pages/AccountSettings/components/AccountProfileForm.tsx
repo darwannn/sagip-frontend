@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
@@ -23,6 +23,7 @@ type TProps = {
 const AccountProfileForm = ({ userData }: TProps) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const successMessageRef = useRef<HTMLDivElement | null>(null);
   const [image, setImage] = useState<string>("");
   const [hasBeenCropped, setHasBeenCropped] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string | undefined>(`
@@ -44,7 +45,6 @@ const AccountProfileForm = ({ userData }: TProps) => {
     setValue,
     handleSubmit,
     formState: { isDirty, errors },
-    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       status: userData?.status,
@@ -119,6 +119,9 @@ const AccountProfileForm = ({ userData }: TProps) => {
         if (res.data.success) {
           if (action === "info") {
             setServerRes(res.data);
+            successMessageRef.current?.scrollIntoView({
+              behavior: "smooth",
+            });
           }
         }
       } else {
@@ -159,7 +162,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
   if (updateIsSuccess) console.log("Updated successfully");
 
   return (
-    <div className=" bg-white p-8 rounded-xl relative">
+    <div className=" bg-white p-8 rounded-xl relative" ref={successMessageRef}>
       <button
         className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
         onClick={() => {
@@ -315,7 +318,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
           />
         </div>
 
-        <div className="w-full mt-5">
+        <div className="w-full mt-5 ">
           <button
             className="w-full lg:w-auto bg-indigo-500 text-white px-5 py-1 my-2 rounded disabled:bg-indigo-300"
             onClick={handleSubmit(onSubmit)}

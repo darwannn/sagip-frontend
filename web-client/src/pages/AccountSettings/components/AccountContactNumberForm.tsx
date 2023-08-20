@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -19,7 +19,7 @@ type TProps = {
 const AccountContactNumberForm = ({ userData }: TProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  const successMessageRef = useRef<HTMLDivElement | null>(null);
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes
   );
@@ -35,6 +35,9 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
   useEffect(() => {
     if (contactVerificationRes) {
       setShowModal(false);
+      successMessageRef.current?.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   }, [contactVerificationRes]);
 
@@ -96,7 +99,7 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
   if (sendIsSuccess) console.log("Updated successfully");
 
   return (
-    <div className="bg-white p-8 rounded-xl relative">
+    <div className="bg-white p-8 rounded-xl relative" ref={successMessageRef}>
       {
         <button
           className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
@@ -132,7 +135,7 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
         )}
       </div>
 
-      <div className="w-full mt-5">
+      <div className="w-full mt-5 ">
         <button
           className="w-full lg:w-auto bg-indigo-500 text-white px-5 py-1 my-2 rounded disabled:bg-indigo-300"
           onClick={handleSubmit(onSubmit)}

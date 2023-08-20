@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { setIdentifier } from "../../../store/slices/authSlice";
@@ -19,6 +19,7 @@ type TProps = {
 const AccountEmailForm = ({ userData }: TProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const successMessageRef = useRef<HTMLDivElement | null>(null);
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes
   );
@@ -34,6 +35,9 @@ const AccountEmailForm = ({ userData }: TProps) => {
   useEffect(() => {
     if (contactVerificationRes) {
       setShowModal(false);
+      successMessageRef.current?.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   }, [contactVerificationRes]);
 
@@ -103,7 +107,7 @@ const AccountEmailForm = ({ userData }: TProps) => {
   if (sendIsSuccess) console.log("Sent successfully");
 
   return (
-    <div className="bg-white p-8 rounded-xl relative">
+    <div className="bg-white p-8 rounded-xl relative" ref={successMessageRef}>
       <button
         className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
         onClick={() => {
@@ -118,7 +122,8 @@ const AccountEmailForm = ({ userData }: TProps) => {
           {contactVerificationRes?.message}
         </div>
       )}
-      {!contactVerificationRes?.success &&
+      {
+        /* !contactVerificationRes?.success && */
         userData?.emailStatus === "unverified" && (
           <div className="bg-red-400 text-white px-5 py-3 my-5  text-center rounded">
             <span className="mr-2">
@@ -128,7 +133,8 @@ const AccountEmailForm = ({ userData }: TProps) => {
               Verify Now
             </button>
           </div>
-        )}
+        )
+      }
 
       <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
         <label htmlFor="email">Email</label>
