@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  FieldErrors,
-  FieldValues,
-  UseFormRegister,
-  set,
-} from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 import { User } from "../../types/user";
 
@@ -23,7 +18,7 @@ type TProps = {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   userData?: null | User;
-  /* reset: any; */
+  setValue: any;
   inMalolos: boolean;
 };
 
@@ -31,7 +26,7 @@ const AddressField: React.FC<TProps> = ({
   register,
   errors,
   userData,
-  /* reset, */
+  setValue,
   inMalolos,
 }) => {
   const [regionsData, setRegionsData] = useState<Region[]>([]);
@@ -55,14 +50,14 @@ const AddressField: React.FC<TProps> = ({
     setRegionsData(await getRegions());
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     const getMalolosBarangays = async () => {
       if (inMalolos) {
         setBarangaysData(await getBarangays("031410"));
       }
     };
     getMalolosBarangays();
-  }, [inMalolos]);
+  }, [inMalolos]); */
   /* when the selector value has been changed, the values of other selectors depending on it must be reset or set to an empty string */
   const getProvincesData = async (dataCode: string | null, action: string) => {
     if (
@@ -144,43 +139,66 @@ const AddressField: React.FC<TProps> = ({
   }, []);
 
   useEffect(() => {
-    if (userData?.region && selectedRegion) {
-      if (selectedRegion.getAttribute("data-code") !== "000000") {
-        selectedRegion.value = userData.region;
-      }
-      const selectedRegionOption =
-        selectedRegion.options[selectedRegion.selectedIndex];
-      if (selectedRegionOption) {
-        getProvincesData(selectedRegionOption.getAttribute("data-code"), "");
+    if (selectedRegion) {
+      selectedRegion.value = "";
+      if (userData?.region || inMalolos) {
+        if (selectedRegion.getAttribute("data-code") !== "000000") {
+          if (userData?.region) selectedRegion.value = userData.region;
+          if (inMalolos) {
+            selectedRegion.value = "Region III (Central Luzon)";
+            setValue("region", "Region III (Central Luzon)");
+          }
+        }
+        const selectedRegionOption =
+          selectedRegion.options[selectedRegion.selectedIndex];
+        if (selectedRegionOption) {
+          getProvincesData(selectedRegionOption.getAttribute("data-code"), "");
+        }
       }
     }
-  }, [regionsData]);
+  }, [regionsData, inMalolos]);
 
   useEffect(() => {
-    if (userData?.province && selectedProvince) {
-      if (selectedProvince.getAttribute("data-code") !== "000000") {
-        selectedProvince.value = userData.province;
-      }
-      const selectedProvinceOption =
-        selectedProvince.options[selectedProvince.selectedIndex];
-      if (selectedProvinceOption) {
-        getCitiesData(selectedProvinceOption.getAttribute("data-code"), "");
+    if (selectedProvince) {
+      selectedProvince.value = "";
+      if (userData?.province || inMalolos) {
+        if (selectedProvince.getAttribute("data-code") !== "000000") {
+          if (userData?.region) selectedProvince.value = userData.province;
+          if (inMalolos) {
+            selectedProvince.value = "Bulacan";
+
+            setValue("province", "Bulacan");
+          }
+        }
+        const selectedProvinceOption =
+          selectedProvince.options[selectedProvince.selectedIndex];
+        if (selectedProvinceOption) {
+          getCitiesData(selectedProvinceOption.getAttribute("data-code"), "");
+        }
       }
     }
-  }, [provincesData]);
+  }, [provincesData, inMalolos]);
 
   useEffect(() => {
-    if (userData?.municipality && selectedCity) {
-      if (selectedCity.getAttribute("data-code") !== "000000") {
-        selectedCity.value = userData.municipality;
-      }
-      const selectedCityOption =
-        selectedCity.options[selectedCity.selectedIndex];
-      if (selectedCityOption) {
-        getBarangaysData(selectedCityOption.getAttribute("data-code"), "");
+    if (selectedCity) {
+      selectedCity.value = "";
+      if (userData?.municipality || inMalolos) {
+        if (selectedCity.getAttribute("data-code") !== "000000") {
+          if (userData?.municipality)
+            selectedCity.value = userData.municipality;
+          if (inMalolos) {
+            selectedCity.value = "City Of Malolos (Capital)";
+            setValue("municipality", "City Of Malolos (Capital)");
+          }
+        }
+        const selectedCityOption =
+          selectedCity.options[selectedCity.selectedIndex];
+        if (selectedCityOption) {
+          getBarangaysData(selectedCityOption.getAttribute("data-code"), "");
+        }
       }
     }
-  }, [citiesData]);
+  }, [citiesData, inMalolos]);
 
   useEffect(() => {
     if (userData?.barangay && selectedBarangay) {
@@ -192,125 +210,137 @@ const AddressField: React.FC<TProps> = ({
 
   return (
     <>
-      {inMalolos !== true && (
-        <>
-          <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
-            <label htmlFor="region">Regions</label>
+      {/*  {inMalolos !== true && ( */}
+      <>
+        <div
+          className={`flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3 ${
+            inMalolos && "hidden"
+          }`}
+        >
+          <label htmlFor="region">Regions</label>
 
-            <select
-              className="border p-1 w-full"
-              id="region"
-              {...register("region", { required: true })}
-              onInput={(e) => {
-                const selectElement = e.target as HTMLSelectElement;
-                getProvincesData(
-                  selectElement.selectedOptions[0]?.getAttribute("data-code"),
-                  "reset"
-                );
-              }}
-            >
+          <select
+            className="border p-1 w-full"
+            id="region"
+            {...register("region", { required: true })}
+            onInput={(e) => {
+              const selectElement = e.target as HTMLSelectElement;
+              getProvincesData(
+                selectElement.selectedOptions[0]?.getAttribute("data-code"),
+                "reset"
+              );
+            }}
+          >
+            <option value="" hidden>
+              Select Region
+            </option>
+            {regionsData.map((item, index) => (
+              <option
+                key={index}
+                value={item.region_name}
+                data-code={item.region_code}
+              >
+                {item.region_name}
+              </option>
+            ))}
+          </select>
+          {errors.region && (
+            <span className="text-red-500">Region is required</span>
+          )}
+        </div>
+
+        <div
+          className={`flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3 ${
+            inMalolos && "hidden"
+          }`}
+        >
+          <label htmlFor="province">Province</label>
+
+          <select
+            className="border p-1 w-full"
+            id="province"
+            {...register("province", { required: true })}
+            onInput={(e) => {
+              const selectElement = e.target as HTMLSelectElement;
+              getCitiesData(
+                selectElement.selectedOptions[0]?.getAttribute("data-code"),
+                "reset"
+              );
+            }}
+          >
+            {provincesData.length === 0 ? (
               <option value="" hidden>
                 Select Region
               </option>
-              {regionsData.map((item, index) => (
+            ) : (
+              <option value="" hidden>
+                Select Province
+              </option>
+            )}
+            {provincesData &&
+              provincesData.length > 0 &&
+              provincesData.map((item, index) => (
                 <option
                   key={index}
-                  value={item.region_name}
-                  data-code={item.region_code}
+                  value={item.province_name}
+                  data-code={item.province_code}
                 >
-                  {item.region_name}
+                  {item.province_name}
                 </option>
               ))}
-            </select>
-            {errors.region && (
-              <span className="text-red-500">Region is required</span>
+          </select>
+          {errors.province && (
+            <span className="text-red-500">Province is required</span>
+          )}
+        </div>
+
+        <div
+          className={`flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3 ${
+            inMalolos && "hidden"
+          }`}
+        >
+          <label htmlFor="municipality">Municipality</label>
+
+          <select
+            className="border p-1 w-full"
+            id="municipality"
+            {...register("municipality", { required: true })}
+            onInput={(e) => {
+              const selectElement = e.target as HTMLSelectElement;
+              getBarangaysData(
+                selectElement.selectedOptions[0]?.getAttribute("data-code"),
+                "reset"
+              );
+            }}
+          >
+            {citiesData.length === 0 ? (
+              <option value="" hidden>
+                Select Province
+              </option>
+            ) : (
+              <option value="" hidden>
+                Select Municipality
+              </option>
             )}
-          </div>
 
-          <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
-            <label htmlFor="province">Province</label>
-
-            <select
-              className="border p-1 w-full"
-              id="province"
-              {...register("province", { required: true })}
-              onInput={(e) => {
-                const selectElement = e.target as HTMLSelectElement;
-                getCitiesData(
-                  selectElement.selectedOptions[0]?.getAttribute("data-code"),
-                  "reset"
-                );
-              }}
-            >
-              {provincesData.length === 0 ? (
-                <option value="" hidden>
-                  Select Region
+            {citiesData &&
+              citiesData.length > 0 &&
+              citiesData.map((item, index) => (
+                <option
+                  key={index}
+                  value={item.city_name}
+                  data-code={item.city_code}
+                >
+                  {item.city_name}
                 </option>
-              ) : (
-                <option value="" hidden>
-                  Select Province
-                </option>
-              )}
-              {provincesData &&
-                provincesData.length > 0 &&
-                provincesData.map((item, index) => (
-                  <option
-                    key={index}
-                    value={item.province_name}
-                    data-code={item.province_code}
-                  >
-                    {item.province_name}
-                  </option>
-                ))}
-            </select>
-            {errors.province && (
-              <span className="text-red-500">Province is required</span>
-            )}
-          </div>
-
-          <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
-            <label htmlFor="municipality">Municipality</label>
-
-            <select
-              className="border p-1 w-full"
-              id="municipality"
-              {...register("municipality", { required: true })}
-              onInput={(e) => {
-                const selectElement = e.target as HTMLSelectElement;
-                getBarangaysData(
-                  selectElement.selectedOptions[0]?.getAttribute("data-code"),
-                  "reset"
-                );
-              }}
-            >
-              {citiesData.length === 0 ? (
-                <option value="" hidden>
-                  Select Province
-                </option>
-              ) : (
-                <option value="" hidden>
-                  Select Municipality
-                </option>
-              )}
-
-              {citiesData &&
-                citiesData.length > 0 &&
-                citiesData.map((item, index) => (
-                  <option
-                    key={index}
-                    value={item.city_name}
-                    data-code={item.city_code}
-                  >
-                    {item.city_name}
-                  </option>
-                ))}
-            </select>
-            {errors.municipality && (
-              <span className="text-red-500">Municipality is required</span>
-            )}
-          </div>
-        </>
-      )}
+              ))}
+          </select>
+          {errors.municipality && (
+            <span className="text-red-500">Municipality is required</span>
+          )}
+        </div>
+      </>
+      {/* )} */}
 
       <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
         <label htmlFor="barangay">Barangay</label>

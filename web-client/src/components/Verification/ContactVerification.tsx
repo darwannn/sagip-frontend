@@ -35,7 +35,7 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode<Token>(token || "");
   const identifier =
-    action != "forgot-password"
+    action != "forgot-password" && action != "register"
       ? useAppSelector((state) => state.auth.identifier)
       : decodedToken.identifier;
 

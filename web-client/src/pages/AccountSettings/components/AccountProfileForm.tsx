@@ -13,7 +13,7 @@ import { MdClose } from "react-icons/md";
 import "cropperjs/dist/cropper.css";
 import moment from "moment";
 
-import Address from "../../../components/AddressSelector/AddressField";
+import AddressField from "../../../components/AddressSelector/AddressField";
 import ImageCropper from "../../../components/ImageCropper/ImageCropper";
 
 type TProps = {
@@ -41,6 +41,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { isDirty, errors },
     reset,
@@ -200,7 +201,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
             <span className="text-red-500">
               {errors.profilePicture
                 ? "Picture is required"
-                : serverRes?.data.profilePicture}
+                : serverRes?.profilePicture}
             </span>
           )}
         </div>
@@ -302,13 +303,13 @@ const AccountProfileForm = ({ userData }: TProps) => {
 
         <h2 className="font-bold mt-10">Address</h2>
         <div className="flex flex-wrap">
-          <Address
+          <AddressField
             inMalolos={false}
             {...{
               register,
               errors,
               userData,
-              /* reset, */
+              setValue,
             }}
           />
         </div>
