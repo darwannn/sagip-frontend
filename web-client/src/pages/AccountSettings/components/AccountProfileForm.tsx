@@ -305,6 +305,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
         <div className="flex flex-wrap">
           <AddressField
             inMalolos={false}
+            style="account"
             {...{
               register,
               errors,

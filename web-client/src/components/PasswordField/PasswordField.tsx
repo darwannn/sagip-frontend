@@ -47,7 +47,7 @@ const PasswordField: React.FC<TProps> = ({
     <div
       className={
         style === "auth" || style === "account-delete"
-          ? "flex flex-col mt-5 p-2 w-full"
+          ? "my-3"
           : "flex flex-col mt-5 p-2 w-full  lg:w-1/2 xl:w-1/3"
       }
     >
