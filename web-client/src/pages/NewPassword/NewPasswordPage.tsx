@@ -1,13 +1,21 @@
 import NewPasswordForm from "./NewPasswordForm";
 
-import AuthForm from "../../components/AuthForm/AuthForm";
+import AuthForm from "../../components/Form/AuthForm";
+import AuthFormHeader from "../../components/Form/AuthFormHeader";
 
 const NewPasswordPage = () => {
   return (
     <AuthForm
-      pageTitle="Create New Password"
-      navigateTo="/forgot-password"
-      component={<NewPasswordForm />}
+      component={
+        <>
+          <AuthFormHeader
+            title="Create New Password"
+            buttonAction="navigate"
+            action="/forgot-password"
+          />
+          <NewPasswordForm />
+        </>
+      }
     />
   );
 };

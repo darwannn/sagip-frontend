@@ -142,7 +142,7 @@ const AccountEmailForm = ({ userData }: TProps) => {
 
         {(errors.email || !serverRes?.success) && (
           <span className="text-red-500">
-            {errors.email ? "Email is required" : serverRes?.email}
+            {errors.email ? "Email is required" : serverRes?.data.email}
           </span>
         )}
       </div>

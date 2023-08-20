@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+  set,
+} from "react-hook-form";
 
 import { User } from "../../types/user";
 
@@ -18,14 +23,16 @@ type TProps = {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   userData?: null | User;
-  reset: any;
+  /* reset: any; */
+  inMalolos: boolean;
 };
 
 const AddressField: React.FC<TProps> = ({
   register,
   errors,
   userData,
-  reset,
+  /* reset, */
+  inMalolos,
 }) => {
   const [regionsData, setRegionsData] = useState<Region[]>([]);
   const [provincesData, setProvincesData] = useState<Province[]>([]);
@@ -48,6 +55,14 @@ const AddressField: React.FC<TProps> = ({
     setRegionsData(await getRegions());
   };
 
+  useEffect(() => {
+    const getMalolosBarangays = async () => {
+      if (inMalolos) {
+        setBarangaysData(await getBarangays("031410"));
+      }
+    };
+    getMalolosBarangays();
+  }, [inMalolos]);
   /* when the selector value has been changed, the values of other selectors depending on it must be reset or set to an empty string */
   const getProvincesData = async (dataCode: string | null, action: string) => {
     if (
@@ -69,12 +84,12 @@ const AddressField: React.FC<TProps> = ({
       setProvincesData([]);
       setCitiesData([]);
       setBarangaysData([]);
-      reset({
+      /* reset({
         province: "",
         municipality: "",
         barangay: "",
         street: "",
-      });
+      }); */
     }
     dataCode && setProvincesData(await getProvinces(dataCode));
   };
@@ -94,11 +109,11 @@ const AddressField: React.FC<TProps> = ({
       selectedBarangay?.setAttribute("data-code", "000000");
       setCitiesData([]);
       setBarangaysData([]);
-      reset({
+      /*  reset({
         municipality: "",
         barangay: "",
         street: "",
-      });
+      }); */
     }
     dataCode && setCitiesData(await getCities(dataCode));
   };
@@ -116,10 +131,10 @@ const AddressField: React.FC<TProps> = ({
 
       selectedBarangay.setAttribute("data-code", "000000");
       setBarangaysData([]);
-      reset({
+      /* reset({
         barangay: "",
         street: "",
-      });
+      }); */
     }
     dataCode && setBarangaysData(await getBarangays(dataCode));
   };
@@ -177,121 +192,125 @@ const AddressField: React.FC<TProps> = ({
 
   return (
     <>
-      <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
-        <label htmlFor="region">Regions</label>
+      {inMalolos !== true && (
+        <>
+          <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
+            <label htmlFor="region">Regions</label>
 
-        <select
-          className="border p-1 w-full"
-          id="region"
-          {...register("region", { required: true })}
-          onInput={(e) => {
-            const selectElement = e.target as HTMLSelectElement;
-            getProvincesData(
-              selectElement.selectedOptions[0]?.getAttribute("data-code"),
-              "reset"
-            );
-          }}
-        >
-          <option value="" hidden>
-            Select Region
-          </option>
-          {regionsData.map((item, index) => (
-            <option
-              key={index}
-              value={item.region_name}
-              data-code={item.region_code}
+            <select
+              className="border p-1 w-full"
+              id="region"
+              {...register("region", { required: true })}
+              onInput={(e) => {
+                const selectElement = e.target as HTMLSelectElement;
+                getProvincesData(
+                  selectElement.selectedOptions[0]?.getAttribute("data-code"),
+                  "reset"
+                );
+              }}
             >
-              {item.region_name}
-            </option>
-          ))}
-        </select>
-        {errors.region && (
-          <span className="text-red-500">Region is required</span>
-        )}
-      </div>
-
-      <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
-        <label htmlFor="province">Province</label>
-
-        <select
-          className="border p-1 w-full"
-          id="province"
-          {...register("province", { required: true })}
-          onInput={(e) => {
-            const selectElement = e.target as HTMLSelectElement;
-            getCitiesData(
-              selectElement.selectedOptions[0]?.getAttribute("data-code"),
-              "reset"
-            );
-          }}
-        >
-          {provincesData.length === 0 ? (
-            <option value="" hidden>
-              Select Region
-            </option>
-          ) : (
-            <option value="" hidden>
-              Select Province
-            </option>
-          )}
-          {provincesData &&
-            provincesData.length > 0 &&
-            provincesData.map((item, index) => (
-              <option
-                key={index}
-                value={item.province_name}
-                data-code={item.province_code}
-              >
-                {item.province_name}
+              <option value="" hidden>
+                Select Region
               </option>
-            ))}
-        </select>
-        {errors.province && (
-          <span className="text-red-500">Province is required</span>
-        )}
-      </div>
+              {regionsData.map((item, index) => (
+                <option
+                  key={index}
+                  value={item.region_name}
+                  data-code={item.region_code}
+                >
+                  {item.region_name}
+                </option>
+              ))}
+            </select>
+            {errors.region && (
+              <span className="text-red-500">Region is required</span>
+            )}
+          </div>
 
-      <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
-        <label htmlFor="municipality">Municipality</label>
+          <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
+            <label htmlFor="province">Province</label>
 
-        <select
-          className="border p-1 w-full"
-          id="municipality"
-          {...register("municipality", { required: true })}
-          onInput={(e) => {
-            const selectElement = e.target as HTMLSelectElement;
-            getBarangaysData(
-              selectElement.selectedOptions[0]?.getAttribute("data-code"),
-              "reset"
-            );
-          }}
-        >
-          {citiesData.length === 0 ? (
-            <option value="" hidden>
-              Select Province
-            </option>
-          ) : (
-            <option value="" hidden>
-              Select Municipality
-            </option>
-          )}
+            <select
+              className="border p-1 w-full"
+              id="province"
+              {...register("province", { required: true })}
+              onInput={(e) => {
+                const selectElement = e.target as HTMLSelectElement;
+                getCitiesData(
+                  selectElement.selectedOptions[0]?.getAttribute("data-code"),
+                  "reset"
+                );
+              }}
+            >
+              {provincesData.length === 0 ? (
+                <option value="" hidden>
+                  Select Region
+                </option>
+              ) : (
+                <option value="" hidden>
+                  Select Province
+                </option>
+              )}
+              {provincesData &&
+                provincesData.length > 0 &&
+                provincesData.map((item, index) => (
+                  <option
+                    key={index}
+                    value={item.province_name}
+                    data-code={item.province_code}
+                  >
+                    {item.province_name}
+                  </option>
+                ))}
+            </select>
+            {errors.province && (
+              <span className="text-red-500">Province is required</span>
+            )}
+          </div>
 
-          {citiesData &&
-            citiesData.length > 0 &&
-            citiesData.map((item, index) => (
-              <option
-                key={index}
-                value={item.city_name}
-                data-code={item.city_code}
-              >
-                {item.city_name}
-              </option>
-            ))}
-        </select>
-        {errors.municipality && (
-          <span className="text-red-500">Municipality is required</span>
-        )}
-      </div>
+          <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
+            <label htmlFor="municipality">Municipality</label>
+
+            <select
+              className="border p-1 w-full"
+              id="municipality"
+              {...register("municipality", { required: true })}
+              onInput={(e) => {
+                const selectElement = e.target as HTMLSelectElement;
+                getBarangaysData(
+                  selectElement.selectedOptions[0]?.getAttribute("data-code"),
+                  "reset"
+                );
+              }}
+            >
+              {citiesData.length === 0 ? (
+                <option value="" hidden>
+                  Select Province
+                </option>
+              ) : (
+                <option value="" hidden>
+                  Select Municipality
+                </option>
+              )}
+
+              {citiesData &&
+                citiesData.length > 0 &&
+                citiesData.map((item, index) => (
+                  <option
+                    key={index}
+                    value={item.city_name}
+                    data-code={item.city_code}
+                  >
+                    {item.city_name}
+                  </option>
+                ))}
+            </select>
+            {errors.municipality && (
+              <span className="text-red-500">Municipality is required</span>
+            )}
+          </div>
+        </>
+      )}
 
       <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
         <label htmlFor="barangay">Barangay</label>
@@ -303,9 +322,9 @@ const AddressField: React.FC<TProps> = ({
           onInput={() => {
             if (selectedStreet) {
               selectedStreet.value = "";
-              reset({
+              /* reset({
                 street: "",
-              });
+              }); */
             }
           }}
         >

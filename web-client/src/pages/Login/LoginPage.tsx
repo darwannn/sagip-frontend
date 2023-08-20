@@ -13,11 +13,19 @@ import { setAuthToken } from "../../util/auth";
 
 import LoginForm from "./LoginForm";
 
-import AuthForm from "../../components/AuthForm/AuthForm";
+import AuthForm from "../../components/Form/AuthForm";
+import AuthFormHeader from "../../components/Form/AuthFormHeader";
 
 const LoginPage = () => {
   return (
-    <AuthForm pageTitle="Login" navigateTo="/" component={<LoginForm />} />
+    <AuthForm
+      component={
+        <>
+          <AuthFormHeader title="Login" buttonAction="navigate" action="/" />
+          <LoginForm />
+        </>
+      }
+    />
   );
 };
 
@@ -56,6 +64,10 @@ export const action: ActionFunction = async ({
   });
   if (resData.message.includes("attempt")) {
     /* navigate("/login/contact-verification"); */
+  }
+
+  if (resData.message.includes("verify")) {
+    /* navigate("/register/contact-verification"); */
   }
   return redirect("/");
 };

@@ -127,7 +127,7 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
           <span className="text-red-500">
             {errors.contactNumber
               ? "Contact Number is required"
-              : serverRes?.contactNumber}
+              : serverRes?.data.contactNumber}
           </span>
         )}
       </div>

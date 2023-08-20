@@ -1,16 +1,22 @@
-import AuthForm from "../../components/AuthForm/AuthForm";
+import AuthForm from "../../components/Form/AuthForm";
+import AuthFormHeader from "../../components/Form/AuthFormHeader";
 import ContactVerification from "../../components/Verification/ContactVerification";
 
 const ForgotPasswordContactVerification = () => {
   return (
     <AuthForm
-      pageTitle="Reset your Password"
-      navigateTo="/forgot-password"
       component={
-        <ContactVerification
-          action="forgot-password"
-          navigateTo="/new-password"
-        />
+        <>
+          <AuthFormHeader
+            title="Reset your Password"
+            buttonAction="navigate"
+            action="/forgot-password"
+          />
+          <ContactVerification
+            action="forgot-password"
+            navigateTo="/new-password"
+          />
+        </>
       }
     />
   );

@@ -9,6 +9,31 @@ export const authQueryApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   tagTypes: ["User", "SelectedUser"],
   endpoints: (builder) => ({
+    register: builder.mutation<TUserResData, { body: Record<string, any> }>({
+      query: ({ body }) => ({
+        url: `/auth/register/`,
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
+
+    /* validate the inputted password / contact number / email address */
+    validataInput: builder.mutation<
+      TUserResData,
+      { body: Record<string, any>; action: string }
+    >({
+      query: ({ body, action }) => ({
+        url: `/auth/validate/${action}`,
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
     /* archive the account if the provided password matches with the password in the database */
     passwordVerification: builder.mutation<
       TUserResData,
@@ -102,6 +127,8 @@ export const authQueryApi = createApi({
 });
 
 export const {
+  useRegisterMutation,
+  useValidataInputMutation,
   usePasswordVerificationMutation,
   useContactVerificationMutation,
   useSendVerificationCodeMutation,

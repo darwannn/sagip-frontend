@@ -178,9 +178,9 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
                     validChars="0-9"
                     onChange={(value) => field.onChange(value)}
                     classNames={{
-                      container: "w-64 md:w-[21vw]",
+                      container: "w-64 md:w-[21vw] ",
                       character:
-                        "text-gray-500 bg-gray-200 border border-gray-300 p-1 rounded-md font-semibold flex items-center justify-center",
+                        "text-gray-500 bg-gray-200 border border-gray-300 p-1 rounded-md font-semibold flex items-center justify-center md:text-[20px]",
                       characterInactive: "",
                       characterSelected:
                         "text-indigo-600 outline-indigo-600 outline-2 ",

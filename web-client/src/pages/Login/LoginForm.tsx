@@ -87,7 +87,7 @@ const LoginForm = () => {
       </button>
 
       <Link
-        to={"/forgot-password"}
+        to={"/register"}
         className="block sm:hidden text-md text-center text-gray-500 underline hover:text-gray-700 my-2"
       >
         or Sign up instead

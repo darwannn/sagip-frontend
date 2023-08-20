@@ -5,6 +5,7 @@ export type AuthType = {
   contactVerificationRes?: any;
   identifier?: string | null;
   newPasswordRes?: any;
+  displayedRegisterPage?: string | null;
 };
 
 export type Token = {

@@ -70,7 +70,7 @@ const ForgotPasswordForm = () => {
             <span className="text-red-500">
               {errors.identifier
                 ? "This field is required"
-                : serverRes?.identifier}
+                : serverRes?.data.identifier}
             </span>
           )}
         </div>

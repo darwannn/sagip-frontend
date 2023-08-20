@@ -186,7 +186,7 @@ const UserForm = ({ userData }: TProps) => {
 
         {(errors.email || !serverRes?.success) && (
           <span className="text-red-500">
-            {errors.email ? "Email Number is required" : serverRes?.email}
+            {errors.email ? "Email Number is required" : serverRes?.data.email}
           </span>
         )}
       </div>
@@ -205,7 +205,7 @@ const UserForm = ({ userData }: TProps) => {
           <span className="text-red-500">
             {errors.contactNumber
               ? "Contact Number is required"
-              : serverRes?.contactNumber}
+              : serverRes?.data.contactNumber}
           </span>
         )}
       </div>

@@ -9,6 +9,7 @@ const initialState: AuthState = {
   contactVerificationRes: null,
   identifier: null,
   newPasswordRes: null,
+  displayedRegisterPage: null,
 };
 
 export const authSlice = createSlice({
@@ -41,6 +42,9 @@ export const authSlice = createSlice({
     setNewPasswordRes: (state, action: PayloadAction<any>) => {
       state.newPasswordRes = action.payload;
     },
+    setDisplayedRegisterPage: (state, action: PayloadAction<any>) => {
+      state.displayedRegisterPage = action.payload;
+    },
   },
 });
 
@@ -50,5 +54,6 @@ export const {
   setcontactVerificationRes,
   setIdentifier,
   setNewPasswordRes,
+  setDisplayedRegisterPage,
 } = authSlice.actions;
 export default authSlice.reducer;

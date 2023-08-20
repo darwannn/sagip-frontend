@@ -200,7 +200,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
             <span className="text-red-500">
               {errors.profilePicture
                 ? "Picture is required"
-                : serverRes?.profilePicture}
+                : serverRes?.data.profilePicture}
             </span>
           )}
         </div>
@@ -303,11 +303,12 @@ const AccountProfileForm = ({ userData }: TProps) => {
         <h2 className="font-bold mt-10">Address</h2>
         <div className="flex flex-wrap">
           <Address
+            inMalolos={false}
             {...{
               register,
               errors,
               userData,
-              reset,
+              /* reset, */
             }}
           />
         </div>
