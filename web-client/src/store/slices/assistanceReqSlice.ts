@@ -15,7 +15,7 @@ export const assistanceReqSlice = createSlice({
   reducers: {
     setSelectedAssistanceRequest: (
       state,
-      action: PayloadAction<TAssistanceRequest>
+      action: PayloadAction<TAssistanceRequest | null>
     ) => {
       state.selectedAssistanceRequest = action.payload;
     },

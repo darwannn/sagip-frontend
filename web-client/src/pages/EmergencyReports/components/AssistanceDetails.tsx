@@ -1,9 +1,14 @@
 import { BASE_IMAGE_URL } from "../../../api.config";
 import { useGetActiveTeamsQuery } from "../../../services/teamQuery";
-import { useAppSelector } from "../../../store/hooks";
-import { selectAssistanceReq } from "../../../store/slices/assistanceReqSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import {
+  selectAssistanceReq,
+  setSelectedAssistanceRequest,
+} from "../../../store/slices/assistanceReqSlice";
 import Select from "react-select";
 import moment from "moment";
+// Icons
+import { MdClose } from "react-icons/md";
 
 const AssistanceDetails = () => {
   const assistanceReq = useAppSelector(selectAssistanceReq);
@@ -21,6 +26,8 @@ const AssistanceDetails = () => {
     label: team.name,
   }));
 
+  const dispatch = useAppDispatch();
+
   if (isLoading) console.log("Loading...");
   if (isError) console.log(error);
   if (isSuccess) console.log(rescueTeam);
@@ -28,7 +35,15 @@ const AssistanceDetails = () => {
   return (
     <div className="border rounded-md shadow-sm p-2 mx-2 h-[80vh]  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">
       <div className="flex flex-col gap-2 h-full">
-        <span>{assistanceReq?._id}</span>
+        <div className="w-full flex flex-row justify-between">
+          <span>{assistanceReq?._id}</span>
+          <button
+            onClick={() => dispatch(setSelectedAssistanceRequest(null))}
+            className="hover:bg-gray-200 p-1 rounded transition-all duration-100"
+          >
+            <MdClose />
+          </button>
+        </div>
         {/* USER DETAILS */}
         <div className="user-info flex flex-row items-center gap-2 p-2">
           <div className="pic-container">
