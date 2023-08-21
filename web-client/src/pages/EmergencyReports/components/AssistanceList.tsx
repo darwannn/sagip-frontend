@@ -5,7 +5,7 @@ const AssistanceList = memo(() => {
   const { data } = useGetAllAssistanceRequestsQuery();
 
   return (
-    <div className="flex flex-col gap-2 bg-white p-3 max-h-[70vh] min-w-[350px] shadow border rounded-md overflow-x-auto">
+    <div className="flex-grow flex flex-col gap-2 w-full overflow-x-auto">
       {data?.map((assistance) => (
         <AssistanceItem key={assistance._id} assistance={assistance} />
       ))}

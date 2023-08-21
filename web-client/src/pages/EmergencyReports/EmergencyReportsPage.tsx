@@ -6,6 +6,7 @@ import { MarkerF } from "@react-google-maps/api";
 import AssistanceDetails from "./components/AssistanceDetails";
 import { useAppSelector } from "../../store/hooks";
 import { selectAssistanceReq } from "../../store/slices/assistanceReqSlice";
+import AssistanceFilters from "./components/AssistanceFilter";
 const EmergencyReportsPage = () => {
   // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -26,8 +27,11 @@ const EmergencyReportsPage = () => {
 
   return (
     <div className="relative h-screen">
-      <div className="relative z-10 flex w-max items-start p-2">
-        <AssistanceList />
+      <div className="flex flex-col p-2">
+        <div className="relative z-10 flex flex-col w-max items-start bg-white p-3 max-h-[70vh] min-w-[350px] shadow border rounded-md ">
+          <AssistanceFilters />
+          <AssistanceList />
+        </div>
       </div>
       {selectedAssistance && <AssistanceDetails />}
       <div className="absolute top-0 z-0 w-full">
