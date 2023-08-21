@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 import { User } from "../../types/user";
@@ -21,6 +22,7 @@ type TProps = {
   setValue: any;
   inMalolos: boolean;
   style: string;
+  getValues?: any;
 };
 
 const AddressField: React.FC<TProps> = ({
@@ -30,6 +32,7 @@ const AddressField: React.FC<TProps> = ({
   setValue,
   inMalolos,
   style,
+  getValues,
 }) => {
   const [regionsData, setRegionsData] = useState<Region[]>([]);
   const [provincesData, setProvincesData] = useState<Province[]>([]);
@@ -51,15 +54,20 @@ const AddressField: React.FC<TProps> = ({
   const getRegionsData = async () => {
     setRegionsData(await getRegions());
   };
+  const formRegion = getValues("region");
+  const formProvince = getValues("province");
+  const formMunicipality = getValues("municipality");
+  const formBarangay = getValues("barangay");
+  useEffect(() => {
+    if (inMalolos) {
+      setValue("region", "Region III (Central Luzon)");
+      setValue("province", "Bulacan");
+      setValue("municipality", "City Of Malolos (Capital)");
+      setValue("barangay", "");
+      setValue("street", "");
+    }
+  }, [inMalolos]);
 
-  /* useEffect(() => {
-    const getMalolosBarangays = async () => {
-      if (inMalolos) {
-        setBarangaysData(await getBarangays("031410"));
-      }
-    };
-    getMalolosBarangays();
-  }, [inMalolos]); */
   /* when the selector value has been changed, the values of other selectors depending on it must be reset or set to an empty string */
   const getProvincesData = async (dataCode: string | null, action: string) => {
     if (
@@ -70,10 +78,10 @@ const AddressField: React.FC<TProps> = ({
       selectedBarangay &&
       selectedStreet
     ) {
-      selectedProvince.value = "";
+      /*  selectedProvince.value = "";
       selectedCity.value = "";
       selectedBarangay.value = "";
-      selectedStreet.value = "";
+      selectedStreet.value = ""; */
 
       selectedProvince?.setAttribute("data-code", "000000");
       selectedCity?.setAttribute("data-code", "000000");
@@ -87,6 +95,9 @@ const AddressField: React.FC<TProps> = ({
         barangay: "",
         street: "",
       }); */
+      setValue("province", "");
+      setValue("municipality", "");
+      setValue("barangay", "");
     }
     dataCode && setProvincesData(await getProvinces(dataCode));
   };
@@ -99,9 +110,9 @@ const AddressField: React.FC<TProps> = ({
       selectedBarangay &&
       selectedStreet
     ) {
-      selectedCity.value = "";
+      /*  selectedCity.value = "";
       selectedBarangay.value = "";
-      selectedStreet.value = "";
+      selectedStreet.value = ""; */
       selectedCity?.setAttribute("data-code", "000000");
       selectedBarangay?.setAttribute("data-code", "000000");
       setCitiesData([]);
@@ -111,6 +122,9 @@ const AddressField: React.FC<TProps> = ({
         barangay: "",
         street: "",
       }); */
+      setValue("municipality", "");
+      setValue("barangay", "");
+      setValue("street", "");
     }
     dataCode && setCitiesData(await getCities(dataCode));
   };
@@ -122,8 +136,8 @@ const AddressField: React.FC<TProps> = ({
       selectedBarangay &&
       selectedStreet
     ) {
-      selectedBarangay.value = "";
-      selectedStreet.value = "";
+      /* selectedBarangay.value = "";
+      selectedStreet.value = ""; */
       console.log("selectedBarangay");
 
       selectedBarangay.setAttribute("data-code", "000000");
@@ -132,6 +146,8 @@ const AddressField: React.FC<TProps> = ({
         barangay: "",
         street: "",
       }); */
+      setValue("barangay", "");
+      setValue("street", "");
     }
     dataCode && setBarangaysData(await getBarangays(dataCode));
   };
@@ -142,13 +158,19 @@ const AddressField: React.FC<TProps> = ({
 
   useEffect(() => {
     if (selectedRegion) {
-      selectedRegion.value = "";
-      if (userData?.region || inMalolos) {
+      setValue("region", "");
+      if (userData?.region || inMalolos || formRegion) {
         if (selectedRegion.getAttribute("data-code") !== "000000") {
-          if (userData?.region) selectedRegion.value = userData.region;
+          if (userData?.region) setValue("region", userData.region);
+
           if (inMalolos) {
-            selectedRegion.value = "Region III (Central Luzon)";
+            /* selectedRegion.value = "Region III (Central Luzon)"; */
             setValue("region", "Region III (Central Luzon)");
+          } else {
+            if (formRegion) {
+              /* selectedRegion.value = formRegion; */
+              setValue("region", formRegion);
+            }
           }
         }
         const selectedRegionOption =
@@ -162,14 +184,20 @@ const AddressField: React.FC<TProps> = ({
 
   useEffect(() => {
     if (selectedProvince) {
-      selectedProvince.value = "";
-      if (userData?.province || inMalolos) {
+      /* selectedProvince.value = ""; */
+      setValue("province", "");
+      if (userData?.province || inMalolos || formProvince) {
         if (selectedProvince.getAttribute("data-code") !== "000000") {
-          if (userData?.region) selectedProvince.value = userData.province;
-          if (inMalolos) {
-            selectedProvince.value = "Bulacan";
+          if (userData?.province) setValue("province", userData.province);
 
+          if (inMalolos) {
+            /*  selectedProvince.value = "Bulacan"; */
             setValue("province", "Bulacan");
+          } else {
+            if (formProvince) {
+              /* selectedProvince.value = formProvince; */
+              setValue("province", formProvince);
+            }
           }
         }
         const selectedProvinceOption =
@@ -183,14 +211,22 @@ const AddressField: React.FC<TProps> = ({
 
   useEffect(() => {
     if (selectedCity) {
-      selectedCity.value = "";
-      if (userData?.municipality || inMalolos) {
+      /* selectedCity.value = ""; */
+
+      setValue("municipality", "");
+      if (userData?.municipality || inMalolos || formMunicipality) {
         if (selectedCity.getAttribute("data-code") !== "000000") {
           if (userData?.municipality)
-            selectedCity.value = userData.municipality;
+            setValue("municipality", userData.municipality);
+
           if (inMalolos) {
-            selectedCity.value = "City Of Malolos (Capital)";
+            /* selectedCity.value = "City Of Malolos (Capital)"; */
             setValue("municipality", "City Of Malolos (Capital)");
+          } else {
+            if (formMunicipality) {
+              /* selectedCity.value = formMunicipality; */
+              setValue("municipality", formMunicipality);
+            }
           }
         }
         const selectedCityOption =
@@ -203,10 +239,16 @@ const AddressField: React.FC<TProps> = ({
   }, [citiesData, inMalolos]);
 
   useEffect(() => {
-    if (userData?.barangay && selectedBarangay) {
-      if (selectedBarangay.getAttribute("data-code") !== "000000") {
-        selectedBarangay.value = userData.barangay;
-      }
+    if (selectedBarangay) {
+      if (userData?.barangay || formBarangay)
+        if (selectedBarangay.getAttribute("data-code") !== "000000") {
+          if (userData?.barangay) setValue("barangay", userData.barangay);
+
+          if (formBarangay) {
+            /* selectedBarangay.value = formBarangay; */
+            setValue("barangay", formBarangay);
+          }
+        }
     }
   }, [barangaysData]);
 
@@ -240,6 +282,7 @@ const AddressField: React.FC<TProps> = ({
             {...register("region", { required: true })}
             onInput={(e) => {
               const selectElement = e.target as HTMLSelectElement;
+
               getProvincesData(
                 selectElement.selectedOptions[0]?.getAttribute("data-code"),
                 "reset"
@@ -290,6 +333,7 @@ const AddressField: React.FC<TProps> = ({
             {...register("province", { required: true })}
             onInput={(e) => {
               const selectElement = e.target as HTMLSelectElement;
+
               getCitiesData(
                 selectElement.selectedOptions[0]?.getAttribute("data-code"),
                 "reset"
@@ -348,6 +392,7 @@ const AddressField: React.FC<TProps> = ({
             {...register("municipality", { required: true })}
             onInput={(e) => {
               const selectElement = e.target as HTMLSelectElement;
+
               getBarangaysData(
                 selectElement.selectedOptions[0]?.getAttribute("data-code"),
                 "reset"
@@ -386,7 +431,7 @@ const AddressField: React.FC<TProps> = ({
       <div
         className={
           style === "auth"
-            ? `my-3 ${inMalolos && "hidden"}`
+            ? `my-3`
             : "flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3"
         }
       >
@@ -442,7 +487,7 @@ const AddressField: React.FC<TProps> = ({
       <div
         className={
           style === "auth"
-            ? `my-3 ${inMalolos && "hidden"}`
+            ? `my-3`
             : "flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3"
         }
       >
