@@ -43,6 +43,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
   const {
     register,
     setValue,
+    getValues,
     handleSubmit,
     formState: { isDirty, errors },
   } = useForm<FieldValues>({
@@ -314,6 +315,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
               errors,
               userData,
               setValue,
+              getValues,
             }}
           />
         </div>
