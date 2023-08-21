@@ -25,7 +25,7 @@ const AccountDelete = () => {
       navigate("/login");
       /* TODO: remove token and user data from local storage */
     }
-  }, [passwordVerificationRes]);
+  }, [passwordVerificationRes, dispatch, navigate]);
 
   return (
     <>

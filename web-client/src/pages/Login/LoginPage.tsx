@@ -1,9 +1,4 @@
-import {
-  ActionFunction,
-  Navigate,
-  redirect,
-  useNavigate,
-} from "react-router-dom";
+import { ActionFunction, redirect } from "react-router-dom";
 
 // Types
 import { AuthResponse } from "../../types/auth";

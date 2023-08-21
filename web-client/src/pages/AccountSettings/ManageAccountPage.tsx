@@ -7,7 +7,7 @@ import AccountOptionList from "./components/AccountSettingsList";
 import ViewAccountPage from "./components/ViewAccountPage";
 
 const ManageAccountPage = () => {
-  let { page } = useParams();
+  const { page } = useParams();
 
   const [isMobile, setIsMobile] = useState(false);
   const { data: userData, isLoading, error } = useGetUserByTokenQuery();

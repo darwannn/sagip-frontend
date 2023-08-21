@@ -24,7 +24,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const successMessageRef = useRef<HTMLDivElement | null>(null);
-  const [image, setImage] = useState<string>("");
+  const [image, setImage] = useState<string | null | ArrayBuffer>("");
   const [hasBeenCropped, setHasBeenCropped] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string | undefined>(`
   ${BASE_IMAGE_URL}/user/${userData?.profilePicture}
@@ -72,7 +72,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
     if (hasBeenCropped) {
       handleSubmit(onCrop)();
     }
-  }, [hasBeenCropped]);
+  }, [hasBeenCropped, handleSubmit]);
 
   const SubmitProfileData = async (data: FieldValues, action: string) => {
     if (action === "info") {
@@ -137,7 +137,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
     SubmitProfileData(data, "picture");
   };
 
-  const handleImageChange = (e: any) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setShowModal(true);
@@ -150,8 +150,8 @@ const AccountProfileForm = ({ userData }: TProps) => {
       }
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result as any);
-        console.log(reader.result as any);
+        setImage(reader.result);
+        console.log(reader.result);
       };
       reader.readAsDataURL(files[0]);
     }
@@ -196,7 +196,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
               title=" "
               className="opacity-0 absolute w-full h-full top-0 left-0 cursor-pointer z-30"
               {...register("profilePicture")}
-              onChange={handleImageChange}
+              onChange={(e) => handleImageChange(e)}
             />
             <img className="" id="profilePictureImg" src={selectedImage} />
           </div>
@@ -209,7 +209,7 @@ const AccountProfileForm = ({ userData }: TProps) => {
           )}
         </div>
         <ImageCropper
-          image={image}
+          image={image as string}
           setCroppedImage={setSelectedImage}
           showModal={showModal}
           setShowModal={setShowModal}

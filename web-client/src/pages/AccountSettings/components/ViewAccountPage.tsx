@@ -11,7 +11,7 @@ type TProps = {
   userData?: User;
 };
 const ViewAccountPage = ({ userData }: TProps) => {
-  let { page } = useParams();
+  const { page } = useParams();
 
   return (
     <div className="flex-1 bg-red-100 ">

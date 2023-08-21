@@ -2,7 +2,7 @@ import AuthForm from "../../components/Form/AuthForm";
 import AuthFormHeader from "../../components/Form/AuthFormHeader";
 import ContactVerification from "../../components/Verification/ContactVerification";
 
-const LoginContactVerification = ({}) => {
+const LoginContactVerification = () => {
   return (
     <AuthForm
       component={

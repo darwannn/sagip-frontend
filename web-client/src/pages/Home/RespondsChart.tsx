@@ -190,7 +190,13 @@ const ResponderChart = ({ emergencyData }: TProps) => {
       setDisablePrevMonthButton(displayedYear <= earliestYear);
       setDisableNextMonthButton(displayedYear >= currentYear);
     }
-  }, [emergencyData, selectedOption, displayedYear, displayedDate]);
+  }, [
+    emergencyData,
+    selectedOption,
+    displayedYear,
+    displayedDate,
+    currentYear,
+  ]);
 
   return (
     <div className="h-full flex flex-col overflow-auto lg:overflow-visible">
