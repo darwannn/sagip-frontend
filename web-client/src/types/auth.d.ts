@@ -29,3 +29,10 @@ export type AuthResponse = {
   identifier?: string;
   password?: string;
 };
+
+export type ContactVerificationRes = {
+  success: boolean;
+  message: string;
+  error?: string | null;
+  code?: string;
+};

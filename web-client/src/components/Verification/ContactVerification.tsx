@@ -70,16 +70,6 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
     },
   });
 
-  /*   useEffect(() => {
-    if (identifier && identifier.includes("@")) {
-      setAction("email");
-    // } else if (/^09\d{9}$/.test(identifier)) {
-    //     setAction("contactNumber");
-    //   } else {
-      setAction("contactNumber");
-    }
-  }, []); */
-
   const SubmitVerificationCode = async (data: FieldValues) => {
     if (!isDirty) {
       console.log("No changes made");

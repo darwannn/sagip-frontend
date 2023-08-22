@@ -19,8 +19,6 @@ const AccountDelete = () => {
 
   useEffect(() => {
     if (passwordVerificationRes) {
-      /* setShowModal(false); */
-      console.log("424");
       dispatch(setDeleteAccountRes(passwordVerificationRes));
       navigate("/login");
       /* TODO: remove token and user data from local storage */

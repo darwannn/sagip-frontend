@@ -23,14 +23,13 @@ const ImageCropper: React.FC<TProps> = ({
 }) => {
   const cropperRef = useRef<ReactCropperElement | null>(null);
   const [imageRequirmentsMet, setImageRequirmentsMet] = useState(true);
+
   useEffect(() => {
     setHasBeenCropped(false);
     handleImageLoad();
   }, [image]);
 
   const handleImageLoad = () => {
-    console.log(image);
-
     /* check if uploaded file is image */
     if (
       image.includes("image/png") ||

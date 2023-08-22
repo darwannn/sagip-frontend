@@ -27,12 +27,6 @@ const AccountEmailForm = ({ userData }: TProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
-    if (userData) {
-      console.log(userData);
-    }
-  }, [userData]);
-
-  useEffect(() => {
     if (contactVerificationRes) {
       setShowModal(false);
       successMessageRef.current?.scrollIntoView({

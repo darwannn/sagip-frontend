@@ -23,7 +23,7 @@ const ManageAccountPage = () => {
     return () => {
       window.removeEventListener("resize", checkScreenSize);
     };
-  }, []);
+  }, [isMobile]);
 
   if (isLoading) {
     return <p>Loading...</p>;
