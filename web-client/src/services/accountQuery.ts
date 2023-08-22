@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import type { User, TUserResData } from "../types/user";
-
 import { API_BASE_URL } from "../api.config";
 
 export const accountQueryApi = createApi({
@@ -35,17 +34,36 @@ export const accountQueryApi = createApi({
       invalidatesTags: ["User"],
     }),
 
-    updatePassword: builder.mutation<
-      TUserResData,
-      { body: Record<string, any> }
-    >({
+    updateProfilePicture: builder.mutation<TUserResData, { body: FormData }>({
       query: ({ body }) => ({
-        url: `/account/new-password`,
+        url: `account/update/profile-picture/`,
         method: "PUT",
-        body: JSON.stringify(body),
+        body,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    updatePassword: builder.mutation<
+      TUserResData,
+      {
+        password: string;
+        confirmPassword: string;
+        oldPassword: string;
+      }
+    >({
+      query: ({ password, confirmPassword, oldPassword }) => ({
+        url: `/account/new-password`,
+        method: "PUT",
+        body: {
+          password,
+          confirmPassword,
+          oldPassword,
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
       invalidatesTags: ["User"],
@@ -68,6 +86,7 @@ export const accountQueryApi = createApi({
 export const {
   useGetUserByTokenQuery,
   useUpdateProfileMutation,
+  useUpdateProfilePictureMutation,
 
   useUpdatePasswordMutation,
   useDeleteAccountMutation,

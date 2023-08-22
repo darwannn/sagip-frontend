@@ -15,14 +15,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
     <>
       <div className="flex flex-col py-5  h-screen w-full md:w-[300px] bg-white sticky top-0 shadow-md ">
         <h1 className="text-xl font-bold my-5 ml-5">Account Settings</h1>
-        {/* shows if email is not yet verified */}
-        {userData?.status === "unverified" && (
-          <div className="bg-red-400 text-white px-5 py-3 my-5  text-center rounded">
-            <span className="mr-2">
-              Account not verified yet. Please Verify
-            </span>
-          </div>
-        )}
+
         <hr className="border border-gray-200" />
         <div
           /* highlight the current displayed component */
@@ -51,8 +44,8 @@ const AccountSettingsList = ({ userData }: TProps) => {
         >
           Email{" "}
           <div className="flex items-center">
-            {userData?.emailStatus !== "unverified" && (
-              <div className="rounded-xl bg-red-500 text-white px-3 py-1 text-xs mr-1 cursor-pointer font-normal ">
+            {userData?.emailStatus === "unverified" && (
+              <div className="rounded-xl bg-red-400 text-white px-3 py-1 text-xs mr-1 cursor-pointer font-normal ">
                 Unverified
               </div>
             )}

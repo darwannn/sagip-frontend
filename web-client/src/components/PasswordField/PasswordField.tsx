@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form";
+import { TUserResData } from "../../types/user";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
@@ -9,7 +10,7 @@ type TProps = {
   errors: FieldErrors<FieldValues>;
   fieldName: string;
   fieldLabel: string;
-  serverRes: any;
+  serverRes: TUserResData | undefined;
   passwordRequirement: boolean;
 };
 
@@ -95,7 +96,7 @@ const PasswordField: React.FC<TProps> = ({
           {errors[fieldName]
             ? `${fieldLabel} is required`
             : (!passwordRequirement || areRequirementsMet) &&
-              serverRes?.data[fieldName]}
+              serverRes?.[fieldName]}
         </span>
       )}
 

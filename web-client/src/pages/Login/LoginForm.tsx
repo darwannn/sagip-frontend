@@ -6,7 +6,6 @@ import { AuthResponse } from "../../types/auth";
 const LoginForm = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [serverRes, setServerRes] = useState<any>(null);
 
   const newPasswordRes = useAppSelector((state) => state.auth.newPasswordRes);
   const deleteAccountRes = useAppSelector(
@@ -23,7 +22,7 @@ const LoginForm = () => {
     <Form method="POST" className="flex flex-col w-full h-full">
       {/* display success message from newPassword or account deletion */}
 
-      {(newPasswordRes || deleteAccountRes || serverRes) && (
+      {(newPasswordRes || deleteAccountRes) /* || serverRes */ && (
         <div
           className={`p-2 rounded-md text-center ${
             newPasswordRes || deleteAccountRes
@@ -34,7 +33,7 @@ const LoginForm = () => {
           {newPasswordRes?.message}
           {deleteAccountRes &&
             "Account deleted. You have 30 days to login and recover your account."}
-          {serverRes?.message}
+          {/* {serverRes?.message} */}
         </div>
       )}
 

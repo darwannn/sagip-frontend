@@ -222,7 +222,7 @@ const ResponderChart = ({ emergencyData }: TProps) => {
         </select>
       </div>
 
-      <div className="flex flex-1 items-center justify-center px-5">
+      <div className="flex flex-1 items-center justify-center px-10">
         {selectedOption === "perMonth" && (
           <button
             className="text-4xl text-black mb-12 disabled:text-gray-400"

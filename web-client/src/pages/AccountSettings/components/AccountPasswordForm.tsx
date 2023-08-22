@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { User } from "../../../types/user";
+import { User, TUserResData } from "../../../types/user";
 
 import { useUpdatePasswordMutation } from "../../../services/accountQuery";
 
@@ -16,7 +16,7 @@ type TProps = {
 
 const AccountPasswordForm = ({ userData }: TProps) => {
   const navigate = useNavigate();
-  const [serverRes, setServerRes] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
 
   const [
@@ -44,19 +44,16 @@ const AccountPasswordForm = ({ userData }: TProps) => {
       console.log("No changes made");
       return;
     }
-    const body = {
-      password: data.password,
-      confirmPassword: data.confirmPassword,
-      oldPassword: data.oldPassword,
-    };
 
     if (userData) {
       const res = await updatePassword({
-        body,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        oldPassword: data.oldPassword,
       });
       console.log(res);
 
-      if (res && "data" in res) {
+      if ("data" in res) {
         if (res.data.success) {
           setServerRes(res.data);
           /* navigate(`/account`); */
@@ -69,8 +66,10 @@ const AccountPasswordForm = ({ userData }: TProps) => {
             behavior: "smooth",
           });
         }
-      } else {
-        setServerRes(res.error);
+      }
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as TUserResData;
+        setServerRes(errData);
       }
     }
   };

@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormGetValues,
+} from "react-hook-form";
 
 import { User } from "../../types/user";
 
@@ -18,10 +24,10 @@ type TProps = {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   userData?: null | User;
-  setValue: any;
+  setValue: UseFormSetValue<FieldValues> | undefined;
   inMalolos: boolean;
   style: string;
-  getValues?: any;
+  getValues: UseFormGetValues<FieldValues> | undefined;
 };
 
 const AddressField: React.FC<TProps> = ({
@@ -53,77 +59,92 @@ const AddressField: React.FC<TProps> = ({
   const getRegionsData = async () => {
     setRegionsData(await getRegions());
   };
-  const formRegion = getValues("region");
-  const formProvince = getValues("province");
-  const formMunicipality = getValues("municipality");
-  const formBarangay = getValues("barangay");
+  const formRegion = getValues?.("region") ?? "";
+  const formProvince = getValues?.("province") ?? "";
+  const formMunicipality = getValues?.("municipality") ?? "";
+  const formBarangay = getValues?.("barangay") ?? "";
 
   useEffect(() => {
     if (inMalolos) {
-      setValue("region", "Region III (Central Luzon)");
-      setValue("province", "Bulacan");
-      setValue("municipality", "City Of Malolos (Capital)");
-      setValue("barangay", "");
-      setValue("street", "");
+      setValue?.("region", "Region III (Central Luzon)");
+      setValue?.("province", "Bulacan");
+      setValue?.("municipality", "City Of Malolos (Capital)");
+      setValue?.("barangay", "");
+      setValue?.("street", "");
     }
-  }, [inMalolos]);
+  }, [inMalolos, setValue]);
 
-  /* when the selector value has been changed, the values of other selectors depending on it must be reset or set to an empty string */
-  const getProvincesData = async (dataCode: string | null, action: string) => {
-    if (
-      action === "reset" &&
-      selectedRegion &&
-      selectedProvince &&
-      selectedCity &&
-      selectedBarangay &&
-      selectedStreet
-    ) {
-      selectedProvince?.setAttribute("data-code", "000000");
-      selectedCity?.setAttribute("data-code", "000000");
-      selectedBarangay?.setAttribute("data-code", "000000");
-      setProvincesData([]);
-      setCitiesData([]);
-      setBarangaysData([]);
-      setValue("province", "");
-      setValue("municipality", "");
-      setValue("barangay", "");
-    }
-    dataCode && setProvincesData(await getProvinces(dataCode));
-  };
+  const getProvincesData = useCallback(
+    async (dataCode: string | null, action: string) => {
+      if (
+        action === "reset" &&
+        selectedRegion &&
+        selectedProvince &&
+        selectedCity &&
+        selectedBarangay &&
+        selectedStreet
+      ) {
+        selectedProvince?.setAttribute("data-code", "000000");
+        selectedCity?.setAttribute("data-code", "000000");
+        selectedBarangay?.setAttribute("data-code", "000000");
+        setProvincesData([]);
+        setCitiesData([]);
+        setBarangaysData([]);
+        setValue?.("province", "");
+        setValue?.("municipality", "");
+        setValue?.("barangay", "");
+      }
+      dataCode && setProvincesData(await getProvinces(dataCode));
+    },
+    [
+      setValue,
+      selectedRegion,
+      selectedProvince,
+      selectedCity,
+      selectedBarangay,
+      selectedStreet,
+    ]
+  );
 
-  const getCitiesData = async (dataCode: string | null, action: string) => {
-    if (
-      action === "reset" &&
-      selectedProvince &&
-      selectedCity &&
-      selectedBarangay &&
-      selectedStreet
-    ) {
-      selectedCity?.setAttribute("data-code", "000000");
-      selectedBarangay?.setAttribute("data-code", "000000");
-      setCitiesData([]);
-      setBarangaysData([]);
-      setValue("municipality", "");
-      setValue("barangay", "");
-      setValue("street", "");
-    }
-    dataCode && setCitiesData(await getCities(dataCode));
-  };
+  const getCitiesData = useCallback(
+    async (dataCode: string | null, action: string) => {
+      if (
+        action === "reset" &&
+        selectedProvince &&
+        selectedCity &&
+        selectedBarangay &&
+        selectedStreet
+      ) {
+        selectedCity?.setAttribute("data-code", "000000");
+        selectedBarangay?.setAttribute("data-code", "000000");
+        setCitiesData([]);
+        setBarangaysData([]);
+        /*    setValue?.("municipality", "");
+        setValue?.("barangay", "");
+        setValue?.("street", ""); */
+      }
+      dataCode && setCitiesData(await getCities(dataCode));
+    },
+    [selectedProvince, selectedCity, selectedBarangay, selectedStreet]
+  );
 
-  const getBarangaysData = async (dataCode: string | null, action: string) => {
-    if (
-      action === "reset" &&
-      selectedCity &&
-      selectedBarangay &&
-      selectedStreet
-    ) {
-      selectedBarangay.setAttribute("data-code", "000000");
-      setBarangaysData([]);
-      setValue("barangay", "");
-      setValue("street", "");
-    }
-    dataCode && setBarangaysData(await getBarangays(dataCode));
-  };
+  const getBarangaysData = useCallback(
+    async (dataCode: string | null, action: string) => {
+      if (
+        action === "reset" &&
+        selectedCity &&
+        selectedBarangay &&
+        selectedStreet
+      ) {
+        selectedBarangay.setAttribute("data-code", "000000");
+        setBarangaysData([]);
+        setValue?.("barangay", "");
+        setValue?.("street", "");
+      }
+      dataCode && setBarangaysData(await getBarangays(dataCode));
+    },
+    [setValue, selectedCity, selectedBarangay, selectedStreet]
+  );
 
   useEffect(() => {
     getRegionsData();
@@ -131,15 +152,16 @@ const AddressField: React.FC<TProps> = ({
 
   useEffect(() => {
     if (selectedRegion) {
-      setValue("region", "");
+      /*  setValue?.("region", ""); */
       if (userData?.region || inMalolos || formRegion) {
         if (selectedRegion.getAttribute("data-code") !== "000000") {
-          if (userData?.region) setValue("region", userData.region);
+          if (userData?.region) setValue?.("region", userData.region);
+          else setValue?.("region", "");
           if (inMalolos) {
-            setValue("region", "Region III (Central Luzon)");
+            setValue?.("region", "Region III (Central Luzon)");
           } else {
             if (formRegion) {
-              setValue("region", formRegion);
+              setValue?.("region", formRegion);
             }
           }
         }
@@ -150,19 +172,28 @@ const AddressField: React.FC<TProps> = ({
         }
       }
     }
-  }, [regionsData, inMalolos]);
+  }, [
+    regionsData,
+    inMalolos,
+    formRegion,
+    getProvincesData,
+    selectedRegion,
+    setValue,
+    userData?.region,
+  ]);
 
   useEffect(() => {
     if (selectedProvince) {
-      setValue("province", "");
+      /* setValue?.("province", ""); */
       if (userData?.province || inMalolos || formProvince) {
         if (selectedProvince.getAttribute("data-code") !== "000000") {
-          if (userData?.province) setValue("province", userData.province);
+          if (userData?.province) setValue?.("province", userData.province);
+          else setValue?.("province", "");
           if (inMalolos) {
-            setValue("province", "Bulacan");
+            setValue?.("province", "Bulacan");
           } else {
             if (formProvince) {
-              setValue("province", formProvince);
+              setValue?.("province", formProvince);
             }
           }
         }
@@ -173,20 +204,29 @@ const AddressField: React.FC<TProps> = ({
         }
       }
     }
-  }, [provincesData, inMalolos]);
+  }, [
+    provincesData,
+    inMalolos,
+    formProvince,
+    selectedProvince,
+    setValue,
+    getCitiesData,
+    userData?.province,
+  ]);
 
   useEffect(() => {
     if (selectedCity) {
-      setValue("municipality", "");
+      /*   setValue?.("municipality", ""); */
       if (userData?.municipality || inMalolos || formMunicipality) {
         if (selectedCity.getAttribute("data-code") !== "000000") {
           if (userData?.municipality)
-            setValue("municipality", userData.municipality);
+            setValue?.("municipality", userData.municipality);
+          else setValue?.("municipality", "");
           if (inMalolos) {
-            setValue("municipality", "City Of Malolos (Capital)");
+            setValue?.("municipality", "City Of Malolos (Capital)");
           } else {
             if (formMunicipality) {
-              setValue("municipality", formMunicipality);
+              setValue?.("municipality", formMunicipality);
             }
           }
         }
@@ -197,19 +237,33 @@ const AddressField: React.FC<TProps> = ({
         }
       }
     }
-  }, [citiesData, inMalolos]);
+  }, [
+    citiesData,
+    inMalolos,
+    formMunicipality,
+    selectedCity,
+    setValue,
+    getBarangaysData,
+    userData?.municipality,
+  ]);
 
   useEffect(() => {
     if (selectedBarangay) {
       if (userData?.barangay || formBarangay)
         if (selectedBarangay.getAttribute("data-code") !== "000000") {
-          if (userData?.barangay) setValue("barangay", userData.barangay);
+          if (userData?.barangay) setValue?.("barangay", userData.barangay);
           if (formBarangay) {
-            setValue("barangay", formBarangay);
+            setValue?.("barangay", formBarangay);
           }
         }
     }
-  }, [barangaysData]);
+  }, [
+    barangaysData,
+    formBarangay,
+    selectedBarangay,
+    setValue,
+    userData?.barangay,
+  ]);
 
   return (
     <>

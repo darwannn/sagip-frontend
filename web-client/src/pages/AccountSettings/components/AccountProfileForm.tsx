@@ -1,20 +1,18 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { User } from "../../../types/user";
+import { TUserResData, User } from "../../../types/user";
 
 import { useUpdateProfileMutation } from "../../../services/accountQuery";
-
-import { BASE_IMAGE_URL } from "../../../api.config";
 
 import { MdClose } from "react-icons/md";
 
 import "cropperjs/dist/cropper.css";
 import moment from "moment";
 
+import AccountProfilePicture from "./AccountProfilePicture";
 import AddressField from "../../../components/AddressSelector/AddressField";
-import ImageCropper from "../../../components/ImageCropper/ImageCropper";
 
 type TProps = {
   userData?: User;
@@ -22,14 +20,9 @@ type TProps = {
 
 const AccountProfileForm = ({ userData }: TProps) => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
   const successMessageRef = useRef<HTMLDivElement | null>(null);
-  const [image, setImage] = useState<string | null | ArrayBuffer>("");
   const [hasBeenCropped, setHasBeenCropped] = useState<boolean>(false);
-  const [selectedImage, setSelectedImage] = useState<string | undefined>(`
-  ${BASE_IMAGE_URL}/user/${userData?.profilePicture}
-  `);
-  const [serverRes, setServerRes] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
 
   const [
     updateProfile,
@@ -61,28 +54,13 @@ const AccountProfileForm = ({ userData }: TProps) => {
       province: userData?.province,
       municipality: userData?.municipality,
       barangay: userData?.barangay,
-      /* region: "",
-      province: "",
-      municipality: "",
-      barangay: "", */
     },
   });
 
-  /* trigger the query when the image has been cropped */
-  useEffect(() => {
-    if (hasBeenCropped) {
-      handleSubmit(onCrop)();
-    }
-  }, [hasBeenCropped, handleSubmit]);
-
-  const SubmitProfileData = async (data: FieldValues, action: string) => {
-    if (action === "info") {
-      const isImageChanged = !!data.profilePicture[0];
-
-      if (!isDirty && !isImageChanged) {
-        console.log("No changes made");
-        return;
-      }
+  const SubmitProfileData = async (data: FieldValues) => {
+    if (!isDirty) {
+      console.log("No changes made");
+      return;
     }
     const body = new FormData();
     body.append("firstname", data.firstname);
@@ -95,17 +73,6 @@ const AccountProfileForm = ({ userData }: TProps) => {
     body.append("barangay", data.barangay);
     body.append("street", data.street);
     body.append("gender", data.gender);
-    if (action === "picture") {
-      body.append(
-        "hasChanged",
-        `${userData && data.profilePicture[0] != null ? true : false}`
-      );
-
-      if (selectedImage) {
-        const imageBlob = await fetch(selectedImage).then((res) => res.blob());
-        body.append("image", imageBlob, "profilePicture.png");
-      }
-    }
 
     if (userData) {
       const res = await updateProfile({
@@ -118,44 +85,22 @@ const AccountProfileForm = ({ userData }: TProps) => {
         console.log(res);
 
         if (res.data.success) {
-          if (action === "info") {
-            setServerRes(res.data);
-            successMessageRef.current?.scrollIntoView({
-              behavior: "smooth",
-            });
-          }
+          setServerRes(res.data);
+          successMessageRef.current?.scrollIntoView({
+            behavior: "smooth",
+          });
         }
       } else {
-        setServerRes(res.error);
+        if ("error" in res && "data" in res.error) {
+          const errData = res.error.data as TUserResData;
+          setServerRes(errData);
+        }
       }
     }
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    SubmitProfileData(data, "info");
-  };
-  const onCrop: SubmitHandler<FieldValues> = async (data) => {
-    SubmitProfileData(data, "picture");
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setShowModal(true);
-      e.preventDefault();
-      let files;
-      if (e.dataTransfer) {
-        files = e.dataTransfer.files;
-      } else if (e.target) {
-        files = e.target.files;
-      }
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImage(reader.result);
-        console.log(reader.result);
-      };
-      reader.readAsDataURL(files[0]);
-    }
+    SubmitProfileData(data);
   };
 
   if (updateIsLoading) console.log("Updating...");
@@ -179,43 +124,8 @@ const AccountProfileForm = ({ userData }: TProps) => {
             {serverRes?.message}
           </div>
         )}
-        <div className="w-full flex flex-col items-center justify-center mb-10 mt-5">
-          <div className="relative w-40 h-40 rounded-full overflow-hidden border">
-            {!image && (
-              <>
-                <div className="w-full px-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-sm text-white text-center leading-4 z-20">
-                  Tap to update profile picture
-                </div>
-                <div className="w-full h-full absolute bg-black opacity-50 z-10"></div>
-              </>
-            )}
 
-            <input
-              type="file"
-              id="profilePicture"
-              accept="image/*"
-              title=" "
-              className="opacity-0 absolute w-full h-full top-0 left-0 cursor-pointer z-30"
-              {...register("profilePicture")}
-              onChange={(e) => handleImageChange(e)}
-            />
-            <img className="" id="profilePictureImg" src={selectedImage} />
-          </div>
-          {(errors.profilePicture || !serverRes?.success) && (
-            <span className="text-red-500">
-              {errors.profilePicture
-                ? "Picture is required"
-                : serverRes?.profilePicture}
-            </span>
-          )}
-        </div>
-        <ImageCropper
-          image={image as string}
-          setCroppedImage={setSelectedImage}
-          showModal={showModal}
-          setShowModal={setShowModal}
-          setHasBeenCropped={setHasBeenCropped}
-        />
+        <AccountProfilePicture userData={userData} />
 
         <h2 className="font-bold">Personal Information</h2>
         <div className="flex flex-wrap ">

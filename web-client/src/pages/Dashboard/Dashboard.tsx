@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useEffect } from "react";
 
 // Services
-import { useGetUsersDataQuery } from "../../services/usersApi";
+import { useGetUsersDataQuery } from "../../services/usersQuery";
 import { useGetArticlesQuery } from "../../services/articleQuery";
 import { useGetTeamsQuery } from "../../services/teamQuery";
 import { useGetFacilitiesQuery } from "../../services/facilityQuery";
@@ -30,9 +30,9 @@ import { RiFileUploadFill } from "react-icons/ri";
 import SingleData from "../../components/Statistics/SingleData";
 import MultipleData from "../../components/Statistics/MultipleData";
 
-import Chart from "./RespondsChart";
+import RespondsChart from "./RespondsChart";
 
-const Home = () => {
+const Dashboard = () => {
   const dispatch = useAppDispatch();
   const totalUsersCount = useAppSelector(selectNumberOfUsers);
   const newUsersCount = useAppSelector(selectNumberOfNewUsers);
@@ -154,7 +154,7 @@ const Home = () => {
 
             {/* chart */}
             <div className=" rounded-xl p-5 bg-gray-200 row-span-2 xl:col-span-3 order-last sm:col-span-2 md:col-span-3 lg:col-span-4 xl:order-none h-96">
-              <Chart emergencyData={emergencyData} />
+              <RespondsChart emergencyData={emergencyData} />
             </div>
 
             {/* side */}
@@ -207,4 +207,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

@@ -11,7 +11,7 @@ import {
   selectNumberOfStaff,
 } from "../../store/slices/userManageSlice";
 // Services
-import { useGetUsersDataQuery } from "../../services/usersApi";
+import { useGetUsersDataQuery } from "../../services/usersQuery";
 // Icons
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";

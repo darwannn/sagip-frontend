@@ -22,6 +22,7 @@ import {
 } from "../../services/authQuery";
 
 import VerificationInput from "react-verification-input";
+import { TUserResData } from "../../types/user";
 
 type TProps = {
   action: string;
@@ -34,12 +35,16 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
 
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode<Token>(token || "");
+
+  const selectorIdentifier = useAppSelector((state) => state.auth.identifier);
+
+  // Use the appropriate identifier based on the action
   const identifier =
-    action != "forgot-password" && action != "register"
-      ? useAppSelector((state) => state.auth.identifier)
+    action !== "forgot-password" && action !== "register"
+      ? selectorIdentifier
       : decodedToken.identifier;
 
-  const [serverRes, setServerRes] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
   const [resendCountdown, setResendCountdown] = useState(10);
 
   const [
@@ -75,18 +80,15 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
       console.log("No changes made");
       return;
     }
-    const body = {
-      code: data.code,
-      contactNumber: identifier,
-      email: identifier,
-    };
 
     const res = await contactVerification({
-      body,
+      code: data.code,
+      contactNumber: identifier ?? "",
+      email: identifier ?? "",
       action,
     });
 
-    if (res && "data" in res) {
+    if ("data" in res) {
       setServerRes(res.data);
       const resData: AuthResponse = res.data;
       if (resData.success) {
@@ -100,7 +102,10 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
         }
       }
     } else {
-      setServerRes(res.error);
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as TUserResData;
+        setServerRes(errData);
+      }
     }
   };
 
@@ -109,17 +114,19 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
   };
 
   const resendCode = async () => {
-    const body = {
-      identifier: identifier,
-    };
-    const res = await resendVerificationCode({ body });
-    if (res && "data" in res) {
+    const res = await resendVerificationCode({
+      identifier: identifier ?? "",
+    });
+    if ("data" in res) {
       setServerRes(res.data);
       if (res.data.success) {
         setResendCountdown(10);
       }
     } else {
-      setServerRes(res.error);
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as TUserResData;
+        setServerRes(errData);
+      }
     }
   };
 
@@ -176,9 +183,11 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
                         "text-indigo-600 outline-indigo-600 outline-2 ",
                     }}
                   />
-                  {(errors.code || !serverRes?.success) && (
+                  {(errors.verificationCode || !serverRes?.success) && (
                     <span className="text-red-500 mt-2">
-                      {errors.code ? "Code is required" : serverRes?.code}
+                      {errors.verificationCode
+                        ? "Code is required"
+                        : serverRes?.verificationCode}
                     </span>
                   )}
                 </>

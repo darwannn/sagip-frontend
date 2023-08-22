@@ -3,7 +3,7 @@ import Doughnut from "../Charts/Doughnut";
 
 type TProps = {
   title: string;
-  value: number | undefined;
+  value: number;
   color: string;
 };
 

@@ -1,12 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-import { setIdentifier } from "../../../store/slices/authSlice";
+import {
+  setIdentifier,
+  setcontactVerificationRes,
+} from "../../../store/slices/authSlice";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { User } from "../../../types/user";
+import { TUserResData, User } from "../../../types/user";
 
 import { useSendVerificationCodeMutation } from "../../../services/authQuery";
+import { useGetUserByTokenQuery } from "../../../services/accountQuery";
 
 import { MdClose } from "react-icons/md";
 
@@ -23,8 +27,14 @@ const AccountEmailForm = ({ userData }: TProps) => {
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes
   );
-  const [serverRes, setServerRes] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
   const [showModal, setShowModal] = useState<boolean>(false);
+  const { refetch: refetchUserData } = useGetUserByTokenQuery();
+
+  useEffect(() => {
+    /* removes the contactVerificationRes message */
+    dispatch(setcontactVerificationRes(null));
+  }, [dispatch]);
 
   useEffect(() => {
     if (contactVerificationRes) {
@@ -32,8 +42,9 @@ const AccountEmailForm = ({ userData }: TProps) => {
       successMessageRef.current?.scrollIntoView({
         behavior: "smooth",
       });
+      refetchUserData();
     }
-  }, [contactVerificationRes]);
+  }, [contactVerificationRes, refetchUserData]);
 
   const [
     sendVerificationCode,
@@ -71,7 +82,7 @@ const AccountEmailForm = ({ userData }: TProps) => {
         action: "verify-email",
       });
 
-      if (res && "data" in res) {
+      if ("data" in res) {
         setServerRes(res.data);
         if (res.data.success) {
           setShowModal(true);
@@ -81,7 +92,10 @@ const AccountEmailForm = ({ userData }: TProps) => {
           }); */
         }
       } else {
-        setServerRes(res.error);
+        if ("error" in res && "data" in res.error) {
+          const errData = res.error.data as TUserResData;
+          setServerRes(errData);
+        }
       }
       console.log(res);
     }
@@ -121,7 +135,7 @@ const AccountEmailForm = ({ userData }: TProps) => {
         userData?.emailStatus === "unverified" && (
           <div className="bg-red-400 text-white px-5 py-3 my-5  text-center rounded">
             <span className="mr-2">
-              Youe Email Address is still unverified.
+              Your Email Address is still unverified.
             </span>
             <button onClick={handleSubmit(onVerify)} className="underline">
               Verify Now
@@ -142,7 +156,7 @@ const AccountEmailForm = ({ userData }: TProps) => {
 
         {(errors.email || !serverRes?.success) && (
           <span className="text-red-500">
-            {errors.email ? "Email is required" : serverRes?.data.email}
+            {errors.email ? "Email is required" : serverRes?.email}
           </span>
         )}
       </div>

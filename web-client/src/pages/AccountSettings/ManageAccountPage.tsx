@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { useGetUserByTokenQuery } from "../../services/accountQuery";
 
-import AccountOptionList from "./components/AccountSettingsList";
+import AccountSettingsList from "./components/AccountSettingsList";
 import ViewAccountPage from "./components/ViewAccountPage";
 
 const ManageAccountPage = () => {
@@ -41,14 +41,14 @@ const ManageAccountPage = () => {
           {page !== "profile" &&
             page !== "email" &&
             page !== "contact-number" &&
-            page !== "password" && <AccountOptionList userData={userData} />}
+            page !== "password" && <AccountSettingsList userData={userData} />}
 
           {page && <ViewAccountPage userData={userData} />}
         </div>
       ) : (
         /* for web, show two components at the same time */
         <div className="w-full flex">
-          <AccountOptionList />
+          <AccountSettingsList userData={userData} />
           {/* flex-1, takes the rest of the space */}
           <ViewAccountPage userData={userData} />
         </div>

@@ -7,10 +7,11 @@ import { AuthResponse } from "../../types/auth";
 import { useForgotPasswordMutation } from "../../services/authQuery";
 
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { TUserResData } from "../../types/user";
 
 const ForgotPasswordForm = () => {
   const navigate = useNavigate();
-  const [serverRes, setServerRes] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
   const [
     forgotPassword,
     { isError: isError, isLoading: isLoading, isSuccess: isSuccess },
@@ -23,26 +24,24 @@ const ForgotPasswordForm = () => {
   } = useForm<FieldValues>();
 
   const SubmitUserPassword = async (data: FieldValues) => {
-    const body = {
-      identifier: data.identifier,
-    };
-
     const res = await forgotPassword({
-      body,
+      identifier: data.identifier,
     });
 
-    if (res && "data" in res) {
+    if ("data" in res) {
       const resData: AuthResponse = res.data;
       setServerRes(res.data);
       if (resData.success) {
         setAuthToken({
           token: resData.token || "",
         });
-
         navigate("/forgot-password/contact-verification");
       }
     } else {
-      setServerRes(res.error);
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as TUserResData;
+        setServerRes(errData);
+      }
     }
   };
 
@@ -70,7 +69,7 @@ const ForgotPasswordForm = () => {
             <span className="text-red-500">
               {errors.identifier
                 ? "This field is required"
-                : serverRes?.data.identifier}
+                : serverRes?.identifier}
             </span>
           )}
         </div>

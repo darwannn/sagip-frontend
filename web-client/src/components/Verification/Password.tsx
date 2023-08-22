@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../store/hooks";
 import { setPasswordVerificationRes } from "../../store/slices/authSlice";
 import { usePasswordVerificationMutation } from "../../services/authQuery";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { TUserResData } from "../../types/user";
 
 import PasswordField from "../../components/PasswordField/PasswordField";
 type TProps = {
@@ -10,7 +11,7 @@ type TProps = {
 };
 const Password = ({ action }: TProps) => {
   const dispatch = useAppDispatch();
-  const [serverRes, setServerRes] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
 
   const [
     passwordVerification,
@@ -47,7 +48,10 @@ const Password = ({ action }: TProps) => {
         dispatch(setPasswordVerificationRes(res.data));
       }
     } else {
-      setServerRes(res.error);
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as TUserResData;
+        setServerRes(errData);
+      }
     }
   };
 

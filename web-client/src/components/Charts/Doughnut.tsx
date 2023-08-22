@@ -1,15 +1,29 @@
 import { Doughnut as ChartDoughnut } from "react-chartjs-2";
 
-const Doughnut = ({ data }: { data: any }) => {
+interface DoughnutData {
+  title: string;
+  value: number;
+  color: string;
+}
+
+type TProps = {
+  data: DoughnutData[];
+};
+
+const Doughnut: React.FC<TProps> = ({ data }) => {
+  const labels = data.map((item) => item.title);
+  const values = data.map((item) => item.value);
+  const colors = data.map((item) => item.color);
+
   return (
     <ChartDoughnut
       data={{
-        labels: data.map((item: any) => item.title),
+        labels: labels,
         datasets: [
           {
-            data: data.map((item: any) => item.value),
-            backgroundColor: data.map((item: any) => item.color),
-            hoverBackgroundColor: data.map((item: any) => item.color),
+            data: values,
+            backgroundColor: colors,
+            hoverBackgroundColor: colors,
             borderWidth: 0,
           },
         ],

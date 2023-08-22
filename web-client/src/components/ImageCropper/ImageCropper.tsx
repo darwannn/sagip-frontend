@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import Modal from "../Modal/Modal";
@@ -24,13 +24,7 @@ const ImageCropper: React.FC<TProps> = ({
   const cropperRef = useRef<ReactCropperElement | null>(null);
   const [imageRequirmentsMet, setImageRequirmentsMet] = useState(true);
 
-  useEffect(() => {
-    setHasBeenCropped(false);
-    handleImageLoad();
-  }, [image]);
-
-  const handleImageLoad = () => {
-    /* check if uploaded file is image */
+  const handleImageLoad = useCallback(() => {
     if (
       image.includes("image/png") ||
       image.includes("image/jpg") ||
@@ -41,14 +35,19 @@ const ImageCropper: React.FC<TProps> = ({
 
       // check if image size is less than 10MB
       if (imageSizeInMB <= 10) {
-        setImageRequirmentsMet(false);
-      } else {
         setImageRequirmentsMet(true);
+      } else {
+        setImageRequirmentsMet(false);
       }
     } else {
-      setImageRequirmentsMet(true);
+      setImageRequirmentsMet(false);
     }
-  };
+  }, [image]);
+
+  useEffect(() => {
+    setHasBeenCropped(false);
+    handleImageLoad();
+  }, [image, handleImageLoad, setHasBeenCropped]);
 
   const getCroppedImage = () => {
     if (cropperRef.current && cropperRef.current.cropper) {
@@ -65,48 +64,55 @@ const ImageCropper: React.FC<TProps> = ({
     <Modal
       modalTitle={"Crop Profile Picture"}
       modalShow={showModal}
-      modalClose={() => setShowModal(false)}
+      modalClose={() => {
+        setShowModal(false);
+        image = "";
+      }}
     >
-      <div>
-        {/* shows when image does not meet requirments */}
-        {imageRequirmentsMet && (
-          <div className="bg-red-400 text-white px-5 py-3 my-2  text-center rounded">
-            Upload an image file .jpeg, .jpg, or .png that is less than 10MB
+      {image && (
+        <>
+          <div>
+            {/* shows when image does not meet requirments */}
+            {!imageRequirmentsMet && (
+              <div className="bg-red-400 text-white px-5 py-3 my-2  text-center rounded">
+                Upload an image file .jpeg, .jpg, or .png that is less than 10MB
+              </div>
+            )}
+            {!imageRequirmentsMet ? (
+              <div className="w-full h-[300px] bg-gray-200 flex flex-col justify-center items-center">
+                <MdOutlineImageNotSupported className="text-8xl text-gray-500" />
+              </div>
+            ) : (
+              <Cropper
+                ref={cropperRef}
+                style={{ height: 400, width: "100%" }}
+                aspectRatio={1}
+                src={image}
+                viewMode={1}
+                minCropBoxHeight={10}
+                minCropBoxWidth={10}
+                background={false}
+                responsive={true}
+                autoCropArea={1}
+                checkOrientation={false}
+                guides={true}
+                zoomOnWheel={true}
+                onInitialized={handleImageLoad}
+              />
+            )}
           </div>
-        )}
-        {imageRequirmentsMet ? (
-          <div className="w-full h-[300px] bg-gray-200 flex flex-col justify-center items-center">
-            <MdOutlineImageNotSupported className="text-8xl text-gray-500" />
-          </div>
-        ) : (
-          <Cropper
-            ref={cropperRef}
-            style={{ height: 400, width: "100%" }}
-            aspectRatio={1}
-            src={image}
-            viewMode={1}
-            minCropBoxHeight={10}
-            minCropBoxWidth={10}
-            background={false}
-            responsive={true}
-            autoCropArea={1}
-            checkOrientation={false}
-            guides={true}
-            zoomOnWheel={true}
-            onInitialized={handleImageLoad}
-          />
-        )}
-      </div>
 
-      <button
-        onClick={getCroppedImage}
-        className={`w-full bg-indigo-500 text-white px-5 py-1 my-2 rounded ${
-          imageRequirmentsMet && "cursor-not-allowed opacity-50"
-        }`}
-        disabled={imageRequirmentsMet}
-      >
-        Crop
-      </button>
+          <button
+            onClick={getCroppedImage}
+            className={`w-full bg-indigo-500 text-white px-5 py-1 my-2 rounded ${
+              !imageRequirmentsMet && "cursor-not-allowed opacity-50"
+            }`}
+            disabled={!imageRequirmentsMet}
+          >
+            Crop
+          </button>
+        </>
+      )}
     </Modal>
   );
 };

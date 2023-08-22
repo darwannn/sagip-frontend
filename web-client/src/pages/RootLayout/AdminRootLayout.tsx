@@ -7,7 +7,7 @@ const AdminRootLayout = () => {
         <nav>
           <ul>
             <li>
-              <NavLink to={"/"}>Home</NavLink>
+              <NavLink to={"/"}>Dashboard</NavLink>
             </li>
             <li>
               <NavLink to={"/users"}>Users</NavLink>

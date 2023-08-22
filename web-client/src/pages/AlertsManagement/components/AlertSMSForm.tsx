@@ -45,16 +45,13 @@ const AlertForm = () => {
     }
 
     // Prepare the data to be sent to the server
-    const body = {
+
+    const res = await sendAlert({
       alertTitle: data.alertTitle,
       alertMessage: data.alertMessage,
       /* by default, the alert will be sent to all registered user */
       location: sendToSpecific ? data.location : ["All"],
-    };
-
-    const token = localStorage.getItem("token");
-
-    const res = await sendAlert({ body, token });
+    });
     console.log(res);
     if (res && "data" in res) {
       if (res.data.success) {

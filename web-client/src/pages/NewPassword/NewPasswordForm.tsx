@@ -6,12 +6,14 @@ import { setNewPasswordRes } from "../../store/slices/authSlice";
 import { useNewPasswordMutation } from "../../services/authQuery";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
+import { TUserResData } from "../../types/user";
+
 import PasswordField from "../../components/PasswordField/PasswordField";
 
 const NewPasswordForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [serverRes, setServerRes] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
   const [
     newPassword,
     { isError: isError, isLoading: isLoading, isSuccess: isSuccess },
@@ -24,24 +26,23 @@ const NewPasswordForm = () => {
   } = useForm<FieldValues>();
 
   const SubmitUserPassword = async (data: FieldValues) => {
-    const body = {
+    const res = await newPassword({
       password: data.password,
       confirmPassword: data.confirmPassword,
-      for: "new-password",
-    };
-
-    const res = await newPassword({
-      body,
+      target: "new-password",
     });
 
-    if (res && "data" in res) {
+    if ("data" in res) {
       setServerRes(res.data);
       if (res.data.success) {
         dispatch(setNewPasswordRes(res.data));
         navigate("/login");
       }
     } else {
-      setServerRes(res.error);
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as TUserResData;
+        setServerRes(errData);
+      }
     }
   };
 

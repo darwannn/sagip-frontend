@@ -1,6 +1,6 @@
 export type SMS = {
   alertTitle: string;
- // alertMessage: string;
+  // alertMessage: string;
   //location: string[];
 };
 
@@ -17,7 +17,6 @@ export type TSurvey = {
   createdAt: string;
   updatedAt: string;
   __v: number;
-
 };
 export type TActiveSurvey = {
   _id: string;
@@ -48,9 +47,6 @@ export type TSurveyReport = {
   responseCount: number;
   affectedCount: number;
   unaffectedCount: number;
-
-
-
 };
 
 export type TSMSResData = {
@@ -68,7 +64,4 @@ export type TSurveyResData = {
   affected?: string[];
 };
 
-export const AlertTypes = [
-  "Flood",
-  "Earthquake",
-];
+export const AlertTypes = ["Flood", "Earthquake"];

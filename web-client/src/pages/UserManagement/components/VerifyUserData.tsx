@@ -1,6 +1,6 @@
 // Services / API
 import { useAppDispatch } from "../../../store/hooks";
-import { useUpdateVerificationRequestMutation } from "../../../services/usersApi";
+import { useUpdateVerificationRequestMutation } from "../../../services/usersQuery";
 import { unsetSelectedVerificationRequest } from "../../../store/slices/userManageSlice";
 
 // Types
@@ -101,7 +101,7 @@ const VerifyUserData = ({ verificationRequest }: TProps) => {
           <a
             href={`${BASE_IMAGE_URL}/verification-request/${verificationRequest?.verificationPicture[0]}`}
           >
-            <div className=" mx-auto my-8 bg-red-100   ">
+            <div className=" mx-auto my-8 bg-gray-100   ">
               <img
                 src={`${BASE_IMAGE_URL}/verification-request/${verificationRequest?.verificationPicture[0]}`}
                 className="w-full h-full object-cover"

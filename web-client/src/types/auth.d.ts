@@ -1,10 +1,12 @@
+import { TUserResData } from "./user";
+
 export type AuthType = {
   token: string | null;
 
-  passwordVerificationRes?: any;
-  contactVerificationRes?: any;
+  passwordVerificationRes?: Partial<TUserResData> | null;
+  contactVerificationRes?: Partial<TUserResData> | null;
   identifier?: string | null;
-  newPasswordRes?: any;
+  newPasswordRes?: Partial<TUserResData> | null;
   displayedRegisterPage?: string | null;
 };
 
@@ -13,7 +15,7 @@ export type Token = {
   iat: number;
   id: string;
 
-  for: string;
+  target: string;
   id: string;
   status: string;
   userType: string;
@@ -28,11 +30,4 @@ export type AuthResponse = {
 
   identifier?: string;
   password?: string;
-};
-
-export type ContactVerificationRes = {
-  success: boolean;
-  message: string;
-  error?: string | null;
-  code?: string;
 };

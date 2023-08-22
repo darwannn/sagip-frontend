@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/Home/Home";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import LoginPage, { action as loginAction } from "../pages/Login/LoginPage";
 import RegistrationPage from "../pages/Register/RegisterPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
     element: <AdminRootLayout />,
     loader: checkAuth,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <Dashboard /> },
       {
         path: "users",
         // loader:

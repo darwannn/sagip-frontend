@@ -1,19 +1,8 @@
 import moment from "moment";
 import { useGetActiveAlertQuery } from "../../../services/alertQuery";
-import { useAppDispatch } from "../../../store/hooks";
-
-import { setActiveAlert } from "../../../store/slices/alertSlice";
-import { useEffect } from "react";
 
 const AlertActive = () => {
   const { data: alertsData, isLoading, error } = useGetActiveAlertQuery();
-
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (alertsData) {
-      dispatch(setActiveAlert(alertsData));
-    }
-  }, [alertsData, dispatch]);
 
   if (isLoading) {
     return <p>Loading active alert...</p>;

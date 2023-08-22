@@ -2,8 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { setIdentifier } from "../../../store/slices/authSlice";
-import { User } from "../../../types/user";
+import {
+  setIdentifier,
+  setcontactVerificationRes,
+} from "../../../store/slices/authSlice";
+import { TUserResData, User } from "../../../types/user";
 
 import { useSendVerificationCodeMutation } from "../../../services/authQuery";
 
@@ -23,8 +26,13 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes
   );
-  const [serverRes, setServerRes] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    /* removes the contactVerificationRes message */
+    dispatch(setcontactVerificationRes(null));
+  }, [dispatch]);
 
   useEffect(() => {
     if (contactVerificationRes) {
@@ -79,7 +87,10 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
           }); */
         }
       } else {
-        setServerRes(res.error);
+        if ("error" in res && "data" in res.error) {
+          const errData = res.error.data as TUserResData;
+          setServerRes(errData);
+        }
       }
     }
   };
@@ -124,7 +135,7 @@ const AccountContactNumberForm = ({ userData }: TProps) => {
           <span className="text-red-500">
             {errors.contactNumber
               ? "Contact Number is required"
-              : serverRes?.data.contactNumber}
+              : serverRes?.contactNumber}
           </span>
         )}
       </div>

@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 // Types
 import type { AuthType as AuthState } from "../../types/auth";
+import type { TUserResData } from "../../types/user";
 
 const initialState: AuthState = {
   token: null,
@@ -25,24 +26,33 @@ export const authSlice = createSlice({
     },
 
     /* holds the server response obtained from the usePasswordVerificationMutation function in the authQuery  */
-    setPasswordVerificationRes: (state, action: PayloadAction<any>) => {
+    setPasswordVerificationRes: (
+      state,
+      action: PayloadAction<Partial<TUserResData>>
+    ) => {
       state.passwordVerificationRes = action.payload;
     },
 
     /* holds the server response obtained from the useContactVerificationMutation function in the authQuery  */
-    setcontactVerificationRes: (state, action: PayloadAction<any>) => {
+    setcontactVerificationRes: (
+      state,
+      action: PayloadAction<Partial<TUserResData> | null>
+    ) => {
       state.contactVerificationRes = action.payload;
     },
     /* holds the new email address/contact number */
-    setIdentifier: (state, action: PayloadAction<any>) => {
+    setIdentifier: (state, action: PayloadAction<string>) => {
       state.identifier = action.payload;
     },
 
     /* holds the server response obtained from the useForgotPasswordMutation function in the authQuery  */
-    setNewPasswordRes: (state, action: PayloadAction<any>) => {
+    setNewPasswordRes: (
+      state,
+      action: PayloadAction<Partial<TUserResData>>
+    ) => {
       state.newPasswordRes = action.payload;
     },
-    setDisplayedRegisterPage: (state, action: PayloadAction<any>) => {
+    setDisplayedRegisterPage: (state, action: PayloadAction<string>) => {
       state.displayedRegisterPage = action.payload;
     },
   },
