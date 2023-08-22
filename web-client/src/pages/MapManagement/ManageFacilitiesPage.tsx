@@ -16,7 +16,7 @@ import FacilitiesList from "./components/FacilitiesList";
 import FacilityForm from "./components/FacilityForm";
 import Select, { MultiValue } from "react-select";
 // Types
-import type { TFacility } from "./types/emergencyFacility";
+import { TFacility } from "./types/emergencyFacility";
 
 const ManageFacilitiesPage = () => {
   // Map State / Instance

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { API_BASE_URL } from "../api.config";
 
-import type { TFacility } from "../pages/MapManagement/types/emergencyFacility";
+import { TFacility } from "../pages/MapManagement/types/emergencyFacility";
 
 export const facilityQueryApi = createApi({
   reducerPath: "facilityQuery",

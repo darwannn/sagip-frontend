@@ -20,7 +20,7 @@ import {
 // Functional Components
 import FileDropzone from "../../../components/Form/FileDropzone";
 // Types
-import type { TFacility } from "../types/emergencyFacility";
+import { TFacility } from "../types/emergencyFacility";
 import { BASE_IMAGE_URL } from "../../../api.config";
 // Icons
 import { MdClose } from "react-icons/md";
