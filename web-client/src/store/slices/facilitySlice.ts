@@ -1,6 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { TFacility } from "../../pages/MapManagement/types/emergencyFacility";
+
 import { RootState } from "../store";
 
 type TFacilityState = {
