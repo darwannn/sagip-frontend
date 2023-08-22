@@ -1,6 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_BASE_URL } from "../api.config";
-import { TAssistanceRequest } from "../pages/EmergencyReports/types/assistanceRequest";
+import {
+  TAssistanceReqResponse,
+  TAssistanceRequest,
+} from "../pages/EmergencyReports/types/assistanceRequest";
+
+type DismissBody = {
+  reason: string;
+  note?: string;
+};
 
 export const assistanceRequestQueryApi = createApi({
   reducerPath: "assistanceRequestQuery",
@@ -15,7 +23,10 @@ export const assistanceRequestQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      // Provide tags for each query result
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({ type: "AssistanceRequest", id: _id }))
+          : ["AssistanceRequest"],
     }),
     getAssistanceRequestById: builder.query<TAssistanceRequest, string>({
       query: (id) => ({
@@ -26,10 +37,28 @@ export const assistanceRequestQueryApi = createApi({
         },
       }),
     }),
+    // Dismiss an assistance request
+    dismissAssistanceRequest: builder.mutation<
+      TAssistanceReqResponse,
+      { id: string; body: DismissBody }
+    >({
+      query: ({ id, body }) => ({
+        url: `assistance-request/delete/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body,
+      }),
+      invalidatesTags: (_result, _error, { id }) => {
+        return [{ type: "AssistanceRequest", id }];
+      },
+    }),
   }),
 });
 
 export const {
   useGetAllAssistanceRequestsQuery,
   useGetAssistanceRequestByIdQuery,
+  useDismissAssistanceRequestMutation,
 } = assistanceRequestQueryApi;

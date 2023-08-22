@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 const AssistanceList = memo(() => {
   const { data } = useGetAllAssistanceRequestsQuery();
   const [searchParams] = useSearchParams();
-  const filter = searchParams.get("filter") || "new";
+  const filter = searchParams.get("filter") || "unverified";
 
   const filteredAssistance = data?.filter(
     (assistance) => assistance.status === filter
