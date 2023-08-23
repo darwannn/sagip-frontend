@@ -1,15 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../store/hooks";
-import { setDisplayedVerificationPage } from "../../../store/slices/authSlice";
-
 import AuthForm from "../../../components/Form/AuthForm";
 
 import AuthFormHeader from "../../../components/Form/AuthFormHeader";
 
 import request_submitted from "../../../assets/img/request_submitted.png";
 const RegistrationSuccessful = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   return (
     <>
       <AuthForm

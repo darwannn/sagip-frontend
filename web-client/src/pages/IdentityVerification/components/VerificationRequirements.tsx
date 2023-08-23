@@ -1,11 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import {
-  useGetIdVerificationRequestQuery,
-  useSendIdVerificationRequestMutation,
-} from "../../../services/authQuery";
+import { useSendIdVerificationRequestMutation } from "../../../services/authQuery";
 import { setDisplayedVerificationPage } from "../../../store/slices/authSlice";
 
 import AuthFormHeader from "../../../components/Form/AuthFormHeader";
