@@ -11,6 +11,9 @@ const initialState: AuthState = {
   identifier: null,
   newPasswordRes: null,
   displayedRegisterPage: null,
+  displayedVerificationPage: null,
+
+  registrationSuccessful: false,
 };
 
 export const authSlice = createSlice({
@@ -55,6 +58,12 @@ export const authSlice = createSlice({
     setDisplayedRegisterPage: (state, action: PayloadAction<string>) => {
       state.displayedRegisterPage = action.payload;
     },
+    setDisplayedVerificationPage: (state, action: PayloadAction<string>) => {
+      state.displayedVerificationPage = action.payload;
+    },
+    setRegistrationSuccessful: (state, action: PayloadAction<boolean>) => {
+      state.registrationSuccessful = action.payload;
+    },
   },
 });
 
@@ -65,5 +74,7 @@ export const {
   setIdentifier,
   setNewPasswordRes,
   setDisplayedRegisterPage,
+  setDisplayedVerificationPage,
+  setRegistrationSuccessful,
 } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import LoginPage, { action as loginAction } from "../pages/Login/LoginPage";
-import RegistrationPage from "../pages/Register/RegisterPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
 
 import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
@@ -30,6 +29,11 @@ import ManageAccountPage from "../pages/AccountSettings/ManageAccountPage";
 import NewPasswordPage from "../pages/NewPassword/NewPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
 import ForgotPasswordContactVerification from "../pages/ForgotPassword/ForgotPasswordContactVerification";
+
+import RegistrationPage from "../pages/Register/RegistrationPage";
+import RegisterContactVerification from "../pages/Register/components/RegisterContactVerification";
+import RegistrationAlmostDone from "../pages/Register/components/RegistrationAlmostDone";
+import IdentityVerificationPage from "../pages/IdentityVerification/IdentityVerificationPage";
 
 /* import LoginContactVerification from "../pages/Login/LoginContactVerification"; */
 
@@ -104,7 +108,25 @@ export const router = createBrowserRouter([
     action: loginAction,
   },
 
-  { path: "/register", element: <RegistrationPage />, loader: isLoggedIn },
+  {
+    path: "register",
+    /* loader: isLoggedIn, */
+    children: [
+      { index: true, element: <RegistrationPage /> },
+      {
+        path: "contact-verification",
+        element: <RegisterContactVerification />,
+      },
+      {
+        path: "identity-verification",
+        element: <RegistrationAlmostDone />,
+      },
+    ],
+  },
+  {
+    path: "identity-verification",
+    element: <IdentityVerificationPage />,
+  },
   {
     path: "forgot-password",
     /* loader: isLoggedIn, */

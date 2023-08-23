@@ -8,6 +8,8 @@ export type AuthType = {
   identifier?: string | null;
   newPasswordRes?: Partial<TUserResData> | null;
   displayedRegisterPage?: string | null;
+  displayedVerificationPage?: string | null;
+  registrationSuccessful?: boolean | null;
 };
 
 export type Token = {
