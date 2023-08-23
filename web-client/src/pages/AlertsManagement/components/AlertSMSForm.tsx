@@ -1,3 +1,4 @@
+import { useEffect, useCallback } from "react";
 import {
   Controller,
   FieldValues,
@@ -21,6 +22,7 @@ const AlertForm = () => {
   const [selectedBarangay, setSelectedBarangay] = useState<null>(null);
   const [sendToSpecific, setSendToSpecific] = useState<boolean>(false);
   const [resetSelectKey, setResetSelectKey] = useState<number>(0);
+  const [malolosBarangays, setMalolosBarangays] = useState<Barangay[]>([]);
   const [
     sendAlert,
     {
@@ -29,6 +31,20 @@ const AlertForm = () => {
       isSuccess: sendIsSuccess,
     },
   ] = useSendAlertMutation();
+
+  const getMalolosBarangays = useCallback(async () => {
+    const barangays = await getBarangays("031410");
+    setMalolosBarangays(barangays);
+  }, []);
+
+  useEffect(() => {
+    getMalolosBarangays();
+  }, [getMalolosBarangays]);
+
+  const options = malolosBarangays.map((barangay: Barangay) => ({
+    value: barangay.brgy_name,
+    label: barangay.brgy_name,
+  }));
 
   const {
     register,
@@ -158,10 +174,3 @@ const AlertForm = () => {
 };
 
 export default AlertForm;
-
-const barangays = await getBarangays("031410");
-
-const options = barangays.map((barangay: Barangay) => ({
-  value: barangay.brgy_name,
-  label: barangay.brgy_name,
-}));
