@@ -1,15 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 // Types
 import type { AuthType as AuthState } from "../../types/auth";
+import type { TUserResData } from "../../types/user";
 
 const initialState: AuthState = {
   token: null,
-  user: {
-    for: "",
-    id: "",
-    status: "",
-    userType: "",
-  },
+
+  passwordVerificationRes: null,
+  contactVerificationRes: null,
+  identifier: null,
+  newPasswordRes: null,
+  displayedRegisterPage: null,
 };
 
 export const authSlice = createSlice({
@@ -20,13 +21,49 @@ export const authSlice = createSlice({
       localStorage.clear();
       // Store token and user in state / redux slice
       state.token = action.payload.token;
-      state.user = action.payload.user;
       // Store token in local storage
       localStorage.setItem("token", action.payload.token || "");
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
+    },
+
+    /* holds the server response obtained from the usePasswordVerificationMutation function in the authQuery  */
+    setPasswordVerificationRes: (
+      state,
+      action: PayloadAction<Partial<TUserResData>>
+    ) => {
+      state.passwordVerificationRes = action.payload;
+    },
+
+    /* holds the server response obtained from the useContactVerificationMutation function in the authQuery  */
+    setcontactVerificationRes: (
+      state,
+      action: PayloadAction<Partial<TUserResData> | null>
+    ) => {
+      state.contactVerificationRes = action.payload;
+    },
+    /* holds the new email address/contact number */
+    setIdentifier: (state, action: PayloadAction<string>) => {
+      state.identifier = action.payload;
+    },
+
+    /* holds the server response obtained from the useForgotPasswordMutation function in the authQuery  */
+    setNewPasswordRes: (
+      state,
+      action: PayloadAction<Partial<TUserResData>>
+    ) => {
+      state.newPasswordRes = action.payload;
+    },
+    setDisplayedRegisterPage: (state, action: PayloadAction<string>) => {
+      state.displayedRegisterPage = action.payload;
     },
   },
 });
 
-export const { login } = authSlice.actions;
+export const {
+  login,
+  setPasswordVerificationRes,
+  setcontactVerificationRes,
+  setIdentifier,
+  setNewPasswordRes,
+  setDisplayedRegisterPage,
+} = authSlice.actions;
 export default authSlice.reducer;

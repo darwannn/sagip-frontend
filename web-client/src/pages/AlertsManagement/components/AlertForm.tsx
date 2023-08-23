@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { TActiveSurvey, TSurvey, TSurveyResData } from "../types/alert";
-
+import { TSurvey, TSurveyResData } from "../types/alert";
+import { useGetActiveAlertQuery } from "../../../services/alertQuery";
 import {
   useAddAlertMutation,
   useUpdateAlertMutation,
@@ -11,14 +11,13 @@ import {
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
-import { useSelector } from "react-redux";
-import { selectActiveAlert } from "../../../store/slices/alertSlice";
-
 type TProps = {
   alertData?: TSurvey;
 };
 
 const AlertForm = ({ alertData }: TProps) => {
+  const { data: activeAlert } = useGetActiveAlertQuery();
+
   const [
     addAlert,
     { isError: addIsError, isLoading: addIsLoading, error: addErr },
@@ -35,8 +34,6 @@ const AlertForm = ({ alertData }: TProps) => {
   const navigate = useNavigate();
 
   /* allows status to be updated without changing the value of other fields */
-  const activeAlert = useSelector(selectActiveAlert) as TActiveSurvey;
-
   const [initialStatus, setInitialStatus] = useState<string>("");
   useEffect(() => {
     if (alertData) {
@@ -63,24 +60,24 @@ const AlertForm = ({ alertData }: TProps) => {
       return;
     }
 
-    const body = {
+    const body: Partial<TSurvey> = {
       title: data.title,
       category: data.category,
       status: status,
       endDate: data.endDate,
     };
 
-    const token = localStorage.getItem("token");
     let res;
     if (alertData) {
       res = await updateAlert({
         body,
-        token,
+
         id: alertData._id,
       });
     } else {
-      res = await addAlert({ body, token });
+      res = await addAlert(body);
     }
+    console.log(res);
     if (res && "data" in res) {
       if (res.data.success) {
         navigate(`/disaster-alerts`);
@@ -155,7 +152,9 @@ const AlertForm = ({ alertData }: TProps) => {
           className="bg-green-500 text-white px-5 py-1 m-2 rounded disabled:bg-green-300"
           onClick={handleSubmit(onPublish)}
           disabled={
-            addIsLoading || updateIsLoading || activeAlert?.success === true
+            addIsLoading ||
+            updateIsLoading ||
+            alertData?._id !== activeAlert?._id
           }
         >
           {!alertData

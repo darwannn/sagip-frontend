@@ -17,7 +17,7 @@ import DataTable from "../../../components/ui/data-table";
 
 // Redux
 import { useAppSelector } from "../../../store/hooks";
-import { useGetVerificationRequestsQuery } from "../../../services/usersApi";
+import { useGetVerificationRequestsQuery } from "../../../services/usersQuery";
 import { selectUserTableData } from "../../../store/slices/userManageSlice";
 
 import { Link } from "react-router-dom";

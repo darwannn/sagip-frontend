@@ -17,6 +17,9 @@ export const getAuthToken = () => {
   }
 
   const decodedToken = jwtDecode<Token>(token || "");
+  console.log("====================================");
+  console.log(decodedToken);
+  console.log("====================================");
   const exp = decodedToken.exp;
   // If token is expired, return null
   if (now > exp) {
@@ -57,7 +60,6 @@ export const isLoggedIn = () => {
  * httpOnly flag set to true.
  */
 // Store token in local storage
-export const setAuthToken = ({ token, user }: AuthType) => {
+export const setAuthToken = ({ token }: AuthType) => {
   localStorage.setItem("token", token || "");
-  localStorage.setItem("user", JSON.stringify(user));
 };

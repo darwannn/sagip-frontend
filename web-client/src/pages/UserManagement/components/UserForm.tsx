@@ -8,14 +8,14 @@ import { User, TUserResData } from "../../../types/user";
 import {
   useAddUserMutation,
   useUpdateUserMutation,
-} from "../../../services/usersApi";
+} from "../../../services/usersQuery";
 
 type TProps = {
   userData?: User;
 };
 
 const UserForm = ({ userData }: TProps) => {
-  const [serverResponse, setServerResponse] = useState<any>();
+  const [serverRes, setServerRes] = useState<TUserResData>();
   const [
     addUser,
     { isError: addIsError, isLoading: addIsLoading, error: addErr },
@@ -66,7 +66,7 @@ const UserForm = ({ userData }: TProps) => {
       console.log("No changes made");
       return;
     }
-    const body = {
+    const body: Partial<User> = {
       contactNumber: data.contactNumber,
       email: data.email,
       status: data.status,
@@ -83,7 +83,7 @@ const UserForm = ({ userData }: TProps) => {
     console.log("data.region");
     console.log(data.region);
     console.log(data.userType);
-    const token = localStorage.getItem("token");
+
     let res;
     if (userData) {
       console.log(data.email);
@@ -91,22 +91,24 @@ const UserForm = ({ userData }: TProps) => {
 
       res = await updateUser({
         body,
-        token,
         id: userData._id,
       });
     } else {
-      res = await addUser({ body, token });
+      res = await addUser(body);
     }
 
     console.log(res);
 
-    if (res && "data" in res) {
-      setServerResponse(res);
+    if ("data" in res) {
+      setServerRes(res.data);
       if (res.data.success) {
         navigate(`/users`);
       }
     } else {
-      setServerResponse(res.error);
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as TUserResData;
+        setServerRes(errData);
+      }
     }
   };
 
@@ -184,11 +186,9 @@ const UserForm = ({ userData }: TProps) => {
           {...register("email", { required: true })}
         />
 
-        {(errors.email || !serverResponse?.success) && (
+        {(errors.email || !serverRes?.success) && (
           <span className="text-red-500">
-            {errors.email
-              ? "Email Number is required"
-              : serverResponse?.data.email}
+            {errors.email ? "Email Number is required" : serverRes?.email}
           </span>
         )}
       </div>
@@ -203,11 +203,11 @@ const UserForm = ({ userData }: TProps) => {
           maxLength={11}
           {...register("contactNumber", { required: true })}
         />
-        {(errors.contactNumber || !serverResponse?.success) && (
+        {(errors.contactNumber || !serverRes?.success) && (
           <span className="text-red-500">
             {errors.contactNumber
               ? "Contact Number is required"
-              : serverResponse?.data.contactNumber}
+              : serverRes?.contactNumber}
           </span>
         )}
       </div>

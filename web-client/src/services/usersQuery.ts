@@ -17,17 +17,13 @@ export const usersApi = createApi({
       query: (id) => `account/${id}`,
       providesTags: ["SelectedUser"],
     }),
-    addUser: builder.mutation<
-      TUserResData,
-      { body: Record<string, any>; token: string | null }
-    >({
-      query: ({ body, token }) => ({
+    addUser: builder.mutation<TUserResData, Partial<User>>({
+      query: (body) => ({
         url: "account/add",
         method: "POST",
-        body: JSON.stringify(body),
+        body,
         headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
       invalidatesTags: ["User", "SelectedUser", "VerificationRequest"],
@@ -35,19 +31,19 @@ export const usersApi = createApi({
 
     updateUser: builder.mutation<
       TUserResData,
-      { body: Record<string, any>; token: string | null; id: string }
+      { body: Partial<User>; id: string }
     >({
-      query: ({ body, token, id }) => ({
+      query: ({ body, id }) => ({
         url: `account/info/update/${id}`,
         method: "PUT",
-        body: JSON.stringify(body),
+        body,
         headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
       invalidatesTags: ["User", "SelectedUser", "VerificationRequest"],
     }),
+
     deleteUser: builder.mutation<void, { token: string | null; id: string }>({
       query: ({ token, id }) => ({
         url: `/account/archive/${id}`,

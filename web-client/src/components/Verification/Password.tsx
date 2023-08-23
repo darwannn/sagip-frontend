@@ -1,0 +1,92 @@
+import { useState } from "react";
+import { useAppDispatch } from "../../store/hooks";
+import { setPasswordVerificationRes } from "../../store/slices/authSlice";
+import { usePasswordVerificationMutation } from "../../services/authQuery";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { TUserResData } from "../../types/user";
+
+import PasswordField from "../../components/PasswordField/PasswordField";
+type TProps = {
+  action: string;
+};
+const Password = ({ action }: TProps) => {
+  const dispatch = useAppDispatch();
+  const [serverRes, setServerRes] = useState<TUserResData>();
+
+  const [
+    passwordVerification,
+    {
+      isError: deleteIsError,
+      isLoading: deleteIsLoading,
+      isSuccess: deleteIsSuccess,
+    },
+  ] = usePasswordVerificationMutation();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, errors },
+  } = useForm<FieldValues>();
+
+  const SubmitUserPassword = async (data: FieldValues) => {
+    if (!isDirty) {
+      console.log("No changes made");
+      return;
+    }
+    const body = {
+      password: data.password,
+    };
+
+    const res = await passwordVerification({
+      body,
+      action,
+    });
+
+    if (res && "data" in res) {
+      setServerRes(res.data);
+      if (res.data.success) {
+        dispatch(setPasswordVerificationRes(res.data));
+      }
+    } else {
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as TUserResData;
+        setServerRes(errData);
+      }
+    }
+  };
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    SubmitUserPassword(data);
+  };
+
+  if (deleteIsLoading) console.log("Updating...");
+  if (deleteIsError) console.log("Error updating");
+  if (deleteIsSuccess) console.log("Deleted successfully");
+
+  return (
+    <>
+      <form>
+        <>
+          <PasswordField
+            register={register}
+            errors={errors}
+            serverRes={serverRes}
+            fieldName="password"
+            fieldLabel="Password"
+            passwordRequirement={false}
+            style="account-delete"
+          />
+        </>
+        <button
+          className="w-full bg-red-500 text-white  px-5 py-1 my-2 rounded"
+          onClick={handleSubmit(onSubmit)}
+          disabled={deleteIsLoading}
+        >
+          Continue
+        </button>
+      </form>
+    </>
+  );
+};
+
+export default Password;

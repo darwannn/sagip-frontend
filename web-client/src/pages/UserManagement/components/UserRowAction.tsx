@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useDeleteUserMutation } from "../../../services/usersApi";
+import { useDeleteUserMutation } from "../../../services/usersQuery";
 
 type PROPS = {
   rowId: string;

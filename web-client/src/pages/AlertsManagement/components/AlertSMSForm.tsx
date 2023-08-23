@@ -11,6 +11,11 @@ import { useSendAlertMutation } from "../../../services/alertQuery";
 import { useState } from "react";
 import Select from "react-select";
 
+import {
+  getBarangays,
+  Barangay,
+} from "../../../components/AddressSelector/AddressSelector";
+
 const AlertForm = () => {
   const [formMessage, setFormMessage] = useState<string>("");
   const [selectedBarangay, setSelectedBarangay] = useState<null>(null);
@@ -40,16 +45,13 @@ const AlertForm = () => {
     }
 
     // Prepare the data to be sent to the server
-    const body = {
+
+    const res = await sendAlert({
       alertTitle: data.alertTitle,
       alertMessage: data.alertMessage,
       /* by default, the alert will be sent to all registered user */
       location: sendToSpecific ? data.location : ["All"],
-    };
-
-    const token = localStorage.getItem("token");
-
-    const res = await sendAlert({ body, token });
+    });
     console.log(res);
     if (res && "data" in res) {
       if (res.data.success) {
@@ -156,57 +158,10 @@ const AlertForm = () => {
 };
 
 export default AlertForm;
-/* temporary, should be similar to the options in user registration page */
-const options = [
-  { value: "Anilao", label: "Anilao" },
-  { value: "Atlag", label: "Atlag" },
-  { value: "Babatnin", label: "Babatnin" },
-  { value: "Bagna", label: "Bagna" },
-  { value: "Bagong-bayan", label: "Bagong Bayan" },
-  { value: "Balayong", label: "Balayong" },
-  { value: "Balite", label: "Balite" },
-  { value: "Bangkal", label: "Bangkal" },
-  { value: "Barihan", label: "Barihan" },
-  { value: "Bulihan", label: "Bulihan" },
-  { value: "Bungahan", label: "Bungahan" },
-  { value: "Caingin", label: "Caingin" },
-  { value: "Calero", label: "Calero" },
-  { value: "Caliligawan", label: "Caliligawan" },
-  { value: "Canalate", label: "Canalate" },
-  { value: "Caniogan", label: "Caniogan" },
-  { value: "Catmon", label: "Catmon" },
-  { value: "Cofradia", label: "Cofradia" },
-  { value: "Dakila", label: "Dakila" },
-  { value: "Guinhawa", label: "Guinhawa" },
-  { value: "Ligas", label: "Ligas" },
-  { value: "Liyang", label: "Liyang" },
-  { value: "Longos", label: "Longos" },
-  { value: "Look-1st", label: "Look 1st" },
-  { value: "Look-2nd", label: "Look 2nd" },
-  { value: "Lugam", label: "Lugam" },
-  { value: "Mabolo", label: "Mabolo" },
-  { value: "Mambog", label: "Mambog" },
-  { value: "Masile", label: "Masile" },
-  { value: "Matimbo", label: "Matimbo" },
-  { value: "Mojon", label: "Mojon" },
-  { value: "Namayan", label: "Namayan" },
-  { value: "Niugan", label: "Niugan" },
-  { value: "Pamarawan", label: "Pamarawan" },
-  { value: "Panasahan", label: "Panasahan" },
-  { value: "Pinagbakahan", label: "Pinagbakahan" },
-  { value: "San Agustin", label: "San Agustin" },
-  { value: "San Gabriel", label: "San Gabriel" },
-  { value: "San Juan", label: "San Juan" },
-  { value: "San Pablo", label: "San Pablo" },
-  { value: "San Vicente Pob", label: "San Vicente (Pob.)" },
-  { value: "Santiago", label: "Santiago" },
-  { value: "Santisima-trinidad", label: "Santisima Trinidad" },
-  { value: "Santo Cristo", label: "Santo Cristo" },
-  { value: "Santo Niño Pob", label: "Santo Niño (Pob.)" },
-  { value: "Santo Rosario Pob", label: "Santo Rosario (Pob.)" },
-  { value: "Santol", label: "Santol" },
-  { value: "Sumapang Bata", label: "Sumapang Bata" },
-  { value: "Sumapang Matanda", label: "Sumapang Matanda" },
-  { value: "Taal", label: "Taal" },
-  { value: "Tikay", label: "Tikay" },
-];
+
+const barangays = await getBarangays("031410");
+
+const options = barangays.map((barangay: Barangay) => ({
+  value: barangay.brgy_name,
+  label: barangay.brgy_name,
+}));

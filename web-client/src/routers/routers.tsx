@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/Home/Home";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import LoginPage, { action as loginAction } from "../pages/Login/LoginPage";
 import RegistrationPage from "../pages/Register/RegisterPage";
-import ForgotPasswordPage from "../pages/Register/ForgotPasswordPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
 
 import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
@@ -26,13 +25,21 @@ import VerifyUserPage from "../pages/UserManagement/VerifyUserPage";
 import CreateUserPage from "../pages/UserManagement/CreateUserPage";
 import ViewUserPage from "../pages/UserManagement/ViewUserPage";
 
+import ManageAccountPage from "../pages/AccountSettings/ManageAccountPage";
+
+import NewPasswordPage from "../pages/NewPassword/NewPasswordPage";
+import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
+import ForgotPasswordContactVerification from "../pages/ForgotPassword/ForgotPasswordContactVerification";
+
+/* import LoginContactVerification from "../pages/Login/LoginContactVerification"; */
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <AdminRootLayout />,
     loader: checkAuth,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <Dashboard /> },
       {
         path: "users",
         // loader:
@@ -80,6 +87,14 @@ export const router = createBrowserRouter([
           { path: ":articleId", element: <ViewArticlePage /> },
         ],
       },
+      {
+        path: "account-settings",
+        children: [
+          { index: true, element: <ManageAccountPage /> },
+          { path: ":page", element: <ManageAccountPage /> },
+          { path: ":page", element: <ManageAccountPage /> },
+        ],
+      },
     ],
   },
   {
@@ -88,11 +103,23 @@ export const router = createBrowserRouter([
     loader: isLoggedIn,
     action: loginAction,
   },
+
   { path: "/register", element: <RegistrationPage />, loader: isLoggedIn },
   {
-    path: "/forgot-password",
-    element: <ForgotPasswordPage />,
-    loader: isLoggedIn,
+    path: "forgot-password",
+    /* loader: isLoggedIn, */
+    children: [
+      { index: true, element: <ForgotPasswordPage /> },
+      {
+        path: "contact-verification",
+        element: <ForgotPasswordContactVerification />,
+      },
+    ],
+  },
+  {
+    path: "/new-password",
+    element: <NewPasswordPage />,
+    /* loader: isLoggedIn, */
   },
   /* temporary, so the report will open in new tab (without side navigation menu) */
   {
