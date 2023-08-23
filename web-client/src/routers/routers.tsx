@@ -31,7 +31,7 @@ import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
 import ForgotPasswordContactVerification from "../pages/ForgotPassword/ForgotPasswordContactVerification";
 
 import RegistrationPage from "../pages/Register/RegistrationPage";
-import RegisterContactVerification from "../pages/Register/components/RegisterContactVerification";
+import RegisterContactVerification from "../pages/Register/components/RegistrationContactVerification";
 import RegistrationAlmostDone from "../pages/Register/components/RegistrationAlmostDone";
 import IdentityVerificationPage from "../pages/IdentityVerification/IdentityVerificationPage";
 

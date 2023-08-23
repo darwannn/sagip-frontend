@@ -25,8 +25,11 @@ type TProps = {
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
 };
 
-const RegisterContactNumber = ({ register, handleSubmit, errors }: TProps) => {
-  /* const dispatch = useAppDispatch(); */
+const RegistrationContactNumber = ({
+  register,
+  handleSubmit,
+  errors,
+}: TProps) => {
   const navigate = useNavigate();
   const [serverRes, setServerRes] = useState<TUserResData>();
   const [
@@ -39,11 +42,6 @@ const RegisterContactNumber = ({ register, handleSubmit, errors }: TProps) => {
   ] = useRegisterMutation();
 
   const SubmitData = async (data: FieldValues) => {
-    /*    if (!isDirty) {
-      console.log("No changes made");
-      return;
-    } */
-
     const body: Partial<User> = {
       firstname: data.firstname,
       middlename: data.middlename,
@@ -98,6 +96,7 @@ const RegisterContactNumber = ({ register, handleSubmit, errors }: TProps) => {
         title="Contact Information"
         buttonAction="dispatch"
         action="address"
+        target="register"
       />
       <div className="mb-10 flex-1 sm:flex-grow-0">
         <div className="my-3">
@@ -132,4 +131,4 @@ const RegisterContactNumber = ({ register, handleSubmit, errors }: TProps) => {
   );
 };
 
-export default RegisterContactNumber;
+export default RegistrationContactNumber;

@@ -23,8 +23,12 @@ const SingleData = ({
     <div
       className={
         isPrimary
-          ? "grid grid-cols-2 h-full border-2 rounded-xl p-5 border-indigo-300 bg-indigo-300 text-gray-800 cursor-pointer"
-          : "grid grid-cols-2 h-full border-2 rounded-xl p-5  border-gray-200 bg-gray-200 text-gray-800 cursor-pointer"
+          ? `grid grid-cols-2 h-full border-2 rounded-xl p-5 border-indigo-300 bg-indigo-300 text-gray-800 ${
+              navigateTo !== "/" && "cursor-pointer"
+            }`
+          : `grid grid-cols-2 h-full border-2 rounded-xl p-5  border-gray-200 bg-gray-200 text-gray-800 ${
+              navigateTo !== "/" && "cursor-pointer"
+            }"`
       }
       onClick={() => {
         if (navigateTo !== "/") navigate(navigateTo);

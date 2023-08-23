@@ -5,13 +5,14 @@ import { setDisplayedVerificationPage } from "../../../store/slices/authSlice";
 import AuthFormHeader from "../../../components/Form/AuthFormHeader";
 
 import account_verification from "../../../assets/img/account_verification.png";
-const RegistrationSuccessful = () => {
+
+const IdentityVerificationNotice = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   return (
     <>
       <AuthFormHeader
-        title="Account Creation Success!"
+        title="Account Verification"
         buttonAction="navigate"
         action="/"
       />
@@ -41,4 +42,4 @@ const RegistrationSuccessful = () => {
   );
 };
 
-export default RegistrationSuccessful;
+export default IdentityVerificationNotice;

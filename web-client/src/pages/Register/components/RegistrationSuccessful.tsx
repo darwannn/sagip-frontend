@@ -5,6 +5,7 @@ import { setRegistrationSuccessful } from "../../../store/slices/authSlice";
 import AuthForm from "../../../components/Form/AuthForm";
 import AuthFormHeader from "../../../components/Form/AuthFormHeader";
 import registration_success from "../../../assets/img/registration_success.png";
+
 const RegistrationSuccessful = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

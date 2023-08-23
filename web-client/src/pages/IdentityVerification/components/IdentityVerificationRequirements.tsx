@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { useSendIdVerificationRequestMutation } from "../../../services/authQuery";
 import { setDisplayedVerificationPage } from "../../../store/slices/authSlice";
@@ -17,10 +18,9 @@ const RegistrationSuccessful = () => {
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  // State Management for the uploaded image
+
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
-  // Event handler for file input change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files && e.target.files[0];
     if (selectedFile) {
@@ -36,23 +36,8 @@ const RegistrationSuccessful = () => {
       isSuccess: sendIsSuccess,
     },
   ] = useSendIdVerificationRequestMutation();
-  /*  const {
-    register,
-    handleSubmit,
-    formState: { isDirty, errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      contactNumber: userData?.contactNumber,
-    },
-  }); */
 
-  /*   const SubmitSendCode = async (data: FieldValues) => { */
   const SubmitSendCode = async () => {
-    /*  if (!isDirty) {
-      console.log("No changes made");
-      return;
-    } */
-
     const body = new FormData();
 
     if (uploadedImage) {
@@ -74,9 +59,6 @@ const RegistrationSuccessful = () => {
     }
   };
 
-  /*   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    SubmitSendCode(data);
-  }; */
   if (sendIsLoading) console.log("Updating...");
   if (sendIsError) console.log("Error updating");
   if (sendIsSuccess) console.log("Updated successfully");
@@ -86,6 +68,7 @@ const RegistrationSuccessful = () => {
         title="Submit your ID"
         buttonAction="dispatch"
         action="notice"
+        target="identity-verification"
       />
       <div className="mb-10 flex-1 sm:flex-grow-0">
         <div className="text-gray-500 mt-5">
@@ -106,8 +89,6 @@ const RegistrationSuccessful = () => {
           </ul>
         </div>
       </div>
-
-      {/* Displaying the uploaded image */}
 
       {uploadedImage && (
         <Modal
@@ -151,20 +132,18 @@ const RegistrationSuccessful = () => {
         onClick={() => {
           dispatch(setDisplayedVerificationPage("requirements"));
           fileInputRef.current?.click();
-          const androidInterface = (window as any).AndroidInterface;
-          androidInterface?.setMediaChooser("camera");
+          /* const androidInterface = (window as any).AndroidInterface;
+          androidInterface?.setMediaChooser("camera"); */
         }}
       >
         Proceed
       </button>
 
-      {/* Input file element */}
       <input
         ref={fileInputRef}
         className="hidden"
         type="file"
-        accept="image/*"
-        capture
+        accept="image/*;capture=camera"
         onChange={handleFileChange}
       />
     </>

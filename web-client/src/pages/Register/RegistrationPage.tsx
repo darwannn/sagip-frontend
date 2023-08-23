@@ -14,11 +14,6 @@ const RegisterPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const isSuccess = queryParams.get("success");
 
-  // If the 'success' query parameter is present and has a truthy value
-  if (isSuccess) {
-    // Redirect to the RegistrationSuccessful component
-  }
-  /* show email page by default */
   useEffect(() => {
     dispatch(setDisplayedRegisterPage("email"));
   }, [dispatch]);
@@ -26,6 +21,7 @@ const RegisterPage = () => {
   return (
     <>
       {isSuccess === "success" ? (
+        /* will display this component if the url has a query param of ?success=success */
         <RegistrationSuccessful />
       ) : (
         <RegistrationForm />

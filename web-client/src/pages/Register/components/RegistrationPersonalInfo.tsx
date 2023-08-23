@@ -17,7 +17,11 @@ type TProps = {
   errors: FieldErrors<FieldValues>;
 };
 
-const RegisterPersonalInfo = ({ register, handleSubmit, errors }: TProps) => {
+const RegistrationPersonalInfo = ({
+  register,
+  handleSubmit,
+  errors,
+}: TProps) => {
   const dispatch = useAppDispatch();
 
   const onValidate: SubmitHandler<FieldValues> = async () => {
@@ -30,6 +34,7 @@ const RegisterPersonalInfo = ({ register, handleSubmit, errors }: TProps) => {
         title="Personal Information"
         buttonAction="dispatch"
         action="password"
+        target="register"
       />
 
       {/*  <div className="flex flex-wrap "> */}
@@ -140,4 +145,4 @@ const RegisterPersonalInfo = ({ register, handleSubmit, errors }: TProps) => {
   );
 };
 
-export default RegisterPersonalInfo;
+export default RegistrationPersonalInfo;

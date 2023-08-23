@@ -23,7 +23,7 @@ type TProps = {
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
 };
 
-const RegisterPassword = ({ register, handleSubmit, errors }: TProps) => {
+const RegistrationPassword = ({ register, handleSubmit, errors }: TProps) => {
   const dispatch = useAppDispatch();
   const [serverRes, setServerRes] = useState<TUserResData>();
   const [
@@ -36,10 +36,6 @@ const RegisterPassword = ({ register, handleSubmit, errors }: TProps) => {
   ] = useValidataInputMutation();
 
   const ValidateData = async (data: FieldValues) => {
-    /* if (!isDirty) {
-      console.log("No changes made");
-      return;
-    } */
     const body = {
       password: data.password,
       confirmPassword: data.confirmPassword,
@@ -54,7 +50,7 @@ const RegisterPassword = ({ register, handleSubmit, errors }: TProps) => {
     console.log(res);
     if (res && "data" in res) {
       if (res.data.success) {
-        dispatch(setDisplayedRegisterPage("personal"));
+        dispatch(setDisplayedRegisterPage("personal-info"));
       }
     } else {
       if ("error" in res && "data" in res.error) {
@@ -78,6 +74,7 @@ const RegisterPassword = ({ register, handleSubmit, errors }: TProps) => {
         title="Create your password"
         buttonAction="dispatch"
         action="email"
+        target="register"
       />
       <div className="mb-10 flex-1 sm:flex-grow-0">
         <PasswordField
@@ -112,4 +109,4 @@ const RegisterPassword = ({ register, handleSubmit, errors }: TProps) => {
   );
 };
 
-export default RegisterPassword;
+export default RegistrationPassword;

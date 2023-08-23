@@ -1,9 +1,9 @@
 import { useAppSelector } from "../../../store/hooks";
 
 import AuthForm from "../../../components/Form/AuthForm";
-import VerificationNotice from "./VerificationNotice";
+import IdentityVerificationNotice from "./IdentityVerificationNotice";
 
-import VerificationRequirements from "./VerificationRequirements";
+import IdentityVerificationRequirements from "./IdentityVerificationRequirements";
 
 const RegisterForm = () => {
   const displayedVerificationPage = useAppSelector(
@@ -14,13 +14,19 @@ const RegisterForm = () => {
     <>
       <AuthForm
         component={
+          /*      <div className="min-h-screen flex">
+        <div className="w-full flex flex-col p-8 bg-gray-50"> */
           <>
-            {displayedVerificationPage === "notice" && <VerificationNotice />}
+            {displayedVerificationPage === "notice" && (
+              <IdentityVerificationNotice />
+            )}
 
             {displayedVerificationPage === "requirements" && (
-              <VerificationRequirements />
+              <IdentityVerificationRequirements />
             )}
           </>
+          /*  </div>
+          </div> */
         }
       />
     </>

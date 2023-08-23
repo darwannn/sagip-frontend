@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import { useAppSelector } from "../../../store/hooks";
 
-import AuthForm from "../../../components/Form/AuthForm";
-import RegisterEmail from "./RegisterEmail";
-import RegisterPassword from "./RegisterPassword";
-import RegisterPersonalInfo from "./RegisterPersonalInfo";
-import RegisterAddress from "./RegisterAddress";
-import RegisterContactNumber from "./RegisterContactNumber";
+import moment from "moment";
+
+import RegistrationEmail from "./RegistrationEmail";
+import RegistrationPassword from "./RegistrationPassword";
+import RegistrationPersonalInfo from "./RegistrationPersonalInfo";
+import RegistrationAddress from "./RegistrationAddress";
+import RegistrationContactNumber from "./RegistrationContactNumber";
 
 import Modal from "../../../components/Modal/Modal";
-
-import moment from "moment";
+import AuthForm from "../../../components/Form/AuthForm";
 import TermsOfUse from "./TermsOfUse";
 import PrivacyPolicy from "./PrivacyPolicy";
 
@@ -23,10 +23,6 @@ const RegisterForm = () => {
   const displayedRegisterPage = useAppSelector(
     (state) => state.auth.displayedRegisterPage
   );
-
-  /* useEffect(() => {
-    console.log(displayedRegisterPage);
-  }, [displayedRegisterPage]); */
 
   const {
     register,
@@ -39,14 +35,12 @@ const RegisterForm = () => {
       firstname: "",
       middlename: "",
       lastname: "",
-
       birthdate: moment(Date.now()).format("YYYY-MM-DD"),
       gender: "",
       password: "",
       confirmPassword: "",
       email: "",
       contactNumber: "",
-
       region: "",
       province: "",
       municipality: "",
@@ -57,60 +51,29 @@ const RegisterForm = () => {
 
   return (
     <>
-      {/*  <button
-        type="submit"
-        className="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-1 rounded w-full"
-        onClick={() => {
-          console.log("clicked");
-          dispatch(
-            setDisplayedRegisterPage(
-              displayedRegisterPage === "password"
-                ? "email"
-                : displayedRegisterPage === "personal"
-                ? "password"
-                : displayedRegisterPage === "address"
-                ? "personal"
-                : displayedRegisterPage === "contact"
-                ? "address"
-                : ""
-            )
-          );
-        }}
-      >
-        <BsArrowLeft className="text-2xl text-gray-500 mb-3" />
-      </button>
- */}
       <AuthForm
         component={
+          /*      <div className="min-h-screen flex">
+        <div className="w-full flex flex-col p-8 bg-gray-50"> */
           <>
-            {/* <div
-              className={`${
-                displayedRegisterPage !== "email" ? "hidden" : "visible"
-              }`}
-            > */}
             {displayedRegisterPage === "email" && (
-              <RegisterEmail
+              <RegistrationEmail
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
               />
             )}
-            {/*  </div> */}
-            {/*  <div
-              className={`${
-                displayedRegisterPage !== "password" ? "hidden" : "visible"
-              }`}
-            > */}
+
             {displayedRegisterPage === "password" && (
-              <RegisterPassword
+              <RegistrationPassword
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
               />
             )}
-            {/* </div> */}
-            {displayedRegisterPage === "personal" && (
-              <RegisterPersonalInfo
+
+            {displayedRegisterPage === "personal-info" && (
+              <RegistrationPersonalInfo
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
@@ -118,7 +81,7 @@ const RegisterForm = () => {
             )}
             {displayedRegisterPage === "address" && (
               <>
-                <RegisterAddress
+                <RegistrationAddress
                   register={register}
                   handleSubmit={handleSubmit}
                   errors={errors}
@@ -128,26 +91,13 @@ const RegisterForm = () => {
               </>
             )}
             {displayedRegisterPage === "contact" && (
-              <RegisterContactNumber
+              <RegistrationContactNumber
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
               />
             )}
-            {displayedRegisterPage === "privacy-policy" && (
-              <RegisterContactNumber
-                register={register}
-                handleSubmit={handleSubmit}
-                errors={errors}
-              />
-            )}
-            {displayedRegisterPage === "terms-of-use" && (
-              <RegisterContactNumber
-                register={register}
-                handleSubmit={handleSubmit}
-                errors={errors}
-              />
-            )}
+
             <Modal
               modalTitle={"Privacy Policy"}
               modalShow={showPrivacyPolicyModal}
@@ -182,6 +132,8 @@ const RegisterForm = () => {
               </Link>
             </div>
           </>
+          /*  </div>
+          </div> */
         }
       />
     </>

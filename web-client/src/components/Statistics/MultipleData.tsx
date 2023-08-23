@@ -17,7 +17,11 @@ const MultipleData = ({
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col sm:flex-row justify-center items-center p-5 gap-5 h-full border-2 rounded-xl border-gray-200 bg-gray-200 text-gray-800 cursor-pointer">
+    <div
+      className={`flex flex-col sm:flex-row justify-center items-center p-5 gap-5 h-full border-2 rounded-xl border-gray-200 bg-gray-200 text-gray-800 ${
+        navigateTo !== "/" && "cursor-pointer"
+      }`}
+    >
       <div className="w-44 flex items-center justify-center">
         <Doughnut data={data} />
       </div>

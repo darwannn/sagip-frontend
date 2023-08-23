@@ -1,49 +1,44 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store/hooks";
 import { useGetIdVerificationRequestQuery } from "../../services/authQuery";
 import { setDisplayedVerificationPage } from "../../store/slices/authSlice";
+
 import IdentityVerificationForm from "./components/IdentityVerificationForm";
-import IdentityVerifying from "./components/IdentityVerifying";
+import IdentityVerificationSubmitted from "./components/IdentityVerificationSubmitted";
 
 const IdentityVerificationPage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [alreadyRequested, setAlreadyRequested] = useState<boolean>(false);
-  /* show email page by default */
   useEffect(() => {
     dispatch(setDisplayedVerificationPage("notice"));
   }, [dispatch]);
-  const {
-    data: requestData,
-    isLoading,
-    error,
-  } = useGetIdVerificationRequestQuery();
+
+  const { data: requestData, error } = useGetIdVerificationRequestQuery();
   useEffect(() => {
     /* indicates that the user is already verified */
     if (!requestData?.success) {
-      /*  if (requestData?.message.includes("not found")) {
-      } */
+      if (requestData?.message.includes("not found")) {
+        navigate("/home");
+      }
       if (requestData?.message.includes("pending")) {
         setAlreadyRequested(true);
       }
     }
-  }, [requestData]);
+  }, [requestData, navigate]);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
   if (error) {
     return <p>Something went wrong</p>;
   }
   return (
     <>
-      {
-        /* requestData?.message.includes("pending") */ alreadyRequested ? (
-          <IdentityVerifying />
-        ) : (
-          <IdentityVerificationForm />
-        )
-      }
+      {alreadyRequested ? (
+        <IdentityVerificationSubmitted />
+      ) : (
+        <IdentityVerificationForm />
+      )}
     </>
   );
 };

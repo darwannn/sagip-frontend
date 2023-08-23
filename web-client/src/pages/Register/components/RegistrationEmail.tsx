@@ -11,9 +11,9 @@ import {
 import { useAppDispatch } from "../../../store/hooks";
 import { setDisplayedRegisterPage } from "../../../store/slices/authSlice";
 import { useValidataInputMutation } from "../../../services/authQuery";
+import { TUserResData } from "../../../types/user";
 
 import AuthFormHeader from "../../../components/Form/AuthFormHeader";
-import { TUserResData } from "../../../types/user";
 
 type TProps = {
   register: UseFormRegister<FieldValues>;
@@ -21,9 +21,10 @@ type TProps = {
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
 };
 
-const RegisterEmail = ({ register, handleSubmit, errors }: TProps) => {
+const RegistrationEmail = ({ register, handleSubmit, errors }: TProps) => {
   const dispatch = useAppDispatch();
   const [serverRes, setServerRes] = useState<TUserResData>();
+
   const [
     validate,
     {
@@ -34,11 +35,6 @@ const RegisterEmail = ({ register, handleSubmit, errors }: TProps) => {
   ] = useValidataInputMutation();
 
   const ValidateData = async (data: FieldValues) => {
-    /* if (!isDirty) {
-      console.log("No changes made");
-      return;
-    } */
-
     const body = {
       email: data.email,
     };
@@ -75,7 +71,7 @@ const RegisterEmail = ({ register, handleSubmit, errors }: TProps) => {
       <AuthFormHeader
         title="Enter your email address"
         buttonAction="navigate"
-        action="/s"
+        action="/login"
       />
       <div className="mb-10 flex-1 sm:flex-grow-0">
         <div className="my-3">
@@ -109,4 +105,4 @@ const RegisterEmail = ({ register, handleSubmit, errors }: TProps) => {
   );
 };
 
-export default RegisterEmail;
+export default RegistrationEmail;

@@ -1,27 +1,34 @@
 import { useNavigate } from "react-router-dom";
-import { useDeleteUserMutation } from "../../../services/usersQuery";
+import { useArchiveUserMutation } from "../../../services/usersQuery";
 
 type PROPS = {
   rowId: string;
+  isArchived: boolean;
 };
 
-const UserRowAction = ({ rowId }: PROPS) => {
+const UserRowAction = ({ rowId, isArchived }: PROPS) => {
   const navigate = useNavigate();
 
-  const [deleteUser, { isLoading, isError, isSuccess, error }] =
-    useDeleteUserMutation();
+  const [archiveUser, { isLoading, isError, isSuccess, error }] =
+    useArchiveUserMutation();
 
   const onViewHandler = () => {
     navigate(`./${rowId}`);
   };
 
-  const onDeleteHandler = async () => {
-    const token = localStorage.getItem("token");
+  const onArchiveHandler = async () => {
     // Show delete confirmation
-    const confirm = window.confirm("Are you sure you want to delete this?");
+    const confirm = window.confirm(
+      `Are you sure you want to ${
+        isArchived ? "unarchive" : "archive"
+      } this account?`
+    );
     if (!confirm) return;
     // Delete article
-    await deleteUser({ token, id: rowId });
+    await archiveUser({
+      action: isArchived ? "unarchive" : "archive",
+      id: rowId,
+    });
     if (isSuccess) {
       console.log("Deleted");
     }
@@ -42,9 +49,9 @@ const UserRowAction = ({ rowId }: PROPS) => {
       <button
         type="button"
         className="bg-red-500 rounded px-3 py-1 text-white "
-        onClick={onDeleteHandler}
+        onClick={onArchiveHandler}
       >
-        {isLoading ? "Loading..." : "Delete"}
+        {isLoading ? "Loading..." : `${isArchived ? "Unarchive" : "Archive"}`}
       </button>
     </div>
   );

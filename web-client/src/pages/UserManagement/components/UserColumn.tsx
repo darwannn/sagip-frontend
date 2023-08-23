@@ -95,7 +95,90 @@ export const userColumn: ColumnDef<User>[] = [
   {
     id: "action",
     header: "Action",
-    cell: ({ row }) => <UserRowAction rowId={row.original._id} />,
+    cell: ({ row }) => (
+      <UserRowAction
+        isArchived={row.original.isArchived}
+        rowId={row.original._id}
+      />
+    ),
+    meta: {
+      width: "100px",
+    },
+  },
+];
+export const staffColumn: ColumnDef<User>[] = [
+  {
+    accessorKey: "_id",
+    header: "ID",
+  },
+  {
+    accessorKey: "profilePicture",
+    header: "",
+    cell: ({ row }) => {
+      const displayPictureName = row.original.profilePicture;
+      const imgUrl = `${BASE_IMAGE_URL}/user/${displayPictureName}`;
+      return (
+        <img
+          src={imgUrl}
+          alt="profile"
+          className="w-10 h-10 rounded-full mx-auto"
+        />
+      );
+    },
+    meta: {
+      width: "80px",
+      minWidth: "80px",
+    },
+  },
+
+  {
+    accessorKey: "firstname",
+    header: "Name",
+    cell: ({ row }) => {
+      const { firstname, middlename, lastname } = row.original;
+      return `${firstname} ${middlename} ${lastname}`;
+    },
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "barangay",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Barangay
+        </button>
+      );
+    },
+  },
+  {
+    accessorKey: "role",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Role
+        </button>
+      );
+    },
+    cell: ({ row }) => {
+      return row.original.userType.toUpperCase();
+    },
+  },
+  {
+    id: "action",
+    header: "Action",
+    cell: ({ row }) => (
+      <UserRowAction
+        isArchived={row.original.isArchived}
+        rowId={row.original._id}
+      />
+    ),
     meta: {
       width: "100px",
     },

@@ -52,9 +52,6 @@ const UserForm = ({ userData }: TProps) => {
       firstname: userData?.firstname,
       middlename: userData?.middlename,
       lastname: userData?.lastname,
-
-      /* uncomment if needed */
-      /* isArchived: userData?.isArchived, */
     },
   });
 
@@ -75,9 +72,6 @@ const UserForm = ({ userData }: TProps) => {
       firstname: data.firstname,
       middlename: data.middlename,
       lastname: data.lastname,
-
-      /* uncomment if needed */
-      /* isArchived: data.isArchived, */
     };
 
     console.log("data.region");

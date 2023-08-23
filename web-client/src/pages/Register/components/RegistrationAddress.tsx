@@ -24,7 +24,7 @@ type TProps = {
   getValues: UseFormGetValues<FieldValues>;
 };
 
-const RegisterAddress = React.memo(
+const RegistrationAddress = React.memo(
   ({ register, handleSubmit, errors, setValue, getValues }: TProps) => {
     const dispatch = useAppDispatch();
     const [inMalolos, setInMalolos] = useState<boolean>(false);
@@ -47,6 +47,7 @@ const RegisterAddress = React.memo(
           title="Residential Information"
           buttonAction="dispatch"
           action="personal"
+          target="register"
         />
         <div className="mb-10 flex-1 sm:flex-grow-0">
           <div className="my-3">
@@ -71,6 +72,7 @@ const RegisterAddress = React.memo(
             }}
           />
         </div>
+
         <button
           className="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-1 rounded w-full"
           onClick={handleSubmit(onValidate)}
@@ -82,4 +84,4 @@ const RegisterAddress = React.memo(
   }
 );
 
-export default RegisterAddress;
+export default RegistrationAddress;
