@@ -131,7 +131,7 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
   };
 
   useEffect(() => {
-    let countdownInterval: NodeJS.Timeout | null = null;
+    let countdownInterval: ReturnType<typeof setInterval> | null = null;
     if (resendCountdown > 0) {
       countdownInterval = setInterval(() => {
         setResendCountdown((prevCountdown) => prevCountdown - 1);
