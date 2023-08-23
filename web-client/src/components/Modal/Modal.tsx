@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({
             <IoMdClose />
           </button>
         </div>
-        <div className="flex-grow my-2">
+        <div className="flex-grow my-2 overflow-y-auto">
           {/* Modal Content */}
           {children}
         </div>
