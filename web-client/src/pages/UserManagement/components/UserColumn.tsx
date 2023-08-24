@@ -156,7 +156,7 @@ export const staffColumn: ColumnDef<User>[] = [
     },
   },
   {
-    accessorKey: "role",
+    accessorKey: "userType",
     header: ({ column }) => {
       return (
         <button

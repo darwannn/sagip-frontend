@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   UseFormRegister,
   FieldValues,
@@ -8,88 +6,27 @@ import {
   UseFormHandleSubmit,
 } from "react-hook-form";
 
-import { setAuthToken } from "../../../util/auth";
-import { AuthResponse } from "../../../types/auth";
-import { useRegisterMutation } from "../../../services/authQuery";
-
 import AuthFormHeader from "../../../components/Form/AuthFormHeader";
-
-import moment from "moment";
-import { TUserResData, User } from "../../../types/user";
+import { TUserResData } from "../../../types/user";
 
 type TProps = {
   register: UseFormRegister<FieldValues>;
 
   errors: FieldErrors<FieldValues>;
-
+  serverRes: TUserResData | undefined;
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
+  onSubmit: SubmitHandler<FieldValues>;
+  onLoading: boolean;
 };
 
 const RegistrationContactNumber = ({
   register,
   handleSubmit,
   errors,
+  serverRes,
+  onSubmit,
+  onLoading,
 }: TProps) => {
-  const navigate = useNavigate();
-  const [serverRes, setServerRes] = useState<TUserResData>();
-  const [
-    registration,
-    {
-      isError: registerIsError,
-      isLoading: registerIsLoading,
-      isSuccess: registerIsSuccess,
-    },
-  ] = useRegisterMutation();
-
-  const SubmitData = async (data: FieldValues) => {
-    const body: Partial<User> = {
-      firstname: data.firstname,
-      middlename: data.middlename,
-      lastname: data.lastname,
-      birthdate: moment(data.birthdate).format("YYYY-MM-DD"),
-      gender: data.gender,
-
-      password: data.password,
-      confirmPassword: data.confirmPassword,
-
-      email: data.email,
-      contactNumber: data.contactNumber,
-
-      region: data.region,
-      province: data.province,
-      municipality: data.municipality,
-      barangay: data.barangay,
-      street: data.street,
-    };
-
-    const res = await registration(body);
-    console.log(res);
-
-    if (res && "data" in res) {
-      console.log(res);
-      const resData: AuthResponse = res.data;
-      if (resData.success) {
-        setServerRes(res.data);
-        setAuthToken({
-          token: resData.token || "",
-        });
-        navigate("/register/contact-verification");
-      }
-    } else {
-      if ("error" in res && "data" in res.error) {
-        const errData = res.error.data as TUserResData;
-        setServerRes(errData);
-      }
-    }
-  };
-
-  const onValidate: SubmitHandler<FieldValues> = async (data) => {
-    SubmitData(data);
-  };
-
-  if (registerIsLoading) console.log("Registering...");
-  if (registerIsError) console.log("Registration Error");
-  if (registerIsSuccess) console.log("Registered successfully");
   return (
     <>
       <AuthFormHeader
@@ -122,8 +59,8 @@ const RegistrationContactNumber = ({
       </div>
       <button
         className="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-1 rounded w-full"
-        onClick={handleSubmit(onValidate)}
-        disabled={registerIsLoading}
+        onClick={handleSubmit(onSubmit)}
+        disabled={onLoading}
       >
         Next
       </button>

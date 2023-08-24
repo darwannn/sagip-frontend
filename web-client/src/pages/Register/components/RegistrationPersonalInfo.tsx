@@ -6,28 +6,25 @@ import {
   UseFormHandleSubmit,
 } from "react-hook-form";
 
-import { useAppDispatch } from "../../../store/hooks";
-import { setDisplayedRegisterPage } from "../../../store/slices/authSlice";
-
 import AuthFormHeader from "../../../components/Form/AuthFormHeader";
 
 type TProps = {
   register: UseFormRegister<FieldValues>;
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
   errors: FieldErrors<FieldValues>;
+  /* serverRes: TUserResData | undefined; */
+  onSubmit: SubmitHandler<FieldValues>;
+  onLoading: boolean;
 };
 
 const RegistrationPersonalInfo = ({
   register,
   handleSubmit,
   errors,
+  /* serverRes, */
+  onSubmit,
+  onLoading,
 }: TProps) => {
-  const dispatch = useAppDispatch();
-
-  const onValidate: SubmitHandler<FieldValues> = async () => {
-    dispatch(setDisplayedRegisterPage("address"));
-  };
-
   return (
     <>
       <AuthFormHeader
@@ -37,7 +34,6 @@ const RegistrationPersonalInfo = ({
         target="register"
       />
 
-      {/*  <div className="flex flex-wrap "> */}
       <div className="mb-10 flex-1 sm:flex-grow-0">
         <div className="my-3">
           <label htmlFor="firstname" className=" text-md  text-gray-500">
@@ -136,11 +132,11 @@ const RegistrationPersonalInfo = ({
       </div>
       <button
         className="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-1 rounded w-full"
-        onClick={handleSubmit(onValidate)}
+        onClick={handleSubmit(onSubmit)}
+        disabled={onLoading}
       >
         Next
       </button>
-      {/* </div> */}
     </>
   );
 };

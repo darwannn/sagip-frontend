@@ -34,6 +34,7 @@ import RegistrationPage from "../pages/Register/RegistrationPage";
 import RegisterContactVerification from "../pages/Register/components/RegistrationContactVerification";
 import RegistrationAlmostDone from "../pages/Register/components/RegistrationAlmostDone";
 import IdentityVerificationPage from "../pages/IdentityVerification/IdentityVerificationPage";
+import Home from "../pages/Home/Home";
 
 /* import LoginContactVerification from "../pages/Login/LoginContactVerification"; */
 
@@ -126,6 +127,10 @@ export const router = createBrowserRouter([
   {
     path: "identity-verification",
     element: <IdentityVerificationPage />,
+  },
+  {
+    path: "homee",
+    element: <Home />,
   },
   {
     path: "forgot-password",

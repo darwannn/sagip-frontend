@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setRegistrationSuccessful } from "../../../store/slices/authSlice";
+
 import AuthForm from "../../../components/Form/AuthForm";
 import AuthFormHeader from "../../../components/Form/AuthFormHeader";
 import registration_success from "../../../assets/img/registration_success.png";
@@ -27,7 +28,7 @@ const RegistrationSuccessful = () => {
             <AuthFormHeader
               title="Account Creation Success!"
               buttonAction="navigate"
-              action="/"
+              action="/none"
             />
             <div className="mb-10 flex-1 sm:flex-grow-0">
               <img src={registration_success} className="w-94 mx-auto my-10" />

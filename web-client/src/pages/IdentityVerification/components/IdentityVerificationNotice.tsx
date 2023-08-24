@@ -14,10 +14,10 @@ const IdentityVerificationNotice = () => {
       <AuthFormHeader
         title="Account Verification"
         buttonAction="navigate"
-        action="/"
+        action="/none"
       />
       <div className="mb-10 flex-1 sm:flex-grow-0">
-        <img src={account_verification} className="w-94 mx-auto my-10" />
+        <img src={account_verification} className="w-80 mx-auto my-10" />
         <div className=" text-gray-500">
           We are required to verify our users identity for{" "}
           <span className="font-semibold">security purposes</span>.

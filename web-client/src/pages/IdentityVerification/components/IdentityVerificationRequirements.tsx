@@ -75,7 +75,7 @@ const RegistrationSuccessful = () => {
           We will only use your ID for verification purposes and it will be kept
           confidential.
         </div>
-        <img src={sample_id} alt="Sample ID" className="w-94 mx-auto my-10" />
+        <img src={sample_id} alt="Sample ID" className="w-80 mx-auto my-10" />
         <div className="text-gray-500">
           Here’s our list of valid ID:
           <ul className="list-disc ml-10">

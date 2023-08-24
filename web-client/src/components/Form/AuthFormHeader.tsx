@@ -19,7 +19,7 @@ const AuthFormHeader = ({ title, action, buttonAction, target }: TProp) => {
     <>
       {buttonAction === "navigate" && (
         <div className="sm:mt-16 mb-10 ">
-          {action !== "/" && (
+          {action !== "/none" && (
             <Link to={action}>
               <BsArrowLeft className="text-2xl text-gray-500 mb-3 cursor-pointer" />
             </Link>
@@ -28,7 +28,7 @@ const AuthFormHeader = ({ title, action, buttonAction, target }: TProp) => {
       )}
       {buttonAction === "dispatch" && (
         <div className="sm:mt-16 mb-10">
-          {action !== "/" && (
+          {action !== "/none" && (
             <div
               onClick={() => {
                 if (target === "register") {
