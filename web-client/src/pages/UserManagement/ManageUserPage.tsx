@@ -9,6 +9,7 @@ import {
   selectNumberOfNewUsers,
   selectVerifiedUsers,
   selectNumberOfStaff,
+  selectNumberOfResidents,
 } from "../../store/slices/userManageSlice";
 // Services
 import { useGetUsersDataQuery } from "../../services/usersQuery";
@@ -24,6 +25,7 @@ const ManageUserPage = () => {
   const dispatch = useAppDispatch();
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
   const totalUsersCount = useAppSelector(selectNumberOfUsers);
+  const totalResidentsCount = useAppSelector(selectNumberOfResidents);
   const newUsersCount = useAppSelector(selectNumberOfNewUsers);
   const staffCount = useAppSelector(selectNumberOfStaff);
 
@@ -92,6 +94,14 @@ const ManageUserPage = () => {
               navigateTo="/"
             />
             <SingleData
+              title="Total Residents"
+              value={totalResidentsCount}
+              icon={<BsFillPersonFill />}
+              isPrimary={false}
+              isThisMonth={false}
+              navigateTo="/"
+            />
+            <SingleData
               title="New Users"
               value={newUsersCount}
               icon={<FaUserPlus />}
@@ -126,7 +136,7 @@ const ManageUserPage = () => {
           }
           onClick={() => dispatch(setTableContent(false))}
         >
-          All Users
+          Residents
         </button>
         <button
           className={

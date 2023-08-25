@@ -64,7 +64,8 @@ export const selectUserTableData = createSelector(
     if (isStaff) {
       return users.filter((user: User) => user.userType != "resident");
     } else {
-      return users;
+      /* return users; */
+      return users.filter((user: User) => user.userType === "resident");
     }
   }
 );
@@ -75,14 +76,26 @@ export const selectNumberOfUsers = createSelector(
   (users: User[]) => users.length
 );
 
+// -- Count number of residents
+export const selectNumberOfResidents = createSelector(
+  (state: RootState) => state.userManage.users,
+  (users: User[]) => {
+    const residentUsers = users.filter(
+      (user: User) => user.userType === "resident"
+    );
+    return residentUsers.length;
+  }
+);
+
 // -- Count number of new users this month
 export const selectNumberOfNewUsers = createSelector(
   (state: RootState) => state.userManage.users,
   (users: User[]) => {
     const currentDate = moment();
-    const usersThisMonth = users.filter((user: User) =>
-      moment(user.createdAt).isSame(currentDate, "month")
-    );
+    const usersThisMonth = users.filter((user: User) => {
+      moment(user.createdAt).isSame(currentDate, "month") &&
+        user.userType === "resident";
+    });
     return usersThisMonth.length;
   }
 );
@@ -103,12 +116,12 @@ export const selectNumberOfActiveUsers = createSelector(
 export const selectVerifiedUsers = createSelector(
   (state: RootState) => state.userManage.users,
   (users: User[]) => {
-    const verifiedUsers = users.filter(
-      (user: User) => user.status === "verified"
-    );
-    const unverifiedUsers = users.filter(
-      (user: User) => user.status != "verified"
-    );
+    const verifiedUsers = users.filter((user: User) => {
+      return user.status === "verified" && user.userType === "resident";
+    });
+    const unverifiedUsers = users.filter((user: User) => {
+      return user.status !== "verified" && user.userType === "resident";
+    });
     return {
       verifiedCount: verifiedUsers.length,
       unverifiedCount: unverifiedUsers.length,

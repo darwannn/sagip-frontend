@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import LoginPage, { action as loginAction } from "../pages/Login/LoginPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
 
 import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
@@ -34,9 +33,9 @@ import RegistrationPage from "../pages/Register/RegistrationPage";
 import RegisterContactVerification from "../pages/Register/components/RegistrationContactVerification";
 import RegistrationAlmostDone from "../pages/Register/components/RegistrationAlmostDone";
 import IdentityVerificationPage from "../pages/IdentityVerification/IdentityVerificationPage";
-import Home from "../pages/Home/Home";
 
-/* import LoginContactVerification from "../pages/Login/LoginContactVerification"; */
+import LoginPage from "../pages/Login/LoginPage";
+import LoginContactVerification from "../pages/Login/LoginContactVerification";
 
 export const router = createBrowserRouter([
   {
@@ -104,9 +103,14 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LoginPage />,
     loader: isLoggedIn,
-    action: loginAction,
+    children: [
+      { index: true, element: <LoginPage /> },
+      {
+        path: "contact-verification",
+        element: <LoginContactVerification />,
+      },
+    ],
   },
 
   {
@@ -127,10 +131,6 @@ export const router = createBrowserRouter([
   {
     path: "identity-verification",
     element: <IdentityVerificationPage />,
-  },
-  {
-    path: "homee",
-    element: <Home />,
   },
   {
     path: "forgot-password",

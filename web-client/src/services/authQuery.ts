@@ -9,6 +9,16 @@ export const authQueryApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   tagTypes: ["User", "SelectedUser"],
   endpoints: (builder) => ({
+    login: builder.mutation<
+      TUserResData,
+      { identifier: string; password: string }
+    >({
+      query: ({ identifier, password }) => ({
+        url: `/auth/login`,
+        method: "POST",
+        body: { identifier, password },
+      }),
+    }),
     register: builder.mutation<TUserResData, Partial<User>>({
       query: (body) => ({
         url: `/auth/register/`,
@@ -150,6 +160,7 @@ export const authQueryApi = createApi({
 });
 
 export const {
+  useLoginMutation,
   useRegisterMutation,
   useValidataInputMutation,
   usePasswordVerificationMutation,

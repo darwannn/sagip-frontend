@@ -1,10 +1,10 @@
-import { ActionFunction, redirect } from "react-router-dom";
+/* import { ActionFunction, redirect } from "react-router-dom";
 
 // Types
 import { AuthResponse } from "../../types/auth";
 
 import { API_BASE_URL } from "../../api.config";
-import { setAuthToken } from "../../util/auth";
+import { setAuthToken } from "../../util/auth"; */
 
 import LoginForm from "./LoginForm";
 
@@ -25,7 +25,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-/* const navigate = useNavigate(); */
+/* // const navigate = useNavigate();
 // LOGIN ACTION
 // eslint-disable-next-line react-refresh/only-export-components
 export const action: ActionFunction = async ({
@@ -58,11 +58,12 @@ export const action: ActionFunction = async ({
     token: resData.token || "",
   });
   if (resData.message.includes("attempt")) {
-    /* navigate("/login/contact-verification"); */
+    //navigate("/login/contact-verification");
   }
 
   if (resData.message.includes("verify")) {
-    /* navigate("/register/contact-verification"); */
+    //navigate("/register/contact-verification");
   }
   return redirect("/");
 };
+ */
