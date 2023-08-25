@@ -62,6 +62,7 @@ const ForgotPasswordForm = () => {
           <input
             type="text"
             id="identifier"
+            placeholder="Email Address or Contact Number"
             className="w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
             {...register("identifier", { required: true })}
           />

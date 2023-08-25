@@ -9,9 +9,13 @@ import { useLoginMutation } from "../../services/authQuery";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { TUserResData } from "../../types/user";
 
+import PasswordField from "../../components/PasswordField/PasswordField";
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const [serverRes, setServerRes] = useState<TUserResData>();
+  const isMobileDevice = /Mobi|iPhone|Android/i.test(navigator.userAgent);
+
   const newPasswordRes = useAppSelector((state) => state.auth.newPasswordRes);
   const deleteAccountRes = useAppSelector(
     (state) => state.account.deleteAccountRes
@@ -54,6 +58,7 @@ const LoginForm = () => {
     } else {
       if ("error" in res && "data" in res.error) {
         const errData = res.error.data as TUserResData;
+
         setServerRes(errData);
       }
     }
@@ -69,10 +74,9 @@ const LoginForm = () => {
   return (
     <>
       {/* display success message from newPassword or account deletion */}
-
       {newPasswordRes ||
         deleteAccountRes ||
-        (serverRes && (
+        (serverRes && !serverRes.message.includes("input error") && (
           <div
             className={`mt-3 p-2 rounded-md text-center ${
               newPasswordRes || deleteAccountRes
@@ -96,6 +100,7 @@ const LoginForm = () => {
           <input
             id="identifier"
             type="text"
+            placeholder="Email Address or Contact Number"
             className="w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
             {...register("identifier", { required: true })}
           />
@@ -108,21 +113,15 @@ const LoginForm = () => {
           )}
         </div>
         <div className=" my-3">
-          <label htmlFor="password" className="text-md  text-gray-500">
-            Password:
-          </label>
-
-          <input
-            id="password"
-            type="password"
-            className="w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
-            {...register("password", { required: true })}
+          <PasswordField
+            register={register}
+            errors={errors}
+            serverRes={serverRes}
+            fieldName="password"
+            fieldLabel="Password"
+            passwordRequirement={false}
+            style="auth"
           />
-          {(errors.password || !serverRes?.success) && (
-            <span className="text-red-500">
-              {errors.password ? "This field is required" : serverRes?.password}
-            </span>
-          )}
 
           <Link
             to={"/forgot-password"}
@@ -140,12 +139,14 @@ const LoginForm = () => {
       >
         {isLoading ? "Loading..." : "Login"}
       </button>
-      <Link
-        to={"/register"}
-        className="block sm:hidden text-md text-center text-gray-500 underline hover:text-gray-700 my-2"
-      >
-        or Sign up instead
-      </Link>
+      {isMobileDevice && (
+        <Link
+          to={"/register"}
+          className="block text-md text-center text-gray-500 underline hover:text-gray-700 my-2"
+        >
+          or Sign up instead
+        </Link>
+      )}
     </>
   );
 };
