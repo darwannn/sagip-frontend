@@ -5,6 +5,7 @@
 import { Link } from "react-router-dom";
 import { useGetArticlesQuery } from "../../services/articleQuery";
 import ArticleTable from "./components/ArticleTable";
+import ArticleStatistics from "./components/ArticleStatistics";
 
 const ManageArticlesPage = () => {
   const { data: articles, isLoading, error } = useGetArticlesQuery(undefined);
@@ -22,6 +23,7 @@ const ManageArticlesPage = () => {
   return (
     <div>
       <h1>Manage Articles Page</h1>
+      <ArticleStatistics />
       <div className="mx-5">
         <Link
           className="bg-indigo-500 px-2 py-1 rounded text-white hover:bg-indigo-600"

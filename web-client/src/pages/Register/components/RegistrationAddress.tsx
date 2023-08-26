@@ -10,7 +10,6 @@ import {
 } from "react-hook-form";
 
 import AddressField from "../../../components/AddressSelector/AddressField";
-import AuthFormHeader from "../../../components/Form/AuthFormHeader";
 
 type TProps = {
   register: UseFormRegister<FieldValues>;
@@ -46,12 +45,7 @@ const RegistrationAddress = ({
 
   return (
     <>
-      <AuthFormHeader
-        title="Residential Information"
-        buttonAction="dispatch"
-        action="personal-info"
-        target="register"
-      />
+      w
       <div className="mb-10 flex-1 sm:flex-grow-0">
         <div className="my-3">
           <label>
@@ -75,7 +69,6 @@ const RegistrationAddress = ({
           }}
         />
       </div>
-
       <button
         className="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-1 rounded w-full"
         onClick={handleSubmit(onSubmit)}
