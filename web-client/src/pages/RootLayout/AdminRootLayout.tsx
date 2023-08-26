@@ -1,9 +1,11 @@
 import { NavLink, Outlet } from "react-router-dom";
+import AdminSidebar from "../../components/Navigation/AdminSidebar";
 
 const AdminRootLayout = () => {
   return (
     <div className="fixed root flex flex-row h-screen w-screen">
-      <div className="sidebar flex flex-col w-60">
+      <AdminSidebar />
+      {/* <div className="sidebar flex flex-col w-60">
         <nav>
           <ul>
             <li>
@@ -33,7 +35,7 @@ const AdminRootLayout = () => {
             <li>
               <NavLink to={"/account-settings"}>Account Settings</NavLink>
             </li>
-            {/* <li>
+            <li>
             <NavLink to={"/login"}>Login</NavLink>
           </li>
           <li>
@@ -41,10 +43,10 @@ const AdminRootLayout = () => {
           </li>
           <li>
           <NavLink to={"/forgot-password"}>Forgot Password</NavLink>
-          </li> */}
+          </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
       <div className="outlet grow overflow-y-auto">
         <Outlet />
       </div>
