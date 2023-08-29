@@ -18,8 +18,8 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className="w-[300px] bg-white flex flex-col p-5">
-      <div className="nav-header pb-5 flex flex-row items-center gap-3">
+    <div className="w-[300px] border-r bg-white flex flex-col p-5">
+      <div className="nav-header pb-2 flex flex-row items-center gap-3">
         <div className="logo-container w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br from-primary-500 to-secondary-500">
           {/* <span className="font-bold text-white text-xl">S</span> */}
         </div>
@@ -29,7 +29,7 @@ const AdminSidebar = () => {
           </h1>
         </div>
       </div>
-      <hr className="w-full h-[1px] border-0 bg-gray-200 self-center" />
+      {/* <hr className="w-full h-[1px] border-0 bg-gray-200 self-center" /> */}
       <nav className="grow py-5 flex flex-col gap-1">
         <NavLink className="w-full hover:bg-primary-100 p-2 rounded" to={"/"}>
           <div className="flex items-center gap-4">
@@ -117,7 +117,19 @@ const AdminSidebar = () => {
           </div>
         </NavLink>
       </nav>
-      <hr className="w-full h-[1px] border-0 bg-gray-200 self-center" />
+      <hr className="w-full h-[1px] border-0 bg-gray-200 self-center mb-5" />
+      {/* MINI PROFILE */}
+      <div className="flex flex-row align-center gap-4 p-2 bg-gray-100 rounded-md">
+        <div className="avatar-container flex flex-col justify-center">
+          {/* PLACEHOLDER FOR IMAGE  */}
+          <div className="avatar w-12 h-12 rounded-full bg-gray-300"></div>
+        </div>
+        <div className="">
+          <p className="text-gray-600 text-xs leading-tight">Administrator</p>
+          <p className="text-gray-600 font-bold">John Doe</p>
+          <p className="text-gray-600 text-sm truncate">johndoe@gmail.com</p>
+        </div>
+      </div>
       <div className="flex flex-col mt-5">
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
