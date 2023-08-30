@@ -7,6 +7,7 @@ import { BiMapPin } from "react-icons/bi";
 import { PiWarning, PiArticleMediumLight } from "react-icons/pi";
 import { SlSettings } from "react-icons/sl";
 import { TbLogout2 } from "react-icons/tb";
+import MiniProfile from "./MiniProfile";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -119,17 +120,7 @@ const AdminSidebar = () => {
       </nav>
       <hr className="w-full h-[1px] border-0 bg-gray-200 self-center mb-5" />
       {/* MINI PROFILE */}
-      <div className="flex flex-row align-center gap-4 p-2 bg-gray-100 rounded-md">
-        <div className="avatar-container flex flex-col justify-center">
-          {/* PLACEHOLDER FOR IMAGE  */}
-          <div className="avatar w-12 h-12 rounded-full bg-gray-300"></div>
-        </div>
-        <div className="">
-          <p className="text-gray-600 text-xs leading-tight">Administrator</p>
-          <p className="text-gray-600 font-bold">John Doe</p>
-          <p className="text-gray-600 text-sm truncate">johndoe@gmail.com</p>
-        </div>
-      </div>
+      <MiniProfile />
       <div className="flex flex-col mt-5">
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
