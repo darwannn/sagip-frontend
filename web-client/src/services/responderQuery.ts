@@ -1,11 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { API_BASE_URL } from "../api.config";
 import { TResponders } from "../pages/TeamManagement/Types/Team";
+import { rootApi } from "./rootApi";
 
-export const responderQueryApi = createApi({
-  reducerPath: "responderQuery",
-  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["Responders"],
+export const responderQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     // Get all responders
     getResponders: builder.query<TResponders, void>({

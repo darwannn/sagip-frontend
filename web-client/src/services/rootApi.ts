@@ -14,6 +14,8 @@ export const rootApi = createApi({
     "Teams",
     "Responders",
     "ActiveTeams",
+    // RESPONDER QUERY
+    "Responders",
     // EMERGENCY QUERY
     "AssistanceRequest",
     // FACILITY QUERY
