@@ -1,13 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
 import type { User, TUserResData } from "../types/user";
 import type { TDashboard } from "../pages/Dashboard/types/dashboard";
-import { API_BASE_URL } from "../api.config";
+import { rootApi } from "./rootApi";
 
-export const accountQueryApi = createApi({
-  reducerPath: "accountQuery",
-  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["User"],
+export const accountQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserByToken: builder.query<User, void>({
       query: () => ({
@@ -16,7 +11,7 @@ export const accountQueryApi = createApi({
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        providesTags: ["User"],
+        providesTags: ["Account"],
       }),
     }),
 
@@ -32,7 +27,7 @@ export const accountQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Account"],
     }),
 
     updateProfilePicture: builder.mutation<TUserResData, { body: FormData }>({
@@ -44,7 +39,7 @@ export const accountQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Account"],
     }),
 
     updatePassword: builder.mutation<
@@ -67,7 +62,7 @@ export const accountQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Account"],
     }),
 
     /* archives the account */
@@ -79,7 +74,7 @@ export const accountQueryApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Account"],
     }),
 
     getStatistics: builder.query<TDashboard, void>({

@@ -10,6 +10,8 @@ export const rootApi = createApi({
     "User",
     "SelectedUser",
     "VerificationRequest",
+    // ACCOUNT QUERY
+    "Account",
     // TEAMS QUERY
     "Teams",
     "Responders",
