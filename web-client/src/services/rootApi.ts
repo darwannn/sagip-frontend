@@ -22,6 +22,11 @@ export const rootApi = createApi({
     // HAZARD REPORT QUERY
     "HazardReports",
     "SelectedHazardReport",
+    // ALERT QUERY
+    "Alert",
+    "SelectedAlert",
+    "ActiveAlert",
+    "AlertReport",
   ],
   endpoints: () => ({}),
 });

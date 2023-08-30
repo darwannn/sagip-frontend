@@ -1,17 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-import { API_BASE_URL } from "../api.config";
 import {
   TSurvey,
   TActiveSurvey,
   TSMSResData,
   TSurveyResData,
 } from "../pages/AlertsManagement/types/alert";
+import { rootApi } from "./rootApi";
 
-export const alertQueryApi = createApi({
-  reducerPath: "alertQuery",
-  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["Alert", "SelectedAlert", "ActiveAlert", "AlertReport"],
+export const alertQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getAlerts: builder.query<TSurvey[], void>({
       query: () => "wellness-survey",

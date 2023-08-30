@@ -12,7 +12,6 @@ import assistanceReqSlice from "./slices/assistanceReqSlice";
 import { articleQueryApi } from "../services/articleQuery";
 import teamSlice from "./slices/teamSlice";
 import { responderQueryApi } from "../services/responderQuery";
-import { alertQueryApi } from "../services/alertQuery";
 import { accountQueryApi } from "../services/accountQuery";
 import { authQueryApi } from "../services/authQuery";
 import { rootApi } from "../services/rootApi";
@@ -22,7 +21,6 @@ export const store = configureStore({
     [rootApi.reducerPath]: rootApi.reducer,
     [articleQueryApi.reducerPath]: articleQueryApi.reducer,
     [responderQueryApi.reducerPath]: responderQueryApi.reducer,
-    [alertQueryApi.reducerPath]: alertQueryApi.reducer,
     [accountQueryApi.reducerPath]: accountQueryApi.reducer,
     [authQueryApi.reducerPath]: authQueryApi.reducer,
     facility: facilitySlice,
@@ -40,7 +38,6 @@ export const store = configureStore({
       rootApi.middleware,
       articleQueryApi.middleware,
       responderQueryApi.middleware,
-      alertQueryApi.middleware,
       accountQueryApi.middleware,
       authQueryApi.middleware,
     ]),
