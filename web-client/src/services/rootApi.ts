@@ -19,6 +19,9 @@ export const rootApi = createApi({
     // FACILITY QUERY
     "Facility",
     "SelectedFacility",
+    // HAZARD REPORT QUERY
+    "HazardReports",
+    "SelectedHazardReport",
   ],
   endpoints: () => ({}),
 });
