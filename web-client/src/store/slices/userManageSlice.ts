@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import moment from "moment";
 
 // Types
 import { User } from "../../types/user";

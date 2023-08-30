@@ -3,10 +3,10 @@ import { useGetStatisticsQuery } from "../../services/accountQuery";
 
 // Icons
 import { BsFillPersonFill } from "react-icons/bs";
-import { FaUserPlus, FaAmbulance, FaUserCheck } from "react-icons/fa";
+import { FaUserPlus, FaAmbulance } from "react-icons/fa";
 
 import { RiFileWarningFill } from "react-icons/ri";
-import { MdLocationOn, MdGroups2 } from "react-icons/md";
+import { MdLocationOn } from "react-icons/md";
 import { RiFileUploadFill } from "react-icons/ri";
 import { MdEmojiPeople } from "react-icons/md";
 /* statistics component */
