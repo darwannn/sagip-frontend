@@ -12,7 +12,6 @@ import assistanceReqSlice from "./slices/assistanceReqSlice";
 import { articleQueryApi } from "../services/articleQuery";
 import { facilityQueryApi } from "../services/facilityQuery";
 import { hazardReportsQueryApi } from "../services/hazardReportsQuery";
-import { teamQueryApi } from "../services/teamQuery";
 import teamSlice from "./slices/teamSlice";
 import { responderQueryApi } from "../services/responderQuery";
 import { alertQueryApi } from "../services/alertQuery";
@@ -27,7 +26,6 @@ export const store = configureStore({
     [articleQueryApi.reducerPath]: articleQueryApi.reducer,
     [facilityQueryApi.reducerPath]: facilityQueryApi.reducer,
     [hazardReportsQueryApi.reducerPath]: hazardReportsQueryApi.reducer,
-    [teamQueryApi.reducerPath]: teamQueryApi.reducer,
     [responderQueryApi.reducerPath]: responderQueryApi.reducer,
     [alertQueryApi.reducerPath]: alertQueryApi.reducer,
     [accountQueryApi.reducerPath]: accountQueryApi.reducer,
@@ -49,7 +47,6 @@ export const store = configureStore({
       articleQueryApi.middleware,
       facilityQueryApi.middleware,
       hazardReportsQueryApi.middleware,
-      teamQueryApi.middleware,
       responderQueryApi.middleware,
       alertQueryApi.middleware,
       accountQueryApi.middleware,

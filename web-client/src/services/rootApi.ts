@@ -5,6 +5,15 @@ import { API_BASE_URL } from "../api.config";
 export const rootApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   reducerPath: "rootApi",
-  tagTypes: ["User", "SelectedUser", "VerificationRequest"],
+  tagTypes: [
+    // USER QUERY
+    "User",
+    "SelectedUser",
+    "VerificationRequest",
+    // TEAMS QUERY
+    "Teams",
+    "Responders",
+    "ActiveTeams",
+  ],
   endpoints: () => ({}),
 });
