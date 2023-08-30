@@ -10,13 +10,11 @@ import alertSlice from "./slices/alertSlice";
 import assistanceReqSlice from "./slices/assistanceReqSlice";
 // API / Services / Queries
 import teamSlice from "./slices/teamSlice";
-import { authQueryApi } from "../services/authQuery";
 import { rootApi } from "../services/rootApi";
 
 export const store = configureStore({
   reducer: {
     [rootApi.reducerPath]: rootApi.reducer,
-    [authQueryApi.reducerPath]: authQueryApi.reducer,
     facility: facilitySlice,
     userManage: userManageSlice,
     auth: authSlice,
@@ -28,10 +26,7 @@ export const store = configureStore({
     assistanceReq: assistanceReqSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
-      rootApi.middleware,
-      authQueryApi.middleware,
-    ]),
+    getDefaultMiddleware().concat([rootApi.middleware]),
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
