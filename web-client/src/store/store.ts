@@ -9,7 +9,6 @@ import accountSlice from "./slices/accountSlice";
 import alertSlice from "./slices/alertSlice";
 import assistanceReqSlice from "./slices/assistanceReqSlice";
 // API / Services / Queries
-import { articleQueryApi } from "../services/articleQuery";
 import teamSlice from "./slices/teamSlice";
 import { responderQueryApi } from "../services/responderQuery";
 import { accountQueryApi } from "../services/accountQuery";
@@ -19,7 +18,6 @@ import { rootApi } from "../services/rootApi";
 export const store = configureStore({
   reducer: {
     [rootApi.reducerPath]: rootApi.reducer,
-    [articleQueryApi.reducerPath]: articleQueryApi.reducer,
     [responderQueryApi.reducerPath]: responderQueryApi.reducer,
     [accountQueryApi.reducerPath]: accountQueryApi.reducer,
     [authQueryApi.reducerPath]: authQueryApi.reducer,
@@ -36,7 +34,6 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       rootApi.middleware,
-      articleQueryApi.middleware,
       responderQueryApi.middleware,
       accountQueryApi.middleware,
       authQueryApi.middleware,

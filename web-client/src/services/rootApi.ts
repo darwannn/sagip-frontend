@@ -27,6 +27,9 @@ export const rootApi = createApi({
     "SelectedAlert",
     "ActiveAlert",
     "AlertReport",
+    // ARTICLE QUERY
+    "Article",
+    "SelectedArticle",
   ],
   endpoints: () => ({}),
 });
