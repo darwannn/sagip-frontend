@@ -16,6 +16,9 @@ export const rootApi = createApi({
     "ActiveTeams",
     // EMERGENCY QUERY
     "AssistanceRequest",
+    // FACILITY QUERY
+    "Facility",
+    "SelectedFacility",
   ],
   endpoints: () => ({}),
 });

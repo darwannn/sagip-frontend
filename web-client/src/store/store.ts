@@ -10,7 +10,6 @@ import alertSlice from "./slices/alertSlice";
 import assistanceReqSlice from "./slices/assistanceReqSlice";
 // API / Services / Queries
 import { articleQueryApi } from "../services/articleQuery";
-import { facilityQueryApi } from "../services/facilityQuery";
 import { hazardReportsQueryApi } from "../services/hazardReportsQuery";
 import teamSlice from "./slices/teamSlice";
 import { responderQueryApi } from "../services/responderQuery";
@@ -23,7 +22,6 @@ export const store = configureStore({
   reducer: {
     [rootApi.reducerPath]: rootApi.reducer,
     [articleQueryApi.reducerPath]: articleQueryApi.reducer,
-    [facilityQueryApi.reducerPath]: facilityQueryApi.reducer,
     [hazardReportsQueryApi.reducerPath]: hazardReportsQueryApi.reducer,
     [responderQueryApi.reducerPath]: responderQueryApi.reducer,
     [alertQueryApi.reducerPath]: alertQueryApi.reducer,
@@ -43,7 +41,6 @@ export const store = configureStore({
     getDefaultMiddleware().concat([
       rootApi.middleware,
       articleQueryApi.middleware,
-      facilityQueryApi.middleware,
       hazardReportsQueryApi.middleware,
       responderQueryApi.middleware,
       alertQueryApi.middleware,
