@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import type { User, TUserResData } from "../types/user";
+import type { TDashboard } from "../pages/Dashboard/types/dashboard";
 import { API_BASE_URL } from "../api.config";
 
 export const accountQueryApi = createApi({
@@ -80,6 +81,16 @@ export const accountQueryApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+
+    getStatistics: builder.query<TDashboard, void>({
+      query: () => ({
+        url: "statistics/",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -87,7 +98,8 @@ export const {
   useGetUserByTokenQuery,
   useUpdateProfileMutation,
   useUpdateProfilePictureMutation,
-
   useUpdatePasswordMutation,
   useDeleteAccountMutation,
+
+  useGetStatisticsQuery,
 } = accountQueryApi;

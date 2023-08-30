@@ -9,7 +9,17 @@ export const authQueryApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   tagTypes: ["User", "SelectedUser"],
   endpoints: (builder) => ({
-    register: builder.mutation<TUserResData, User>({
+    login: builder.mutation<
+      TUserResData,
+      { identifier: string; password: string }
+    >({
+      query: ({ identifier, password }) => ({
+        url: `/auth/login`,
+        method: "POST",
+        body: { identifier, password },
+      }),
+    }),
+    register: builder.mutation<TUserResData, Partial<User>>({
       query: (body) => ({
         url: `/auth/register/`,
         method: "POST",
@@ -124,10 +134,33 @@ export const authQueryApi = createApi({
         },
       }),
     }),
+    getIdVerificationRequest: builder.query<TUserResData, void>({
+      query: () => ({
+        url: `/auth/verify-identity/request/`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+    }),
+
+    sendIdVerificationRequest: builder.mutation<
+      TUserResData,
+      { body: FormData }
+    >({
+      query: ({ body }) => ({
+        url: `/auth/verify-identity`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+    }),
   }),
 });
 
 export const {
+  useLoginMutation,
   useRegisterMutation,
   useValidataInputMutation,
   usePasswordVerificationMutation,
@@ -136,4 +169,6 @@ export const {
   useResendVerificationCodeMutation,
   useForgotPasswordMutation,
   useNewPasswordMutation,
+  useGetIdVerificationRequestQuery,
+  useSendIdVerificationRequestMutation,
 } = authQueryApi;

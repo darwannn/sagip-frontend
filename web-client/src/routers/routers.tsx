@@ -1,7 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import LoginPage, { action as loginAction } from "../pages/Login/LoginPage";
-import RegistrationPage from "../pages/Register/RegisterPage";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
 
 import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
@@ -31,7 +29,13 @@ import NewPasswordPage from "../pages/NewPassword/NewPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
 import ForgotPasswordContactVerification from "../pages/ForgotPassword/ForgotPasswordContactVerification";
 
-/* import LoginContactVerification from "../pages/Login/LoginContactVerification"; */
+import RegistrationPage from "../pages/Register/RegistrationPage";
+import RegisterContactVerification from "../pages/Register/components/RegistrationContactVerification";
+import RegistrationAlmostDone from "../pages/Register/components/RegistrationAlmostDone";
+import IdentityVerificationPage from "../pages/IdentityVerification/IdentityVerificationPage";
+
+import LoginPage from "../pages/Login/LoginPage";
+import LoginContactVerification from "../pages/Login/LoginContactVerification";
 
 export const router = createBrowserRouter([
   {
@@ -99,12 +103,35 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LoginPage />,
     loader: isLoggedIn,
-    action: loginAction,
+    children: [
+      { index: true, element: <LoginPage /> },
+      {
+        path: "contact-verification",
+        element: <LoginContactVerification />,
+      },
+    ],
   },
 
-  { path: "/register", element: <RegistrationPage />, loader: isLoggedIn },
+  {
+    path: "register",
+    /* loader: isLoggedIn, */
+    children: [
+      { index: true, element: <RegistrationPage /> },
+      {
+        path: "contact-verification",
+        element: <RegisterContactVerification />,
+      },
+      {
+        path: "identity-verification",
+        element: <RegistrationAlmostDone />,
+      },
+    ],
+  },
+  {
+    path: "identity-verification",
+    element: <IdentityVerificationPage />,
+  },
   {
     path: "forgot-password",
     /* loader: isLoggedIn, */

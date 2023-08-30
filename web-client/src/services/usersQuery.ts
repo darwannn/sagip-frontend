@@ -44,12 +44,12 @@ export const usersApi = createApi({
       invalidatesTags: ["User", "SelectedUser", "VerificationRequest"],
     }),
 
-    deleteUser: builder.mutation<void, { token: string | null; id: string }>({
-      query: ({ token, id }) => ({
-        url: `/account/archive/${id}`,
+    archiveUser: builder.mutation<void, { action: string | null; id: string }>({
+      query: ({ action, id }) => ({
+        url: `/account/${action}/${id}`,
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
       invalidatesTags: ["User", "SelectedUser", "VerificationRequest"],
@@ -92,7 +92,7 @@ export const {
   useGetUserByIdQuery,
   useAddUserMutation,
   useUpdateUserMutation,
-  useDeleteUserMutation,
+  useArchiveUserMutation,
   useGetVerificationRequestsQuery,
   useUpdateVerificationRequestMutation,
 } = usersApi;

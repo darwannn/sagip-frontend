@@ -70,7 +70,7 @@ const AddressField: React.FC<TProps> = ({
       setValue?.("province", "Bulacan");
       setValue?.("municipality", "City Of Malolos (Capital)");
       setValue?.("barangay", "");
-      setValue?.("street", "");
+      /* setValue?.("street", ""); */
     }
   }, [inMalolos, setValue]);
 

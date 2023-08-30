@@ -2,33 +2,17 @@ import { useEffect } from "react";
 import UserTable from "./components/UserTable";
 // Redux
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import {
-  setUsers,
-  setTableContent,
-  selectNumberOfUsers,
-  selectNumberOfNewUsers,
-  selectVerifiedUsers,
-  selectNumberOfStaff,
-} from "../../store/slices/userManageSlice";
+import { setUsers, setTableContent } from "../../store/slices/userManageSlice";
 // Services
 import { useGetUsersDataQuery } from "../../services/usersQuery";
-// Icons
-import { BsFillPersonFill } from "react-icons/bs";
-import { FaUserPlus } from "react-icons/fa";
 
-import SingleData from "../../components/Statistics/SingleData";
-import MultipleData from "../../components/Statistics/MultipleData";
+import UserStatistics from "./components/UserStatistics";
 
 const ManageUserPage = () => {
   // Redux
   const dispatch = useAppDispatch();
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
-  const totalUsersCount = useAppSelector(selectNumberOfUsers);
-  const newUsersCount = useAppSelector(selectNumberOfNewUsers);
-  const staffCount = useAppSelector(selectNumberOfStaff);
 
-  const { verifiedCount, unverifiedCount } =
-    useAppSelector(selectVerifiedUsers);
   // Service
   const { data: users, isLoading, error } = useGetUsersDataQuery(undefined);
 
@@ -43,80 +27,7 @@ const ManageUserPage = () => {
 
   return (
     <>
-      <div className="statistics flex flex-row h-52 m-5 gap-4">
-        {isStaff ? (
-          <>
-            <SingleData
-              title="Total Staffs"
-              value={staffCount.totalStaff}
-              icon={<BsFillPersonFill />}
-              isPrimary={true}
-              isThisMonth={false}
-              navigateTo="/"
-            />
-
-            <MultipleData
-              data={[
-                {
-                  title: "Responder",
-                  value: staffCount.responderCount,
-                  color: "rgba(175, 185, 233, 1)",
-                },
-                {
-                  title: " Dispatcher",
-                  value: staffCount.dispatcherCount,
-                  color: "rgba(212, 85, 85, 1)",
-                },
-                {
-                  title: " Admin",
-                  value: staffCount.adminCount,
-                  color: "rgba(255, 194, 123, 1)",
-                },
-                {
-                  title: " Super-admin",
-                  value: staffCount.superAdminCount,
-                  color: "rgba(99, 102, 241,1)",
-                },
-              ]}
-              navigateTo="/"
-            />
-          </>
-        ) : (
-          <>
-            <SingleData
-              title="Total Users"
-              value={totalUsersCount}
-              icon={<BsFillPersonFill />}
-              isPrimary={true}
-              isThisMonth={false}
-              navigateTo="/"
-            />
-            <SingleData
-              title="New Users"
-              value={newUsersCount}
-              icon={<FaUserPlus />}
-              isPrimary={false}
-              isThisMonth={true}
-              navigateTo="/"
-            />
-            <MultipleData
-              data={[
-                {
-                  title: "Verified Users",
-                  value: verifiedCount,
-                  color: "rgba(99, 102, 241,1)",
-                },
-                {
-                  title: "Unverified Users",
-                  value: unverifiedCount,
-                  color: "rgba(212, 85, 85, 1)",
-                },
-              ]}
-              navigateTo="/"
-            />
-          </>
-        )}
-      </div>
+      <UserStatistics />
       <div className="border-gray-400 border-b-2 mx-5 mt-5">
         <button
           className={
@@ -126,7 +37,7 @@ const ManageUserPage = () => {
           }
           onClick={() => dispatch(setTableContent(false))}
         >
-          All Users
+          Residents
         </button>
         <button
           className={

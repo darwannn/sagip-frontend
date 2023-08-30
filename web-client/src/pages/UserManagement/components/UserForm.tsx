@@ -52,9 +52,6 @@ const UserForm = ({ userData }: TProps) => {
       firstname: userData?.firstname,
       middlename: userData?.middlename,
       lastname: userData?.lastname,
-
-      /* uncomment if needed */
-      /* isArchived: userData?.isArchived, */
     },
   });
 
@@ -75,9 +72,6 @@ const UserForm = ({ userData }: TProps) => {
       firstname: data.firstname,
       middlename: data.middlename,
       lastname: data.lastname,
-
-      /* uncomment if needed */
-      /* isArchived: data.isArchived, */
     };
 
     console.log("data.region");
@@ -113,7 +107,14 @@ const UserForm = ({ userData }: TProps) => {
   };
 
   const onBan: SubmitHandler<FieldValues> = async (data) => {
-    SubmitUserData(data, userData?.isBanned === true ? false : true);
+    if (
+      confirm(
+        `Are you sure you want to ${
+          userData?.isBanned === true ? "unban" : "ban"
+        } this user?`
+      )
+    )
+      SubmitUserData(data, userData?.isBanned === true ? false : true);
   };
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     SubmitUserData(data, userData?.isBanned);
