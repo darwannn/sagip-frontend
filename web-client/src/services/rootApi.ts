@@ -14,6 +14,8 @@ export const rootApi = createApi({
     "Teams",
     "Responders",
     "ActiveTeams",
+    // EMERGENCY QUERY
+    "AssistanceRequest",
   ],
   endpoints: () => ({}),
 });

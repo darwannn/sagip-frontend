@@ -17,7 +17,6 @@ import { responderQueryApi } from "../services/responderQuery";
 import { alertQueryApi } from "../services/alertQuery";
 import { accountQueryApi } from "../services/accountQuery";
 import { authQueryApi } from "../services/authQuery";
-import { assistanceRequestQueryApi } from "../services/assistanceRequestQuery";
 import { rootApi } from "../services/rootApi";
 
 export const store = configureStore({
@@ -30,7 +29,6 @@ export const store = configureStore({
     [alertQueryApi.reducerPath]: alertQueryApi.reducer,
     [accountQueryApi.reducerPath]: accountQueryApi.reducer,
     [authQueryApi.reducerPath]: authQueryApi.reducer,
-    [assistanceRequestQueryApi.reducerPath]: assistanceRequestQueryApi.reducer,
     facility: facilitySlice,
     userManage: userManageSlice,
     auth: authSlice,
@@ -51,7 +49,6 @@ export const store = configureStore({
       alertQueryApi.middleware,
       accountQueryApi.middleware,
       authQueryApi.middleware,
-      assistanceRequestQueryApi.middleware,
     ]),
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
