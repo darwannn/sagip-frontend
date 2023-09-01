@@ -1,4 +1,4 @@
-import { TResponders } from "../pages/TeamManagement/Types/Team";
+import { TResponders } from "../types/team";
 import { rootApi } from "./rootApi";
 
 export const responderQueryApi = rootApi.injectEndpoints({

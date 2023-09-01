@@ -1,4 +1,4 @@
-import { Article, TArticleResData } from "../pages/Articles/types/article";
+import { Article, TArticleResData } from "../types/article";
 import { rootApi } from "./rootApi";
 
 export const articleQueryApi = rootApi.injectEndpoints({

@@ -1,29 +1,29 @@
 import { createBrowserRouter } from "react-router-dom";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import Dashboard from "../pages/Admin/Dashboard/Dashboard";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
 
-import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
-import EmergencyReportsPage from "../pages/EmergencyReports/EmergencyReportsPage";
-import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
-import ManageFacilitiesPage from "../pages/MapManagement/ManageFacilitiesPage";
+import ManageTeamPage from "../pages/Admin/TeamManagement/ManageTeamPage";
+import EmergencyReportsPage from "../pages/Admin/AssistanceRequestManagement/EmergencyReportsPage";
+import HazardReportsPage from "../pages/Admin/HazardReportsManagement/HazardReportsPage";
+import ManageFacilitiesPage from "../pages/Admin/FacilityManagement/ManageFacilitiesPage";
 import { checkAuth, isLoggedIn } from "../util/auth";
-import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
-import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";
-import ViewArticlePage from "../pages/Articles/ViewArticlePage";
-import TeamDetails from "../pages/TeamManagement/Components/TeamDetails";
-import ManageRespondersPage from "../pages/TeamManagement/ManageRespondersPage";
+import ManageArticlesPage from "../pages/Admin/ArticleManagement/ManageArticlesPage";
+import CreateArticlesPage from "../pages/Admin/ArticleManagement/CreateArticlesPage";
+import ViewArticlePage from "../pages/Admin/ArticleManagement/ViewArticlePage";
+import TeamDetails from "../pages/Admin/TeamManagement/components/TeamDetails";
+import ManageRespondersPage from "../pages/Admin/TeamManagement/ManageRespondersPage";
 
-import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
-import CreateAlertPage from "../pages/AlertsManagement/CreateAlertsPage";
-import ViewAlertsPage from "../pages/AlertsManagement/ViewAlertsPage";
-import AlertReport from "../pages/AlertsManagement/components/AlertReport";
+import ManageAlertsPage from "../pages/Admin/AlertsManagement/ManageAlertsPage";
+import CreateAlertPage from "../pages/Admin/AlertsManagement/CreateAlertsPage";
+import ViewAlertsPage from "../pages/Admin/AlertsManagement/ViewAlertsPage";
+import AlertReport from "../pages/Admin/AlertsManagement/components/AlertReport";
 
-import ManageUserPage from "../pages/UserManagement/ManageUserPage";
-import VerifyUserPage from "../pages/UserManagement/VerifyUserPage";
-import CreateUserPage from "../pages/UserManagement/CreateUserPage";
-import ViewUserPage from "../pages/UserManagement/ViewUserPage";
+import ManageUserPage from "../pages/Admin/UserManagement/ManageUserPage";
+import VerifyUserPage from "../pages/Admin/UserManagement/VerifyUserPage";
+import CreateUserPage from "../pages/Admin/UserManagement/CreateUserPage";
+import ViewUserPage from "../pages/Admin/UserManagement/ViewUserPage";
 
-import ManageAccountPage from "../pages/AccountSettings/ManageAccountPage";
+import ManageAccountPage from "../pages/Admin/AccountSettings/ManageAccountPage";
 
 import NewPasswordPage from "../pages/NewPassword/NewPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
@@ -36,12 +36,69 @@ import IdentityVerificationPage from "../pages/IdentityVerification/IdentityVeri
 
 import LoginPage from "../pages/Login/LoginPage";
 import LoginContactVerification from "../pages/Login/LoginContactVerification";
-import AccountProfileForm from "../pages/AccountSettings/components/AccountProfileForm";
-import AccountEmailForm from "../pages/AccountSettings/components/AccountEmailForm";
-import AccountContactNumberForm from "../pages/AccountSettings/components/AccountContactNumberForm";
-import AccountPasswordForm from "../pages/AccountSettings/components/AccountPasswordForm";
+import AccountProfileForm from "../pages/Admin/AccountSettings/components/AccountProfileForm";
+import AccountEmailForm from "../pages/Admin/AccountSettings/components/AccountEmailForm";
+import AccountContactNumberForm from "../pages/Admin/AccountSettings/components/AccountContactNumberForm";
+import AccountPasswordForm from "../pages/Admin/AccountSettings/components/AccountPasswordForm";
+import TEMP_ROOT_PAGE from "../pages/RootLayout/Temp_RootPage";
 
 export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <TEMP_ROOT_PAGE />,
+    children: [
+      {
+        path: "login",
+        loader: isLoggedIn,
+        children: [
+          {
+            index: true,
+            element: <LoginPage />,
+          },
+          {
+            path: "contact-verification",
+            element: <LoginContactVerification />,
+          },
+        ],
+      },
+
+      {
+        path: "register",
+        /* loader: isLoggedIn, */
+        children: [
+          { index: true, element: <RegistrationPage /> },
+          {
+            path: "contact-verification",
+            element: <RegisterContactVerification />,
+          },
+          {
+            path: "identity-verification",
+            element: <RegistrationAlmostDone />,
+          },
+        ],
+      },
+      {
+        path: "identity-verification",
+        element: <IdentityVerificationPage />,
+      },
+      {
+        path: "forgot-password",
+        /* loader: isLoggedIn, */
+        children: [
+          { index: true, element: <ForgotPasswordPage /> },
+          {
+            path: "contact-verification",
+            element: <ForgotPasswordContactVerification />,
+          },
+        ],
+      },
+      {
+        path: "/new-password",
+        element: <NewPasswordPage />,
+        /* loader: isLoggedIn, */
+      },
+    ]
+  },
   {
     path: "admin",
     element: <AdminRootLayout />,
@@ -107,53 +164,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/login",
-    loader: isLoggedIn,
-    children: [
-      { index: true, element: <LoginPage /> },
-      {
-        path: "contact-verification",
-        element: <LoginContactVerification />,
-      },
-    ],
-  },
 
-  {
-    path: "register",
-    /* loader: isLoggedIn, */
-    children: [
-      { index: true, element: <RegistrationPage /> },
-      {
-        path: "contact-verification",
-        element: <RegisterContactVerification />,
-      },
-      {
-        path: "identity-verification",
-        element: <RegistrationAlmostDone />,
-      },
-    ],
-  },
-  {
-    path: "identity-verification",
-    element: <IdentityVerificationPage />,
-  },
-  {
-    path: "forgot-password",
-    /* loader: isLoggedIn, */
-    children: [
-      { index: true, element: <ForgotPasswordPage /> },
-      {
-        path: "contact-verification",
-        element: <ForgotPasswordContactVerification />,
-      },
-    ],
-  },
-  {
-    path: "/new-password",
-    element: <NewPasswordPage />,
-    /* loader: isLoggedIn, */
-  },
   /* temporary, so the report will open in new tab (without side navigation menu) */
   {
     path: "/disaster-alerts/report/:alertId",

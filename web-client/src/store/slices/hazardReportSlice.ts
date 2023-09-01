@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
-import { THazardReport } from "../../pages/HazardReports/types/hazardReport";
+import { THazardReport } from "../../types/hazardReport";
 
 type THazardReportState = {
   selectedHazardReport: THazardReport | null;
