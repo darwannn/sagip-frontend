@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { useGetAllAssistanceRequestsQuery } from "../../../services/assistanceRequestQuery";
+import { useGetAllAssistanceRequestsQuery } from "../../../../services/assistanceRequestQuery";
 import AssistanceItem from "./AssistanceItem";
 import { useSearchParams } from "react-router-dom";
 const AssistanceList = memo(() => {

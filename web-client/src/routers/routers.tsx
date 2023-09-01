@@ -2,16 +2,16 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Admin/Dashboard/Dashboard";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
 
-import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
-import EmergencyReportsPage from "../pages/EmergencyReports/EmergencyReportsPage";
+import ManageTeamPage from "../pages/Admin/TeamManagement/ManageTeamPage";
+import EmergencyReportsPage from "../pages/Admin/AssistanceRequestManagement/EmergencyReportsPage";
 import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
 import ManageFacilitiesPage from "../pages/MapManagement/ManageFacilitiesPage";
 import { checkAuth, isLoggedIn } from "../util/auth";
 import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
 import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";
 import ViewArticlePage from "../pages/Articles/ViewArticlePage";
-import TeamDetails from "../pages/TeamManagement/Components/TeamDetails";
-import ManageRespondersPage from "../pages/TeamManagement/ManageRespondersPage";
+import TeamDetails from "../pages/Admin/TeamManagement/components/TeamDetails";
+import ManageRespondersPage from "../pages/Admin/TeamManagement/ManageRespondersPage";
 
 import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
 import CreateAlertPage from "../pages/AlertsManagement/CreateAlertsPage";

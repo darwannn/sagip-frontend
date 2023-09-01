@@ -1,6 +1,6 @@
 import { useState } from "react";
-import CreateTeamForm from "./Components/CreateTeamForm";
-import TeamList from "./Components/TeamList";
+import CreateTeamForm from "./components/CreateTeamForm";
+import TeamList from "./components/TeamList";
 import { Link, Outlet } from "react-router-dom";
 import { IoAddSharp } from "react-icons/io5";
 import { MdManageAccounts } from "react-icons/md";

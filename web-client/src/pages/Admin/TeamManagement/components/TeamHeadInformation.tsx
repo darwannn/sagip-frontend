@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { GoDotFill } from "react-icons/go";
-import { BASE_IMAGE_URL } from "../../../api.config";
-import { User } from "../../../types/user";
+import { BASE_IMAGE_URL } from "../../../../api.config";
+import { User } from "../../../../types/user";
 import { HiDotsVertical } from "react-icons/hi";
 
 type TeamHeadInformationProps = {
@@ -37,9 +37,8 @@ const TeamHeadInformation: React.FC<TeamHeadInformationProps> = memo(
           <span className="font-semibold text-sm">Status</span>
           <div className="flex flex-row items-center">
             <GoDotFill
-              className={`${
-                user.isOnline ? "text-green-800" : "text-gray-500"
-              }`}
+              className={`${user.isOnline ? "text-green-800" : "text-gray-500"
+                }`}
             />
             <span>{user.isOnline ? "Online" : "Offline"}</span>
           </div>

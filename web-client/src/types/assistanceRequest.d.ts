@@ -1,5 +1,5 @@
-import { User } from "../../../types/user";
-import { TTeam } from "../../TeamManagement/Types/Team";
+import { User } from "./user";
+import { TTeam } from "./team";
 
 type TAssistanceRequest = {
   _id: string;

@@ -1,7 +1,7 @@
 import { FieldValues, useForm } from "react-hook-form";
-import { useDismissAssistanceRequestMutation } from "../../../services/assistanceRequestQuery";
-import { useAppDispatch } from "../../../store/hooks";
-import { setSelectedAssistanceRequest } from "../../../store/slices/assistanceReqSlice";
+import { useDismissAssistanceRequestMutation } from "../../../../services/assistanceRequestQuery";
+import { useAppDispatch } from "../../../../store/hooks";
+import { setSelectedAssistanceRequest } from "../../../../store/slices/assistanceReqSlice";
 
 type TProps = {
   assistanceId: string;

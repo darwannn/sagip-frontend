@@ -2,7 +2,7 @@ import type {
   TResponders,
   TTeam,
   TTeamResponse,
-} from "../pages/TeamManagement/Types/Team";
+} from "../types/team";
 import { User } from "../types/user";
 import { rootApi } from "./rootApi";
 

@@ -1,6 +1,6 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { TTeam } from "../../pages/TeamManagement/Types/Team";
+import { TTeam } from "../../types/team";
 
 type teamState = {
   selectedTeam: TTeam | null;

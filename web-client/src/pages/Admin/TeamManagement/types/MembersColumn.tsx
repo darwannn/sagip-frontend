@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 // Types
-import type { User } from "../../../types/user";
-import { BASE_IMAGE_URL } from "../../../api.config";
+import type { User } from "../../../../types/user";
+import { BASE_IMAGE_URL } from "../../../../api.config";
 import { GoDotFill } from "react-icons/go";
 // import { HiDotsVertical } from "react-icons/hi";
 

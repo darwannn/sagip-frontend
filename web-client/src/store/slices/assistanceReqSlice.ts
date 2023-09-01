@@ -2,7 +2,7 @@ import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import {
   TAssistanceRequest,
   TAssistanceRequestState,
-} from "../../pages/EmergencyReports/types/assistanceRequest";
+} from "../../types/assistanceRequest";
 import { RootState } from "../store";
 
 const initialState: TAssistanceRequestState = {

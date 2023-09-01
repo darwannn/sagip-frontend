@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import MapComponent from "../MapManagement/components/MapComponent";
-import { useGetAllAssistanceRequestsQuery } from "../../services/assistanceRequestQuery";
+import MapComponent from "../../MapManagement/components/MapComponent";
+import { useGetAllAssistanceRequestsQuery } from "../../../services/assistanceRequestQuery";
 import AssistanceList from "./components/AssistanceList";
 import { MarkerF } from "@react-google-maps/api";
 import AssistanceDetails from "./components/AssistanceDetails";
-import { useAppSelector } from "../../store/hooks";
-import { selectAssistanceReq } from "../../store/slices/assistanceReqSlice";
+import { useAppSelector } from "../../../store/hooks";
+import { selectAssistanceReq } from "../../../store/slices/assistanceReqSlice";
 import AssistanceFilters from "./components/AssistanceFilter";
 const EmergencyReportsPage = () => {
   // Map State / Instance

@@ -2,11 +2,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteTeamMutation,
   useGetTeamQuery,
-} from "../../../services/teamQuery";
-import { useLazyGetRespondersQuery } from "../../../services/responderQuery";
+} from "../../../../services/teamQuery";
+import { useLazyGetRespondersQuery } from "../../../../services/responderQuery";
 import { useState } from "react";
 import RespondersTable from "./RespondersTable";
-import Modal from "../../../components/Modal/Modal";
+import Modal from "../../../../components/Modal/Modal";
 import EditTeamModal from "./EditTeamModal";
 import TeamHeadInformation from "./TeamHeadInformation";
 

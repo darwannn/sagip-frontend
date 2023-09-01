@@ -8,10 +8,10 @@ import {
   useAddTeamHeadMutation,
   useAddTeamMemberMutation,
   useLazyGetUnassignedRespondersQuery,
-} from "../../../services/teamQuery";
+} from "../../../../services/teamQuery";
 // Types
-import { User } from "../../../types/user";
-import { BASE_IMAGE_URL } from "../../../api.config";
+import { User } from "../../../../types/user";
+import { BASE_IMAGE_URL } from "../../../../api.config";
 
 const AddResponderForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -57,9 +57,8 @@ const AddResponderForm: React.FC = () => {
 
   return (
     <div
-      className={`flex flex-row gap-1 p-2 items-center rounded-md relative  ${
-        selectedUser ? "border-2 border-gray-200" : ""
-      }`}
+      className={`flex flex-row gap-1 p-2 items-center rounded-md relative  ${selectedUser ? "border-2 border-gray-200" : ""
+        }`}
     >
       <div className="flex-grow relative">
         {selectedUser ? (
@@ -86,7 +85,7 @@ const AddResponderForm: React.FC = () => {
                 setIsAddMode(true);
                 getResponders();
               }}
-              // onBlur={() => setIsAddMode(false)}
+            // onBlur={() => setIsAddMode(false)}
             />
             {/* Suggestions */}
             {isAddMode && (

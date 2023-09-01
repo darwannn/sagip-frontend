@@ -1,9 +1,9 @@
 import moment from "moment";
-import { TAssistanceRequest } from "../types/assistanceRequest";
+import { TAssistanceRequest } from "../../../../types/assistanceRequest";
 import { TbTextCaption } from "react-icons/tb";
 import { MdLocationOn } from "react-icons/md";
-import { useAppDispatch } from "../../../store/hooks";
-import { setSelectedAssistanceRequest } from "../../../store/slices/assistanceReqSlice";
+import { useAppDispatch } from "../../../../store/hooks";
+import { setSelectedAssistanceRequest } from "../../../../store/slices/assistanceReqSlice";
 
 type AssistanceItemProps = {
   assistance: TAssistanceRequest;

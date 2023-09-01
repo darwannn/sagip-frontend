@@ -2,7 +2,7 @@ import { memo } from "react";
 import {
   useCreateTeamMutation,
   useGetTeamsQuery,
-} from "../../../services/teamQuery";
+} from "../../../../services/teamQuery";
 import TeamItem from "./TeamItem";
 
 const TeamList = memo(() => {

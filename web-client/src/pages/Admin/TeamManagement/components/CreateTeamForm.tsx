@@ -1,7 +1,7 @@
 import React, { useState, memo } from "react";
-import { useCreateTeamMutation } from "../../../services/teamQuery";
+import { useCreateTeamMutation } from "../../../../services/teamQuery";
 import { MdClose } from "react-icons/md";
-import { TTeamResponse } from "../Types/Team";
+import { TTeamResponse } from "../../../../types/team";
 import { useNavigate } from "react-router-dom";
 
 type TProps = {

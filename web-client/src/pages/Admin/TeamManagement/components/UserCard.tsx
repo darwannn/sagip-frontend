@@ -1,5 +1,5 @@
-import { BASE_IMAGE_URL } from "../../../api.config";
-import { User } from "../../../types/user";
+import { BASE_IMAGE_URL } from "../../../../api.config";
+import { User } from "../../../../types/user";
 
 type TProps = {
   user: User;

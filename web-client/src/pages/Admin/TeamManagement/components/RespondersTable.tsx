@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { User } from "../../../types/user";
-import { membersColumn as columns } from "../Types/MembersColumn";
-import DataTable from "../../../components/ui/data-table";
+import { User } from "../../../../types/user";
+import { membersColumn as columns } from "../types/MembersColumn";
+import DataTable from "../../../../components/ui/data-table";
 type TProps = {
   membersData: User[];
 };

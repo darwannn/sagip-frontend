@@ -1,13 +1,13 @@
-import { BASE_IMAGE_URL } from "../../../api.config";
-import { useGetActiveTeamsQuery } from "../../../services/teamQuery";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { BASE_IMAGE_URL } from "../../../../api.config";
+import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   selectAssistanceReq,
   setSelectedAssistanceRequest,
-} from "../../../store/slices/assistanceReqSlice";
+} from "../../../../store/slices/assistanceReqSlice";
 import Select from "react-select";
 import moment from "moment";
-import Modal from "../../../components/Modal/Modal";
+import Modal from "../../../../components/Modal/Modal";
 // Icons
 import { MdClose } from "react-icons/md";
 import { useState } from "react";

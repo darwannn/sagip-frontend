@@ -1,7 +1,7 @@
 import {
   TAssistanceReqResponse,
   TAssistanceRequest,
-} from "../pages/EmergencyReports/types/assistanceRequest";
+} from "../types/assistanceRequest";
 import { rootApi } from "./rootApi";
 
 type DismissBody = {

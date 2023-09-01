@@ -1,11 +1,11 @@
-import { User } from "../../../types/user";
+import { User } from "../../../../types/user";
 import UserCard from "./UserCard";
-import { TTeam } from "../Types/Team";
+import { TTeam } from "../../../../types/team";
 import { AiOutlineMinus } from "react-icons/ai";
 import {
   useUnassignHeadMutation,
   useUnassignMemberMutation,
-} from "../../../services/teamQuery";
+} from "../../../../services/teamQuery";
 import AddResponderForm from "./AddResponderForm";
 type TProps = {
   teamData?: TTeam;
