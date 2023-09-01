@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Bar from "../../components/Charts/Bar";
+import Bar from "../../../../components/Charts/Bar";
 import "chart.js/auto";
 
-import type { THazardReport } from "../HazardReports/types/hazardReport";
+import type { THazardReport } from "../../../HazardReports/types/hazardReport";
 
 import { MdChevronRight, MdChevronLeft } from "react-icons/md";
 
@@ -167,16 +167,16 @@ const ResponderChart = ({ emergencyData }: TProps) => {
     /* limits prev and next button to years with existing record */
     const earliestYear = emergencyData
       ? Math.min(
-          ...emergencyData
-            .filter((report) => report.status === "resolved")
-            .map((report) => moment(report.createdAt).year())
-        )
+        ...emergencyData
+          .filter((report) => report.status === "resolved")
+          .map((report) => moment(report.createdAt).year())
+      )
       : moment().year();
 
     const earliestMonths = emergencyData
       ? emergencyData
-          .filter((report) => report.status === "resolved")
-          .map((report) => moment(report.createdAt).format("YYYY-MM"))
+        .filter((report) => report.status === "resolved")
+        .map((report) => moment(report.createdAt).format("YYYY-MM"))
       : [moment().format("YYYY-MM")];
 
     if (selectedOption === "perDay") {

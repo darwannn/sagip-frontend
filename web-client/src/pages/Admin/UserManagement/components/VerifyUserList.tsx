@@ -2,7 +2,7 @@ import { memo } from "react";
 // Functional Components
 import VerifyUserItem from "./VerifyUserItem";
 // Types
-import type { User } from "../../../types/user";
+import type { User } from "../../../../types/user";
 
 type TProps = {
   verificationRequests: User[];

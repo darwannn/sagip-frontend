@@ -1,9 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 // Types
-import { User } from "../../../types/user";
+import { User } from "../../../../types/user";
 
 // API
-import { BASE_IMAGE_URL } from "../../../api.config";
+import { BASE_IMAGE_URL } from "../../../../api.config";
 
 import UserRowAction from "./UserRowAction";
 

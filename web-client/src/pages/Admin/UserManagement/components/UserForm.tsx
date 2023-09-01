@@ -3,12 +3,12 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
 // Types
-import { User, TUserResData } from "../../../types/user";
+import { User, TUserResData } from "../../../../types/user";
 //Services
 import {
   useAddUserMutation,
   useUpdateUserMutation,
-} from "../../../services/usersQuery";
+} from "../../../../services/usersQuery";
 
 type TProps = {
   userData?: User;
@@ -109,8 +109,7 @@ const UserForm = ({ userData }: TProps) => {
   const onBan: SubmitHandler<FieldValues> = async (data) => {
     if (
       confirm(
-        `Are you sure you want to ${
-          userData?.isBanned === true ? "unban" : "ban"
+        `Are you sure you want to ${userData?.isBanned === true ? "unban" : "ban"
         } this user?`
       )
     )

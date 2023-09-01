@@ -1,5 +1,5 @@
 import type { User, TUserResData } from "../types/user";
-import type { TDashboard } from "../pages/Dashboard/types/dashboard";
+import type { TDashboard } from "../pages/Admin/Dashboard/types/dashboard";
 import { rootApi } from "./rootApi";
 
 export const accountQueryApi = rootApi.injectEndpoints({

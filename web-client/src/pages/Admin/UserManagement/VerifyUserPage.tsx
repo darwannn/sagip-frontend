@@ -1,8 +1,8 @@
 import { useState } from "react";
 // Services / API
-import { useAppSelector } from "../../store/hooks";
-import { useGetVerificationRequestsQuery } from "../../services/usersQuery";
-import { selectionVerificationRequest } from "../../store/slices/userManageSlice";
+import { useAppSelector } from "../../../store/hooks";
+import { useGetVerificationRequestsQuery } from "../../../services/usersQuery";
+import { selectionVerificationRequest } from "../../../store/slices/userManageSlice";
 
 import { Link } from "react-router-dom";
 

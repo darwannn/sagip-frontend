@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import UserTable from "./components/UserTable";
 // Redux
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setUsers, setTableContent } from "../../store/slices/userManageSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { setUsers, setTableContent } from "../../../store/slices/userManageSlice";
 // Services
-import { useGetUsersDataQuery } from "../../services/usersQuery";
+import { useGetUsersDataQuery } from "../../../services/usersQuery";
 
 import UserStatistics from "./components/UserStatistics";
 

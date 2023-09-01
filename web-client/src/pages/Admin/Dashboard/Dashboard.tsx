@@ -1,5 +1,5 @@
 // Services
-import { useGetStatisticsQuery } from "../../services/accountQuery";
+import { useGetStatisticsQuery } from "../../../services/accountQuery";
 
 // Icons
 import { BsFillPersonFill } from "react-icons/bs";
@@ -10,10 +10,10 @@ import { MdLocationOn } from "react-icons/md";
 import { RiFileUploadFill } from "react-icons/ri";
 import { MdEmojiPeople } from "react-icons/md";
 /* statistics component */
-import SingleData from "../../components/Statistics/SingleData";
-import MultipleData from "../../components/Statistics/MultipleData";
+import SingleData from "../../../components/Statistics/SingleData";
+import MultipleData from "../../../components/Statistics/MultipleData";
 
-import RespondsChart from "./RespondsChart";
+import RespondsChart from "./components/RespondsChart";
 
 const Dashboard = () => {
   const {

@@ -1,11 +1,11 @@
 import { memo } from "react";
 
 // Services / API
-import { useAppDispatch } from "../../../store/hooks";
-import { setSelectedVerificationRequest } from "../../../store/slices/userManageSlice";
+import { useAppDispatch } from "../../../../store/hooks";
+import { setSelectedVerificationRequest } from "../../../../store/slices/userManageSlice";
 
 // Types
-import type { User } from "../../../types/user";
+import type { User } from "../../../../types/user";
 // Icons
 import { MdChevronRight } from "react-icons/md";
 

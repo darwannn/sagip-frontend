@@ -1,11 +1,11 @@
 // Services / API
-import { useAppDispatch } from "../../../store/hooks";
-import { useUpdateVerificationRequestMutation } from "../../../services/usersQuery";
-import { unsetSelectedVerificationRequest } from "../../../store/slices/userManageSlice";
+import { useAppDispatch } from "../../../../store/hooks";
+import { useUpdateVerificationRequestMutation } from "../../../../services/usersQuery";
+import { unsetSelectedVerificationRequest } from "../../../../store/slices/userManageSlice";
 
 // Types
-import type { User } from "../../../types/user";
-import { BASE_IMAGE_URL } from "../../../api.config";
+import type { User } from "../../../../types/user";
+import { BASE_IMAGE_URL } from "../../../../api.config";
 // Icons
 import { MdClose } from "react-icons/md";
 

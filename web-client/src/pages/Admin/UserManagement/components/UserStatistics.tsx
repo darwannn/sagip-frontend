@@ -1,14 +1,14 @@
 // Redux
-import { useAppSelector } from "../../../store/hooks";
+import { useAppSelector } from "../../../../store/hooks";
 
 // Services
-import { useGetStatisticsQuery } from "../../../services/accountQuery";
+import { useGetStatisticsQuery } from "../../../../services/accountQuery";
 // Icons
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
 
-import SingleData from "../../../components/Statistics/SingleData";
-import MultipleData from "../../../components/Statistics/MultipleData";
+import SingleData from "../../../../components/Statistics/SingleData";
+import MultipleData from "../../../../components/Statistics/MultipleData";
 
 const UserStatistics = () => {
   const isStaff = useAppSelector((state) => state.userManage.isStaff);

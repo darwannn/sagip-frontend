@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import Dashboard from "../pages/Admin/Dashboard/Dashboard";
 import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
 
 import ManageTeamPage from "../pages/TeamManagement/ManageTeamPage";
@@ -18,10 +18,10 @@ import CreateAlertPage from "../pages/AlertsManagement/CreateAlertsPage";
 import ViewAlertsPage from "../pages/AlertsManagement/ViewAlertsPage";
 import AlertReport from "../pages/AlertsManagement/components/AlertReport";
 
-import ManageUserPage from "../pages/UserManagement/ManageUserPage";
-import VerifyUserPage from "../pages/UserManagement/VerifyUserPage";
-import CreateUserPage from "../pages/UserManagement/CreateUserPage";
-import ViewUserPage from "../pages/UserManagement/ViewUserPage";
+import ManageUserPage from "../pages/Admin/UserManagement/ManageUserPage";
+import VerifyUserPage from "../pages/Admin/UserManagement/VerifyUserPage";
+import CreateUserPage from "../pages/Admin/UserManagement/CreateUserPage";
+import ViewUserPage from "../pages/Admin/UserManagement/ViewUserPage";
 
 import ManageAccountPage from "../pages/AccountSettings/ManageAccountPage";
 

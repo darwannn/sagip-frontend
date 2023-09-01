@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useArchiveUserMutation } from "../../../services/usersQuery";
+import { useArchiveUserMutation } from "../../../../services/usersQuery";
 
 type PROPS = {
   rowId: string;
@@ -19,8 +19,7 @@ const UserRowAction = ({ rowId, isArchived }: PROPS) => {
   const onArchiveHandler = async () => {
     // Show delete confirmation
     const confirm = window.confirm(
-      `Are you sure you want to ${
-        isArchived ? "unarchive" : "archive"
+      `Are you sure you want to ${isArchived ? "unarchive" : "archive"
       } this account?`
     );
     if (!confirm) return;

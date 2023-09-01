@@ -13,12 +13,12 @@ import {
 } from "@tanstack/react-table";
 
 import { userColumn, staffColumn } from "./UserColumn";
-import DataTable from "../../../components/ui/data-table";
+import DataTable from "../../../../components/ui/data-table";
 
 // Redux
-import { useAppSelector } from "../../../store/hooks";
-import { useGetVerificationRequestsQuery } from "../../../services/usersQuery";
-import { selectUserTableData } from "../../../store/slices/userManageSlice";
+import { useAppSelector } from "../../../../store/hooks";
+import { useGetVerificationRequestsQuery } from "../../../../services/usersQuery";
+import { selectUserTableData } from "../../../../store/slices/userManageSlice";
 
 import { Link } from "react-router-dom";
 
@@ -136,9 +136,8 @@ const UserTable = () => {
           Previous
         </button>
         <div>
-          <span className="text-sm">{`Page ${
-            table.getState().pagination.pageIndex + 1
-          } of ${table.getPageCount()}`}</span>
+          <span className="text-sm">{`Page ${table.getState().pagination.pageIndex + 1
+            } of ${table.getPageCount()}`}</span>
         </div>
         <button
           className="border px-3 py-1 rounded"

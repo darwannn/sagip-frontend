@@ -1,5 +1,5 @@
 /* TODO: should be assistance request type */
-import { THazardReport } from "../../HazardReports/types/hazardReport";
+import { THazardReport } from "../../../HazardReports/types/hazardReport";
 
 export type TDashboard = {
   emergencyFacilities: number;

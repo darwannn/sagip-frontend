@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import UserForm from "./components/UserForm";
-import { useGetUserByIdQuery } from "../../services/usersQuery";
+import { useGetUserByIdQuery } from "../../../services/usersQuery";
 
 const ViewUserPage = () => {
   const { userId } = useParams();
