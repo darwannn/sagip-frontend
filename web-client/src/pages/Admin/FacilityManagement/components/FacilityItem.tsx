@@ -1,10 +1,10 @@
 import { memo } from "react";
 // Services / API
-import { useAppDispatch } from "../../../store/hooks";
-import { setSelectedFacility } from "../../../store/slices/facilitySlice";
-import { useDeleteFacilityMutation } from "../../../services/facilityQuery";
+import { useAppDispatch } from "../../../../store/hooks";
+import { setSelectedFacility } from "../../../../store/slices/facilitySlice";
+import { useDeleteFacilityMutation } from "../../../../services/facilityQuery";
 // Types
-import { TFacility } from "../types/emergencyFacility";
+import { TFacility } from "../../../../types/emergencyFacility";
 // Icons
 import FacilityIcon from "./FacilityIcon";
 import { MdLocationOn, MdDelete } from "react-icons/md";

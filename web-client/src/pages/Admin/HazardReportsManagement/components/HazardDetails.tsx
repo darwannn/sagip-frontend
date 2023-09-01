@@ -1,14 +1,14 @@
 import moment from "moment";
-import type { THazardReport } from "../types/hazardReport";
-import { BASE_IMAGE_URL } from "../../../api.config";
+import type { THazardReport } from "../../../../types/hazardReport";
+import { BASE_IMAGE_URL } from "../../../../api.config";
 import { MdClose } from "react-icons/md";
-import { useAppDispatch } from "../../../store/hooks";
-import { setSelectedHazardReport } from "../../../store/slices/hazardReportSlice";
+import { useAppDispatch } from "../../../../store/hooks";
+import { setSelectedHazardReport } from "../../../../store/slices/hazardReportSlice";
 import {
   useDeleteHazardReportMutation,
   useResolveHazardReportMutation,
   useVerifyHazardReportMutation,
-} from "../../../services/hazardReportsQuery";
+} from "../../../../services/hazardReportsQuery";
 
 type TProps = {
   reportData: THazardReport;

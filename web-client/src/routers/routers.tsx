@@ -4,8 +4,8 @@ import AdminRootLayout from "../pages/RootLayout/AdminRootLayout";
 
 import ManageTeamPage from "../pages/Admin/TeamManagement/ManageTeamPage";
 import EmergencyReportsPage from "../pages/Admin/AssistanceRequestManagement/EmergencyReportsPage";
-import HazardReportsPage from "../pages/HazardReports/HazardReportsPage";
-import ManageFacilitiesPage from "../pages/MapManagement/ManageFacilitiesPage";
+import HazardReportsPage from "../pages/Admin/HazardReportsManagement/HazardReportsPage";
+import ManageFacilitiesPage from "../pages/Admin/FacilityManagement/ManageFacilitiesPage";
 import { checkAuth, isLoggedIn } from "../util/auth";
 import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
 import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";

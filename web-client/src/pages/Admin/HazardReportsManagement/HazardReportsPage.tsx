@@ -6,13 +6,13 @@ import HazardReportsList from "./components/HazardReportsList";
 import HazardDetails from "./components/HazardDetails";
 import HazardFilters from "./components/HazardFilters";
 // Redux / Services / API
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectHazardReport,
   setSelectedHazardReport,
-} from "../../store/slices/hazardReportSlice";
-import { useGetHazardReportsQuery } from "../../services/hazardReportsQuery";
-import { THazardReport } from "./types/hazardReport";
+} from "../../../store/slices/hazardReportSlice";
+import { useGetHazardReportsQuery } from "../../../services/hazardReportsQuery";
+import { THazardReport } from "../../../types/hazardReport";
 
 const HazardReportsPage = () => {
   // Map State / Instance

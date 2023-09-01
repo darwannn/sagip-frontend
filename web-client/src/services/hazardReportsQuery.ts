@@ -1,4 +1,4 @@
-import { THazardReport } from "../pages/HazardReports/types/hazardReport";
+import { THazardReport } from "../types/hazardReport";
 import { rootApi } from "./rootApi";
 
 export const hazardReportsQueryApi = rootApi.injectEndpoints({

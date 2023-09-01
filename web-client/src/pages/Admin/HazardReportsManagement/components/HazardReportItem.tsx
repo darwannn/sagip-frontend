@@ -1,7 +1,7 @@
 import moment from "moment";
-import { setSelectedHazardReport } from "../../../store/slices/hazardReportSlice";
-import { useAppDispatch } from "../../../store/hooks";
-import type { THazardReport } from "../types/hazardReport";
+import { setSelectedHazardReport } from "../../../../store/slices/hazardReportSlice";
+import { useAppDispatch } from "../../../../store/hooks";
+import type { THazardReport } from "../../../../types/hazardReport";
 
 type TProps = {
   report: THazardReport;

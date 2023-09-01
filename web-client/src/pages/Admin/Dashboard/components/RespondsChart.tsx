@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Bar from "../../../../components/Charts/Bar";
 import "chart.js/auto";
 
-import type { THazardReport } from "../../../HazardReports/types/hazardReport";
+import type { THazardReport } from "../../../../types/hazardReport";
 
 import { MdChevronRight, MdChevronLeft } from "react-icons/md";
 

@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 // Services / API
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useGetFacilitiesQuery } from "../../services/facilityQuery";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useGetFacilitiesQuery } from "../../../services/facilityQuery";
 import {
   setSelectedFacility,
   selectAddMode,
   selectionFacility,
   selectTempMarkerPos,
-} from "../../store/slices/facilitySlice";
+} from "../../../store/slices/facilitySlice";
 // Functional Componenents
 import { MarkerF } from "@react-google-maps/api";
 import MapComponent from "./components/MapComponent";
@@ -16,7 +16,7 @@ import FacilitiesList from "./components/FacilitiesList";
 import FacilityForm from "./components/FacilityForm";
 import Select, { MultiValue } from "react-select";
 // Types
-import { TFacility } from "./types/emergencyFacility";
+import { TFacility } from "../../../types/emergencyFacility";
 
 const ManageFacilitiesPage = () => {
   // Map State / Instance

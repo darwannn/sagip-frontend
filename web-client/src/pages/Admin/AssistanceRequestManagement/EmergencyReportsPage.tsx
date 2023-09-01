@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MapComponent from "../../MapManagement/components/MapComponent";
+import MapComponent from "../FacilityManagement/components/MapComponent";
 import { useGetAllAssistanceRequestsQuery } from "../../../services/assistanceRequestQuery";
 import AssistanceList from "./components/AssistanceList";
 import { MarkerF } from "@react-google-maps/api";

@@ -1,11 +1,11 @@
 import { memo } from "react";
 // Services / API
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   selectAddMode,
   selectionFacility,
   setAddMode,
-} from "../../../store/slices/facilitySlice";
+} from "../../../../store/slices/facilitySlice";
 // Icons
 import { MdMyLocation } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -30,11 +30,10 @@ const FacilityActions = memo(({ recenterMapHandler }: TProps) => {
       </button>
       {/* Add Facility Button */}
       <button
-        className={`${
-          addMode
+        className={`${addMode
             ? "bg-red-200 hover:bg-red-300"
             : "bg-gray-100 hover:bg-gray-300"
-        } text-gray-500 p-2 text-2xl rounded-md transition-all duration-200 disabled:text-gray-200 disabled:hover:bg-gray-100`}
+          } text-gray-500 p-2 text-2xl rounded-md transition-all duration-200 disabled:text-gray-200 disabled:hover:bg-gray-100`}
         onClick={() => {
           dispatch(setAddMode(!addMode));
         }}

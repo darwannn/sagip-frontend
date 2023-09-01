@@ -7,21 +7,21 @@ import {
   useWatch,
 } from "react-hook-form";
 // Services / API
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   useAddFacilityMutation,
   useUpdateFacilityMutation,
-} from "../../../services/facilityQuery";
+} from "../../../../services/facilityQuery";
 import {
   selectTempMarkerPos,
   setAddMode,
   unsetSelectedFacility,
-} from "../../../store/slices/facilitySlice";
+} from "../../../../store/slices/facilitySlice";
 // Functional Components
-import FileDropzone from "../../../components/Form/FileDropzone";
+import FileDropzone from "../../../../components/Form/FileDropzone";
 // Types
-import { TFacility } from "../types/emergencyFacility";
-import { BASE_IMAGE_URL } from "../../../api.config";
+import { TFacility } from "../../../../types/emergencyFacility";
+import { BASE_IMAGE_URL } from "../../../../api.config";
 // Icons
 import { MdClose } from "react-icons/md";
 
@@ -211,9 +211,8 @@ const FacilityForm = ({ facility }: TProps) => {
             <option value="non-operational">Full</option>
           </select>
           <button
-            className={`${
-              facility ? "bg-indigo-500" : "bg-green-500"
-            } p-2 rounded text-white`}
+            className={`${facility ? "bg-indigo-500" : "bg-green-500"
+              } p-2 rounded text-white`}
             type="submit"
           >
             {facility
@@ -221,8 +220,8 @@ const FacilityForm = ({ facility }: TProps) => {
                 ? "Updating ...."
                 : "Update"
               : isAddFacilityLoading
-              ? "Adding ...."
-              : "Add"}
+                ? "Adding ...."
+                : "Add"}
           </button>
         </div>
       </form>

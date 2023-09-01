@@ -1,6 +1,6 @@
 import { memo } from "react";
 // Google Maps API
-import { GOOGLE_MAP_API_KEY } from "../../../api.config";
+import { GOOGLE_MAP_API_KEY } from "../../../../api.config";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 const containerStyle = {
