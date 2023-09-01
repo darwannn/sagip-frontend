@@ -39,7 +39,7 @@ import LoginContactVerification from "../pages/Login/LoginContactVerification";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "admin",
     element: <AdminRootLayout />,
     loader: checkAuth,
     children: [
@@ -95,8 +95,8 @@ export const router = createBrowserRouter([
         path: "account-settings",
         children: [
           { index: true, element: <ManageAccountPage /> },
-          { path: ":page", element: <ManageAccountPage /> },
-          { path: ":page", element: <ManageAccountPage /> },
+          // { path: ":page", element: <ManageAccountPage /> },
+          // { path: ":page", element: <ManageAccountPage /> },
         ],
       },
     ],
