@@ -48,7 +48,10 @@ export const checkAuth = () => {
 export const isLoggedIn = () => {
   const token = getAuthToken();
   if (token) {
-    return redirect("/");
+    // TODO: REDIRECT DEPENDING ON USER TYPE
+
+    // TEMPORARY
+    return redirect("/admin");
   }
   return null;
 };

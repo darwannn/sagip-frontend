@@ -40,8 +40,65 @@ import AccountProfileForm from "../pages/Admin/AccountSettings/components/Accoun
 import AccountEmailForm from "../pages/Admin/AccountSettings/components/AccountEmailForm";
 import AccountContactNumberForm from "../pages/Admin/AccountSettings/components/AccountContactNumberForm";
 import AccountPasswordForm from "../pages/Admin/AccountSettings/components/AccountPasswordForm";
+import TEMP_ROOT_PAGE from "../pages/RootLayout/Temp_RootPage";
 
 export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <TEMP_ROOT_PAGE />,
+    children: [
+      {
+        path: "login",
+        loader: isLoggedIn,
+        children: [
+          {
+            index: true,
+            element: <LoginPage />,
+          },
+          {
+            path: "contact-verification",
+            element: <LoginContactVerification />,
+          },
+        ],
+      },
+
+      {
+        path: "register",
+        /* loader: isLoggedIn, */
+        children: [
+          { index: true, element: <RegistrationPage /> },
+          {
+            path: "contact-verification",
+            element: <RegisterContactVerification />,
+          },
+          {
+            path: "identity-verification",
+            element: <RegistrationAlmostDone />,
+          },
+        ],
+      },
+      {
+        path: "identity-verification",
+        element: <IdentityVerificationPage />,
+      },
+      {
+        path: "forgot-password",
+        /* loader: isLoggedIn, */
+        children: [
+          { index: true, element: <ForgotPasswordPage /> },
+          {
+            path: "contact-verification",
+            element: <ForgotPasswordContactVerification />,
+          },
+        ],
+      },
+      {
+        path: "/new-password",
+        element: <NewPasswordPage />,
+        /* loader: isLoggedIn, */
+      },
+    ]
+  },
   {
     path: "admin",
     element: <AdminRootLayout />,
@@ -107,53 +164,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/login",
-    loader: isLoggedIn,
-    children: [
-      { index: true, element: <LoginPage /> },
-      {
-        path: "contact-verification",
-        element: <LoginContactVerification />,
-      },
-    ],
-  },
 
-  {
-    path: "register",
-    /* loader: isLoggedIn, */
-    children: [
-      { index: true, element: <RegistrationPage /> },
-      {
-        path: "contact-verification",
-        element: <RegisterContactVerification />,
-      },
-      {
-        path: "identity-verification",
-        element: <RegistrationAlmostDone />,
-      },
-    ],
-  },
-  {
-    path: "identity-verification",
-    element: <IdentityVerificationPage />,
-  },
-  {
-    path: "forgot-password",
-    /* loader: isLoggedIn, */
-    children: [
-      { index: true, element: <ForgotPasswordPage /> },
-      {
-        path: "contact-verification",
-        element: <ForgotPasswordContactVerification />,
-      },
-    ],
-  },
-  {
-    path: "/new-password",
-    element: <NewPasswordPage />,
-    /* loader: isLoggedIn, */
-  },
   /* temporary, so the report will open in new tab (without side navigation menu) */
   {
     path: "/disaster-alerts/report/:alertId",

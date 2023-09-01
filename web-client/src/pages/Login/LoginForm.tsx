@@ -45,8 +45,9 @@ const LoginForm = () => {
       setAuthToken({
         token: resData.token || "",
       });
+      // TODO: REDIRECT DEPENDS ON USER ROLE
       if (resData.success) {
-        navigate("/");
+        navigate("/admin");
       }
       if (resData.message.includes("attempt")) {
         navigate("/login/contact-verification");
@@ -78,11 +79,10 @@ const LoginForm = () => {
         deleteAccountRes ||
         (serverRes && !serverRes.message.includes("input error") && (
           <div
-            className={`mt-3 p-2 rounded-md text-center ${
-              newPasswordRes || deleteAccountRes
-                ? "bg-green-500 text-white"
-                : "bg-red-500 text-white"
-            }`}
+            className={`mt-3 p-2 rounded-md text-center ${newPasswordRes || deleteAccountRes
+              ? "bg-green-500 text-white"
+              : "bg-red-500 text-white"
+              }`}
           >
             {newPasswordRes &&
               "Password changed successfully. You can now login with your new password."}
