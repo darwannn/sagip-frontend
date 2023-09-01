@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 
 import { useGetUserByTokenQuery } from "../../services/accountQuery";
 
@@ -50,7 +50,10 @@ const ManageAccountPage = () => {
         <div className="w-full flex">
           <AccountSettingsList userData={userData} />
           {/* flex-1, takes the rest of the space */}
-          <ViewAccountPage userData={userData} />
+          {/* <ViewAccountPage userData={userData} /> */}
+          <div className="flex-1">
+            <Outlet />
+          </div>
         </div>
       )}
     </>

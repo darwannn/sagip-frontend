@@ -36,6 +36,10 @@ import IdentityVerificationPage from "../pages/IdentityVerification/IdentityVeri
 
 import LoginPage from "../pages/Login/LoginPage";
 import LoginContactVerification from "../pages/Login/LoginContactVerification";
+import AccountProfileForm from "../pages/AccountSettings/components/AccountProfileForm";
+import AccountEmailForm from "../pages/AccountSettings/components/AccountEmailForm";
+import AccountContactNumberForm from "../pages/AccountSettings/components/AccountContactNumberForm";
+import AccountPasswordForm from "../pages/AccountSettings/components/AccountPasswordForm";
 
 export const router = createBrowserRouter([
   {
@@ -93,10 +97,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "account-settings",
+        element: <ManageAccountPage />,
         children: [
-          { index: true, element: <ManageAccountPage /> },
-          // { path: ":page", element: <ManageAccountPage /> },
-          // { path: ":page", element: <ManageAccountPage /> },
+          { path: "profile", element: <AccountProfileForm /> },
+          { path: "contact-number", element: <AccountContactNumberForm /> },
+          { path: "email", element: <AccountEmailForm /> },
+          { path: "password", element: <AccountPasswordForm /> },
         ],
       },
     ],

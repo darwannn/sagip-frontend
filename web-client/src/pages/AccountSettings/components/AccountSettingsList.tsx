@@ -22,7 +22,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
           className={` ${
             page === "profile" && "font-semibold text-black"
           } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
-          onClick={() => navigate("/account-settings/profile")}
+          onClick={() => navigate("profile")}
         >
           Profile
         </div>
@@ -31,7 +31,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
           className={` ${
             page === "contact-number" && "font-semibold text-black"
           } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
-          onClick={() => navigate("/account-settings/contact-number")}
+          onClick={() => navigate("contact-number")}
         >
           Contact Number
         </div>
@@ -40,7 +40,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
           className={` ${
             page === "email" && "font-semibold text-black"
           } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
-          onClick={() => navigate("/account-settings/email")}
+          onClick={() => navigate("email")}
         >
           Email{" "}
           <div className="flex items-center">
@@ -56,7 +56,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
           className={` ${
             page === "password" && "font-semibold text-black"
           } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
-          onClick={() => navigate("/account-settings/password")}
+          onClick={() => navigate("password")}
         >
           Password
         </div>
