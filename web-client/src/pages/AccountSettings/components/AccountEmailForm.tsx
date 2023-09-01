@@ -7,7 +7,7 @@ import {
 } from "../../../store/slices/authSlice";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { TUserResData, User } from "../../../types/user";
+import { TUserResData } from "../../../types/user";
 
 import { useSendVerificationCodeMutation } from "../../../services/authQuery";
 import { useGetUserByTokenQuery } from "../../../services/accountQuery";
@@ -16,13 +16,11 @@ import { MdClose } from "react-icons/md";
 
 import Modal from "../../../components/Modal/Modal";
 import ContactVerification from "../../../components/Verification/ContactVerification";
-type TProps = {
-  userData?: User;
-};
 
-const AccountEmailForm = ({ userData }: TProps) => {
+const AccountEmailForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { data: userData } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes

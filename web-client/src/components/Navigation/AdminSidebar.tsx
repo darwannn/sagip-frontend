@@ -32,7 +32,10 @@ const AdminSidebar = () => {
       </div>
       {/* <hr className="w-full h-[1px] border-0 bg-gray-200 self-center" /> */}
       <nav className="grow py-5 flex flex-col gap-1">
-        <NavLink className="w-full hover:bg-primary-100 p-2 rounded" to={"/"}>
+        <NavLink
+          className="w-full hover:bg-primary-100 p-2 rounded"
+          to={"/admin"}
+        >
           <div className="flex items-center gap-4">
             <span className="text-[24px] text-gray-600">
               <RxDashboard />
@@ -42,7 +45,7 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"/users"}
+          to={"users"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">
@@ -53,7 +56,7 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"/teams"}
+          to={"teams"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">
@@ -64,7 +67,7 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"/emergency-reports"}
+          to={"emergency-reports"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">
@@ -75,7 +78,7 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"/facility-map"}
+          to={"facility-map"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">
@@ -86,7 +89,7 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"/hazard-reports"}
+          to={"hazard-reports"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">
@@ -97,7 +100,7 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"/disaster-alerts"}
+          to={"disaster-alerts"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">
@@ -108,7 +111,7 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"/articles"}
+          to={"manage-articles"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">
@@ -124,7 +127,7 @@ const AdminSidebar = () => {
       <div className="flex flex-col mt-5">
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"/account-settings"}
+          to={"account-settings"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">

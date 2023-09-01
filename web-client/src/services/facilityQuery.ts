@@ -1,13 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-import { API_BASE_URL } from "../api.config";
-
 import { TFacility } from "../pages/MapManagement/types/emergencyFacility";
+import { rootApi } from "./rootApi";
 
-export const facilityQueryApi = createApi({
-  reducerPath: "facilityQuery",
-  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["Facility", "SelectedFacility"],
+export const facilityQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     // Get all facilities
     getFacilities: builder.query<TFacility[], void>({

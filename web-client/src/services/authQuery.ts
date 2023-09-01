@@ -1,13 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
 import type { TUserResData, User } from "../types/user";
+import { rootApi } from "./rootApi";
 
-import { API_BASE_URL } from "../api.config";
-
-export const authQueryApi = createApi({
-  reducerPath: "authQuery",
-  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["User", "SelectedUser"],
+export const authQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<
       TUserResData,

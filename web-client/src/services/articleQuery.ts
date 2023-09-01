@@ -1,12 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-import { API_BASE_URL } from "../api.config";
 import { Article, TArticleResData } from "../pages/Articles/types/article";
+import { rootApi } from "./rootApi";
 
-export const articleQueryApi = createApi({
-  reducerPath: "articleQuery",
-  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["Article", "SelectedArticle"],
+export const articleQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     // Get all articles
     getArticles: builder.query<Article[], void>({

@@ -1,19 +1,15 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { API_BASE_URL } from "../api.config";
 import {
   TAssistanceReqResponse,
   TAssistanceRequest,
 } from "../pages/EmergencyReports/types/assistanceRequest";
+import { rootApi } from "./rootApi";
 
 type DismissBody = {
   reason: string;
   note?: string;
 };
 
-export const assistanceRequestQueryApi = createApi({
-  reducerPath: "assistanceRequestQuery",
-  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["AssistanceRequest"],
+export const assistanceRequestQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllAssistanceRequests: builder.query<TAssistanceRequest[], void>({
       query: () => ({
