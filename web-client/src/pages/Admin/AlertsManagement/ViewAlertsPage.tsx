@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import AlertForm from "./components/AlertForm";
-import { useGetAlertByIdQuery } from "../../services/alertQuery";
+import { useGetAlertByIdQuery } from "../../../services/alertQuery";
 
 const ViewAlertPage = () => {
 
@@ -17,7 +17,7 @@ const ViewAlertPage = () => {
   if (error) {
     console.log(alertId);
     console.log(error);
-    
+
     return <p>Something went wrong</p>;
   }
 

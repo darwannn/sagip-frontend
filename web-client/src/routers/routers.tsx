@@ -7,16 +7,16 @@ import EmergencyReportsPage from "../pages/Admin/AssistanceRequestManagement/Eme
 import HazardReportsPage from "../pages/Admin/HazardReportsManagement/HazardReportsPage";
 import ManageFacilitiesPage from "../pages/Admin/FacilityManagement/ManageFacilitiesPage";
 import { checkAuth, isLoggedIn } from "../util/auth";
-import ManageArticlesPage from "../pages/Articles/ManageArticlesPage";
-import CreateArticlesPage from "../pages/Articles/CreateArticlesPage";
-import ViewArticlePage from "../pages/Articles/ViewArticlePage";
+import ManageArticlesPage from "../pages/Admin/ArticleManagement/ManageArticlesPage";
+import CreateArticlesPage from "../pages/Admin/ArticleManagement/CreateArticlesPage";
+import ViewArticlePage from "../pages/Admin/ArticleManagement/ViewArticlePage";
 import TeamDetails from "../pages/Admin/TeamManagement/components/TeamDetails";
 import ManageRespondersPage from "../pages/Admin/TeamManagement/ManageRespondersPage";
 
-import ManageAlertsPage from "../pages/AlertsManagement/ManageAlertsPage";
-import CreateAlertPage from "../pages/AlertsManagement/CreateAlertsPage";
-import ViewAlertsPage from "../pages/AlertsManagement/ViewAlertsPage";
-import AlertReport from "../pages/AlertsManagement/components/AlertReport";
+import ManageAlertsPage from "../pages/Admin/AlertsManagement/ManageAlertsPage";
+import CreateAlertPage from "../pages/Admin/AlertsManagement/CreateAlertsPage";
+import ViewAlertsPage from "../pages/Admin/AlertsManagement/ViewAlertsPage";
+import AlertReport from "../pages/Admin/AlertsManagement/components/AlertReport";
 
 import ManageUserPage from "../pages/Admin/UserManagement/ManageUserPage";
 import VerifyUserPage from "../pages/Admin/UserManagement/VerifyUserPage";

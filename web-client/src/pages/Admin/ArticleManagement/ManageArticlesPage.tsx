@@ -3,7 +3,7 @@
 // Redux
 // Services
 import { Link } from "react-router-dom";
-import { useGetArticlesQuery } from "../../services/articleQuery";
+import { useGetArticlesQuery } from "../../../services/articleQuery";
 import ArticleTable from "./components/ArticleTable";
 import ArticleStatistics from "./components/ArticleStatistics";
 

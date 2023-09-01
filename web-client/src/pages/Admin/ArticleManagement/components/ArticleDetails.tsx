@@ -8,9 +8,9 @@ import {
 } from "react-hook-form";
 import { Controller } from "react-hook-form";
 // Types
-import FileDropzone from "../../../components/Form/FileDropzone";
+import FileDropzone from "../../../../components/Form/FileDropzone";
 
-import { BASE_IMAGE_URL } from "../../../api.config";
+import { BASE_IMAGE_URL } from "../../../../api.config";
 
 type TProps = {
   register: UseFormRegister<FieldValues>;

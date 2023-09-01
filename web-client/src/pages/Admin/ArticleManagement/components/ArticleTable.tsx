@@ -6,11 +6,11 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import DataTable from "../../../components/ui/data-table";
+import DataTable from "../../../../components/ui/data-table";
 import { articleColumn as columns } from "../types/ArticleColumn";
 // Redux
-import PaginationControls from "../../../components/ui/PaginationControl";
-import { Article } from "../types/article";
+import PaginationControls from "../../../../components/ui/PaginationControl";
+import { Article } from "../../../../types/article";
 
 type TProps = {
   articleData: Article[];

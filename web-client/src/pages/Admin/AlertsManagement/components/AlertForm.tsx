@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { TSurvey, TSurveyResData } from "../types/alert";
-import { useGetActiveAlertQuery } from "../../../services/alertQuery";
+import { TSurvey, TSurveyResData } from "../../../../types/alert";
+import { useGetActiveAlertQuery } from "../../../../services/alertQuery";
 import {
   useAddAlertMutation,
   useUpdateAlertMutation,
-} from "../../../services/alertQuery";
+} from "../../../../services/alertQuery";
 
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
@@ -160,8 +160,8 @@ const AlertForm = ({ alertData }: TProps) => {
           {!alertData
             ? "Publish"
             : alertData?.status === "active"
-            ? "Update"
-            : "Publish"}
+              ? "Update"
+              : "Publish"}
         </button>
 
         {alertData && (

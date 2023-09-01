@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useDeleteArticleMutation } from "../../../services/articleQuery";
+import { useDeleteArticleMutation } from "../../../../services/articleQuery";
 type TRowAction = {
   rowId: string;
 };

@@ -5,12 +5,12 @@ import {
   useForm,
 } from "react-hook-form";
 //Types
-import { Article, TArticleResData } from "../types/article";
+import { Article, TArticleResData } from "../../../../types/article";
 // Redux
 import {
   useAddArticleMutation,
   useUpdateArticleMutation,
-} from "../../../services/articleQuery";
+} from "../../../../services/articleQuery";
 // Components
 import ArticleDetailsForm from "./ArticleDetails";
 import ArticleContentEditor from "./ArticleContentEditor";

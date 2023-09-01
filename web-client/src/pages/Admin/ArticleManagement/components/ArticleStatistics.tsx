@@ -1,10 +1,10 @@
 // Services
-import { useGetStatisticsQuery } from "../../../services/accountQuery";
+import { useGetStatisticsQuery } from "../../../../services/accountQuery";
 // Icons
 import { RiFileUploadFill } from "react-icons/ri";
 import { MdArticle } from "react-icons/md";
 
-import SingleData from "../../../components/Statistics/SingleData";
+import SingleData from "../../../../components/Statistics/SingleData";
 
 const ArticleStatistics = () => {
   const {

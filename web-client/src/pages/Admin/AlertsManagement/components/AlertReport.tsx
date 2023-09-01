@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
-import { useGetAlertReportByIdQuery } from "../../../services/alertQuery";
-import { TSurveyReport } from "../types/alert";
+import { useGetAlertReportByIdQuery } from "../../../../services/alertQuery";
+import { TSurveyReport } from "../../../../types/alert";
 
 import moment from "moment";
 import {
@@ -14,7 +14,7 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 
-import Malolos_CDRRMO_Logo from "../../../assets/img/Malolos_CDRRMO_Logo.png";
+import Malolos_CDRRMO_Logo from "../../../../assets/img/Malolos_CDRRMO_Logo.png";
 
 const styles = StyleSheet.create({
   body: {

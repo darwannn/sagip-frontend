@@ -3,8 +3,8 @@ import { ControllerRenderProps } from "react-hook-form";
 import StarterKit from "@tiptap/starter-kit";
 
 // Components
-import CustomMenuBar from "../../../components/tiptap-text-editor/CustomMenuBar";
-import Tiptap from "../../../components/tiptap-text-editor/Tiptap";
+import CustomMenuBar from "../../../../components/tiptap-text-editor/CustomMenuBar";
+import Tiptap from "../../../../components/tiptap-text-editor/Tiptap";
 
 type PROPS = {
   content: string;

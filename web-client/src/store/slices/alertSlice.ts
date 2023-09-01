@@ -1,7 +1,7 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 
 // Types
-import type { TSurvey } from "../../pages/AlertsManagement/types/alert";
+import type { TSurvey } from "../../types/alert";
 import { RootState } from "../store";
 
 type TSurveyState = {

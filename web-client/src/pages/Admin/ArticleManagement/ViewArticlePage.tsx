@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import ArticleForm from "./components/ArticleForm";
-import { useGetArticleByIdQuery } from "../../services/articleQuery";
+import { useGetArticleByIdQuery } from "../../../services/articleQuery";
 
 const ViewArticlePage = () => {
   // Get the params from the URL

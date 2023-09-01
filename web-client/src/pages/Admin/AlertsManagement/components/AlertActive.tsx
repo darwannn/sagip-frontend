@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useGetActiveAlertQuery } from "../../../services/alertQuery";
+import { useGetActiveAlertQuery } from "../../../../services/alertQuery";
 
 const AlertActive = () => {
   const { data: alertsData, isLoading, error } = useGetActiveAlertQuery();

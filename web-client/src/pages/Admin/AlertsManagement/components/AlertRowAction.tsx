@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useDeleteAlertMutation } from "../../../services/alertQuery";
+import { useDeleteAlertMutation } from "../../../../services/alertQuery";
 type TRowAction = {
   rowId: string;
 };

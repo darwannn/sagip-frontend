@@ -6,11 +6,11 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import DataTable from "../../../components/ui/data-table";
+import DataTable from "../../../../components/ui/data-table";
 import { alertColumn as columns } from "../types/AlertColumn";
 // Redux
-import PaginationControls from "../../../components/ui/PaginationControl";
-import { TSurvey } from "../types/alert";
+import PaginationControls from "../../../../components/ui/PaginationControl";
+import { TSurvey } from "../../../../types/alert";
 type TProps = {
   alertData: TSurvey[];
 };

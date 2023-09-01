@@ -3,7 +3,7 @@ import {
   TActiveSurvey,
   TSMSResData,
   TSurveyResData,
-} from "../pages/AlertsManagement/types/alert";
+} from "../types/alert";
 import { rootApi } from "./rootApi";
 
 export const alertQueryApi = rootApi.injectEndpoints({
