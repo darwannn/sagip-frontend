@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-import { setDeleteAccountRes } from "../../../store/slices/accountSlice";
+import { useAppSelector, useAppDispatch } from "../../../../store/hooks";
+import { setDeleteAccountRes } from "../../../../store/slices/accountSlice";
 
 import moment from "moment";
 
-import Modal from "../../../components/Modal/Modal";
-import Password from "../../../components/Verification/Password";
+import Modal from "../../../../components/Modal/Modal";
+import Password from "../../../../components/Verification/Password";
 
 const AccountDelete = () => {
   const navigate = useNavigate();

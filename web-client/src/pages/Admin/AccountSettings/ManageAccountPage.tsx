@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-import { useGetUserByTokenQuery } from "../../services/accountQuery";
+import { useGetUserByTokenQuery } from "../../../services/accountQuery";
 
 import AccountSettingsList from "./components/AccountSettingsList";
 

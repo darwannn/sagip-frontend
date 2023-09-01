@@ -23,7 +23,7 @@ import VerifyUserPage from "../pages/Admin/UserManagement/VerifyUserPage";
 import CreateUserPage from "../pages/Admin/UserManagement/CreateUserPage";
 import ViewUserPage from "../pages/Admin/UserManagement/ViewUserPage";
 
-import ManageAccountPage from "../pages/AccountSettings/ManageAccountPage";
+import ManageAccountPage from "../pages/Admin/AccountSettings/ManageAccountPage";
 
 import NewPasswordPage from "../pages/NewPassword/NewPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
@@ -36,10 +36,10 @@ import IdentityVerificationPage from "../pages/IdentityVerification/IdentityVeri
 
 import LoginPage from "../pages/Login/LoginPage";
 import LoginContactVerification from "../pages/Login/LoginContactVerification";
-import AccountProfileForm from "../pages/AccountSettings/components/AccountProfileForm";
-import AccountEmailForm from "../pages/AccountSettings/components/AccountEmailForm";
-import AccountContactNumberForm from "../pages/AccountSettings/components/AccountContactNumberForm";
-import AccountPasswordForm from "../pages/AccountSettings/components/AccountPasswordForm";
+import AccountProfileForm from "../pages/Admin/AccountSettings/components/AccountProfileForm";
+import AccountEmailForm from "../pages/Admin/AccountSettings/components/AccountEmailForm";
+import AccountContactNumberForm from "../pages/Admin/AccountSettings/components/AccountContactNumberForm";
+import AccountPasswordForm from "../pages/Admin/AccountSettings/components/AccountPasswordForm";
 
 export const router = createBrowserRouter([
   {

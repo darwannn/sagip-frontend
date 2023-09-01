@@ -1,21 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../../../store/hooks";
 import {
   setIdentifier,
   setcontactVerificationRes,
-} from "../../../store/slices/authSlice";
+} from "../../../../store/slices/authSlice";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { TUserResData } from "../../../types/user";
+import { TUserResData } from "../../../../types/user";
 
-import { useSendVerificationCodeMutation } from "../../../services/authQuery";
-import { useGetUserByTokenQuery } from "../../../services/accountQuery";
+import { useSendVerificationCodeMutation } from "../../../../services/authQuery";
+import { useGetUserByTokenQuery } from "../../../../services/accountQuery";
 
 import { MdClose } from "react-icons/md";
 
-import Modal from "../../../components/Modal/Modal";
-import ContactVerification from "../../../components/Verification/ContactVerification";
+import Modal from "../../../../components/Modal/Modal";
+import ContactVerification from "../../../../components/Verification/ContactVerification";
 
 const AccountEmailForm = () => {
   const navigate = useNavigate();

@@ -2,16 +2,16 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { TUserResData } from "../../../types/user";
+import { TUserResData } from "../../../../types/user";
 
 import {
   useGetUserByTokenQuery,
   useUpdatePasswordMutation,
-} from "../../../services/accountQuery";
+} from "../../../../services/accountQuery";
 
 import { MdClose } from "react-icons/md";
 
-import PasswordField from "../../../components/PasswordField/PasswordField";
+import PasswordField from "../../../../components/PasswordField/PasswordField";
 
 const AccountPasswordForm = () => {
   const navigate = useNavigate();

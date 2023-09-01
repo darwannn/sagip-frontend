@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { User } from "../../../types/user";
-import { useUpdateProfilePictureMutation } from "../../../services/accountQuery";
+import { User } from "../../../../types/user";
+import { useUpdateProfilePictureMutation } from "../../../../services/accountQuery";
 
-import { BASE_IMAGE_URL } from "../../../api.config";
+import { BASE_IMAGE_URL } from "../../../../api.config";
 
-import ImageCropper from "../../../components/ImageCropper/ImageCropper";
+import ImageCropper from "../../../../components/ImageCropper/ImageCropper";
 
 type TProps = {
   userData?: User;

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 
-import { User } from "../../../types/user";
+import { User } from "../../../../types/user";
 
 import AccountDelete from "./AccountDelete";
 
@@ -19,27 +19,24 @@ const AccountSettingsList = ({ userData }: TProps) => {
         <hr className="border border-gray-200" />
         <div
           /* highlight the current displayed component */
-          className={` ${
-            page === "profile" && "font-semibold text-black"
-          } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
+          className={` ${page === "profile" && "font-semibold text-black"
+            } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
           onClick={() => navigate("profile")}
         >
           Profile
         </div>
         <hr className="border border-gray-200" />
         <div
-          className={` ${
-            page === "contact-number" && "font-semibold text-black"
-          } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
+          className={` ${page === "contact-number" && "font-semibold text-black"
+            } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
           onClick={() => navigate("contact-number")}
         >
           Contact Number
         </div>
         <hr className="border border-gray-200" />
         <div
-          className={` ${
-            page === "email" && "font-semibold text-black"
-          } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
+          className={` ${page === "email" && "font-semibold text-black"
+            } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
           onClick={() => navigate("email")}
         >
           Email{" "}
@@ -53,9 +50,8 @@ const AccountSettingsList = ({ userData }: TProps) => {
         </div>
         <hr className="border border-gray-200" />
         <div
-          className={` ${
-            page === "password" && "font-semibold text-black"
-          } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
+          className={` ${page === "password" && "font-semibold text-black"
+            } flex justify-between items-center rounded-md py-2 px-5 cursor-pointer `}
           onClick={() => navigate("password")}
         >
           Password
