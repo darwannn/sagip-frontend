@@ -2,21 +2,21 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { User, TUserResData } from "../../../types/user";
+import { TUserResData } from "../../../types/user";
 
-import { useUpdatePasswordMutation } from "../../../services/accountQuery";
+import {
+  useGetUserByTokenQuery,
+  useUpdatePasswordMutation,
+} from "../../../services/accountQuery";
 
 import { MdClose } from "react-icons/md";
 
 import PasswordField from "../../../components/PasswordField/PasswordField";
 
-type TProps = {
-  userData?: User;
-};
-
-const AccountPasswordForm = ({ userData }: TProps) => {
+const AccountPasswordForm = () => {
   const navigate = useNavigate();
   const [serverRes, setServerRes] = useState<TUserResData>();
+  const { data: userData } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
 
   const [

@@ -88,7 +88,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "articles",
+        path: "manage-articles",
         children: [
           { index: true, element: <ManageArticlesPage /> },
           { path: "create", element: <CreateArticlesPage /> },

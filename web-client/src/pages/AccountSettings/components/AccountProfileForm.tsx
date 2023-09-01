@@ -2,9 +2,12 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { TUserResData, User } from "../../../types/user";
+import { TUserResData } from "../../../types/user";
 
-import { useUpdateProfileMutation } from "../../../services/accountQuery";
+import {
+  useGetUserByTokenQuery,
+  useUpdateProfileMutation,
+} from "../../../services/accountQuery";
 
 import { MdClose } from "react-icons/md";
 
@@ -14,13 +17,10 @@ import moment from "moment";
 import AccountProfilePicture from "./AccountProfilePicture";
 import AddressField from "../../../components/AddressSelector/AddressField";
 
-type TProps = {
-  userData?: User;
-};
-
-const AccountProfileForm = ({ userData }: TProps) => {
+const AccountProfileForm = () => {
   const navigate = useNavigate();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
+  const { data: userData } = useGetUserByTokenQuery();
   const [hasBeenCropped, setHasBeenCropped] = useState<boolean>(false);
   const [serverRes, setServerRes] = useState<TUserResData>();
 
