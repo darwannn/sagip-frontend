@@ -1,7 +1,7 @@
 import moment from "moment";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { TSurvey } from "../../../../types/alert";
+import { TSurvey } from "../../../../types/survey";
 import SurveyTableRowAction from "../components/SurveyTableRowAction";
 
 export const surveyColumn: ColumnDef<TSurvey>[] = [

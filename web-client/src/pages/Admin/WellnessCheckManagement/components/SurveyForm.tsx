@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { TSurvey, TSurveyResData } from "../../../../types/alert";
+import { TSurvey, TSurveyResData } from "../../../../types/survey";
 import { useGetActiveSurveyQuery } from "../../../../services/surveyQuery";
 import {
   useAddSurveyMutation,

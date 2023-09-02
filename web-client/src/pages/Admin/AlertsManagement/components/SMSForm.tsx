@@ -3,6 +3,8 @@ import { Controller, FieldValues, SubmitHandler, useForm } from "react-hook-form
 import Select from "react-select"
 import { Barangay, getBarangays } from "../../../../components/AddressSelector/AddressSelector";
 import { MdSend } from "react-icons/md";
+import { useSendAlertMutation } from "../../../../services/alertQuery";
+import { SMSAlert } from "../../../../types/alert";
 
 const SMSForm = () => {
   const [malBarangays, setMalBarangays] = useState<Barangay[]>([]);
@@ -10,8 +12,9 @@ const SMSForm = () => {
     const barangays = await getBarangays("031410");
     setMalBarangays(barangays);
   }, []);
+  const [sendAlert, { isLoading, isSuccess, isError, error }] = useSendAlertMutation();
 
-  const { register, handleSubmit, watch, control, formState: { errors } } = useForm<FieldValues>();
+  const { register, handleSubmit, reset, watch, control, formState: { errors } } = useForm<FieldValues>();
 
   const watchSendOpt = watch("sendOptions");
 
@@ -26,8 +29,35 @@ const SMSForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
+
+    const selectedLoc = data.sendOption === "sendToSpecific" ? data.location.map((loc: { value: string, label: string }) => loc.value) : ["All"];
+
+    console.log(selectedLoc);
+
+    const smsData: SMSAlert = {
+      alertTitle: data.alertTitle,
+      alertMessage: data.alertMessage,
+      location: selectedLoc,
+    }
+
+    sendAlert(smsData);
+
+    reset({
+      alertTitle: "",
+      alertMessage: "",
+      sendOptions: "sendToSpecific",
+      location: [],
+    })
+
+
   };
 
+  if (isSuccess) {
+    console.log("Success");
+  }
+  if (isError) {
+    console.log(error);
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -88,9 +118,13 @@ const SMSForm = () => {
 
       </div>
       <div className="action-container flex flex-row justify-end mt-5">
-        <button className="btn-primary" type="submit">
-          Send Alert
-          <span><MdSend /></span>
+        <button className="btn-primary" type="submit" disabled={isLoading}>
+          {isLoading ? "Sending..." :
+            <>
+              Send Alert
+              <span><MdSend /></span>
+            </>
+          }
         </button>
       </div>
     </form>);

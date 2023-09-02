@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import { useGetSurveyReportByIdQuery } from "../../../../services/surveyQuery";
-import { TSurveyReport } from "../../../../types/alert";
+import { TSurveyReport } from "../../../../types/survey";
 
 import moment from "moment";
 import {

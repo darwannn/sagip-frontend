@@ -1,9 +1,4 @@
-import {
-  TSurvey,
-  TActiveSurvey,
-  TSMSResData,
-  TSurveyResData,
-} from "../types/alert";
+import { TSurvey, TActiveSurvey, TSurveyResData } from "../types/survey";
 import { rootApi } from "./rootApi";
 
 export const surveyQueryApi = rootApi.injectEndpoints({
@@ -24,27 +19,6 @@ export const surveyQueryApi = rootApi.injectEndpoints({
     getSurveyReportById: builder.query<TSurvey, string | undefined>({
       query: (id) => `wellness-survey/report/${id}`,
       providesTags: ["SurveyReport"],
-    }),
-    sendAlert: builder.mutation<
-      TSMSResData,
-      {
-        alertTitle: string;
-        alertMessage: string;
-        location: string[];
-      }
-    >({
-      query: ({ alertTitle, alertMessage, location }) => ({
-        url: `api/send-alert/`,
-        method: "POST",
-        body: {
-          alertTitle,
-          alertMessage,
-          location,
-        },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }),
     }),
     addSurvey: builder.mutation<TSurveyResData, Partial<TSurvey>>({
       query: (body) => ({
@@ -87,7 +61,6 @@ export const surveyQueryApi = rootApi.injectEndpoints({
 });
 
 export const {
-  useSendAlertMutation,
   useGetSurveyQuery,
   useGetSurveyByIdQuery,
   useGetActiveSurveyQuery,

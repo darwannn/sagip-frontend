@@ -10,7 +10,7 @@ import DataTable from "../../../../components/ui/data-table";
 import { surveyColumn as columns } from "../types/SurveyColumn";
 // Redux
 import PaginationControls from "../../../../components/ui/PaginationControl";
-import { TSurvey } from "../../../../types/alert";
+import { TSurvey } from "../../../../types/survey";
 type TProps = {
   alertData: TSurvey[];
 };
