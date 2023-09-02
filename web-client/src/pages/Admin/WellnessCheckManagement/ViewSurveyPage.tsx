@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import SurveyForm from "./components/SurveyForm";
-import { useGetSurveyByIdQuery } from "../../../services/alertQuery";
+import { useGetSurveyByIdQuery } from "../../../services/surveyQuery";
 
 const ViewSurveyPage = () => {
 

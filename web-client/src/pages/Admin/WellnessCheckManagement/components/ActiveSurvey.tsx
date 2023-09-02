@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useGetActiveSurveyQuery } from "../../../../services/alertQuery";
+import { useGetActiveSurveyQuery } from "../../../../services/surveyQuery";
 
 const ActiveSurvey = () => {
   const { data: surveyData, isLoading, error } = useGetActiveSurveyQuery();

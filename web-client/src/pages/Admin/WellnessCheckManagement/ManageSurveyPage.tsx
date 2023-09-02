@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useGetSurveyQuery } from "../../../services/alertQuery";
+import { useGetSurveyQuery } from "../../../services/surveyQuery";
 import SurveyTable from "./components/SurveyTable";
 
 import ActiveSurvey from "./components/ActiveSurvey";

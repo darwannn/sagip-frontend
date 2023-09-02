@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { TSurvey, TSurveyResData } from "../../../../types/alert";
-import { useGetActiveSurveyQuery } from "../../../../services/alertQuery";
+import { useGetActiveSurveyQuery } from "../../../../services/surveyQuery";
 import {
   useAddSurveyMutation,
   useUpdateSurveyMutation,
-} from "../../../../services/alertQuery";
+} from "../../../../services/surveyQuery";
 
 import moment from "moment";
 import { useNavigate } from "react-router-dom";

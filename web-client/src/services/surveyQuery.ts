@@ -6,7 +6,7 @@ import {
 } from "../types/alert";
 import { rootApi } from "./rootApi";
 
-export const alertQueryApi = rootApi.injectEndpoints({
+export const surveyQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getSurvey: builder.query<TSurvey[], void>({
       query: () => "wellness-survey",
@@ -95,4 +95,4 @@ export const {
   useAddSurveyMutation,
   useUpdateSurveyMutation,
   useGetSurveyReportByIdQuery,
-} = alertQueryApi;
+} = surveyQueryApi;

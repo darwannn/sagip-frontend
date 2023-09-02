@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useDeleteSurveyMutation } from "../../../../services/alertQuery";
+import { useDeleteSurveyMutation } from "../../../../services/surveyQuery";
 type TRowAction = {
   rowId: string;
 };

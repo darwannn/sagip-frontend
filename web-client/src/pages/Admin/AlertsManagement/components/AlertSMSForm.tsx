@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 
 // Redux
-import { useSendAlertMutation } from "../../../../services/alertQuery";
+import { useSendAlertMutation } from "../../../../services/surveyQuery";
 
 import { useState } from "react";
 import Select from "react-select";
