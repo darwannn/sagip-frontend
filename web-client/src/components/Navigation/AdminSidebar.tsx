@@ -120,6 +120,17 @@ const AdminSidebar = () => {
             <span className="text-gray-600">Articles</span>
           </div>
         </NavLink>
+        <NavLink
+          className="w-full hover:bg-primary-100 p-2 rounded"
+          to={"alert-management"}
+        >
+          <div className="flex items-center gap-4 ">
+            <span className="text-[24px] text-gray-600">
+              <PiArticleMediumLight />
+            </span>
+            <span className="text-gray-600">Alerts</span>
+          </div>
+        </NavLink>
       </nav>
       <hr className="w-full h-[1px] border-0 bg-gray-200 self-center mb-5" />
       {/* MINI PROFILE */}

@@ -103,12 +103,12 @@ const styles = StyleSheet.create({
 });
 
 const SurveyReport = () => {
-  const { alertId } = useParams();
+  const { surveyId } = useParams();
   const {
     data: alertData,
     isLoading,
     error,
-  } = useGetSurveyReportByIdQuery(alertId);
+  } = useGetSurveyReportByIdQuery(surveyId);
 
   const reportData = alertData as TSurveyReport | undefined;
 
@@ -116,7 +116,7 @@ const SurveyReport = () => {
     return <p>Loading...</p>;
   }
   if (error) {
-    console.log(alertId);
+    console.log(surveyId);
     console.log(error);
 
     return <p>Something went wrong</p>;

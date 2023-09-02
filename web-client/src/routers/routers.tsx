@@ -16,7 +16,7 @@ import ManageRespondersPage from "../pages/Admin/TeamManagement/ManageResponders
 import ManageSurveyPage from "../pages/Admin/WellnessCheckManagement/ManageSurveyPage";
 import CreateSurveyPage from "../pages/Admin/WellnessCheckManagement/CreateSurveyPage";
 import ViewSurveyPage from "../pages/Admin/WellnessCheckManagement/ViewSurveyPage";
-import AlertReport from "../pages/Admin/WellnessCheckManagement/components/SurveyReport";
+import SurveyReport from "../pages/Admin/WellnessCheckManagement/components/SurveyReport";
 
 import ManageUserPage from "../pages/Admin/UserManagement/ManageUserPage";
 import VerifyUserPage from "../pages/Admin/UserManagement/VerifyUserPage";
@@ -41,6 +41,7 @@ import AccountEmailForm from "../pages/Admin/AccountSettings/components/AccountE
 import AccountContactNumberForm from "../pages/Admin/AccountSettings/components/AccountContactNumberForm";
 import AccountPasswordForm from "../pages/Admin/AccountSettings/components/AccountPasswordForm";
 import TEMP_ROOT_PAGE from "../pages/RootLayout/Temp_RootPage";
+import AlertPage from "../pages/Admin/AlertsManagement/AlertPage";
 
 export const router = createBrowserRouter([
   {
@@ -153,6 +154,10 @@ export const router = createBrowserRouter([
         ],
       },
       {
+        path: "alert-management",
+        element: <AlertPage />,
+      },
+      {
         path: "account-settings",
         element: <ManageAccountPage />,
         children: [
@@ -162,13 +167,14 @@ export const router = createBrowserRouter([
           { path: "password", element: <AccountPasswordForm /> },
         ],
       },
+
     ],
   },
 
   /* temporary, so the report will open in new tab (without side navigation menu) */
   {
-    path: "/wellness-check/report/:alertId",
-    element: <AlertReport />,
+    path: "/wellness-check/report/:surveyId",
+    element: <SurveyReport />,
     loader: checkAuth,
   },
 ]);
