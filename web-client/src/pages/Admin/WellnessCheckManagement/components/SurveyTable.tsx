@@ -7,7 +7,7 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 import DataTable from "../../../../components/ui/data-table";
-import { alertColumn as columns } from "../types/AlertColumn";
+import { surveyColumn as columns } from "../types/SurveyColumn";
 // Redux
 import PaginationControls from "../../../../components/ui/PaginationControl";
 import { TSurvey } from "../../../../types/alert";
@@ -15,7 +15,7 @@ type TProps = {
   alertData: TSurvey[];
 };
 
-const AlertTable = ({ alertData: data }: TProps) => {
+const SurveyTable = ({ alertData: data }: TProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // For filtering data
   // Initialiaze table configuration
   const table = useReactTable({
@@ -76,4 +76,4 @@ const AlertTable = ({ alertData: data }: TProps) => {
   );
 };
 
-export default AlertTable;
+export default SurveyTable;

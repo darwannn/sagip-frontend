@@ -100,13 +100,13 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"disaster-alerts"}
+          to={"wellness-check"}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[24px] text-gray-600">
               <MdCrisisAlert />
             </span>
-            <span className="text-gray-600">Disaster Alerts</span>
+            <span className="text-gray-600">Wellness Check</span>
           </div>
         </NavLink>
         <NavLink

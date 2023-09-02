@@ -1,30 +1,29 @@
 import { Link } from "react-router-dom";
 import { useGetAlertsQuery } from "../../../services/alertQuery";
-import AlertTable from "./components/AlertTable";
-import SMSAlertForm from "./components/AlertSMSForm";
+import SurveyTable from "./components/SurveyTable";
 
-import AlertActive from "./components/AlertActive";
+import ActiveSurvey from "./components/ActiveSurvey";
 
-const ManageAlertsPage = () => {
+const ManageSurveyPage = () => {
   const { data: alerts, isLoading, error } = useGetAlertsQuery(undefined);
 
   if (error) {
     return <p>Something went wrong...</p>;
   }
   const tableComponent = alerts ? (
-    <AlertTable alertData={alerts} />
+    <SurveyTable alertData={alerts} />
   ) : (
     <p>No survey found</p>
   );
 
   return (
     <div className="flex lg:flex-row flex-col">
-      <div className=" lg:w-1/4 w-full m-5">
+      {/* <div className=" lg:w-1/4 w-full m-5">
         <h1 className=" font-bold">Send Alerts</h1>
         <SMSAlertForm />
-      </div>
+      </div> */}
 
-      <div className=" lg:w-3/4 w-full m-5">
+      <div className="  w-full m-5">
         <h1 className=" font-bold">Wellness Check Survey</h1>
         <div className="mx-5"></div>
 
@@ -34,7 +33,7 @@ const ManageAlertsPage = () => {
         >
           New Survey
         </Link>
-        <AlertActive />
+        <ActiveSurvey />
         {isLoading ? <p>Getting survey....</p> : tableComponent}
         {/* <AlertForm/> */}
       </div>
@@ -42,4 +41,4 @@ const ManageAlertsPage = () => {
   );
 };
 
-export default ManageAlertsPage;
+export default ManageSurveyPage;

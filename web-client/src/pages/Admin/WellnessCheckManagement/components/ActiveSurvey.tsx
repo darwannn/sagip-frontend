@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useGetActiveAlertQuery } from "../../../../services/alertQuery";
 
-const AlertActive = () => {
+const ActiveSurvey = () => {
   const { data: alertsData, isLoading, error } = useGetActiveAlertQuery();
 
   if (isLoading) {
@@ -50,4 +50,4 @@ const AlertActive = () => {
   );
 };
 
-export default AlertActive;
+export default ActiveSurvey;

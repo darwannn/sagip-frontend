@@ -13,10 +13,10 @@ import ViewArticlePage from "../pages/Admin/ArticleManagement/ViewArticlePage";
 import TeamDetails from "../pages/Admin/TeamManagement/components/TeamDetails";
 import ManageRespondersPage from "../pages/Admin/TeamManagement/ManageRespondersPage";
 
-import ManageAlertsPage from "../pages/Admin/AlertsManagement/ManageAlertsPage";
-import CreateAlertPage from "../pages/Admin/AlertsManagement/CreateAlertsPage";
-import ViewAlertsPage from "../pages/Admin/AlertsManagement/ViewAlertsPage";
-import AlertReport from "../pages/Admin/AlertsManagement/components/AlertReport";
+import ManageSurveyPage from "../pages/Admin/WellnessCheckManagement/ManageSurveyPage";
+import CreateSurveyPage from "../pages/Admin/WellnessCheckManagement/CreateSurveyPage";
+import ViewSurveyPage from "../pages/Admin/WellnessCheckManagement/ViewSurveyPage";
+import AlertReport from "../pages/Admin/WellnessCheckManagement/components/SurveyReport";
 
 import ManageUserPage from "../pages/Admin/UserManagement/ManageUserPage";
 import VerifyUserPage from "../pages/Admin/UserManagement/VerifyUserPage";
@@ -136,11 +136,11 @@ export const router = createBrowserRouter([
         element: <ManageFacilitiesPage />,
       },
       {
-        path: "disaster-alerts",
+        path: "wellness-check",
         children: [
-          { index: true, element: <ManageAlertsPage /> },
-          { path: "create", element: <CreateAlertPage /> },
-          { path: ":alertId", element: <ViewAlertsPage /> },
+          { index: true, element: <ManageSurveyPage /> },
+          { path: "create", element: <CreateSurveyPage /> },
+          { path: ":alertId", element: <ViewSurveyPage /> },
           /* { path: "report/:alertId", element: <AlertReport /> }, */
         ],
       },
@@ -167,7 +167,7 @@ export const router = createBrowserRouter([
 
   /* temporary, so the report will open in new tab (without side navigation menu) */
   {
-    path: "/disaster-alerts/report/:alertId",
+    path: "/wellness-check/report/:alertId",
     element: <AlertReport />,
     loader: checkAuth,
   },

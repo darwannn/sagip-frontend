@@ -3,19 +3,19 @@ import { useDeleteAlertMutation } from "../../../../services/alertQuery";
 type TRowAction = {
   rowId: string;
 };
-const AlertRowAction = ({ rowId }: TRowAction) => {
+const SurveyTableRowAction = ({ rowId }: TRowAction) => {
   const navigate = useNavigate();
 
   const [deleteAlert, { isLoading, isError, isSuccess, error }] =
     useDeleteAlertMutation();
 
   const onViewHandler = () => {
-    navigate(`/disaster-alerts/${rowId}?mode=view`);
+    navigate(`/admin/wellness-check/${rowId}?mode=view`);
   };
   const onGenerateReportHandler = () => {
     //navigate(`/disaster-alerts/report/${rowId}`);
     /* opens the link in a new tab */
-    window.open(`/disaster-alerts/report/${rowId}`, "_blank");
+    window.open(`/wellness-check/report/${rowId}`, "_blank");
   };
 
   const onDeleteHandler = async () => {
@@ -60,4 +60,4 @@ const AlertRowAction = ({ rowId }: TRowAction) => {
   );
 };
 
-export default AlertRowAction;
+export default SurveyTableRowAction;

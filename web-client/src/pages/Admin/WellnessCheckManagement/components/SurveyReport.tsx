@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ViewAlertPage = () => {
+const SurveyReport = () => {
   const { alertId } = useParams();
   const {
     data: alertData,
@@ -249,4 +249,4 @@ const ViewAlertPage = () => {
   );
 };
 
-export default ViewAlertPage;
+export default SurveyReport;

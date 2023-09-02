@@ -15,7 +15,7 @@ type TProps = {
   alertData?: TSurvey;
 };
 
-const AlertForm = ({ alertData }: TProps) => {
+const SurveyForm = ({ alertData }: TProps) => {
   const { data: activeAlert } = useGetActiveAlertQuery();
 
   const [
@@ -71,7 +71,6 @@ const AlertForm = ({ alertData }: TProps) => {
     if (alertData) {
       res = await updateAlert({
         body,
-
         id: alertData._id,
       });
     } else {
@@ -80,7 +79,7 @@ const AlertForm = ({ alertData }: TProps) => {
     console.log(res);
     if (res && "data" in res) {
       if (res.data.success) {
-        navigate(`/disaster-alerts`);
+        navigate(`/admin/disaster-alerts`);
       }
     }
   };
@@ -178,4 +177,4 @@ const AlertForm = ({ alertData }: TProps) => {
   );
 };
 
-export default AlertForm;
+export default SurveyForm;
