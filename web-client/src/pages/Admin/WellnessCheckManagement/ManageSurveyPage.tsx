@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import { useGetAlertsQuery } from "../../../services/alertQuery";
+import { useGetSurveyQuery } from "../../../services/alertQuery";
 import SurveyTable from "./components/SurveyTable";
 
 import ActiveSurvey from "./components/ActiveSurvey";
 
 const ManageSurveyPage = () => {
-  const { data: alerts, isLoading, error } = useGetAlertsQuery(undefined);
+  const { data: surveys, isLoading, error } = useGetSurveyQuery(undefined);
 
   if (error) {
     return <p>Something went wrong...</p>;
   }
-  const tableComponent = alerts ? (
-    <SurveyTable alertData={alerts} />
+  const tableComponent = surveys ? (
+    <SurveyTable alertData={surveys} />
   ) : (
     <p>No survey found</p>
   );

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useDeleteAlertMutation } from "../../../../services/alertQuery";
+import { useDeleteSurveyMutation } from "../../../../services/alertQuery";
 type TRowAction = {
   rowId: string;
 };
@@ -7,7 +7,7 @@ const SurveyTableRowAction = ({ rowId }: TRowAction) => {
   const navigate = useNavigate();
 
   const [deleteAlert, { isLoading, isError, isSuccess, error }] =
-    useDeleteAlertMutation();
+    useDeleteSurveyMutation();
 
   const onViewHandler = () => {
     navigate(`/admin/wellness-check/${rowId}?mode=view`);

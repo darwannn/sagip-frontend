@@ -8,31 +8,28 @@ import { rootApi } from "./rootApi";
 
 export const alertQueryApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAlerts: builder.query<TSurvey[], void>({
+    getSurvey: builder.query<TSurvey[], void>({
       query: () => "wellness-survey",
-      providesTags: ["Alert"],
+      providesTags: ["WellnessSurvey"],
     }),
     // Get specific article with id
-    getAlertById: builder.query<TSurvey, string | undefined>({
+    getSurveyById: builder.query<TSurvey, string | undefined>({
       query: (id) => `wellness-survey/${id}`,
-      providesTags: ["SelectedAlert"],
+      providesTags: ["SelectedSurvey"],
     }),
-    getActiveAlert: builder.query<TActiveSurvey, void>({
+    getActiveSurvey: builder.query<TActiveSurvey, void>({
       query: () => `wellness-survey/active`,
-      providesTags: ["ActiveAlert"],
+      providesTags: ["ActiveSurvey"],
     }),
-
-    getAlertReportById: builder.query<TSurvey, string | undefined>({
+    getSurveyReportById: builder.query<TSurvey, string | undefined>({
       query: (id) => `wellness-survey/report/${id}`,
-      providesTags: ["AlertReport"],
+      providesTags: ["SurveyReport"],
     }),
-
     sendAlert: builder.mutation<
       TSMSResData,
       {
         alertTitle: string;
         alertMessage: string;
-
         location: string[];
       }
     >({
@@ -49,8 +46,7 @@ export const alertQueryApi = rootApi.injectEndpoints({
         },
       }),
     }),
-
-    addAlert: builder.mutation<TSurveyResData, Partial<TSurvey>>({
+    addSurvey: builder.mutation<TSurveyResData, Partial<TSurvey>>({
       query: (body) => ({
         url: "wellness-survey/add",
         method: "POST",
@@ -59,11 +55,10 @@ export const alertQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["Alert", "ActiveAlert"],
+      invalidatesTags: ["WellnessSurvey", "ActiveSurvey"],
     }),
-
     // Update article
-    updateAlert: builder.mutation<
+    updateSurvey: builder.mutation<
       TSurveyResData,
       { body: Partial<TSurvey>; id: string }
     >({
@@ -75,10 +70,10 @@ export const alertQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["Alert", "SelectedAlert", "ActiveAlert"],
+      invalidatesTags: ["WellnessSurvey", "SelectedSurvey", "ActiveSurvey"],
     }),
 
-    deleteAlert: builder.mutation<void, { token: string | null; id: string }>({
+    deleteSurvey: builder.mutation<void, { token: string | null; id: string }>({
       query: ({ token, id }) => ({
         url: `wellness-survey/delete/${id}`,
         method: "DELETE",
@@ -86,18 +81,18 @@ export const alertQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${token}`,
         },
       }),
-      invalidatesTags: ["Alert", "ActiveAlert"],
+      invalidatesTags: ["WellnessSurvey", "ActiveSurvey"],
     }),
   }),
 });
 
 export const {
   useSendAlertMutation,
-  useGetAlertsQuery,
-  useGetAlertByIdQuery,
-  useGetActiveAlertQuery,
-  useDeleteAlertMutation,
-  useAddAlertMutation,
-  useUpdateAlertMutation,
-  useGetAlertReportByIdQuery,
+  useGetSurveyQuery,
+  useGetSurveyByIdQuery,
+  useGetActiveSurveyQuery,
+  useDeleteSurveyMutation,
+  useAddSurveyMutation,
+  useUpdateSurveyMutation,
+  useGetSurveyReportByIdQuery,
 } = alertQueryApi;

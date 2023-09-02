@@ -5,31 +5,31 @@ import type { TSurvey } from "../../types/alert";
 import { RootState } from "../store";
 
 type TSurveyState = {
-  alerts: TSurvey[] | null;
-  activeAlert: TSurvey | null;
+  survey: TSurvey[] | null;
+  activeSurvey: TSurvey | null;
 };
 
 const initialState: TSurveyState = {
-  alerts: [],
-  activeAlert: null,
+  survey: [],
+  activeSurvey: null,
 };
 
-export const alertSlice = createSlice({
+export const surveySlice = createSlice({
   name: "alert",
   initialState,
   reducers: {
     setActiveAlert: (state, action: PayloadAction<TSurvey>) => {
-      state.activeAlert = action.payload;
+      state.activeSurvey = action.payload;
     },
   },
 });
 
-export const { setActiveAlert } = alertSlice.actions;
-export default alertSlice.reducer;
+export const { setActiveAlert } = surveySlice.actions;
+export default surveySlice.reducer;
 
 // Selectors
 
 export const selectActiveAlert = createSelector(
-  (state: RootState) => state.alerts.activeAlert,
+  (state: RootState) => state.survey.activeSurvey,
   (activeAlert) => activeAlert
 );

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { useGetAlertReportByIdQuery } from "../../../../services/alertQuery";
+import { useGetSurveyReportByIdQuery } from "../../../../services/alertQuery";
 import { TSurveyReport } from "../../../../types/alert";
 
 import moment from "moment";
@@ -108,7 +108,7 @@ const SurveyReport = () => {
     data: alertData,
     isLoading,
     error,
-  } = useGetAlertReportByIdQuery(alertId);
+  } = useGetSurveyReportByIdQuery(alertId);
 
   const reportData = alertData as TSurveyReport | undefined;
 

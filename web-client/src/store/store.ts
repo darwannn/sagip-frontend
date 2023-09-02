@@ -6,7 +6,7 @@ import articleSlice from "./slices/articleSlice";
 import facilitySlice from "./slices/facilitySlice";
 import hazardReportSlice from "./slices/hazardReportSlice";
 import accountSlice from "./slices/accountSlice";
-import alertSlice from "./slices/alertSlice";
+import surveySlice from "./slices/surveySlice";
 import assistanceReqSlice from "./slices/assistanceReqSlice";
 // API / Services / Queries
 import teamSlice from "./slices/teamSlice";
@@ -22,7 +22,7 @@ export const store = configureStore({
     hazardReports: hazardReportSlice,
     team: teamSlice,
     account: accountSlice,
-    alerts: alertSlice,
+    survey: surveySlice,
     assistanceReq: assistanceReqSlice,
   },
   middleware: (getDefaultMiddleware) =>

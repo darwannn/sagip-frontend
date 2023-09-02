@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import SurveyForm from "./components/SurveyForm";
-import { useGetAlertByIdQuery } from "../../../services/alertQuery";
+import { useGetSurveyByIdQuery } from "../../../services/alertQuery";
 
 const ViewSurveyPage = () => {
 
@@ -9,7 +9,7 @@ const ViewSurveyPage = () => {
     data: alertData,
     isLoading,
     error,
-  } = useGetAlertByIdQuery(alertId);
+  } = useGetSurveyByIdQuery(alertId);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -29,7 +29,7 @@ const ViewSurveyPage = () => {
       >
         Cancel
       </Link>
-      <SurveyForm alertData={alertData} />
+      <SurveyForm surveyData={alertData} />
     </div>
   );
 };

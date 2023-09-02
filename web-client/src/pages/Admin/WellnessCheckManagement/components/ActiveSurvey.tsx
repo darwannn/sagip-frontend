@@ -1,8 +1,8 @@
 import moment from "moment";
-import { useGetActiveAlertQuery } from "../../../../services/alertQuery";
+import { useGetActiveSurveyQuery } from "../../../../services/alertQuery";
 
 const ActiveSurvey = () => {
-  const { data: alertsData, isLoading, error } = useGetActiveAlertQuery();
+  const { data: surveyData, isLoading, error } = useGetActiveSurveyQuery();
 
   if (isLoading) {
     return <p>Loading active alert...</p>;
@@ -14,34 +14,34 @@ const ActiveSurvey = () => {
 
   return (
     <div className="my-8">
-      {alertsData?._id && (
+      {surveyData?._id && (
         <>
           <div className="">Active Survey: </div>
           <div className="flex flex-wrap xl:justify-between lg:justify-between md:justify-between gap-5 p-7 bg-yellow-200 rounded-xl">
             <div className="">
               <div className="text-sm text-gray-500">Survey ID</div>
-              <div className="">{alertsData?.title}</div>
+              <div className="">{surveyData?.title}</div>
             </div>
             <div className="">
               <div className="text-sm text-gray-500">Date Published</div>
               <div className="">
-                {moment(alertsData?.startDate).format("MMM DD, YYYY")} to{" "}
-                {moment(alertsData?.endDate).format("MMM DD, YYYY")}
+                {moment(surveyData?.startDate).format("MMM DD, YYYY")} to{" "}
+                {moment(surveyData?.endDate).format("MMM DD, YYYY")}
               </div>
             </div>
             <div className=" ">
               <div className="text-sm text-gray-500">Responses</div>
               <div className="">
-                {alertsData?.affected.length + alertsData?.unaffected.length}
+                {surveyData?.affected.length + surveyData?.unaffected.length}
               </div>
             </div>
             <div className=" ">
               <div className="text-sm text-gray-500">Affected</div>
-              <div className="">{alertsData?.affected.length}</div>
+              <div className="">{surveyData?.affected.length}</div>
             </div>
             <div className="">
               <div className="text-sm text-gray-500">Unaffected</div>
-              <div className="">{alertsData?.unaffected.length}</div>
+              <div className="">{surveyData?.unaffected.length}</div>
             </div>
           </div>
         </>
