@@ -34,8 +34,13 @@ const ArticlesData = () => {
     },
   ] = useSaveArticleMutation();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [isArticleSaved, setIsArticleSaved] = useState<boolean>(false);
   const userToken = localStorage.getItem("token");
+
   useEffect(() => {
     if (userToken) {
       const decodedToken = jwtDecode<Token>(userToken);

@@ -93,10 +93,10 @@ const ArticlesPage = () => {
           )}
           {!isInSavedPage && (
             <div className="flex my-3">
-              <div className="flex-1 font-bold text-gray-800 ">All:</div>
-
+              {/* <div className="flex-1 font-bold text-gray-800 ">All:</div>
+               */}
               <select
-                className="outline-0 border rounded-md p-1 bg-gray-200   "
+                className="outline-0 border rounded-md p-1" /* bg-gray-200 */
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >

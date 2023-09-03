@@ -69,7 +69,7 @@ export const articleQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      providesTags: ["Article", "PublishedArticle", "SavedArticle"],
+      providesTags: ["SavedArticle"],
     }),
     saveArticle: builder.mutation<TArticleResData, string>({
       query: (id) => ({
@@ -79,7 +79,12 @@ export const articleQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["Article", "PublishedArticle", "SavedArticle"],
+      invalidatesTags: [
+        "Article",
+        "SelectedArticle",
+        "PublishedArticle",
+        "SavedArticle",
+      ],
     }),
   }),
 });

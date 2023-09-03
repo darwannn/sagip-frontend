@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import type { Article } from "../../../../types/article";
 import type { Token } from "../../../../types/auth";
@@ -17,19 +17,20 @@ type TProps = {
 };
 
 const ArticleItem = ({ articleData }: TProps) => {
-  const navigate = useNavigate();
   const [isArticleSaved, setIsArticleSaved] = useState<boolean>(false);
 
   const userToken = localStorage.getItem("token");
   useEffect(() => {
-    if (userToken) {
+    if (userToken && articleData) {
       const decodedToken = jwtDecode<Token>(userToken);
 
-      if (articleData?.saves.includes(decodedToken.id)) {
+      if (articleData.saves.includes(decodedToken.id)) {
         setIsArticleSaved(true);
+      } else {
+        setIsArticleSaved(false);
       }
     }
-  }, [userToken, articleData?.saves]);
+  }, [userToken, articleData]);
 
   const [
     save,
@@ -76,12 +77,11 @@ const ArticleItem = ({ articleData }: TProps) => {
         </div>
         <div className="m-3">
           <div className="text-xs text-gray-500">{articleData.category}</div>
-          <div
-            className="font-bold hover:text-[#364FC7] hover:cursor-pointer"
-            onClick={() => navigate(`/articles/${articleData._id}`)}
-          >
-            {articleData.title}
-          </div>
+          <Link to={`/articles/${articleData._id}`}>
+            <div className="font-bold hover:text-[#364FC7] hover:cursor-pointer">
+              {articleData.title}
+            </div>
+          </Link>
         </div>
 
         {/* bookmark */}

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   useGetSignalAlertQuery,
   useGetWeatherAlertQuery,
@@ -36,12 +37,14 @@ const Home = () => {
             <div className="font-bold text-4xl flex-1">SAGIP</div>
             {userData && (
               <>
-                <div className="relative cursor-pointer m-2">
-                  {true && (
-                    <div className=" w-2 h-2 bg-[#C92A2A] rounded-full absolute right-1"></div>
-                  )}
-                  <IoNotificationsOutline className="text-2xl" />
-                </div>
+                <Link to="/notification">
+                  <div className="relative cursor-pointer m-2">
+                    {true && (
+                      <div className=" w-2 h-2 bg-[#C92A2A] rounded-full absolute right-1"></div>
+                    )}
+                    <IoNotificationsOutline className="text-2xl" />
+                  </div>
+                </Link>
                 <img
                   src={`${BASE_IMAGE_URL}/user/${userData?.profilePicture}`}
                   className="rounded-full w-10"
