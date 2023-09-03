@@ -45,16 +45,18 @@ const Home = () => {
                     <IoNotificationsOutline className="text-2xl" />
                   </div>
                 </Link>
-                <img
-                  src={`${BASE_IMAGE_URL}/user/${userData?.profilePicture}`}
-                  className="rounded-full w-10"
-                />
+                <Link to="/account-settings">
+                  <img
+                    src={`${BASE_IMAGE_URL}/user/${userData?.profilePicture}`}
+                    className="rounded-full w-10"
+                  />
+                </Link>
               </>
             )}
           </>
         }
       />
-      <div className="px-5">
+      <div className="flex flex-col px-5 mt-2">
         {weatherAlertData && signalAlertData && (
           <WeatherAlert
             weatherAlertData={weatherAlertData}
@@ -65,18 +67,26 @@ const Home = () => {
           <WellnessSurvey wellnessSurveyData={wellnessSurveyData} />
         )}
         <EmergencyHotlines />
+        <div className="mt-5">
+          {userData && hazardReportData && userData && (
+            <>
+              <div className="font-bold text-xl text-[#293B95] mb-2">
+                Reported hazards in {userData?.street}
+              </div>
+              <MostRecentHazard
+                hazardReportData={hazardReportData}
+                userData={userData}
+              />
+            </>
+          )}
+        </div>
+        <div className="mt-5">
+          <div className="font-bold text-xl text-[#293B95] mb-2">
+            Safety Tips
+          </div>
 
-        {userData && hazardReportData && userData && (
-          <>
-            <MostRecentHazard
-              hazardReportData={hazardReportData}
-              userData={userData}
-            />
-          </>
-        )}
-        <div className="font-bold text-xl text-[#293B95]">Safety Tips</div>
-
-        {articlesData && <SavedArticleList articleData={articlesData} />}
+          {articlesData && <SavedArticleList articleData={articlesData} />}
+        </div>
       </div>
     </>
   );

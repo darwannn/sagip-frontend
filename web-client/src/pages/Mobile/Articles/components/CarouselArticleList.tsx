@@ -1,6 +1,6 @@
 import { Article } from "../../../../types/article";
 
-import SavedArticleItem from "./CarouselArticleItem";
+import CarouselArticleItem from "./CarouselArticleItem";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -37,7 +37,7 @@ const CarouselArticleList = ({ articleData }: TProps) => {
     <>
       <Slider {...slickSettings}>
         {articleData.map((article, index) => (
-          <SavedArticleItem key={index} articleData={article} />
+          <CarouselArticleItem key={index} articleData={article} />
         ))}
       </Slider>
     </>

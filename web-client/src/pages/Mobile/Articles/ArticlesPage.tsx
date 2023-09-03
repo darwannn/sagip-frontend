@@ -9,7 +9,7 @@ import { BiSearch, BiBookmarks } from "react-icons/bi";
 import { BsArrowLeft } from "react-icons/bs";
 
 import ArticleList from "./components/ArticleList";
-import SavedArticleList from "./components/CarouselArticleList";
+import CarouselArticleList from "./components/CarouselArticleList";
 
 const ArticlesPage = () => {
   const isInSavedPage = location.pathname.includes("saved");
@@ -85,12 +85,15 @@ const ArticlesPage = () => {
             </div>
           </div>
 
-          {savedArticleData && search === "" && (
-            <div className="font-bold text-gray-800 my-3">Saved:</div>
-          )}
-          {!isInSavedPage && search === "" && savedArticleData && (
-            <SavedArticleList articleData={savedArticleData} />
-          )}
+          {!isInSavedPage &&
+            search === "" &&
+            savedArticleData &&
+            savedArticleData.length != 0 && (
+              <>
+                <div className="font-bold text-gray-800 my-3">Saved:</div>
+                <CarouselArticleList articleData={savedArticleData} />
+              </>
+            )}
           {!isInSavedPage && (
             <div className="flex my-3">
               {/* <div className="flex-1 font-bold text-gray-800 ">All:</div>

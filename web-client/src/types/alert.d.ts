@@ -10,6 +10,7 @@ export type TSignalResData = {
 export type TWeatherResData = {
   success: boolean;
   weather: string;
+  icon: string;
   message: string;
 };
 

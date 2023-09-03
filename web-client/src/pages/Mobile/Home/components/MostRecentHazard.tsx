@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BASE_IMAGE_URL } from "../../../../api.config";
 import { BsArrowRight } from "react-icons/bs";
 
@@ -27,9 +28,6 @@ const MostRecentHazard = ({ hazardReportData, userData }: TProps) => {
     <>
       {mostRecentHazardReport && filteredHazardReports?.length !== 0 && (
         <>
-          <div className="font-bold text-xl text-[#293B95]">
-            Reported hazards in {userData?.street}
-          </div>
           <div className="bg-white  rounded-2xl p-5 border-2 border-[#FFD400] ">
             <div className="flex">
               <div className="h-[100px] w-[100px] mr-3">
@@ -53,11 +51,12 @@ const MostRecentHazard = ({ hazardReportData, userData }: TProps) => {
               </div>
             </div>
           </div>
-
-          <div className="flex text-gray-600">
-            <div className="flex-1">See more in your area</div>
-            <BsArrowRight />
-          </div>
+          <Link to="/hazard">
+            <div className="flex text-gray-600 mt-1">
+              <div className="flex-1">See more in your area</div>
+              <BsArrowRight />
+            </div>
+          </Link>
         </>
       )}
     </>
