@@ -1,6 +1,6 @@
 import { rootApi } from "./rootApi";
 import { TSMSResData } from "../types/survey";
-import { SMSAlert } from "../types/alert";
+import { SMSAlerTemplate, SMSAlert } from "../types/alert";
 
 export const alertQuery = rootApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +18,15 @@ export const alertQuery = rootApi.injectEndpoints({
         },
       }),
     }),
+    getAlertTemplates: builder.query<SMSAlerTemplate[], void>({
+      query: () => ({
+        url: `alert/sms`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useSendAlertMutation } = alertQuery;
+export const { useSendAlertMutation, useGetAlertTemplatesQuery } = alertQuery;
