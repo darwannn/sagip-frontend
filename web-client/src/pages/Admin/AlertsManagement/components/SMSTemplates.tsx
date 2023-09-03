@@ -1,8 +1,12 @@
+import { useState } from "react";
+import Modal from "../../../../components/Modal/Modal";
 import { useGetAlertTemplatesQuery } from "../../../../services/alertQuery";
 import SMSTemplateItem from "./SMSTemplateItem";
+import SMSTemplateForm from "./SMSTemplateForm";
 
 const SMSTemplates = () => {
 
+  const [isAddMode, setIsAddMode] = useState(false);
   const { data, isSuccess, isLoading, isError, error } = useGetAlertTemplatesQuery();
 
   let templates;
@@ -23,17 +27,26 @@ const SMSTemplates = () => {
   }
 
   return (
-    <div className="flex-1 p-5">
-      <div className="flex flex-row justify-between items-center">
-        <h2 className="text-lg font-bold text-gray-800">Message Templates</h2>
-        <button className="btn-primary">
-          Create New
-        </button>
+    <>
+      <div className="flex-1 p-5">
+        <div className="flex flex-row justify-between items-center">
+          <h2 className="text-lg font-bold text-gray-800">Message Templates</h2>
+          <button type="button" className="btn-primary" onClick={() => setIsAddMode(true)}>
+            Create New
+          </button>
+        </div>
+        <div className="templates-container mt-5 h-full flex flex-col gap-3">
+          {templates}
+        </div>
       </div>
-      <div className="templates-container mt-5 h-full flex flex-col gap-3">
-        {templates}
-      </div>
-    </div>
+      <Modal
+        modalTitle="Create New Template"
+        modalShow={isAddMode}
+        modalClose={() => setIsAddMode(false)}
+      >
+        <SMSTemplateForm />
+      </Modal>
+    </>
   );
 }
 
