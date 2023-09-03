@@ -34,6 +34,8 @@ export const rootApi = createApi({
     // ARTICLE QUERY
     "Article",
     "SelectedArticle",
+    // ALERT QUERY
+    "Templates",
   ],
   endpoints: () => ({}),
 });

@@ -1,10 +1,33 @@
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useAddAlertTemplateMutation } from "../../../../services/alertQuery";
 
 const SMSTemplateForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [addTemplate, { isLoading, isSuccess, isError }] = useAddAlertTemplateMutation();
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
+
+    const body = {
+      alertTitle: data.alertTitle,
+      alertMessage: data.alertMessage,
+    }
+
+    addTemplate(body);
+
   };
+
+  if (isSuccess) {
+    console.log("Success");
+  }
+
+  if (isError) {
+    console.log("Error");
+  }
+
+  if (isLoading) {
+    console.log("Loading");
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">

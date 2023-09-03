@@ -4,7 +4,7 @@ export type SMSAlert = {
   location: string[] | string;
 };
 
-export type SMSAlerTemplate = {
+export type SMSAlertTemplate = {
   _id: string;
   alertTitle: string;
   alertMessage: string;

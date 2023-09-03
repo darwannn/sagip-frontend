@@ -1,7 +1,7 @@
-import { SMSAlerTemplate, } from "../../../../types/alert";
+import { SMSAlertTemplate, } from "../../../../types/alert";
 
 type SMSTemplateItemProps = {
-  templateData: SMSAlerTemplate;
+  templateData: SMSAlertTemplate;
 }
 const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
   return (
