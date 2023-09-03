@@ -1,4 +1,5 @@
 import SMSForm from "./components/SMSForm";
+import SMSTemplates from "./components/SMSTemplates";
 
 const AlertPage = () => {
 
@@ -6,9 +7,15 @@ const AlertPage = () => {
   return (<div className="p-10 h-screen">
     <div className="pb-5">
       <h1 className="text-2xl font-bold text-primary-500">Send SMS Alerts</h1>
+      <p>
+        Send SMS alerts to all or specific barangays.
+      </p>
     </div>
     <hr />
-    <SMSForm />
+    <div className="flex flex-row gap-5">
+      <SMSForm />
+      <SMSTemplates />
+    </div>
   </div>);
 }
 

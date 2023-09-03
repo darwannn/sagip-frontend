@@ -60,7 +60,7 @@ const SMSForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex-1" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
         <label htmlFor="alertTitle" className="form-label">
           Title
