@@ -42,14 +42,25 @@ import AccountContactNumberForm from "../pages/Admin/AccountSettings/components/
 import AccountPasswordForm from "../pages/Admin/AccountSettings/components/AccountPasswordForm";
 import TEMP_ROOT_PAGE from "../pages/RootLayout/Temp_RootPage";
 
+import ArticlesPage from "../pages/Mobile/Articles/ArticlesPage";
+import ArticlesData from "../pages/Mobile/Articles/components/ArticlesData";
+
+import Index from "../pages/Index/Index";
+import Home from "../pages/Mobile/Home/Home";
+import EmergencyHotlinesPage from "../pages/Mobile/EmergencyHotlines/EmergencyHotlinesPage";
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <TEMP_ROOT_PAGE />,
     children: [
       {
+        index: true,
+        element: <Index />,
+      },
+      {
         path: "login",
-        loader: isLoggedIn,
+        /* loader: isLoggedIn, */
         children: [
           {
             index: true,
@@ -97,8 +108,32 @@ export const router = createBrowserRouter([
         element: <NewPasswordPage />,
         /* loader: isLoggedIn, */
       },
-    ]
+      {
+        path: "home",
+        element: <Home />,
+      },
+      {
+        path: "emergency-hotlines",
+        element: <EmergencyHotlinesPage />,
+      },
+      {
+        path: "articles",
+        /* loader: isLoggedIn, */
+        children: [
+          { index: true, element: <ArticlesPage /> },
+          {
+            path: ":articleId",
+            element: <ArticlesData />,
+          },
+          {
+            path: "saved",
+            element: <ArticlesData />,
+          },
+        ],
+      },
+    ],
   },
+
   {
     path: "admin",
     element: <AdminRootLayout />,

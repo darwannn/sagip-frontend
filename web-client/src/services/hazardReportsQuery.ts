@@ -55,6 +55,12 @@ export const hazardReportsQueryApi = rootApi.injectEndpoints({
         return [{ type: "HazardReports", id }];
       },
     }),
+
+    // Get ongoing hazard reports
+    getOngoingHazard: builder.query<THazardReport[], void>({
+      query: () => "hazard-report/ongoing",
+      providesTags: ["OngoingHazardReports"],
+    }),
   }),
 });
 
@@ -64,4 +70,6 @@ export const {
   useVerifyHazardReportMutation,
   useResolveHazardReportMutation,
   useDeleteHazardReportMutation,
+
+  useGetOngoingHazardQuery,
 } = hazardReportsQueryApi;

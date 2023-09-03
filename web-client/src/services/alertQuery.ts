@@ -3,6 +3,8 @@ import {
   TActiveSurvey,
   TSMSResData,
   TSurveyResData,
+  TSignalResData,
+  TWeatherResData,
 } from "../types/alert";
 import { rootApi } from "./rootApi";
 
@@ -88,6 +90,36 @@ export const alertQueryApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ["Alert", "ActiveAlert"],
     }),
+
+    getSignalAlert: builder.query<TSignalResData, void>({
+      query: () => "alert/signal",
+    }),
+    getWeatherAlert: builder.query<TWeatherResData, void>({
+      query: () => "alert/weather",
+    }),
+
+    /* Checks if user already answered the survey */
+    getCheckActiveSurvey: builder.query<TActiveSurvey, void>({
+      query: () => ({
+        url: `wellness-survey/myresponse`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: ["CheckActiveSurvey"],
+    }),
+
+    answerSurvey: builder.mutation<TSurveyResData, string>({
+      query: (answer) => ({
+        url: `wellness-survey/answer/`,
+        method: "PUT",
+        body: { answer },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["CheckActiveSurvey"],
+    }),
   }),
 });
 
@@ -100,4 +132,10 @@ export const {
   useAddAlertMutation,
   useUpdateAlertMutation,
   useGetAlertReportByIdQuery,
+
+  useGetSignalAlertQuery,
+  useGetWeatherAlertQuery,
+
+  useGetCheckActiveSurveyQuery,
+  useAnswerSurveyMutation,
 } = alertQueryApi;
