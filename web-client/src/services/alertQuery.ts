@@ -1,6 +1,6 @@
 import { rootApi } from "./rootApi";
 import { TSMSResData } from "../types/survey";
-import { SMSAlertTemplate, SMSAlert } from "../types/alert";
+import { SMSAlertTemplate, SMSAlert, SMSAlertRes } from "../types/alert";
 
 export const alertQuery = rootApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -30,10 +30,7 @@ export const alertQuery = rootApi.injectEndpoints({
           ? result.map(({ _id }) => ({ type: "Templates", id: _id }))
           : ["Templates"],
     }),
-    addAlertTemplate: builder.mutation<
-      SMSAlertTemplate,
-      Partial<SMSAlertTemplate>
-    >({
+    addAlertTemplate: builder.mutation<SMSAlertRes, Partial<SMSAlertTemplate>>({
       query: (body) => ({
         url: `alert/sms/add`,
         method: "POST",
@@ -59,7 +56,7 @@ export const alertQuery = rootApi.injectEndpoints({
       { id: string; body: Partial<SMSAlertTemplate> }
     >({
       query: ({ id, body }) => ({
-        url: `alert/sms/edit/${id}`,
+        url: `alert/sms/update/${id}`,
         method: "PUT",
         body,
         headers: {

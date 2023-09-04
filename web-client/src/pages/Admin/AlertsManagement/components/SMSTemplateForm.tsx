@@ -1,10 +1,37 @@
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { useAddAlertTemplateMutation } from "../../../../services/alertQuery";
+import { useAddAlertTemplateMutation, useEditAlertTemplateMutation, } from "../../../../services/alertQuery";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { SMSAlertTemplate } from "../../../../types/alert";
 
-const SMSTemplateForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+type SMSTemplateFormProps = {
+  templateData?: SMSAlertTemplate;
+}
+
+const SMSTemplateForm: React.FC<SMSTemplateFormProps> = ({ templateData }) => {
+  const [searchParams] = useSearchParams();
+  const isEditMode = searchParams.get("mode") === "edit";
+  const templateId = searchParams.get("id");
+
   const [addTemplate, { isLoading, isSuccess, isError }] = useAddAlertTemplateMutation();
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const [editTemplate, { isLoading: isEditLoading, isSuccess: isEditSuccess, isError: isEditError }] = useEditAlertTemplateMutation();
+  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
+
+  useEffect(() => {
+    if (isEditMode && templateId && templateData) {
+      setValue("alertTitle", templateData.alertTitle);
+      setValue("alertMessage", templateData.alertMessage);
+    }
+
+    // Cleanup
+    return () => {
+      setValue("alertTitle", "");
+      setValue("alertMessage", "");
+    }
+  }, [isEditMode, templateId, templateData, setValue])
+
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
 
     const body = {
@@ -12,24 +39,62 @@ const SMSTemplateForm = () => {
       alertMessage: data.alertMessage,
     }
 
-    addTemplate(body);
+    if (isEditMode && templateId) {
+      // Update
+      editTemplate({ id: templateId, body });
+    } else {
+      // Add
+      const res = await addTemplate(body);
+
+      if (res && 'data' in res) {
+        if (res.data.success === true) {
+          reset();
+        }
+      }
+
+
+
+    }
 
   };
 
-  if (isSuccess) {
+  let buttonTxt;
+  let messageComponent;
+
+  if (isSuccess || isEditSuccess) {
     console.log("Success");
+    messageComponent = (
+      <div className="bg-green-300 p-2 border-l-2 border-l-green-500 text-sm rounded">
+        {`${isEditMode ? "Edited" : "Added"} Successfully`}
+      </div>
+    )
   }
 
-  if (isError) {
+  if (isError || isEditError) {
     console.log("Error");
+    messageComponent = (
+      <div className="bg-red-300 p-2 border-l-2 border-l-red-500 text-sm rounded">
+        {`${isEditMode ? "Edit" : "Add"} Error`}
+      </div>
+    )
   }
 
-  if (isLoading) {
+  if (isLoading || isEditLoading) {
     console.log("Loading");
+  }
+
+
+  if (isLoading || isEditLoading) {
+    buttonTxt = "Loading...";
+  } else if (isEditMode) {
+    buttonTxt = "Update";
+  } else {
+    buttonTxt = "Add";
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {messageComponent}
       <div className="form-group">
         <label htmlFor="alertTitle" className="form-label">
           Title
@@ -45,8 +110,8 @@ const SMSTemplateForm = () => {
         {errors.alertMessage && <span className="input-error">Message is required.</span>}
       </div>
       <div className="action-container flex flex-row justify-end mt-5">
-        <button className="btn-primary" type="submit">
-          Create Template
+        <button className="btn-primary" type="submit" disabled={isLoading || isEditLoading}>
+          {buttonTxt}
         </button>
       </div>
     </form>

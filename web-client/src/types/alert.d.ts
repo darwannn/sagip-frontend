@@ -4,6 +4,12 @@ export type SMSAlert = {
   location: string[] | string;
 };
 
+export type SMSAlertRes = {
+  message: string;
+  smsAlert: SMSAlertTemplate;
+  success: boolean;
+};
+
 export type SMSAlertTemplate = {
   _id: string;
   alertTitle: string;
