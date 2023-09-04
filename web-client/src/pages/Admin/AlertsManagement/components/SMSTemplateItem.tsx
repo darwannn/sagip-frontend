@@ -9,6 +9,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Modal from "../../../../components/Modal/Modal";
 import SMSTemplateForm from "./SMSTemplateForm";
 import { useState } from "react";
+import { useAppDispatch } from "../../../../store/hooks";
+import { setSelectedTemplate } from "../../../../store/slices/alertSlice";
 
 
 type SMSTemplateItemProps = {
@@ -18,6 +20,8 @@ const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const [
     deleteTemplate,
@@ -36,6 +40,11 @@ const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
     deleteTemplate({ id });
   }
 
+  const onSelectItemHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+    dispatch(setSelectedTemplate(templateData))
+  };
+
   if (isDeleteLoading) {
     console.log("delete loading");
   }
@@ -48,7 +57,9 @@ const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
 
   return (
     <>
-      <div className="template-item p-5 h-[150px] bg-gray-100 shadow-sm rounded-md cursor-pointer relative group">
+      <div className="template-item p-5 h-[150px] bg-gray-100 shadow-sm rounded-md cursor-pointer relative group hover:shadow-md hover:-translate-y-1 transition-all duration-100"
+        onClick={onSelectItemHandler}
+      >
         <div className="template-title mb-2">
           <h5 className="font-semibold text-gray-700 truncate">{templateData.alertTitle}</h5>
         </div>

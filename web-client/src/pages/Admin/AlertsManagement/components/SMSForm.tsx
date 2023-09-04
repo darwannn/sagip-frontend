@@ -2,9 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { Controller, FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Select from "react-select"
 import { Barangay, getBarangays } from "../../../../components/AddressSelector/AddressSelector";
-import { MdSend } from "react-icons/md";
 import { useSendAlertMutation } from "../../../../services/alertQuery";
 import { SMSAlert } from "../../../../types/alert";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { selectedTemplate, setSelectedTemplate } from "../../../../store/slices/alertSlice";
+// ICONS
+import { MdSend } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 
 const SMSForm = () => {
   const [malBarangays, setMalBarangays] = useState<Barangay[]>([]);
@@ -12,27 +16,34 @@ const SMSForm = () => {
     const barangays = await getBarangays("031410");
     setMalBarangays(barangays);
   }, []);
-  const [sendAlert, { isLoading, isSuccess, isError, error }] = useSendAlertMutation();
 
-  const { register, handleSubmit, reset, watch, control, formState: { errors } } = useForm<FieldValues>();
+  const [sendAlert, { isLoading, isError, error }] = useSendAlertMutation();
+
+  const { register, handleSubmit, reset, watch, setValue, control, formState: { errors } } = useForm<FieldValues>();
+
+  const dispatch = useAppDispatch();
+  const setTemplate = useAppSelector(selectedTemplate);
 
   const watchSendOpt = watch("sendOptions");
 
   useEffect(() => {
     getMalolosBarangays();
-  }, [getMalolosBarangays]);
+
+    if (setTemplate) {
+      setValue("alertTitle", setTemplate.alertTitle);
+      setValue("alertMessage", setTemplate.alertMessage);
+    }
+
+  }, [getMalolosBarangays, setTemplate, setValue]);
 
   const options = malBarangays.map((barangay: Barangay) => ({
     value: barangay.brgy_name,
     label: barangay.brgy_name,
   }));
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
 
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const selectedLoc = data.sendOption === "sendToSpecific" ? data.location.map((loc: { value: string, label: string }) => loc.value) : ["All"];
-
-    console.log(selectedLoc);
 
     const smsData: SMSAlert = {
       alertTitle: data.alertTitle,
@@ -40,27 +51,36 @@ const SMSForm = () => {
       location: selectedLoc,
     }
 
-    sendAlert(smsData);
+    const res = await sendAlert(smsData);
 
-    reset({
-      alertTitle: "",
-      alertMessage: "",
-      sendOptions: "sendToSpecific",
-      location: [],
-    })
-
-
+    if (res && 'data' in res) {
+      if (res.data.success) {
+        reset()
+        if (setTemplate)
+          dispatch(setSelectedTemplate(null));
+      }
+    }
   };
 
-  if (isSuccess) {
-    console.log("Success");
-  }
   if (isError) {
     console.log(error);
   }
 
   return (
     <form className="flex-1" onSubmit={handleSubmit(onSubmit)}>
+      {setTemplate &&
+        <div className="p-2 bg-blue-200 my-2 rounded border-l-4 border-l-blue-500 flex flex-row justify-between">
+          <span className="text-sm truncate">Using template: <span className="font-semibold">{setTemplate?.alertTitle}</span></span>
+          <button type="button" className="flex items-center text-gray-500 hover:text-gray-800"
+            onClick={() => {
+              dispatch(setSelectedTemplate(null));
+              reset();
+            }}
+          >
+            <IoMdClose />
+          </button>
+        </div>
+      }
       <div className="form-group">
         <label htmlFor="alertTitle" className="form-label">
           Title

@@ -11,6 +11,7 @@ import assistanceReqSlice from "./slices/assistanceReqSlice";
 // API / Services / Queries
 import teamSlice from "./slices/teamSlice";
 import { rootApi } from "../services/rootApi";
+import alertSlice from "./slices/alertSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     account: accountSlice,
     survey: surveySlice,
     assistanceReq: assistanceReqSlice,
+    alert: alertSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([rootApi.middleware]),
