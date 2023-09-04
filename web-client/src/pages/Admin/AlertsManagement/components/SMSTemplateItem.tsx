@@ -13,6 +13,7 @@ import { setSelectedTemplate } from "../../../../store/slices/alertSlice";
 // ICONS
 import { TbPencil } from "react-icons/tb";
 import { LuTrash2 } from "react-icons/lu"
+import { toast } from "react-toastify";
 
 
 type SMSTemplateItemProps = {
@@ -39,7 +40,14 @@ const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
   }
 
   const onDeleteItemHandler = (id: string) => {
-    deleteTemplate({ id });
+    toast.promise(
+      deleteTemplate({ id }).unwrap,
+      {
+        pending: 'Deleting Template...',
+        success: 'Template Deleted.',
+        error: 'Delete Failed.'
+      }
+    )
   }
 
   const onSelectItemHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
