@@ -54,6 +54,20 @@ export const alertQuery = rootApi.injectEndpoints({
       }),
       invalidatesTags: (_result, _error, { id }) => [{ type: "Templates", id }],
     }),
+    editAlertTemplate: builder.mutation<
+      SMSAlertTemplate,
+      { id: string; body: Partial<SMSAlertTemplate> }
+    >({
+      query: ({ id, body }) => ({
+        url: `alert/sms/edit/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Templates", id }],
+    }),
   }),
 });
 
@@ -62,4 +76,5 @@ export const {
   useGetAlertTemplatesQuery,
   useAddAlertTemplateMutation,
   useDeleteAlertTemplateMutation,
+  useEditAlertTemplateMutation,
 } = alertQuery;
