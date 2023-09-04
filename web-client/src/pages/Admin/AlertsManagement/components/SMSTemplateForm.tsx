@@ -14,8 +14,8 @@ const SMSTemplateForm: React.FC<SMSTemplateFormProps> = ({ templateData }) => {
   const isEditMode = searchParams.get("mode") === "edit";
   const templateId = searchParams.get("id");
 
-  const [addTemplate, { isLoading, isSuccess, isError }] = useAddAlertTemplateMutation();
-  const [editTemplate, { isLoading: isEditLoading, isSuccess: isEditSuccess, isError: isEditError, error }] = useEditAlertTemplateMutation();
+  const [addTemplate, { isLoading, isError }] = useAddAlertTemplateMutation();
+  const [editTemplate, { isLoading: isEditLoading, isError: isEditError, error }] = useEditAlertTemplateMutation();
   const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
 
   useEffect(() => {
@@ -68,37 +68,14 @@ const SMSTemplateForm: React.FC<SMSTemplateFormProps> = ({ templateData }) => {
           reset();
         }
       }
-
     }
-
   };
 
   let buttonTxt;
-  let messageComponent;
-
-  if (isSuccess || isEditSuccess) {
-    console.log("Success");
-    messageComponent = (
-      <div className="bg-green-300 p-2 border-l-2 border-l-green-500 text-sm rounded">
-        {`${isEditMode ? "Edited" : "Added"} Successfully`}
-      </div>
-    )
-  }
 
   if (isError || isEditError) {
-    console.log("Error");
-    console.log(error)
-    messageComponent = (
-      <div className="bg-red-300 p-2 border-l-2 border-l-red-500 text-sm rounded">
-        {`${isEditMode ? "Edit" : "Add"} Error`}
-      </div>
-    )
+    console.log("Error", error);
   }
-
-  if (isLoading || isEditLoading) {
-    console.log("Loading");
-  }
-
 
   if (isLoading || isEditLoading) {
     buttonTxt = "Loading...";
@@ -110,7 +87,6 @@ const SMSTemplateForm: React.FC<SMSTemplateFormProps> = ({ templateData }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {messageComponent}
       <div className="form-group">
         <label htmlFor="alertTitle" className="form-label">
           Title

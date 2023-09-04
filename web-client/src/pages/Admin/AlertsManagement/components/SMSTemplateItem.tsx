@@ -28,9 +28,9 @@ const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
 
   const [
     deleteTemplate,
-    { isLoading: isDeleteLoading,
+    {
       isError: isDeleteError,
-      isSuccess: isDeleteSuccess,
+      error,
     }
   ] = useDeleteAlertTemplateMutation();
 
@@ -55,14 +55,8 @@ const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
     dispatch(setSelectedTemplate(templateData))
   };
 
-  if (isDeleteLoading) {
-    console.log("delete loading");
-  }
-  if (isDeleteSuccess) {
-    console.log("delete success");
-  }
   if (isDeleteError) {
-    console.log("delete error");
+    console.log("Delete error", error);
   }
 
   return (

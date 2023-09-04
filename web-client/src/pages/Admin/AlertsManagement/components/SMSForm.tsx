@@ -52,8 +52,6 @@ const SMSForm = () => {
       location: selectedLoc,
     }
 
-    // const res = await sendAlert(smsData);
-
     const res = await toast.promise(sendAlert(smsData).unwrap, {
       pending: 'Sending Alert...',
       success: 'Alert Send Success!',
