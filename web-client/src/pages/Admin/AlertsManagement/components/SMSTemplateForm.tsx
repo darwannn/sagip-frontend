@@ -1,9 +1,11 @@
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { useAddAlertTemplateMutation, useEditAlertTemplateMutation, } from "../../../../services/alertQuery";
-import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
-import { SMSAlertTemplate } from "../../../../types/alert";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+// Components
+import { useAddAlertTemplateMutation, useEditAlertTemplateMutation, } from "../../../../services/alertQuery";
+// Type
+import { SMSAlertTemplate } from "../../../../types/alert";
 
 type SMSTemplateFormProps = {
   templateData?: SMSAlertTemplate;

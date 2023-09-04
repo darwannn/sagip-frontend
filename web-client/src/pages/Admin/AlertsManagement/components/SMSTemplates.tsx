@@ -1,6 +1,8 @@
 import { useState } from "react";
-import Modal from "../../../../components/Modal/Modal";
+// Redux
 import { useGetAlertTemplatesQuery } from "../../../../services/alertQuery";
+// Components
+import Modal from "../../../../components/Modal/Modal";
 import SMSTemplateItem from "./SMSTemplateItem";
 import SMSTemplateForm from "./SMSTemplateForm";
 

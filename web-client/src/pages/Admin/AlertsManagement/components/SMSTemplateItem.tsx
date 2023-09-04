@@ -1,25 +1,27 @@
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from "../../../../components/ui/DropdownMenu";
-import { SMSAlertTemplate, } from "../../../../types/alert";
-
+import { memo } from "react"
 import { useDeleteAlertTemplateMutation } from "../../../../services/alertQuery";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Modal from "../../../../components/Modal/Modal";
+import { toast } from "react-toastify";
+// Components
 import SMSTemplateForm from "./SMSTemplateForm";
+import Modal from "../../../../components/Modal/Modal";
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from "../../../../components/ui/DropdownMenu";
+// Redux
 import { useState } from "react";
 import { useAppDispatch } from "../../../../store/hooks";
 import { setSelectedTemplate } from "../../../../store/slices/alertSlice";
-
-// ICONS
+// Types
+import { SMSAlertTemplate, } from "../../../../types/alert";
+// Icons
 import { TbPencil } from "react-icons/tb";
 import { LuTrash2 } from "react-icons/lu"
-import { toast } from "react-toastify";
 
 
 type SMSTemplateItemProps = {
   templateData: SMSAlertTemplate;
 }
-const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
+const SMSTemplateItem: React.FC<SMSTemplateItemProps> = memo(({ templateData }) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [isEditMode, setIsEditMode] = useState(false);
@@ -107,6 +109,6 @@ const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
       </Modal>
     </>
   );
-}
+})
 
 export default SMSTemplateItem;

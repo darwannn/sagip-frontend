@@ -1,15 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
 import { Controller, FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import Select from "react-select"
+import { toast } from "react-toastify";
+// Components
 import { Barangay, getBarangays } from "../../../../components/AddressSelector/AddressSelector";
+import Select from "react-select"
+// Redux
 import { useSendAlertMutation } from "../../../../services/alertQuery";
 import { SMSAlert } from "../../../../types/alert";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { selectedTemplate, setSelectedTemplate } from "../../../../store/slices/alertSlice";
-// ICONS
+// Icons
 import { MdSend } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
-import { toast } from "react-toastify";
 
 const SMSForm = () => {
   const [malBarangays, setMalBarangays] = useState<Barangay[]>([]);
