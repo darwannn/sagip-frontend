@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "login",
-        /* loader: isLoggedIn, */
+        loader: isLoggedIn,
         children: [
           {
             index: true,
