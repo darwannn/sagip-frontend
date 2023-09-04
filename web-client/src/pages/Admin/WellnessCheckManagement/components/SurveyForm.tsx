@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { TSurvey, TSurveyResData } from "../../../../types/alert";
-import { useGetActiveAlertQuery } from "../../../../services/alertQuery";
+import { TSurvey, TSurveyResData } from "../../../../types/survey";
+import { useGetActiveSurveyQuery } from "../../../../services/surveyQuery";
 import {
-  useAddAlertMutation,
-  useUpdateAlertMutation,
-} from "../../../../services/alertQuery";
+  useAddSurveyMutation,
+  useUpdateSurveyMutation,
+} from "../../../../services/surveyQuery";
 
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
 type TProps = {
-  alertData?: TSurvey;
+  surveyData?: TSurvey;
 };
 
-const AlertForm = ({ alertData }: TProps) => {
-  const { data: activeAlert } = useGetActiveAlertQuery();
+const SurveyForm = ({ surveyData }: TProps) => {
+  const { data: activeAlert } = useGetActiveSurveyQuery();
 
   const [
     addAlert,
     { isError: addIsError, isLoading: addIsLoading, error: addErr },
-  ] = useAddAlertMutation();
+  ] = useAddSurveyMutation();
   const [
     updateAlert,
     {
@@ -29,17 +29,17 @@ const AlertForm = ({ alertData }: TProps) => {
       isLoading: updateIsLoading,
       isSuccess: updateIsSuccess,
     },
-  ] = useUpdateAlertMutation();
+  ] = useUpdateSurveyMutation();
 
   const navigate = useNavigate();
 
   /* allows status to be updated without changing the value of other fields */
   const [initialStatus, setInitialStatus] = useState<string>("");
   useEffect(() => {
-    if (alertData) {
-      setInitialStatus(alertData.status);
+    if (surveyData) {
+      setInitialStatus(surveyData.status);
     }
-  }, [alertData]);
+  }, [surveyData]);
 
   const {
     register,
@@ -47,10 +47,10 @@ const AlertForm = ({ alertData }: TProps) => {
     formState: { isDirty, errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      title: alertData?.title,
-      category: alertData?.category,
+      title: surveyData?.title,
+      category: surveyData?.category,
       /* by default, input type="date" requires its value to be in YYYY-MM-DD format */
-      endDate: moment(alertData?.endDate).format("YYYY-MM-DD"),
+      endDate: moment(surveyData?.endDate).format("YYYY-MM-DD"),
     },
   });
 
@@ -68,11 +68,10 @@ const AlertForm = ({ alertData }: TProps) => {
     };
 
     let res;
-    if (alertData) {
+    if (surveyData) {
       res = await updateAlert({
         body,
-
-        id: alertData._id,
+        id: surveyData._id,
       });
     } else {
       res = await addAlert(body);
@@ -80,7 +79,7 @@ const AlertForm = ({ alertData }: TProps) => {
     console.log(res);
     if (res && "data" in res) {
       if (res.data.success) {
-        navigate(`/disaster-alerts`);
+        navigate(`/admin/welness-check`);
       }
     }
   };
@@ -107,7 +106,7 @@ const AlertForm = ({ alertData }: TProps) => {
 
   return (
     <form>
-      {alertData?._id !== activeAlert?._id && activeAlert?.success === true && (
+      {surveyData?._id !== activeAlert?._id && activeAlert?.success === true && (
         <div className="bg-red-400 text-white px-5 py-3 my-5 rounded">
           There is already an active alert. Please unpublish it before
           publishing a new one.
@@ -154,23 +153,23 @@ const AlertForm = ({ alertData }: TProps) => {
           disabled={
             addIsLoading ||
             updateIsLoading ||
-            alertData?._id !== activeAlert?._id
+            surveyData?._id !== activeAlert?._id
           }
         >
-          {!alertData
+          {!surveyData
             ? "Publish"
-            : alertData?.status === "active"
+            : surveyData?.status === "active"
               ? "Update"
               : "Publish"}
         </button>
 
-        {alertData && (
+        {surveyData && (
           <button
             className="bg-red-500 text-white px-5 py-1 m-2 rounded"
             onClick={handleSubmit(onUnpublish)}
             disabled={addIsLoading || updateIsLoading}
           >
-            {alertData?.status === "active" ? "Unpublish" : "Update"}
+            {surveyData?.status === "active" ? "Unpublish" : "Update"}
           </button>
         )}
       </div>
@@ -178,4 +177,4 @@ const AlertForm = ({ alertData }: TProps) => {
   );
 };
 
-export default AlertForm;
+export default SurveyForm;

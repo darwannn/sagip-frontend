@@ -8,6 +8,7 @@ import { PiWarning, PiArticleMediumLight } from "react-icons/pi";
 import { SlSettings } from "react-icons/sl";
 import { TbLogout2 } from "react-icons/tb";
 import MiniProfile from "./MiniProfile";
+import { FaRegMessage } from "react-icons/fa6"
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const AdminSidebar = () => {
           to={"/admin"}
         >
           <div className="flex items-center gap-4">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <RxDashboard />
             </span>
             <span className="text-gray-600">Dashboard</span>
@@ -48,7 +49,7 @@ const AdminSidebar = () => {
           to={"users"}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <LiaUserSolid />
             </span>
             <span className="text-gray-600">Users</span>
@@ -59,7 +60,7 @@ const AdminSidebar = () => {
           to={"teams"}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <LiaUsersSolid />
             </span>
             <span className="text-gray-600">Teams</span>
@@ -70,7 +71,7 @@ const AdminSidebar = () => {
           to={"emergency-reports"}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <MdOutlineEmergencyShare />
             </span>
             <span className="text-gray-600">Emergency Reports</span>
@@ -81,7 +82,7 @@ const AdminSidebar = () => {
           to={"facility-map"}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <BiMapPin />
             </span>
             <span className="text-gray-600">Facility Map</span>
@@ -92,7 +93,7 @@ const AdminSidebar = () => {
           to={"hazard-reports"}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <PiWarning />
             </span>
             <span className="text-gray-600">Hazard Reports</span>
@@ -100,13 +101,13 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"disaster-alerts"}
+          to={"wellness-check"}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <MdCrisisAlert />
             </span>
-            <span className="text-gray-600">Disaster Alerts</span>
+            <span className="text-gray-600">Wellness Check</span>
           </div>
         </NavLink>
         <NavLink
@@ -114,10 +115,21 @@ const AdminSidebar = () => {
           to={"manage-articles"}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <PiArticleMediumLight />
             </span>
             <span className="text-gray-600">Articles</span>
+          </div>
+        </NavLink>
+        <NavLink
+          className="w-full hover:bg-primary-100 p-2 rounded"
+          to={"alert-management"}
+        >
+          <div className="flex items-center gap-4 ">
+            <span className="text-[16px] text-gray-600">
+              <FaRegMessage />
+            </span>
+            <span className="text-gray-600">Alerts</span>
           </div>
         </NavLink>
       </nav>

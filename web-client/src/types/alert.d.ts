@@ -1,67 +1,19 @@
-export type SMS = {
+export type SMSAlert = {
   alertTitle: string;
-  // alertMessage: string;
-  //location: string[];
+  alertMessage: string;
+  location: string[] | string;
 };
 
-export type TSurvey = {
+export type SMSAlertRes = {
+  message: string;
+  smsAlert: SMSAlertTemplate;
+  success: boolean;
+};
+
+export type SMSAlertTemplate = {
   _id: string;
-  title: string;
-  category: string;
-  unaffected: string[];
-  affected: string[];
-  status: string;
-  isArchived: boolean;
-  startDate: string;
-  endDate: string;
+  alertTitle: string;
+  alertMessage: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
 };
-export type TActiveSurvey = {
-  _id: string;
-  title: string;
-  category: string;
-  unaffected: string[];
-  affected: string[];
-  status: string;
-  isArchived: boolean;
-  startDate: string;
-  endDate: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-
-  success?: boolean;
-};
-export type TSurveyReport = {
-  _id: string;
-  title: string;
-  category: string;
-  startDate: string;
-  endDate: string;
-  unaffected: string[];
-  affected: string[];
-  status: string;
-  success: boolean;
-  responseCount: number;
-  affectedCount: number;
-  unaffectedCount: number;
-};
-
-export type TSMSResData = {
-  message: string;
-  success: boolean;
-};
-
-export type TSurveyResData = {
-  survey: Survey;
-  message: string;
-  success: boolean;
-  title?: string;
-  category?: string;
-  unaffected?: string[];
-  affected?: string[];
-};
-
-export const AlertTypes = ["Flood", "Earthquake"];

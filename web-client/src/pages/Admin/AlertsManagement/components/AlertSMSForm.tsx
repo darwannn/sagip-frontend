@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useEffect, useCallback } from "react";
 import {
   Controller,
@@ -6,11 +7,10 @@ import {
   useForm,
 } from "react-hook-form";
 
+// Components
+import Select from "react-select";
 // Redux
 import { useSendAlertMutation } from "../../../../services/alertQuery";
-
-import { useState } from "react";
-import Select from "react-select";
 
 import {
   getBarangays,
