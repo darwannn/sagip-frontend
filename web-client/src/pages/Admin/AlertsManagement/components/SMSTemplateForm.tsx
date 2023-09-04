@@ -3,6 +3,7 @@ import { useAddAlertTemplateMutation, useEditAlertTemplateMutation, } from "../.
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { SMSAlertTemplate } from "../../../../types/alert";
+import { toast } from "react-toastify";
 
 type SMSTemplateFormProps = {
   templateData?: SMSAlertTemplate;
@@ -13,8 +14,8 @@ const SMSTemplateForm: React.FC<SMSTemplateFormProps> = ({ templateData }) => {
   const isEditMode = searchParams.get("mode") === "edit";
   const templateId = searchParams.get("id");
 
-  const [addTemplate, { isLoading, isSuccess, isError }] = useAddAlertTemplateMutation();
-  const [editTemplate, { isLoading: isEditLoading, isSuccess: isEditSuccess, isError: isEditError }] = useEditAlertTemplateMutation();
+  const [addTemplate, { isLoading, isError }] = useAddAlertTemplateMutation();
+  const [editTemplate, { isLoading: isEditLoading, isError: isEditError, error }] = useEditAlertTemplateMutation();
   const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
 
   useEffect(() => {
@@ -41,48 +42,40 @@ const SMSTemplateForm: React.FC<SMSTemplateFormProps> = ({ templateData }) => {
 
     if (isEditMode && templateId) {
       // Update
-      editTemplate({ id: templateId, body });
+      toast.promise(
+        editTemplate({ id: templateId, body }).unwrap,
+        {
+          pending: 'Editing Template.',
+          success: 'Edited Successfully',
+          error: 'Edit Failed.'
+        }
+      )
+
     } else {
       // Add
-      const res = await addTemplate(body);
+      // const res = await addTemplate(body);
+      const res = await toast.promise(
+        addTemplate(body).unwrap(),
+        {
+          pending: 'Adding New Template.',
+          success: 'Template Added.',
+          error: 'Add Failed.'
+        }
+      )
 
-      if (res && 'data' in res) {
-        if (res.data.success === true) {
+      if (res) {
+        if (res.success) {
           reset();
         }
       }
-
-
-
     }
-
   };
 
   let buttonTxt;
-  let messageComponent;
-
-  if (isSuccess || isEditSuccess) {
-    console.log("Success");
-    messageComponent = (
-      <div className="bg-green-300 p-2 border-l-2 border-l-green-500 text-sm rounded">
-        {`${isEditMode ? "Edited" : "Added"} Successfully`}
-      </div>
-    )
-  }
 
   if (isError || isEditError) {
-    console.log("Error");
-    messageComponent = (
-      <div className="bg-red-300 p-2 border-l-2 border-l-red-500 text-sm rounded">
-        {`${isEditMode ? "Edit" : "Add"} Error`}
-      </div>
-    )
+    console.log("Error", error);
   }
-
-  if (isLoading || isEditLoading) {
-    console.log("Loading");
-  }
-
 
   if (isLoading || isEditLoading) {
     buttonTxt = "Loading...";
@@ -94,7 +87,6 @@ const SMSTemplateForm: React.FC<SMSTemplateFormProps> = ({ templateData }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {messageComponent}
       <div className="form-group">
         <label htmlFor="alertTitle" className="form-label">
           Title

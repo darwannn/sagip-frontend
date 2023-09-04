@@ -9,6 +9,7 @@ import { selectedTemplate, setSelectedTemplate } from "../../../../store/slices/
 // ICONS
 import { MdSend } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const SMSForm = () => {
   const [malBarangays, setMalBarangays] = useState<Barangay[]>([]);
@@ -51,10 +52,14 @@ const SMSForm = () => {
       location: selectedLoc,
     }
 
-    const res = await sendAlert(smsData);
+    const res = await toast.promise(sendAlert(smsData).unwrap, {
+      pending: 'Sending Alert...',
+      success: 'Alert Send Success!',
+      error: 'Failed To Send Alert'
+    })
 
-    if (res && 'data' in res) {
-      if (res.data.success) {
+    if (res) {
+      if (res.success) {
         reset()
         if (setTemplate)
           dispatch(setSelectedTemplate(null));
