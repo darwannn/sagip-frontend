@@ -67,7 +67,7 @@ const SMSForm = () => {
   }
 
   return (
-    <form className="flex-1" onSubmit={handleSubmit(onSubmit)}>
+    <form className="col-span-3 flex flex-col" onSubmit={handleSubmit(onSubmit)}>
       {setTemplate &&
         <div className="p-2 bg-blue-200 my-2 rounded border-l-4 border-l-blue-500 flex flex-row justify-between">
           <span className="text-sm truncate">Using template: <span className="font-semibold">{setTemplate?.alertTitle}</span></span>
@@ -88,11 +88,11 @@ const SMSForm = () => {
         <input className="form-input" type="text" id="alertTitle" placeholder="Enter Alert Title" {...register("alertTitle", { required: true })} />
         {errors.alertTitle && <span className="input-error">Title is required.</span>}
       </div>
-      <div className="form-group">
+      <div className="form-group grow">
         <label htmlFor="alertMessage" className="form-label">
           Message
         </label>
-        <textarea className="form-input" id="alertMessage" placeholder="Enter alert message or select from the templates." rows={10} {...register("alertMessage", { required: true })} />
+        <textarea className="form-input h-full resize-none" id="alertMessage" placeholder="Enter alert message or select from the templates." {...register("alertMessage", { required: true })} />
         {errors.alertMessage && <span className="input-error">Message is required.</span>}
       </div>
       <label htmlFor="" className="form-label">Sending Options</label>

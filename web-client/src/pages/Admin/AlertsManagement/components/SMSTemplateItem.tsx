@@ -2,8 +2,6 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from "../../../../components/ui/DropdownMenu";
 import { SMSAlertTemplate, } from "../../../../types/alert";
 
-// ICONS
-import { TbPencil } from "react-icons/tb"
 import { useDeleteAlertTemplateMutation } from "../../../../services/alertQuery";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Modal from "../../../../components/Modal/Modal";
@@ -11,6 +9,10 @@ import SMSTemplateForm from "./SMSTemplateForm";
 import { useState } from "react";
 import { useAppDispatch } from "../../../../store/hooks";
 import { setSelectedTemplate } from "../../../../store/slices/alertSlice";
+
+// ICONS
+import { TbPencil } from "react-icons/tb";
+import { LuTrash2 } from "react-icons/lu"
 
 
 type SMSTemplateItemProps = {
@@ -77,13 +79,13 @@ const SMSTemplateItem: React.FC<SMSTemplateItemProps> = ({ templateData }) => {
               className="hover:bg-gray-100 text-base"
               onClick={() => onEditItemHandler(templateData._id)}
             >
-              Edit
+              <span className="mr-2 h-4 w-4"><TbPencil /></span> <span>Edit</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               className="hover:bg-gray-100 text-base"
               onClick={() => onDeleteItemHandler(templateData._id)}
             >
-              Delete
+              <span className="mr-2 h-4 w-4"><LuTrash2 /></span> <span>Delete</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

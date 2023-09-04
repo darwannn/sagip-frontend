@@ -28,14 +28,14 @@ const SMSTemplates = () => {
 
   return (
     <>
-      <div className="flex-1 p-5">
+      <div className="col-span-2 p-5 flex flex-col">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-lg font-bold text-gray-800">Message Templates</h2>
           <button type="button" className="btn-primary" onClick={() => setIsAddMode(true)}>
             Create New
           </button>
         </div>
-        <div className="templates-container mt-5 h-full flex flex-col gap-3">
+        <div className="templates-container mt-5 flex flex-col gap-3 max-h-[70vh] overflow-y-scroll">
           {templates}
         </div>
       </div>
