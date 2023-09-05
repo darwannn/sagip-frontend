@@ -4,7 +4,7 @@ import {
   useGetWeatherAlertQuery,
 } from "../../../services/alertQuery";
 import { useGetPublishedArticlesQuery } from "../../../services/articleQuery";
-import { useGetCheckActiveSurveyQuery } from "../../../services/alertQuery";
+import { useGetCheckActiveSurveyQuery } from "../../../services/surveyQuery";
 import { useGetUserByTokenQuery } from "../../../services/accountQuery";
 import { useGetOngoingHazardQuery } from "../../../services/hazardReportsQuery";
 

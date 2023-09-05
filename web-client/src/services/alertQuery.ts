@@ -1,7 +1,7 @@
 import { TSignalResData, TWeatherResData } from "../types/alert";
 
 import { rootApi } from "./rootApi";
-import { TActiveSurvey, TSMSResData, TSurveyResData } from "../types/survey";
+import { TSMSResData } from "../types/survey";
 import { SMSAlertTemplate, SMSAlert, SMSAlertRes } from "../types/alert";
 
 export const alertQuery = rootApi.injectEndpoints({
