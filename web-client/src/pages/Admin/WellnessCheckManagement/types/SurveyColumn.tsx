@@ -1,10 +1,10 @@
 import moment from "moment";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { TSurvey } from "../../../../types/alert";
-import AlertRowAction from "../components/AlertRowAction";
+import { TSurvey } from "../../../../types/survey";
+import SurveyTableRowAction from "../components/SurveyTableRowAction";
 
-export const alertColumn: ColumnDef<TSurvey>[] = [
+export const surveyColumn: ColumnDef<TSurvey>[] = [
   {
     accessorKey: "_id",
     header: "ID",
@@ -51,6 +51,6 @@ export const alertColumn: ColumnDef<TSurvey>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => <AlertRowAction rowId={row.getValue("_id")} />,
+    cell: ({ row }) => <SurveyTableRowAction rowId={row.getValue("_id")} />,
   },
 ];

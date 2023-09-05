@@ -13,10 +13,10 @@ import ViewArticlePage from "../pages/Admin/ArticleManagement/ViewArticlePage";
 import TeamDetails from "../pages/Admin/TeamManagement/components/TeamDetails";
 import ManageRespondersPage from "../pages/Admin/TeamManagement/ManageRespondersPage";
 
-import ManageAlertsPage from "../pages/Admin/AlertsManagement/ManageAlertsPage";
-import CreateAlertPage from "../pages/Admin/AlertsManagement/CreateAlertsPage";
-import ViewAlertsPage from "../pages/Admin/AlertsManagement/ViewAlertsPage";
-import AlertReport from "../pages/Admin/AlertsManagement/components/AlertReport";
+import ManageSurveyPage from "../pages/Admin/WellnessCheckManagement/ManageSurveyPage";
+import CreateSurveyPage from "../pages/Admin/WellnessCheckManagement/CreateSurveyPage";
+import ViewSurveyPage from "../pages/Admin/WellnessCheckManagement/ViewSurveyPage";
+import SurveyReport from "../pages/Admin/WellnessCheckManagement/components/SurveyReport";
 
 import ManageUserPage from "../pages/Admin/UserManagement/ManageUserPage";
 import VerifyUserPage from "../pages/Admin/UserManagement/VerifyUserPage";
@@ -41,6 +41,7 @@ import AccountEmailForm from "../pages/Admin/AccountSettings/components/AccountE
 import AccountContactNumberForm from "../pages/Admin/AccountSettings/components/AccountContactNumberForm";
 import AccountPasswordForm from "../pages/Admin/AccountSettings/components/AccountPasswordForm";
 import TEMP_ROOT_PAGE from "../pages/RootLayout/Temp_RootPage";
+import AlertPage from "../pages/Admin/AlertsManagement/AlertPage";
 
 import ArticlesPage from "../pages/Mobile/Articles/ArticlesPage";
 import ArticlesData from "../pages/Mobile/Articles/components/ArticlesData";
@@ -171,11 +172,11 @@ export const router = createBrowserRouter([
         element: <ManageFacilitiesPage />,
       },
       {
-        path: "disaster-alerts",
+        path: "wellness-check",
         children: [
-          { index: true, element: <ManageAlertsPage /> },
-          { path: "create", element: <CreateAlertPage /> },
-          { path: ":alertId", element: <ViewAlertsPage /> },
+          { index: true, element: <ManageSurveyPage /> },
+          { path: "create", element: <CreateSurveyPage /> },
+          { path: ":alertId", element: <ViewSurveyPage /> },
           /* { path: "report/:alertId", element: <AlertReport /> }, */
         ],
       },
@@ -188,6 +189,10 @@ export const router = createBrowserRouter([
         ],
       },
       {
+        path: "alert-management",
+        element: <AlertPage />,
+      },
+      {
         path: "account-settings",
         element: <ManageAccountPage />,
         children: [
@@ -197,13 +202,14 @@ export const router = createBrowserRouter([
           { path: "password", element: <AccountPasswordForm /> },
         ],
       },
+
     ],
   },
 
   /* temporary, so the report will open in new tab (without side navigation menu) */
   {
-    path: "/disaster-alerts/report/:alertId",
-    element: <AlertReport />,
+    path: "/wellness-check/report/:surveyId",
+    element: <SurveyReport />,
     loader: checkAuth,
   },
 ]);

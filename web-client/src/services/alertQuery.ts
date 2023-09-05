@@ -1,3 +1,4 @@
+
 import {
   TSurvey,
   TActiveSurvey,
@@ -6,40 +7,16 @@ import {
   TSignalResData,
   TWeatherResData,
 } from "../types/alert";
+
 import { rootApi } from "./rootApi";
+import { TSMSResData } from "../types/survey";
+import { SMSAlertTemplate, SMSAlert, SMSAlertRes } from "../types/alert";
 
-export const alertQueryApi = rootApi.injectEndpoints({
+export const alertQuery = rootApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAlerts: builder.query<TSurvey[], void>({
-      query: () => "wellness-survey",
-      providesTags: ["Alert"],
-    }),
-    // Get specific article with id
-    getAlertById: builder.query<TSurvey, string | undefined>({
-      query: (id) => `wellness-survey/${id}`,
-      providesTags: ["SelectedAlert"],
-    }),
-    getActiveAlert: builder.query<TActiveSurvey, void>({
-      query: () => `wellness-survey/active`,
-      providesTags: ["ActiveAlert"],
-    }),
-
-    getAlertReportById: builder.query<TSurvey, string | undefined>({
-      query: (id) => `wellness-survey/report/${id}`,
-      providesTags: ["AlertReport"],
-    }),
-
-    sendAlert: builder.mutation<
-      TSMSResData,
-      {
-        alertTitle: string;
-        alertMessage: string;
-
-        location: string[];
-      }
-    >({
+    sendAlert: builder.mutation<TSMSResData, SMSAlert>({
       query: ({ alertTitle, alertMessage, location }) => ({
-        url: `api/send-alert/`,
+        url: `alert/sms/send`,
         method: "POST",
         body: {
           alertTitle,
@@ -51,44 +28,52 @@ export const alertQueryApi = rootApi.injectEndpoints({
         },
       }),
     }),
-
-    addAlert: builder.mutation<TSurveyResData, Partial<TSurvey>>({
+    getAlertTemplates: builder.query<SMSAlertTemplate[], void>({
+      query: () => ({
+        url: `alert/sms`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({ type: "Templates", id: _id }))
+          : ["Templates"],
+    }),
+    addAlertTemplate: builder.mutation<SMSAlertRes, Partial<SMSAlertTemplate>>({
       query: (body) => ({
-        url: "wellness-survey/add",
+        url: `alert/sms/add`,
         method: "POST",
         body,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["Alert", "ActiveAlert"],
+      invalidatesTags: ["Templates"],
     }),
-
-    // Update article
-    updateAlert: builder.mutation<
-      TSurveyResData,
-      { body: Partial<TSurvey>; id: string }
+    deleteAlertTemplate: builder.mutation<SMSAlertTemplate, { id: string }>({
+      query: ({ id }) => ({
+        url: `alert/sms/delete/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Templates", id }],
+    }),
+    editAlertTemplate: builder.mutation<
+      SMSAlertTemplate,
+      { id: string; body: Partial<SMSAlertTemplate> }
     >({
-      query: ({ body, id }) => ({
-        url: `wellness-survey/update/${id}`,
+      query: ({ id, body }) => ({
+        url: `alert/sms/update/${id}`,
         method: "PUT",
         body,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["Alert", "SelectedAlert", "ActiveAlert"],
-    }),
-
-    deleteAlert: builder.mutation<void, { token: string | null; id: string }>({
-      query: ({ token, id }) => ({
-        url: `wellness-survey/delete/${id}`,
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      invalidatesTags: ["Alert", "ActiveAlert"],
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Templates", id }],
     }),
 
     getSignalAlert: builder.query<TSignalResData, void>({
@@ -138,4 +123,10 @@ export const {
 
   useGetCheckActiveSurveyQuery,
   useAnswerSurveyMutation,
-} = alertQueryApi;
+
+  useGetAlertTemplatesQuery,
+  useAddAlertTemplateMutation,
+  useDeleteAlertTemplateMutation,
+  useEditAlertTemplateMutation,
+} = alertQuery;
+

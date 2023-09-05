@@ -32,13 +32,19 @@ export const rootApi = createApi({
     "SelectedAlert",
     "ActiveAlert",
     "AlertReport",
-
-    "CheckActiveSurvey",
     // ARTICLE QUERY
     "Article",
     "SelectedArticle",
     "SavedArticle",
     "PublishedArticle",
+    // SURVEY QUERY
+    "WellnessSurvey",
+    "SelectedSurvey",
+    "ActiveSurvey",
+    "SurveyReport",
+     "CheckActiveSurvey",
+    // ALERT QUERY
+    "Templates",
   ],
   endpoints: () => ({}),
 });

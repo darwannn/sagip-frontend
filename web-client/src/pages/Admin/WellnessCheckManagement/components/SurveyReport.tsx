@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
-import { useGetAlertReportByIdQuery } from "../../../../services/alertQuery";
-import { TSurveyReport } from "../../../../types/alert";
+import { useGetSurveyReportByIdQuery } from "../../../../services/surveyQuery";
+import { TSurveyReport } from "../../../../types/survey";
 
 import moment from "moment";
 import {
@@ -102,13 +102,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const ViewAlertPage = () => {
-  const { alertId } = useParams();
+const SurveyReport = () => {
+  const { surveyId } = useParams();
   const {
     data: alertData,
     isLoading,
     error,
-  } = useGetAlertReportByIdQuery(alertId);
+  } = useGetSurveyReportByIdQuery(surveyId);
 
   const reportData = alertData as TSurveyReport | undefined;
 
@@ -116,7 +116,7 @@ const ViewAlertPage = () => {
     return <p>Loading...</p>;
   }
   if (error) {
-    console.log(alertId);
+    console.log(surveyId);
     console.log(error);
 
     return <p>Something went wrong</p>;
@@ -249,4 +249,4 @@ const ViewAlertPage = () => {
   );
 };
 
-export default ViewAlertPage;
+export default SurveyReport;

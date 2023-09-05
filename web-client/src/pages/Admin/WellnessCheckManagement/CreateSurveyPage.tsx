@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
-import AlertForm from "./components/AlertForm";
+import SurveyForm from "./components/SurveyForm";
 
-const CreateArticlesPage = () => {
+const CreateSurveyPage = () => {
   return (
     <div className="m-5">
       <Link
         className="px-2 py-1 bg-red-200 rounded hover:bg-red-400"
-        to={"/disaster-alerts"}
+        to={"/admin/wellness-check"}
       >
         Cancel
       </Link>
-      <AlertForm />
+      <SurveyForm />
     </div>
   );
 };
 
-export default CreateArticlesPage;
+export default CreateSurveyPage;

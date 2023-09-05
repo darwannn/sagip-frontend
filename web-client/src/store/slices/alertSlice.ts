@@ -1,35 +1,33 @@
-import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
-
-// Types
-import type { TSurvey } from "../../types/alert";
+import { PayloadAction, createSlice, createSelector } from "@reduxjs/toolkit";
+import { SMSAlertTemplate } from "../../types/alert";
 import { RootState } from "../store";
 
-type TSurveyState = {
-  alerts: TSurvey[] | null;
-  activeAlert: TSurvey | null;
+type TAlertState = {
+  selectedTemplate: SMSAlertTemplate | null;
 };
 
-const initialState: TSurveyState = {
-  alerts: [],
-  activeAlert: null,
+const initialState: TAlertState = {
+  selectedTemplate: null,
 };
 
 export const alertSlice = createSlice({
   name: "alert",
   initialState,
   reducers: {
-    setActiveAlert: (state, action: PayloadAction<TSurvey>) => {
-      state.activeAlert = action.payload;
+    setSelectedTemplate: (
+      state,
+      action: PayloadAction<SMSAlertTemplate | null>
+    ) => {
+      state.selectedTemplate = action.payload;
     },
   },
 });
 
-export const { setActiveAlert } = alertSlice.actions;
+export const { setSelectedTemplate } = alertSlice.actions;
 export default alertSlice.reducer;
 
-// Selectors
-
-export const selectActiveAlert = createSelector(
-  (state: RootState) => state.alerts.activeAlert,
-  (activeAlert) => activeAlert
+// Create selectors to select the selected template
+export const selectedTemplate = createSelector(
+  (state: RootState) => state.alert.selectedTemplate,
+  (selectedTemplate: SMSAlertTemplate | null) => selectedTemplate
 );
