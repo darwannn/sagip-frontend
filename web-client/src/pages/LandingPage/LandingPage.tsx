@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import SAGIP_Logo from "../../assets/img/SAGIP_Logo.png";
 import Malolos_City_Hall from "../../assets/img/Malolos_City_Hall.jpg";
 
-const Index = () => {
+const LandingPage = () => {
   const navigate = useNavigate();
   const isMobileDevice = /Mobi|iPhone|Android/i.test(navigator.userAgent);
 
@@ -57,4 +57,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default LandingPage;

@@ -1,4 +1,3 @@
-
 export type TSignalResData = {
   success: boolean;
   signal: number;
@@ -16,7 +15,6 @@ export type TWeatherResData = {
 };
 
 export type SMSAlert = {
-
   alertTitle: string;
   alertMessage: string;
   location: string[] | string;

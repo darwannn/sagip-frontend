@@ -1,6 +1,6 @@
-import { useAnswerSurveyMutation } from "../../../../services/alertQuery";
+import { useAnswerSurveyMutation } from "../../../../services/surveyQuery";
 
-import { TActiveSurvey } from "../../../../types/alert";
+import { TActiveSurvey } from "../../../../types/survey";
 
 type TProps = {
   wellnessSurveyData: TActiveSurvey;

@@ -57,6 +57,29 @@ export const surveyQueryApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ["WellnessSurvey", "ActiveSurvey"],
     }),
+
+    /* Checks if user already answered the survey */
+    getCheckActiveSurvey: builder.query<TActiveSurvey, void>({
+      query: () => ({
+        url: `wellness-survey/myresponse`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: ["CheckActiveSurvey"],
+    }),
+
+    answerSurvey: builder.mutation<TSurveyResData, string>({
+      query: (answer) => ({
+        url: `wellness-survey/answer/`,
+        method: "PUT",
+        body: { answer },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["CheckActiveSurvey"],
+    }),
   }),
 });
 
@@ -68,4 +91,7 @@ export const {
   useAddSurveyMutation,
   useUpdateSurveyMutation,
   useGetSurveyReportByIdQuery,
+
+  useGetCheckActiveSurveyQuery,
+  useAnswerSurveyMutation,
 } = surveyQueryApi;
