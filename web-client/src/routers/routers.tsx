@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
     element: <TEMP_ROOT_PAGE />,
     children: [
       {
-        LandingPage: true,
+        index: true,
         element: <LandingPage />,
       },
       {
@@ -64,7 +64,7 @@ export const router = createBrowserRouter([
         loader: isLoggedIn,
         children: [
           {
-            LandingPage: true,
+            index: true,
             element: <LoginPage />,
           },
           {
@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
         path: "register",
         /* loader: isLoggedIn, */
         children: [
-          { LandingPage: true, element: <RegistrationPage /> },
+          { index: true, element: <RegistrationPage /> },
           {
             path: "contact-verification",
             element: <RegisterContactVerification />,
@@ -97,7 +97,7 @@ export const router = createBrowserRouter([
         path: "forgot-password",
         /* loader: isLoggedIn, */
         children: [
-          { LandingPage: true, element: <ForgotPasswordPage /> },
+          { index: true, element: <ForgotPasswordPage /> },
           {
             path: "contact-verification",
             element: <ForgotPasswordContactVerification />,
@@ -121,7 +121,7 @@ export const router = createBrowserRouter([
         path: "articles",
         /* loader: isLoggedIn, */
         children: [
-          { LandingPage: true, element: <ArticlesPage /> },
+          { index: true, element: <ArticlesPage /> },
           {
             path: ":articleId",
             element: <ArticlesData />,
@@ -140,12 +140,12 @@ export const router = createBrowserRouter([
     element: <AdminRootLayout />,
     loader: checkAuth,
     children: [
-      { LandingPage: true, element: <Dashboard /> },
+      { index: true, element: <Dashboard /> },
       {
         path: "users",
         // loader:
         children: [
-          { LandingPage: true, element: <ManageUserPage /> },
+          { index: true, element: <ManageUserPage /> },
           { path: "create", element: <CreateUserPage /> },
           { path: ":userId", element: <ViewUserPage /> },
           { path: "verify-users", element: <VerifyUserPage /> },
@@ -155,7 +155,7 @@ export const router = createBrowserRouter([
         path: "teams",
         element: <ManageTeamPage />,
         children: [
-          { LandingPage: true, element: <ManageRespondersPage /> },
+          { index: true, element: <ManageRespondersPage /> },
           { path: ":id", element: <TeamDetails /> },
         ],
       },
@@ -174,7 +174,7 @@ export const router = createBrowserRouter([
       {
         path: "wellness-check",
         children: [
-          { LandingPage: true, element: <ManageSurveyPage /> },
+          { index: true, element: <ManageSurveyPage /> },
           { path: "create", element: <CreateSurveyPage /> },
           { path: ":alertId", element: <ViewSurveyPage /> },
           /* { path: "report/:alertId", element: <AlertReport /> }, */
@@ -183,7 +183,7 @@ export const router = createBrowserRouter([
       {
         path: "manage-articles",
         children: [
-          { LandingPage: true, element: <ManageArticlesPage /> },
+          { index: true, element: <ManageArticlesPage /> },
           { path: "create", element: <CreateArticlesPage /> },
           { path: ":articleId", element: <ViewArticlePage /> },
         ],
