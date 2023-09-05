@@ -9,6 +9,7 @@ import { SlSettings } from "react-icons/sl";
 import { TbLogout2 } from "react-icons/tb";
 import MiniProfile from "./MiniProfile";
 import { FaRegMessage } from "react-icons/fa6"
+import { HiOutlineBell } from "react-icons/hi"
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className="w-[300px] border-r bg-white flex flex-col p-5">
+    <div className="w-[300px] z-10 border-r bg-white flex flex-col p-5">
       <div className="nav-header pb-2 flex flex-row items-center gap-3">
         <div className="logo-container w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br from-primary-500 to-secondary-500">
           {/* <span className="font-bold text-white text-xl">S</span> */}
@@ -139,10 +140,21 @@ const AdminSidebar = () => {
       <div className="flex flex-col mt-5">
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
+          to={"#"}
+        >
+          <div className="flex items-center gap-4 ">
+            <span className="text-[18px] text-gray-600">
+              <HiOutlineBell />
+            </span>
+            <span className="text-gray-600">Notifications</span>
+          </div>
+        </NavLink>
+        <NavLink
+          className="w-full hover:bg-primary-100 p-2 rounded"
           to={"account-settings"}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <SlSettings />
             </span>
             <span className="text-gray-600">Account Settings</span>
@@ -153,7 +165,7 @@ const AdminSidebar = () => {
           onClick={() => logout()}
         >
           <div className="flex items-center gap-4 ">
-            <span className="text-[24px] text-gray-600">
+            <span className="text-[18px] text-gray-600">
               <TbLogout2 />
             </span>
             <span className="text-gray-600">Logout</span>
