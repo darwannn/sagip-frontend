@@ -11,4 +11,4 @@ export type TUserNotification = {
   _id: string;
 };
 
-export type NotificationRes = TUserNotification[];
+// export type NotificationRes = TUserNotification[];

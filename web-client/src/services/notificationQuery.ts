@@ -1,9 +1,9 @@
-import { NotificationRes } from "../types/notification";
+import { TUserNotification } from "../types/notification";
 import { rootApi } from "./rootApi";
 
 export const notificationQuery = rootApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUserNotification: builder.query<NotificationRes, void>({
+    getUserNotification: builder.query<TUserNotification[], void>({
       query: () => ({
         url: `notification`,
         headers: {
