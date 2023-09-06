@@ -8,10 +8,16 @@ import { PiWarning, PiArticleMediumLight } from "react-icons/pi";
 import { SlSettings } from "react-icons/sl";
 import { TbLogout2 } from "react-icons/tb";
 import MiniProfile from "./MiniProfile";
-import { FaRegMessage } from "react-icons/fa6"
-import { HiOutlineBell } from "react-icons/hi"
+import { FaRegMessage } from "react-icons/fa6";
+import { HiOutlineBell } from "react-icons/hi";
 
-const AdminSidebar = () => {
+type AdminSidebarProps = {
+  toggleNotificationHandler: () => void;
+};
+
+const AdminSidebar: React.FC<AdminSidebarProps> = ({
+  toggleNotificationHandler,
+}) => {
   const navigate = useNavigate();
 
   const logout = () => {
@@ -138,9 +144,9 @@ const AdminSidebar = () => {
       {/* MINI PROFILE */}
       <MiniProfile />
       <div className="flex flex-col mt-5">
-        <NavLink
-          className="w-full hover:bg-primary-100 p-2 rounded"
-          to={"#"}
+        <div
+          className="w-full hover:bg-primary-100 p-2 rounded cursor-pointer"
+          onClick={() => toggleNotificationHandler()}
         >
           <div className="flex items-center gap-4 ">
             <span className="text-[18px] text-gray-600">
@@ -148,7 +154,7 @@ const AdminSidebar = () => {
             </span>
             <span className="text-gray-600">Notifications</span>
           </div>
-        </NavLink>
+        </div>
         <NavLink
           className="w-full hover:bg-primary-100 p-2 rounded"
           to={"account-settings"}

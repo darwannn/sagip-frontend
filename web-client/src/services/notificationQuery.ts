@@ -10,12 +10,26 @@ export const notificationQuery = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      // providesTags: (result) =>
-      //   result
-      //     ? result.map(({ _id }) => ({ type: "Notification", id: _id }))
-      //     : ["Notification"],
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({ type: "Notification", id: _id }))
+          : ["Notification"],
+    }),
+    readUserNotification: builder.mutation<
+      { success: boolean; message: string },
+      void
+    >({
+      query: () => ({
+        url: `notification/read`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["Notification"],
     }),
   }),
 });
 
-export const { useGetUserNotificationQuery } = notificationQuery;
+export const { useGetUserNotificationQuery, useReadUserNotificationMutation } =
+  notificationQuery;
