@@ -65,7 +65,7 @@ const NotificationPanel = () => {
   }
 
   return (
-    <div className="notification-panel absolute z-[5] left-[300px] w-[350px] p-5 h-screen bg-gray-50 shadow overflow-y-auto">
+    <div className="notification-panel absolute z-[11] left-[300px] w-[350px] p-5 h-screen bg-gray-50 shadow overflow-y-auto">
       <div className="mb-5">
         <h3 className="font-semibold text-lg text-primary-500">
           Notifications

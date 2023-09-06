@@ -100,7 +100,7 @@ const ManageFacilitiesPage = () => {
 
   return (
     <div className="relative h-screen">
-      <div className="relative z-10 flex flex-col gap-2 p-2 w-max items-start">
+      <div className="relative z-[5] flex flex-col gap-2 p-2 w-max items-start">
         {/* Facility Actions */}
         <FacilityActions recenterMapHandler={recenterMap} />
         {/* Facilities List */}

@@ -27,7 +27,7 @@ const EmergencyReportsPage = () => {
   return (
     <div className="relative h-screen">
       <div className="flex flex-col p-2">
-        <div className="relative z-10 flex flex-col w-max items-start bg-white p-3 max-h-[70vh] min-w-[350px] shadow border rounded-md ">
+        <div className="relative z-[5] flex flex-col w-max items-start bg-white p-3 max-h-[70vh] min-w-[350px] shadow border rounded-md ">
           <AssistanceFilters />
           <AssistanceList />
         </div>
