@@ -45,7 +45,6 @@ const RegistrationAddress = ({
 
   return (
     <>
-      w
       <div className="mb-10 flex-1 sm:flex-grow-0">
         <div className="my-3">
           <label>

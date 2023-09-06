@@ -55,6 +55,37 @@ export const articleQueryApi = rootApi.injectEndpoints({
         invalidatesTags: ["Article"],
       }
     ),
+
+    /* Get published articles */
+    getPublishedArticles: builder.query<Article[], void>({
+      query: () => "safety-tips/published",
+      providesTags: ["SavedArticle"],
+    }),
+    /* Get saved article of specific user*/
+    getSavedArticles: builder.query<Article[], void>({
+      query: () => ({
+        url: "safety-tips/saved",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: ["SavedArticle"],
+    }),
+    saveArticle: builder.mutation<TArticleResData, string>({
+      query: (id) => ({
+        url: `safety-tips/saves/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: [
+        "Article",
+        "SelectedArticle",
+        "PublishedArticle",
+        "SavedArticle",
+      ],
+    }),
   }),
 });
 
@@ -64,4 +95,8 @@ export const {
   useAddArticleMutation,
   useUpdateArticleMutation,
   useDeleteArticleMutation,
+
+  useGetPublishedArticlesQuery,
+  useGetSavedArticlesQuery,
+  useSaveArticleMutation,
 } = articleQueryApi;

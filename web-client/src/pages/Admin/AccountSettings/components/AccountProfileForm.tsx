@@ -112,7 +112,7 @@ const AccountProfileForm = () => {
       <button
         className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
         onClick={() => {
-          navigate("/account-settings");
+          navigate("/admin/account-settings");
         }}
       >
         <MdClose />

@@ -1,3 +1,5 @@
+import { TSignalResData, TWeatherResData } from "../types/alert";
+
 import { rootApi } from "./rootApi";
 import { TSMSResData } from "../types/survey";
 import { SMSAlertTemplate, SMSAlert, SMSAlertRes } from "../types/alert";
@@ -65,11 +67,20 @@ export const alertQuery = rootApi.injectEndpoints({
       }),
       invalidatesTags: (_result, _error, { id }) => [{ type: "Templates", id }],
     }),
+
+    getSignalAlert: builder.query<TSignalResData, void>({
+      query: () => "alert/signal",
+    }),
+    getWeatherAlert: builder.query<TWeatherResData, void>({
+      query: () => "alert/weather",
+    }),
   }),
 });
 
 export const {
   useSendAlertMutation,
+  useGetSignalAlertQuery,
+  useGetWeatherAlertQuery,
   useGetAlertTemplatesQuery,
   useAddAlertTemplateMutation,
   useDeleteAlertTemplateMutation,

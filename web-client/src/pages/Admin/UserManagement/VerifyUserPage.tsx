@@ -63,7 +63,7 @@ const VerifyUserPage = () => {
           <div className=" w-[350px] flex flex-col z-10 bg-white shadow-md rounded-r-xl p-4 h-screen sticky top-0">
             <div className="flex items-center">
               {/* temporary back button */}
-              <Link className="text-3xl" to={"/users"}>
+              <Link className="text-3xl" to={"/admin/users"}>
                 <MdChevronLeft />
               </Link>
               <h1 className="font-bold text-2xl text-sky-900 mt-3">

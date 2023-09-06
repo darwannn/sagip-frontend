@@ -6,10 +6,9 @@ const TEMP_ROOT_PAGE = () => {
   const navigate = useNavigate();
   useEffect(() => {
     navigate("/admin")
-  }, [navigate])
-
+  }, [navigate]);
 
   return <Outlet />;
-}
+};
 
 export default TEMP_ROOT_PAGE;

@@ -43,11 +43,22 @@ import AccountPasswordForm from "../pages/Admin/AccountSettings/components/Accou
 import TEMP_ROOT_PAGE from "../pages/RootLayout/Temp_RootPage";
 import AlertPage from "../pages/Admin/AlertsManagement/AlertPage";
 
+import ArticlesPage from "../pages/Mobile/Articles/ArticlesPage";
+import ArticlesData from "../pages/Mobile/Articles/components/ArticlesData";
+
+import LandingPage from "../pages/LandingPage/LandingPage";
+import Home from "../pages/Mobile/Home/Home";
+import EmergencyHotlinesPage from "../pages/Mobile/EmergencyHotlines/EmergencyHotlinesPage";
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <TEMP_ROOT_PAGE />,
     children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
       {
         path: "login",
         loader: isLoggedIn,
@@ -98,8 +109,32 @@ export const router = createBrowserRouter([
         element: <NewPasswordPage />,
         /* loader: isLoggedIn, */
       },
-    ]
+      {
+        path: "home",
+        element: <Home />,
+      },
+      {
+        path: "emergency-hotlines",
+        element: <EmergencyHotlinesPage />,
+      },
+      {
+        path: "articles",
+        /* loader: isLoggedIn, */
+        children: [
+          { index: true, element: <ArticlesPage /> },
+          {
+            path: ":articleId",
+            element: <ArticlesData />,
+          },
+          {
+            path: "saved",
+            element: <ArticlesData />,
+          },
+        ],
+      },
+    ],
   },
+
   {
     path: "admin",
     element: <AdminRootLayout />,
@@ -167,7 +202,6 @@ export const router = createBrowserRouter([
           { path: "password", element: <AccountPasswordForm /> },
         ],
       },
-
     ],
   },
 

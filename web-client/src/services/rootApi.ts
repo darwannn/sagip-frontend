@@ -26,14 +26,23 @@ export const rootApi = createApi({
     // HAZARD REPORT QUERY
     "HazardReports",
     "SelectedHazardReport",
+    "OngoingHazardReports",
+    // ALERT QUERY
+    "Alert",
+    "SelectedAlert",
+    "ActiveAlert",
+    "AlertReport",
+    // ARTICLE QUERY
+    "Article",
+    "SelectedArticle",
+    "SavedArticle",
+    "PublishedArticle",
     // SURVEY QUERY
     "WellnessSurvey",
     "SelectedSurvey",
     "ActiveSurvey",
     "SurveyReport",
-    // ARTICLE QUERY
-    "Article",
-    "SelectedArticle",
+     "CheckActiveSurvey",
     // ALERT QUERY
     "Templates",
     // USER NOTIFICATION
