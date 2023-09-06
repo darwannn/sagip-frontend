@@ -93,7 +93,9 @@ const ArticleForm = ({ articleData }: TProps) => {
       const res = await addArticle({ body, token });
       if (res && "data" in res) {
         if (res.data.success) {
-          navigate(`/articles/${data.safetyTip._id}?mode=view`);
+          navigate(
+            `/admin/manage-articles/${res.data.safetyTip._id}?mode=view`
+          );
         }
       }
     }

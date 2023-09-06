@@ -1,15 +1,16 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ArticleForm from "./components/ArticleForm";
 
 const CreateArticlesPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="m-5">
-      <Link
+      <button
         className="px-2 py-1 bg-red-200 rounded hover:bg-red-400"
-        to={"/articles"}
+        onClick={() => navigate(-1)}
       >
-        Cancel
-      </Link>
+        Back
+      </button>
       <ArticleForm />
     </div>
   );
