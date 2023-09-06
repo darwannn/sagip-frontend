@@ -37,16 +37,31 @@ const NotificationPanel = () => {
 
   if (isError) console.log("Error loading notifications: ", error);
 
-  let templateList;
+  const maxPage = sortedData ? Math.ceil(sortedData?.length / per_page) : 0;
+  let notificationList;
+  let notificationLoadMore;
 
   if (isLoading) {
-    templateList = <p className="text-center my-5">Loading...</p>;
+    notificationList = <p className="text-center my-5">Loading...</p>;
   } else if (isSuccess && entries?.length === 0) {
-    templateList = <p className="text-center my-5">No new notifications.</p>;
+    notificationList = (
+      <p className="text-center my-5">No new notifications.</p>
+    );
   } else if (isSuccess && entries && entries?.length > 0) {
-    templateList = entries?.map((notification) => (
+    notificationList = entries?.map((notification) => (
       <NotificationItem key={notification._id} notification={notification} />
     ));
+  }
+
+  if (page < maxPage) {
+    notificationLoadMore = (
+      <button
+        className="py-1 px-3 w-full mt-3"
+        onClick={() => setPage(page + 1)}
+      >
+        Load more
+      </button>
+    );
   }
 
   return (
@@ -71,8 +86,9 @@ const NotificationPanel = () => {
         </button>
       </div>
       <div className="notification-container flex flex-col gap-2">
-        {templateList}
+        {notificationList}
       </div>
+      {notificationLoadMore}
     </div>
   );
 };
