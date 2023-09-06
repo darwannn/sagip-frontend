@@ -84,7 +84,7 @@ const AccountEmailForm = () => {
         setServerRes(res.data);
         if (res.data.success) {
           setShowModal(true);
-          dispatch(setIdentifier(data.email));
+          dispatch(setIdentifier(action === "update" ? data.email : userData?.email));
           /* setAuthToken({
             token: res.data.token || "",
           }); */

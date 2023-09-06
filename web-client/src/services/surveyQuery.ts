@@ -31,7 +31,7 @@ export const surveyQueryApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ["WellnessSurvey", "ActiveSurvey"],
     }),
-    // Update article
+        // Update article
     updateSurvey: builder.mutation<
       TSurveyResData,
       { body: Partial<TSurvey>; id: string }

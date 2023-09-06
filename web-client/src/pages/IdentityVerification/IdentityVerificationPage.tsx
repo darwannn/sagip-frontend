@@ -5,6 +5,7 @@ import { useGetIdVerificationRequestQuery } from "../../services/authQuery";
 import { setDisplayedVerificationPage } from "../../store/slices/authSlice";
 
 import IdentityVerificationSubmitted from "./components/IdentityVerificationSubmitted";
+import IdentityVerificationForm from "./components/IdentityVerificationForm";
 
 const IdentityVerificationPage = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,7 @@ const IdentityVerificationPage = () => {
       {alreadyRequested ? (
         <IdentityVerificationSubmitted />
       ) : (
-        <IdentityVerificationSubmitted />
+        <IdentityVerificationForm />
       )}
     </>
   );

@@ -14,7 +14,7 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { setcontactVerificationRes } from "../../store/slices/authSlice";
+import { setcontactVerificationRes,setRegistrationSuccessful } from "../../store/slices/authSlice";
 
 import {
   useContactVerificationMutation,
@@ -100,6 +100,9 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
         } else {
           dispatch(setcontactVerificationRes(res.data));
         }
+        if(action === "register") {
+          dispatch(setRegistrationSuccessful(true));
+        }
       }
     } else {
       if ("error" in res && "data" in res.error) {
@@ -116,6 +119,7 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
   const resendCode = async () => {
     const res = await resendVerificationCode({
       identifier: identifier ?? "",
+      action,
     });
     if ("data" in res) {
       setServerRes(res.data);

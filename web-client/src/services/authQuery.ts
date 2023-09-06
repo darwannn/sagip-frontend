@@ -88,12 +88,13 @@ export const authQueryApi = rootApi.injectEndpoints({
       TUserResData,
       {
         identifier: string;
+        action: string;
       }
     >({
-      query: ({ identifier }) => ({
+      query: ({ identifier,action }) => ({
         url: `/auth/resend-code/`,
         method: "PUT",
-        body: { identifier },
+        body: { identifier,action },
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

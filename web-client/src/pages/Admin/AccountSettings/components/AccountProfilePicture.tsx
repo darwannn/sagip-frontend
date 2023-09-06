@@ -39,9 +39,9 @@ const AccountProfilePicture = ({ userData }: TProps) => {
   const [
     updateProfilePicture,
     {
-      isError: sendIsError,
-      isLoading: sendIsLoading,
-      isSuccess: sendIsSuccess,
+      isError: updateIsError,
+      isLoading: updateIsLoading,
+      isSuccess: updateIsSuccess,
     },
   ] = useUpdateProfilePictureMutation();
 
@@ -66,9 +66,9 @@ const AccountProfilePicture = ({ userData }: TProps) => {
     }
   }, [hasBeenCropped, selectedImage, updateProfilePicture]);
 
-  if (sendIsLoading) console.log("Updating...");
-  if (sendIsError) console.log("Error updating");
-  if (sendIsSuccess) console.log("Updated successfully");
+  if (updateIsLoading) console.log("Updating...");
+  if (updateIsError) console.log("Error updating");
+  if (updateIsSuccess) console.log("Updated successfully");
   return (
     <>
       <div className="w-full flex flex-col items-center justify-center mb-10 mt-5">

@@ -10,7 +10,7 @@ const SurveyTableRowAction = ({ rowId }: TRowAction) => {
     useDeleteSurveyMutation();
 
   const onViewHandler = () => {
-    navigate(`/admin/wellness-check/${rowId}?mode=view`);
+    navigate(`/admin/wellness-check/${rowId}`);
   };
   const onGenerateReportHandler = () => {
     //navigate(`/disaster-alerts/report/${rowId}`);

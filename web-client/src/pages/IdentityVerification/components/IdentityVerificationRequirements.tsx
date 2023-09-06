@@ -52,8 +52,10 @@ const RegistrationSuccessful = () => {
 
     if (res && "data" in res) {
       if (res.data.success) {
-        if (!registrationSuccessful) {
+        if (registrationSuccessful) {
           navigate("/register?success=success");
+        } else {
+          navigate("/identity-verification");
         }
       }
     }

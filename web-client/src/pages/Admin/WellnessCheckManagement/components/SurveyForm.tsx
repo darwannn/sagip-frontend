@@ -79,7 +79,7 @@ const SurveyForm = ({ surveyData }: TProps) => {
     console.log(res);
     if (res && "data" in res) {
       if (res.data.success) {
-        navigate(`/admin/welness-check`);
+        navigate(`/admin/wellness-check`);
       }
     }
   };
@@ -153,7 +153,7 @@ const SurveyForm = ({ surveyData }: TProps) => {
           disabled={
             addIsLoading ||
             updateIsLoading ||
-            surveyData?._id !== activeAlert?._id
+            (activeAlert?.success  && surveyData?._id !== activeAlert?._id)
           }
         >
           {!surveyData
