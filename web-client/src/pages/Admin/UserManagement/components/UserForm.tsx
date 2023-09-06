@@ -96,7 +96,7 @@ const UserForm = ({ userData }: TProps) => {
     if ("data" in res) {
       setServerRes(res.data);
       if (res.data.success) {
-        navigate(`/users`);
+        navigate(`/admin/users`);
       }
     } else {
       if ("error" in res && "data" in res.error) {
@@ -109,7 +109,8 @@ const UserForm = ({ userData }: TProps) => {
   const onBan: SubmitHandler<FieldValues> = async (data) => {
     if (
       confirm(
-        `Are you sure you want to ${userData?.isBanned === true ? "unban" : "ban"
+        `Are you sure you want to ${
+          userData?.isBanned === true ? "unban" : "ban"
         } this user?`
       )
     )

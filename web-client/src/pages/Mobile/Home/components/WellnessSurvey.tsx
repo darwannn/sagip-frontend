@@ -21,7 +21,7 @@ const WellnessSurvey = ({ wellnessSurveyData }: TProps) => {
     /* if ("data" in res) {
       setServerRes(res.data);
       if (res.data.success) {
-        navigate(`/users`);
+        navigate(`/admin/users`);
       }
     } else {
       if ("error" in res && "data" in res.error) {

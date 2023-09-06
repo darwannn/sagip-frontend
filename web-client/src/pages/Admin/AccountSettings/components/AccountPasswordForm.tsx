@@ -56,7 +56,7 @@ const AccountPasswordForm = () => {
       if ("data" in res) {
         if (res.data.success) {
           setServerRes(res.data);
-          /* navigate(`/account`); */
+          /* navigate(`/admin/account-settings`); */
           reset({
             confirmPassword: "",
             password: "",
@@ -87,7 +87,7 @@ const AccountPasswordForm = () => {
       <button
         className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
         onClick={() => {
-          navigate("/account-settings");
+          navigate("/admin/account-settings");
         }}
       >
         <MdClose />
