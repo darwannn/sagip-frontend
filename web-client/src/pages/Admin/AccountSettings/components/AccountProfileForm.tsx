@@ -237,13 +237,13 @@ const AccountProfileForm = () => {
           </div>
         </section>
 
-        <div className="w-full mt-5 ">
+        <div className="w-full mt-10 ">
           <button
-            className="w-full lg:w-auto bg-indigo-500 text-white px-5 py-1 my-2 rounded disabled:bg-indigo-300"
+            className="btn-primary"
             onClick={handleSubmit(onSubmit)}
-            disabled={updateIsLoading && !hasBeenCropped}
+            disabled={(updateIsLoading && !hasBeenCropped) || !isDirty}
           >
-            Update
+            Update Profile
           </button>
         </div>
       </form>
