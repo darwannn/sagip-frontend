@@ -36,6 +36,8 @@ export const rootApi = createApi({
     "SelectedArticle",
     // ALERT QUERY
     "Templates",
+    // USER NOTIFICATION
+    "Notification",
   ],
   endpoints: () => ({}),
 });
