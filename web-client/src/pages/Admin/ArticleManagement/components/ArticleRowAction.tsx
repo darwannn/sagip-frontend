@@ -10,7 +10,7 @@ const ArticleRowAction = ({ rowId }: TRowAction) => {
     useDeleteArticleMutation();
 
   const onViewHandler = () => {
-    navigate(`/articles/${rowId}?mode=view`);
+    navigate(`/admin/manage-articles/${rowId}?mode=view`);
   };
 
   const onDeleteHandler = async () => {
