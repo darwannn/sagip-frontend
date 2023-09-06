@@ -16,13 +16,20 @@ const ManageAccountPage = () => {
   }
 
   return (
-    <div className="w-full flex">
-      <AccountSettingsList userData={userData} />
-      {/* flex-1, takes the rest of the space */}
-      {/* <ViewAccountPage userData={userData} /> */}
-      <div className="flex-1">
-        <Outlet />
+    <div className="p-8 min-h-screen mx-auto">
+      <div className="mb-5">
+        <h1 className="text-2xl font-bold text-primary-500">
+          Account Settings
+        </h1>
+        <p>Manage your account settings and contact number.</p>
       </div>
+      <hr />
+      <main className="flex flex-row">
+        <AccountSettingsList userData={userData} />
+        <div className="flex-1">
+          <Outlet />
+        </div>
+      </main>
     </div>
   );
 };
