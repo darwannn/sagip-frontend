@@ -11,10 +11,9 @@ export const accountQueryApi = rootApi.injectEndpoints({
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        providesTags: ["Account"],
       }),
+      providesTags: ["Account"],
     }),
-
     updateProfile: builder.mutation<
       TUserResData,
       { body: FormData; id: string | undefined }

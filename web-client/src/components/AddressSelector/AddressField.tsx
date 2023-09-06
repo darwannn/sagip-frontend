@@ -272,24 +272,26 @@ const AddressField: React.FC<TProps> = ({
           className={
             style === "auth"
               ? `my-3 ${inMalolos && "hidden"}`
-              : `flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3 ${
-                  inMalolos && "hidden"
-                }`
+              : `form-group w-full ${inMalolos && "hidden"}`
           }
         >
           <label
             htmlFor="region"
-            className={style === "auth" ? "text-md  text-gray-500" : ""}
+            className={
+              style === "auth" ? "text-md  text-gray-500" : "form-label"
+            }
           >
             Regions
           </label>
 
           <select
-            className={
+            className={`
+            ${
               style === "auth"
-                ? "w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
-                : "border p-1 w-full"
-            }
+                ? "w-full bg-gray-200 border border-gray-300 p-2 rounded-md"
+                : "border p-2 w-full"
+            } p-2 rounded
+          `}
             id="region"
             {...register("region", { required: true })}
             onInput={(e) => {
@@ -323,24 +325,26 @@ const AddressField: React.FC<TProps> = ({
           className={
             style === "auth"
               ? `my-3 ${inMalolos && "hidden"}`
-              : `flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3 ${
-                  inMalolos && "hidden"
-                }`
+              : `form-group w-full ${inMalolos && "hidden"}`
           }
         >
           <label
             htmlFor="province"
-            className={style === "auth" ? "text-md  text-gray-500" : ""}
+            className={
+              style === "auth" ? "text-md  text-gray-500" : "form-label"
+            }
           >
             Province
           </label>
 
           <select
-            className={
+            className={`
+            ${
               style === "auth"
-                ? "w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
-                : "border p-1 w-full"
-            }
+                ? "w-full bg-gray-200 border border-gray-300 p-2 rounded-md"
+                : "border p-2 w-full"
+            } p-2 rounded
+          `}
             id="province"
             {...register("province", { required: true })}
             onInput={(e) => {
@@ -382,24 +386,26 @@ const AddressField: React.FC<TProps> = ({
           className={
             style === "auth"
               ? `my-3 ${inMalolos && "hidden"}`
-              : `flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3 ${
-                  inMalolos && "hidden"
-                }`
+              : `form-group w-full ${inMalolos && "hidden"}`
           }
         >
           <label
             htmlFor="municipality"
-            className={style === "auth" ? "text-md  text-gray-500" : ""}
+            className={
+              style === "auth" ? "text-md  text-gray-500" : "form-label"
+            }
           >
             Municipality
           </label>
 
           <select
-            className={
+            className={`
+            ${
               style === "auth"
-                ? "w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
-                : "border p-1 w-full"
-            }
+                ? "w-full bg-gray-200 border border-gray-300 p-2 rounded-md"
+                : "border p-2 w-full"
+            } p-2 rounded
+          `}
             id="municipality"
             {...register("municipality", { required: true })}
             onInput={(e) => {
@@ -439,26 +445,22 @@ const AddressField: React.FC<TProps> = ({
         </div>
       </>
 
-      <div
-        className={
-          style === "auth"
-            ? `my-3`
-            : "flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3"
-        }
-      >
+      <div className={style === "auth" ? `my-3` : "form-group w-full"}>
         <label
           htmlFor="barangay"
-          className={style === "auth" ? "text-md  text-gray-500" : ""}
+          className={style === "auth" ? "text-md  text-gray-500" : "form-label"}
         >
           Barangay
         </label>
 
         <select
-          className={
-            style === "auth"
-              ? "w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
-              : "border p-1 w-full"
-          }
+          className={`
+            ${
+              style === "auth"
+                ? "w-full bg-gray-200 border border-gray-300 p-2 rounded-md"
+                : "border p-2 w-full"
+            } p-2 rounded
+          `}
           id="barangay"
           {...register("barangay", { required: true })}
           onInput={() => {
@@ -492,16 +494,10 @@ const AddressField: React.FC<TProps> = ({
           <span className="text-red-500">Barangay is required</span>
         )}
       </div>
-      <div
-        className={
-          style === "auth"
-            ? `my-3`
-            : "flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3"
-        }
-      >
+      <div className={style === "auth" ? `my-3` : "form-group w-full"}>
         <label
           htmlFor="street"
-          className={style === "auth" ? "text-md  text-gray-500" : ""}
+          className={style === "auth" ? "text-md  text-gray-500" : "form-label"}
         >
           Street
         </label>
@@ -510,8 +506,8 @@ const AddressField: React.FC<TProps> = ({
           id="street"
           className={
             style === "auth"
-              ? "w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
-              : "border p-1 w-full"
+              ? "w-full bg-gray-200 border border-gray-300 p-2 rounded-md"
+              : "border rounded p-2 w-full"
           }
           placeholder="Street"
           {...register("street", { required: true })}
