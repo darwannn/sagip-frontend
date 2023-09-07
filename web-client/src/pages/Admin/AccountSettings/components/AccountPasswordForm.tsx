@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { TUserResData } from "../../../../types/user";
@@ -9,12 +8,9 @@ import {
   useUpdatePasswordMutation,
 } from "../../../../services/accountQuery";
 
-import { MdClose } from "react-icons/md";
-
 import PasswordField from "../../../../components/PasswordField/PasswordField";
 
 const AccountPasswordForm = () => {
-  const navigate = useNavigate();
   const [serverRes, setServerRes] = useState<TUserResData>();
   const { data: userData } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
@@ -83,22 +79,13 @@ const AccountPasswordForm = () => {
   if (updateIsSuccess) console.log("Updated successfully");
 
   return (
-    <div className="bg-white p-8 rounded-xl relative" ref={successMessageRef}>
-      <button
-        className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
-        onClick={() => {
-          navigate("/admin/account-settings");
-        }}
-      >
-        <MdClose />
-      </button>
-      <div className="text-3xl font-bold">Update Password</div>
+    <div className="" ref={successMessageRef}>
       {serverRes?.success && (
         <div className="w-full bg-green-500 text-white p-2 my-3 rounded-md text-center">
           {serverRes?.message}
         </div>
       )}
-      <form className="flex flex-wrap">
+      <form className="grid grid-cols-3 gap-5 text-sm">
         <PasswordField
           register={register}
           errors={errors}
@@ -129,13 +116,13 @@ const AccountPasswordForm = () => {
           style="account"
         />
 
-        <div className="w-full mt-5 ">
+        <div className="w-full mt-3 ">
           <button
-            className="w-full md:w-auto bg-indigo-500 text-white px-5 py-1 my-2 rounded disabled:bg-indigo-300"
+            className="btn-primary"
             onClick={handleSubmit(onSubmit)}
-            disabled={updateIsLoading}
+            disabled={updateIsLoading || !isDirty}
           >
-            Update
+            Update Password
           </button>
         </div>
       </form>
