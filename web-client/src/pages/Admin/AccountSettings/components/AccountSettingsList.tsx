@@ -12,7 +12,18 @@ const AccountSettingsList = ({ userData }: TProps) => {
   const isVerified = userData?.emailStatus === "verified" ?? true;
 
   return (
-    <div className="flex flex-col py-5 gap-1 h-screen w-full md:w-[250px] bg-white">
+    <div className="flex flex-col py-5 gap-1 w-full md:w-[250px] bg-white">
+      <NavLink
+        className={({ isActive }) =>
+          `${
+            isActive ? "child:bg-gray-200" : ""
+          } text-sm font-semibold text-gray-700`
+        }
+        to={""}
+        end
+      >
+        <div className="p-2 hover:bg-blue-100 rounded">Account</div>
+      </NavLink>
       <NavLink
         className={({ isActive }) =>
           `${
@@ -23,6 +34,7 @@ const AccountSettingsList = ({ userData }: TProps) => {
       >
         <div className="p-2 hover:bg-blue-100 rounded">Profile</div>
       </NavLink>
+
       <NavLink
         className={({ isActive }) =>
           `${

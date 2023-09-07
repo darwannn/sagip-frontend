@@ -49,6 +49,7 @@ import ArticlesData from "../pages/Mobile/Articles/components/ArticlesData";
 import LandingPage from "../pages/LandingPage/LandingPage";
 import Home from "../pages/Mobile/Home/Home";
 import EmergencyHotlinesPage from "../pages/Mobile/EmergencyHotlines/EmergencyHotlinesPage";
+import AccountSettingsPage from "../pages/Admin/AccountSettings/AccountSettingsPage";
 
 export const router = createBrowserRouter([
   {
@@ -196,6 +197,7 @@ export const router = createBrowserRouter([
         path: "account-settings",
         element: <ManageAccountPage />,
         children: [
+          { index: true, element: <AccountSettingsPage /> },
           { path: "profile", element: <AccountProfileForm /> },
           { path: "contact-number", element: <AccountContactNumberForm /> },
           { path: "email", element: <AccountEmailForm /> },

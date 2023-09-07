@@ -26,7 +26,7 @@ const ManageAccountPage = () => {
       <hr />
       <main className="flex flex-row">
         <AccountSettingsList userData={userData} />
-        <div className="flex-1">
+        <div className="flex-1 py-5 px-10">
           <Outlet />
         </div>
       </main>

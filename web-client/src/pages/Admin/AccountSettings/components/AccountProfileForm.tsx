@@ -104,7 +104,7 @@ const AccountProfileForm = () => {
   if (updateIsSuccess) console.log("Updated successfully");
 
   return (
-    <div className=" bg-white p-8 rounded-xl relative" ref={successMessageRef}>
+    <div className="relative" ref={successMessageRef}>
       <form>
         {serverRes?.success && (
           <div className="w-full bg-green-500 text-white p-2 my-3 rounded-md text-center">
