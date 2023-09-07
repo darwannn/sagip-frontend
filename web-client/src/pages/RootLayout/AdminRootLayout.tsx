@@ -22,7 +22,7 @@ const AdminRootLayout = () => {
     <div className="relative root flex flex-row h-screen w-screen">
       <AdminSidebar toggleNotificationHandler={toggleNotification} />
       {isNotificationOpen && <NotificationPanel />}
-      <div className="outlet grow overflow-y-auto">
+      <div className="w-full grow overflow-auto">
         <Outlet />
       </div>
     </div>

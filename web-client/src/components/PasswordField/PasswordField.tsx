@@ -49,14 +49,14 @@ const PasswordField: React.FC<TProps> = ({
       className={
         style === "auth" || style === "account-delete"
           ? "my-3"
-          : "flex flex-col mt-5 p-2 w-full  lg:w-1/2 xl:w-1/3"
+          : "form-group w-full"
       }
     >
       <label
         htmlFor={fieldName}
         className={
           style === "account" || style === "account-delete"
-            ? ""
+            ? "form-label"
             : "text-md  text-gray-500"
         }
       >
@@ -68,7 +68,7 @@ const PasswordField: React.FC<TProps> = ({
           id={fieldName}
           className={
             style === "account" || style === "account-delete"
-              ? "border p-1 w-full"
+              ? "form-input w-full"
               : "w-full bg-gray-200 border border-gray-300 p-1 rounded-md"
           }
           placeholder={fieldLabel}

@@ -71,7 +71,7 @@ const AccountProfilePicture = ({ userData }: TProps) => {
   if (sendIsSuccess) console.log("Updated successfully");
   return (
     <>
-      <div className="w-full flex flex-col items-center justify-center mb-10 mt-5">
+      <div className="">
         <div className="relative w-40 h-40 rounded-full overflow-hidden border">
           {!image && (
             <>

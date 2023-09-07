@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../../store/hooks";
 import {
   setIdentifier,
@@ -12,13 +11,17 @@ import { TUserResData } from "../../../../types/user";
 import { useSendVerificationCodeMutation } from "../../../../services/authQuery";
 import { useGetUserByTokenQuery } from "../../../../services/accountQuery";
 
-import { MdClose } from "react-icons/md";
-
 import Modal from "../../../../components/Modal/Modal";
 import ContactVerification from "../../../../components/Verification/ContactVerification";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../../../components/ui/Alert";
+
+import { PiWarningCircleBold } from "react-icons/pi";
 
 const AccountEmailForm = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: userData } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
@@ -113,16 +116,7 @@ const AccountEmailForm = () => {
   if (sendIsSuccess) console.log("Sent successfully");
 
   return (
-    <div className="bg-white p-8 rounded-xl relative" ref={successMessageRef}>
-      <button
-        className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
-        onClick={() => {
-          navigate("/admin/account-settings");
-        }}
-      >
-        <MdClose />
-      </button>
-      <div className="text-3xl font-bold">Update Email</div>
+    <div className="" ref={successMessageRef}>
       {contactVerificationRes?.success && (
         <div className="w-full bg-green-500 text-white p-2 my-3 rounded-md text-center">
           {contactVerificationRes?.message}
@@ -131,23 +125,32 @@ const AccountEmailForm = () => {
       {
         /* !contactVerificationRes?.success && */
         userData?.emailStatus === "unverified" && (
-          <div className="bg-red-400 text-white px-5 py-3 my-5  text-center rounded">
-            <span className="mr-2">
-              Your Email Address is still unverified.
-            </span>
-            <button onClick={handleSubmit(onVerify)} className="underline">
-              Verify Now
+          <Alert className="border-yellow-500  text-yellow-500 my-5">
+            <PiWarningCircleBold className="text-lg" />
+            <AlertTitle>Unverified Email Address</AlertTitle>
+            <AlertDescription>
+              To ensure the security of your account and receive important
+              updates, please verify your email address.
+            </AlertDescription>
+            <button
+              onClick={handleSubmit(onVerify)}
+              className="font-bold text-sm underline disabled:text-yellow-400"
+              disabled={sendIsLoading}
+            >
+              {sendIsLoading ? "Sending..." : "Send Verification Code"}
             </button>
-          </div>
+          </Alert>
         )
       }
 
-      <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
-        <label htmlFor="email">Email</label>
+      <div className="form-group text-sm w-full lg:w-1/2 xl:w-1/3">
+        <label htmlFor="email" className="form-label">
+          Email
+        </label>
         <input
           type="email"
           id="email"
-          className="border p-1 w-full"
+          className="form-input w-full"
           placeholder="Email"
           {...register("email", { required: true })}
         />
@@ -161,11 +164,11 @@ const AccountEmailForm = () => {
 
       <div className="w-full mt-5">
         <button
-          className="w-full lg:w-auto bg-indigo-500 text-white px-5 py-1 my-2 rounded disabled:bg-indigo-300"
+          className="btn-primary w-full lg:w-auto"
           onClick={handleSubmit(onUpdate)}
-          disabled={sendIsLoading}
+          disabled={sendIsLoading || !isDirty}
         >
-          Update
+          Update Email
         </button>
       </div>
 

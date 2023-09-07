@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../../store/hooks";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -10,14 +9,11 @@ import { TUserResData } from "../../../../types/user";
 
 import { useSendVerificationCodeMutation } from "../../../../services/authQuery";
 
-import { MdClose } from "react-icons/md";
-
 import Modal from "../../../../components/Modal/Modal";
 import ContactVerification from "../../../../components/Verification/ContactVerification";
 import { useGetUserByTokenQuery } from "../../../../services/accountQuery";
 
 const AccountContactNumberForm = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: userData } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
@@ -102,29 +98,20 @@ const AccountContactNumberForm = () => {
   if (sendIsSuccess) console.log("Updated successfully");
 
   return (
-    <div className="bg-white p-8 rounded-xl relative" ref={successMessageRef}>
-      {
-        <button
-          className="absolute top-4 right-4 hover:bg-gray-300 rounded  text-gray-500 cursor-pointer"
-          onClick={() => {
-            navigate("/admin/account-settings");
-          }}
-        >
-          <MdClose />
-        </button>
-      }
-      <div className="text-3xl font-bold">Update Contact Number</div>
+    <div className="" ref={successMessageRef}>
       {contactVerificationRes?.success && (
         <div className="w-full bg-green-500 text-white p-2 my-3 rounded-md text-center">
           {contactVerificationRes?.message}
         </div>
       )}
-      <div className="flex flex-col mt-5 p-2 w-full lg:w-1/2 xl:w-1/3">
-        <label htmlFor="contactNumber">Contact Number</label>
+      <div className="form-group w-full lg:w-1/2 xl:w-1/3 text-sm">
+        <label htmlFor="contactNumber" className="form-label">
+          Contact Number
+        </label>
         <input
           type="text"
           id="contactNumber"
-          className="border p-1 w-full"
+          className="form-input w-full"
           placeholder="Contact Number"
           maxLength={11}
           {...register("contactNumber", { required: true })}
@@ -140,11 +127,11 @@ const AccountContactNumberForm = () => {
 
       <div className="w-full mt-5 ">
         <button
-          className="w-full lg:w-auto bg-indigo-500 text-white px-5 py-1 my-2 rounded disabled:bg-indigo-300"
+          className="btn-primary w-full lg:w-auto"
           onClick={handleSubmit(onSubmit)}
-          disabled={sendIsLoading}
+          disabled={sendIsLoading || !isDirty}
         >
-          Update
+          Update Contact
         </button>
       </div>
 

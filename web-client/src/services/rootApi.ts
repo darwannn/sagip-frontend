@@ -42,7 +42,7 @@ export const rootApi = createApi({
     "SelectedSurvey",
     "ActiveSurvey",
     "SurveyReport",
-     "CheckActiveSurvey",
+    "CheckActiveSurvey",
     // ALERT QUERY
     "Templates",
     // USER NOTIFICATION
