@@ -21,8 +21,13 @@ const ManageArticlesPage = () => {
   );
 
   return (
-    <div>
-      <h1>Manage Articles Page</h1>
+    <div className="p-10">
+      {/* PAGE HEADER */}
+      <div className="mb-5">
+        <h1 className="text-2xl font-bold text-primary-500">Manage Articles</h1>
+        <p>Manage create and post contents.</p>
+      </div>
+      <hr />
       <ArticleStatistics />
       <div className="mx-5">
         <Link
