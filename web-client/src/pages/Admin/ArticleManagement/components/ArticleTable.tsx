@@ -54,7 +54,7 @@ const ArticleTable = ({ articleData: data }: TProps) => {
   });
 
   return (
-    <div className="">
+    <div className="grow flex flex-col">
       {/* Table Action */}
       <section className="flex flex-row justify-between items center mb-5">
         {/* Query */}
@@ -158,36 +158,7 @@ const ArticleTable = ({ articleData: data }: TProps) => {
           </Link>
         </div>
       </section>
-      {/* <div className="my-2">
-        <input
-          className="p-1"
-          value={(table.getColumn("_id")?.getFilterValue() as string) ?? ""}
-          onChange={(e) =>
-            table.getColumn("_id")?.setFilterValue(e.target.value)
-          }
-          placeholder="Search with ID"
-        />
-
-        <select
-          id="category"
-          className="p-1 ml-2 border rounded-md"
-          value={
-            (table.getColumn("category")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(e) =>
-            table.getColumn("category")?.setFilterValue(e.target.value)
-          }
-        >
-          <option value="" disabled>
-            Filter by category
-          </option>
-          <option value="General Tips">General Tips</option>
-          <option value="Preparedness">Preparedness</option>
-          <option value="Flood Safety">Flood Safety</option>
-          <option value="Heat Safety">Heat Safety</option>
-        </select>
-      </div> */}
-      <div className="rounded-md border ">
+      <div className="rounded-md border">
         <DataTable table={table} columnLength={columns.length} />
       </div>
       <PaginationControls table={table} />

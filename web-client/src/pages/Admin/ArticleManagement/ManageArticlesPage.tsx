@@ -20,7 +20,7 @@ const ManageArticlesPage = () => {
   );
 
   return (
-    <div className="p-10">
+    <div className="p-10 min-h-screen flex flex-col">
       {/* PAGE HEADER */}
       <div className="mb-5">
         <h1 className="text-2xl font-bold text-primary-500">Manage Articles</h1>

@@ -7,7 +7,7 @@ type TProps = {
 
 const PaginationControls = ({ table }: TProps) => {
   return (
-    <div className="flex justify-between items-center px-5 py-3">
+    <div className="mt-auto flex justify-between items-center px-5 py-3">
       <button
         className="border px-3 py-1 rounded"
         onClick={() => table.previousPage()}
