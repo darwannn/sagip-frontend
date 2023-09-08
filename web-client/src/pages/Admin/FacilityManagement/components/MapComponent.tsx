@@ -25,10 +25,19 @@ type TProps = {
   onSetMapHandler: (map: google.maps.Map) => void;
 };
 
+const libraries: (
+  | "places"
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "visualization"
+)[] = ["places"];
+
 const MapComponent = memo(({ children, onSetMapHandler }: TProps) => {
   const { isLoaded: isMapLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
+    libraries: libraries,
   });
 
   const dispatch = useAppDispatch();

@@ -50,6 +50,34 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         return [{ type: "AssistanceRequest", id }];
       },
     }),
+
+    getOngoingAssistanceRequests: builder.query<TAssistanceRequest[], void>({
+      query: () => ({
+        url: `assistance-request/ongoing`,
+        method: "GET",
+      }),
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({
+              type: "OngoingAssistanceRequest",
+              id: _id,
+            }))
+          : ["OngoingAssistanceRequest"],
+    }),
+
+    updateAssistanceRequest: builder.mutation<
+      TAssistanceRequest,
+      { action: string; id: string }
+    >({
+      query: ({ action, id }) => ({
+        url: `assistance-request/update/${action}/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["AssistanceRequest", "OngoingAssistanceRequest"],
+    }),
   }),
 });
 
@@ -57,4 +85,7 @@ export const {
   useGetAllAssistanceRequestsQuery,
   useGetAssistanceRequestByIdQuery,
   useDismissAssistanceRequestMutation,
+
+  useGetOngoingAssistanceRequestsQuery,
+  useUpdateAssistanceRequestMutation,
 } = assistanceRequestQueryApi;

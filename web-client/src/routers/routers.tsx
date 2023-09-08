@@ -51,6 +51,10 @@ import Home from "../pages/Mobile/Home/Home";
 import EmergencyHotlinesPage from "../pages/Mobile/EmergencyHotlines/EmergencyHotlinesPage";
 import AccountSettingsPage from "../pages/Admin/AccountSettings/AccountSettingsPage";
 
+import MobileAccountSettingPage from "../pages/Mobile/AccountSettings/AccountSettingsPage";
+import ResponderPage from "../pages/Mobile/ResponderPage/ResponderPage";
+import ResponderMap from "../pages/Mobile/ResponderPage/components/ResponderMap";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -130,6 +134,20 @@ export const router = createBrowserRouter([
           {
             path: "saved",
             element: <ArticlesData />,
+          },
+        ],
+      },
+      {
+        path: "account-settings",
+        element: <MobileAccountSettingPage />,
+      },
+      {
+        path: "responder",
+        children: [
+          { index: true, element: <ResponderPage /> },
+          {
+            path: "map",
+            element: <ResponderMap />,
           },
         ],
       },
