@@ -28,7 +28,10 @@ const ArticleContentEditor = ({ content, onChange }: PROPS) => {
     []
   );
   return (
-    <div className="tiptapEditor">
+    <div className="form-group">
+      <label htmlFor="content" className="form-label">
+        Contents
+      </label>
       <CustomMenuBar editor={editor} />
       <Tiptap editor={editor} />
     </div>

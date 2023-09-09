@@ -61,7 +61,7 @@ const ArticleDetailsForm = ({
           <option value="Heat Safety">Heat Safety</option>
         </select>
       </div>
-      <div className="">
+      <div className="mb-5">
         <label htmlFor="coverImage" className="form-label text-sm">
           Cover Image
         </label>
