@@ -50,6 +50,9 @@ import LandingPage from "../pages/LandingPage/LandingPage";
 import Home from "../pages/Mobile/Home/Home";
 import EmergencyHotlinesPage from "../pages/Mobile/EmergencyHotlines/EmergencyHotlinesPage";
 import AccountSettingsPage from "../pages/Admin/AccountSettings/AccountSettingsPage";
+import ArticlePreviewPage, {
+  ArticlePreviewLoader,
+} from "../pages/Admin/ArticleManagement/ArticlePreviewPage";
 
 export const router = createBrowserRouter([
   {
@@ -207,6 +210,12 @@ export const router = createBrowserRouter([
     ],
   },
 
+  {
+    path: "preview/article/:id",
+    element: <ArticlePreviewPage />,
+    loader: ArticlePreviewLoader,
+    // children: [{ path: ":id", element: <ArticlePreviewPage /> }],
+  },
   /* temporary, so the report will open in new tab (without side navigation menu) */
   {
     path: "/wellness-check/report/:surveyId",
