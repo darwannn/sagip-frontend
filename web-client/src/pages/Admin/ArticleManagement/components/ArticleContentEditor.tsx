@@ -24,6 +24,11 @@ const ArticleContentEditor = ({ content, onChange }: PROPS) => {
       onUpdate: ({ editor }) => {
         onChange(editor.getHTML());
       },
+      editorProps: {
+        attributes: {
+          class: "rounded bg-slate-100 h-20 border-none focus:outline-gray-300",
+        },
+      },
     },
     []
   );
