@@ -11,7 +11,9 @@ const CreateArticlesPage = () => {
       >
         Back
       </button>
-      <ArticleForm />
+      <div className="max-w-[1000px] mx-auto">
+        <ArticleForm />
+      </div>
     </div>
   );
 };
