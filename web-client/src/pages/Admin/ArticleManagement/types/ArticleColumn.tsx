@@ -27,7 +27,7 @@ export const articleColumn: ColumnDef<Article>[] = [
       const data = row.original.title;
       return (
         <Link
-          to={`/admin/manag-articles/${row.original._id}`}
+          to={`/admin/manage-articles/${row.original._id}`}
           className="font-semibold text-gray-700"
         >
           {data}

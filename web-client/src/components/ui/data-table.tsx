@@ -17,7 +17,7 @@ type PROPS = {
 const DataTable = ({ table, columnLength }: PROPS) => {
   return (
     <ShadTable>
-      <TableHeader>
+      <TableHeader className="bg-slate-100">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
