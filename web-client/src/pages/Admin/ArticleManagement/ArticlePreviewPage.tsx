@@ -1,4 +1,10 @@
-import { Await, LoaderFunctionArgs, json, useNavigate } from "react-router-dom";
+import {
+  Await,
+  LoaderFunctionArgs,
+  json,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { defer, useLoaderData } from "react-router-typesafe";
 import { store } from "../../../store/store";
 import { articleQueryApi } from "../../../services/articleQuery";
@@ -12,6 +18,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 const ArticlePreviewPage = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const { article } = useLoaderData<typeof ArticlePreviewLoader>();
   console.log("articleData", article);
 
@@ -42,12 +49,12 @@ const ArticlePreviewPage = () => {
                   </span>
                 </div>
                 <div className="justify-self-end text-sm flex gap-2">
-                  {data.status === "draft" && (
-                    <button className="py-2 px-5 border border-white text-white rounded hover:bg-white hover:text-blue-500">
-                      Publish
-                    </button>
-                  )}
-                  <button className="py-2 px-5 border border-white text-white rounded hover:bg-white hover:text-blue-500">
+                  <button
+                    className="py-2 px-5 border border-white text-white rounded hover:bg-white hover:text-blue-500"
+                    onClick={() =>
+                      navigate(`/admin/manage-articles/edit/${id}`)
+                    }
+                  >
                     Edit
                   </button>
                 </div>

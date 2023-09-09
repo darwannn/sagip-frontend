@@ -5,7 +5,6 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 // Icons
-import { PiArticle } from "react-icons/pi";
 import { LuTrash2 } from "react-icons/lu";
 import { GoKebabHorizontal } from "react-icons/go";
 import {
@@ -14,6 +13,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "../../../../components/ui/DropdownMenu";
+
+// Icon
+import { TbPencil } from "react-icons/tb";
+import { MdOutlinePreview } from "react-icons/md";
 
 type TRowAction = {
   rowId: string;
@@ -25,7 +28,11 @@ const ArticleRowAction = ({ rowId }: TRowAction) => {
     useDeleteArticleMutation();
 
   const onViewHandler = () => {
-    navigate(`/admin/manage-articles/${rowId}?mode=view`);
+    navigate(`/preview/article/${rowId}`);
+  };
+
+  const onEditHandler = () => {
+    navigate(`edit/${rowId}`);
   };
 
   const onDeleteHandler = async () => {
@@ -54,8 +61,12 @@ const ArticleRowAction = ({ rowId }: TRowAction) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="flex gap-2" onClick={onViewHandler}>
-          <PiArticle className="text-lg" />
+          <MdOutlinePreview className="text-xl" />
           <span>View</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-2" onClick={onEditHandler}>
+          <TbPencil className="text-lg" />
+          <span>Edit</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           className="flex gap-2 text-red-500"

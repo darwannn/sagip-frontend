@@ -189,7 +189,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <ManageArticlesPage /> },
           { path: "create", element: <CreateArticlesPage /> },
-          { path: ":articleId", element: <ViewArticlePage /> },
+          { path: "edit/:articleId", element: <ViewArticlePage /> },
         ],
       },
       {
