@@ -3,18 +3,16 @@ import { StandaloneSearchBox } from "@react-google-maps/api";
 
 import { BiSearchAlt2 } from "react-icons/bi";
 
-/* const defaultCenter = { lat: 14.8448, lng: 120.8103 };
 const malolosBounds = {
   north: 14.881784,
   south: 14.795797,
   east: 120.855111,
   west: 120.781636,
 };
-const restrictions = {
+/* const restrictions = {
   country: "ph",
 };
  */
-
 type TProps = {
   map: google.maps.Map | null;
 };
@@ -67,7 +65,7 @@ const AssistanceDetails = ({ map }: TProps) => {
       <StandaloneSearchBox
         onPlacesChanged={onPlacesChanged}
         onLoad={onSBLoad}
-        /* bounds={malolosBounds} */
+        bounds={malolosBounds}
       >
         <input
           type="text"

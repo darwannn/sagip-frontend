@@ -3,7 +3,7 @@ import { useAppSelector } from "../../../../store/hooks";
 
 import { selectionFacility } from "../../../../store/slices/facilitySlice";
 
-import { FaPaperPlane } from "react-icons/fa";
+import { FaDirections } from "react-icons/fa";
 
 import { BsFillTelephoneFill } from "react-icons/bs";
 
@@ -17,16 +17,18 @@ const AssistanceDetails = () => {
         {/*  <div>250m away</div> */}
       </div>
 
-      <div className="text-2xl text-[#293B95] font-bold">{facility?.name}</div>
+      <div className="text-2xl text-primary-600 font-bold">
+        {facility?.name}
+      </div>
       <div className="flex my-3 gap-2">
-        <button className=" flex gap-2 items-center border bg-[#8695DD] text-white px-3 rounded-md hover:bg-[#293B95] ">
+        <button className=" flex gap-2 items-center border bg-primary-300 text-white px-3 rounded-md hover:bg-primary-600">
           {/* <IoNavigate/> */}
-          <FaPaperPlane />
+          <FaDirections />
           Navigate
         </button>
         <a
           href={`tel:${facility?.contactNumber}`}
-          className="  flex gap-2 items-center border border-[#D7DCF4] text-[#293B95] py-1 px-3 rounded-md hover:bg-[#D7DCF4]"
+          className="  flex gap-2 items-center border border-primary-100 text-primary-600 py-1 px-3 rounded-md hover:bg-primary-100"
         >
           <BsFillTelephoneFill /> Call
         </a>

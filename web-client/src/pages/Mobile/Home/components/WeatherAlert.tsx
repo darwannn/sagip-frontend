@@ -21,7 +21,7 @@ const WeatherAlert = ({ signalAlertData, weatherAlertData }: TProps) => {
               </div>
               <div>
                 Malolos is under{" "}
-                <span className="text-[#C92A2A]">
+                <span className="text-secondary-500">
                   Signal #{signalAlertData?.signal}
                 </span>
               </div>

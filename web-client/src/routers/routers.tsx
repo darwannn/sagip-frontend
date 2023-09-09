@@ -54,6 +54,7 @@ import AccountSettingsPage from "../pages/Admin/AccountSettings/AccountSettingsP
 import MobileAccountSettingPage from "../pages/Mobile/AccountSettings/AccountSettingsPage";
 import ResponderPage from "../pages/Mobile/ResponderPage/ResponderPage";
 import ResponderMap from "../pages/Mobile/ResponderPage/components/ResponderMap";
+import HazardMap from "../pages/Mobile/HazardMap/HazardMap";
 
 export const router = createBrowserRouter([
   {
@@ -150,6 +151,10 @@ export const router = createBrowserRouter([
             element: <ResponderMap />,
           },
         ],
+      },
+      {
+        path: "hazard-map",
+        element: <HazardMap />,
       },
     ],
   },

@@ -9,6 +9,7 @@ import { useGetUserByTokenQuery } from "../../../services/accountQuery";
 import { useGetOngoingHazardQuery } from "../../../services/hazardReportsQuery";
 
 import { BASE_IMAGE_URL } from "../../../api.config";
+import SAGIP_Logo from "../../../assets/img/SAGIP_Logo.png";
 
 import SavedArticleList from "../Articles/components/CarouselArticleList";
 import MobileHeader from "../../../components/MobileHeader/MobileHeader";
@@ -34,13 +35,14 @@ const Home = () => {
       <MobileHeader
         component={
           <>
+            <img src={SAGIP_Logo} className="w-9 mr-3" />
             <div className="font-bold text-4xl flex-1">SAGIP</div>
             {userData && (
               <>
                 <Link to="/notification">
                   <div className="relative cursor-pointer m-2">
                     {true && (
-                      <div className=" w-2 h-2 bg-[#C92A2A] rounded-full absolute right-1"></div>
+                      <div className=" w-2 h-2 bg-secondary-500 rounded-full absolute right-1"></div>
                     )}
                     <IoNotificationsOutline className="text-2xl" />
                   </div>
@@ -70,7 +72,7 @@ const Home = () => {
         <div className="mt-5">
           {userData && hazardReportData && userData && (
             <>
-              <div className="font-bold text-xl text-[#293B95] mb-2">
+              <div className="font-bold text-xl text-primary-600 mb-2">
                 Reported hazards in {userData?.street}
               </div>
               <MostRecentHazard
@@ -81,7 +83,7 @@ const Home = () => {
           )}
         </div>
         <div className="mt-5">
-          <div className="font-bold text-xl text-[#293B95] mb-2">
+          <div className="font-bold text-xl text-primary-600  mb-2">
             Safety Tips
           </div>
 

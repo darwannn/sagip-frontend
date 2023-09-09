@@ -54,7 +54,6 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
     getOngoingAssistanceRequests: builder.query<TAssistanceRequest[], void>({
       query: () => ({
         url: `assistance-request/ongoing`,
-        method: "GET",
       }),
       providesTags: (result) =>
         result
@@ -63,6 +62,22 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
               id: _id,
             }))
           : ["OngoingAssistanceRequest"],
+    }),
+
+    getToRespondAssistanceRequests: builder.query<TAssistanceRequest[], void>({
+      query: () => ({
+        url: `assistance-request/torespond`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({
+              type: "ToRespondAssistanceRequest",
+              id: _id,
+            }))
+          : ["ToRespondAssistanceRequest"],
     }),
 
     updateAssistanceRequest: builder.mutation<
@@ -76,7 +91,11 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["AssistanceRequest", "OngoingAssistanceRequest"],
+      invalidatesTags: [
+        "AssistanceRequest",
+        "OngoingAssistanceRequest",
+        "ToRespondAssistanceRequest",
+      ],
     }),
   }),
 });
@@ -87,5 +106,7 @@ export const {
   useDismissAssistanceRequestMutation,
 
   useGetOngoingAssistanceRequestsQuery,
+  useGetToRespondAssistanceRequestsQuery,
+
   useUpdateAssistanceRequestMutation,
 } = assistanceRequestQueryApi;
