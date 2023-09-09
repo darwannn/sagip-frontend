@@ -26,7 +26,8 @@ const ArticleContentEditor = ({ content, onChange }: PROPS) => {
       },
       editorProps: {
         attributes: {
-          class: "rounded bg-slate-100 h-20 border-none focus:outline-gray-300",
+          class:
+            "rounded bg-slate-100 h-20 border-none focus:outline-gray-300 overflow-y-auto",
         },
       },
     },
