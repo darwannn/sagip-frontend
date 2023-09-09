@@ -12,6 +12,7 @@ import { Suspense } from "react";
 import { Article } from "../../../types/article";
 import { BASE_IMAGE_URL } from "../../../api.config";
 import momennt from "moment";
+import "./styles/articlePreview.css";
 
 // Icons
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -87,7 +88,7 @@ const ArticlePreviewPage = () => {
               </section>
               <hr />
               <div
-                className="mt-5 mb-20 md:text-xl"
+                className="preview-container mt-5 mb-20 md:text-xl"
                 dangerouslySetInnerHTML={createMarkup(data.content)}
               />
             </div>
