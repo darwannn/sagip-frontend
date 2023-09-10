@@ -15,6 +15,7 @@ import {
 import ArticleDetailsForm from "./ArticleDetails";
 import ArticleContentEditor from "./ArticleContentEditor";
 import { useNavigate } from "react-router-dom";
+import useUnsaveChangesWarning from "../../../../hooks/useUnsavedChangesWarning";
 
 type TProps = {
   articleData?: Article;
@@ -52,6 +53,8 @@ const ArticleForm = ({ articleData }: TProps) => {
       content: articleData?.content,
     },
   });
+
+  useUnsaveChangesWarning(isDirty);
 
   const SubmitArticleData = async (data: FieldValues, status: string) => {
     if (!isDirty) {
