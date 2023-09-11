@@ -30,7 +30,7 @@ const SMSTemplates = () => {
 
   return (
     <>
-      <div className="col-span-2 p-5 flex flex-col">
+      <div className="col-span-2 flex flex-col">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-lg font-bold text-gray-800">Message Templates</h2>
           <button

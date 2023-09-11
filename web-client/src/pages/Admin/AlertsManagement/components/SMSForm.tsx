@@ -62,9 +62,15 @@ const SMSForm = () => {
     label: barangay.brgy_name,
   }));
 
+  useEffect(() => {
+    if (watchSendOpt === "all") {
+      setValue("location", []);
+    }
+  }, [watchSendOpt, setValue]);
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const selectedLoc =
-      data.sendOption === "sendToSpecific"
+      data.sendOptions === "sendToSpecific"
         ? data.location.map(
             (loc: { value: string; label: string }) => loc.value
           )
@@ -78,7 +84,7 @@ const SMSForm = () => {
 
     const res = await toast.promise(sendAlert(smsData).unwrap, {
       pending: "Sending Alert...",
-      success: "Alert Send Success!",
+      success: "Alert Sent",
       error: "Failed To Send Alert",
     });
 
@@ -117,7 +123,7 @@ const SMSForm = () => {
           </button>
         </div>
       )}
-      <div className="form-group">
+      <div className="form-group mb-5">
         <label htmlFor="alertTitle" className="form-label">
           Title
         </label>
@@ -132,7 +138,7 @@ const SMSForm = () => {
           <span className="input-error">Title is required.</span>
         )}
       </div>
-      <div className="form-group grow">
+      <div className="form-group mb-5 grow">
         <label htmlFor="alertMessage" className="form-label">
           Message
         </label>
@@ -149,7 +155,7 @@ const SMSForm = () => {
       <label htmlFor="" className="form-label">
         Sending Options
       </label>
-      <div className="">
+      <div className="mb-5">
         <div className="flex flex-row gap-2">
           <input
             {...register("sendOptions")}
@@ -177,12 +183,13 @@ const SMSForm = () => {
           control={control}
           name={"location"}
           rules={{ required: watchSendOpt === "sendToSpecific" }}
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <Select
               isMulti
               options={options}
               placeholder="Select a barangay"
               isDisabled={watchSendOpt === "all"}
+              value={value}
               onChange={onChange}
             />
           )}

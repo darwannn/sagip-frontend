@@ -9,7 +9,7 @@ const AlertPage = () => {
         <p>Send SMS alerts to all or specific barangays.</p>
       </div>
       <hr />
-      <div className="grow grid grid-flow-col grid-cols-5">
+      <div className="grow grid grid-flow-col grid-cols-5 gap-16 mt-10">
         <SMSForm />
         <SMSTemplates />
       </div>
