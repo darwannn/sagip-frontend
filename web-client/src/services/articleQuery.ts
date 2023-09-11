@@ -6,12 +6,18 @@ export const articleQueryApi = rootApi.injectEndpoints({
     // Get all articles
     getArticles: builder.query<Article[], void>({
       query: () => "safety-tips",
-      providesTags: ["Article"],
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({ type: "Article", id: _id }))
+          : ["Article"],
     }),
     // Get specific article with id
     getArticleById: builder.query<Article, string | undefined>({
       query: (id) => `safety-tips/${id}`,
-      providesTags: ["SelectedArticle"],
+      providesTags: (result) =>
+        result
+          ? [{ type: "SelectedArticle", id: result._id }]
+          : ["SelectedArticle"],
     }),
     addArticle: builder.mutation<
       TArticleResData,
@@ -40,7 +46,9 @@ export const articleQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${token}`,
         },
       }),
-      invalidatesTags: ["SelectedArticle"],
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "SelectedArticle", id },
+      ],
     }),
     // Delete article
     deleteArticle: builder.mutation<void, { token: string | null; id: string }>(
@@ -52,7 +60,7 @@ export const articleQueryApi = rootApi.injectEndpoints({
             Authorization: `Bearer ${token}`,
           },
         }),
-        invalidatesTags: ["Article"],
+        invalidatesTags: (_result, _error, { id }) => [{ type: "Article", id }],
       }
     ),
 
