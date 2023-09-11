@@ -20,7 +20,7 @@ const LoginForm = () => {
   const deleteAccountRes = useAppSelector(
     (state) => state.account.deleteAccountRes
   );
-
+  console.log(newPasswordRes);
   const [
     login,
     { isError: isError, isLoading: isLoading, isSuccess: isSuccess },
@@ -75,18 +75,19 @@ const LoginForm = () => {
   return (
     <>
       {/* display success message from newPassword or account deletion */}
-      {newPasswordRes ||
-        deleteAccountRes ||
+      {newPasswordRes?.success ||
+        deleteAccountRes?.success ||
         (serverRes && !serverRes.message.includes("input error") && (
           <div
-            className={`mt-3 p-2 rounded-md text-center ${newPasswordRes || deleteAccountRes
-              ? "bg-green-500 text-white"
-              : "bg-red-500 text-white"
-              }`}
+            className={`mt-3 p-2 rounded-md text-center ${
+              newPasswordRes?.success || deleteAccountRes?.success
+                ? "bg-green-500 text-white"
+                : "bg-red-500 text-white"
+            }`}
           >
-            {newPasswordRes &&
+            {newPasswordRes?.success &&
               "Password changed successfully. You can now login with your new password."}
-            {deleteAccountRes &&
+            {deleteAccountRes?.success &&
               "Account deleted. You have 30 days to login and recover your account."}
             {serverRes?.message}
           </div>
