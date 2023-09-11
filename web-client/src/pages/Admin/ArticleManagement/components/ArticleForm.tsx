@@ -16,6 +16,8 @@ import ArticleDetailsForm from "./ArticleDetails";
 import ArticleContentEditor from "./ArticleContentEditor";
 import { useNavigate } from "react-router-dom";
 import useUnsaveChangesWarning from "../../../../hooks/useUnsavedChangesWarning";
+import { toast } from "react-toastify";
+import { Badge } from "../../../../components/ui/Badge";
 
 type TProps = {
   articleData?: Article;
@@ -87,18 +89,41 @@ const ArticleForm = ({ articleData }: TProps) => {
     const token = localStorage.getItem("token");
 
     if (articleData) {
-      updateArticle({
-        body,
-        token,
-        id: articleData._id,
-      });
+      // updateArticle({
+      //   body,
+      //   token,
+      //   id: articleData._id,
+      // });
+
+      await toast.promise(
+        updateArticle({ body, token, id: articleData._id }).unwrap(),
+        {
+          pending:
+            status === "draft" ? "Saving Draft..." : "Publishing Article...",
+          success: status === "draft" ? "Draft Saved" : "Article Published",
+          error:
+            status === "draft"
+              ? "Failed To Save Draft"
+              : "Failed To Publish Article",
+        }
+      );
     } else {
-      const res = await addArticle({ body, token });
-      if (res && "data" in res) {
-        if (res.data.success) {
-          navigate(
-            `/admin/manage-articles/${res.data.safetyTip._id}?mode=view`
-          );
+      // const res = await addArticle({ body, token });
+
+      const res = await toast.promise(addArticle({ body, token }).unwrap(), {
+        pending:
+          status === "draft" ? "Saving Draft..." : "Publishing Article...",
+        success: status === "draft" ? "Draft Saved" : "Article Published",
+        error:
+          status === "draft"
+            ? "Failed To Save Draft"
+            : "Failed To Publish Article",
+      });
+
+      if (res) {
+        if (res.success) {
+          // console.log(res);
+          navigate(`/admin/manage-articles/edit/${res.safetyTip._id}`);
         }
       }
     }
@@ -126,6 +151,17 @@ const ArticleForm = ({ articleData }: TProps) => {
 
   return (
     <form className="mt-5">
+      {articleData && (
+        <Badge
+          className={`capitalize mb-5 ${
+            articleData.status === "draft"
+              ? "bg-yellow-500 hover:bg-yellow-500"
+              : "bg-green-500 hover:bg-green-500"
+          }`}
+        >
+          {articleData.status}
+        </Badge>
+      )}
       <ArticleDetailsForm
         control={control}
         register={register}
