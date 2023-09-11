@@ -20,7 +20,7 @@ const LoginForm = () => {
   const deleteAccountRes = useAppSelector(
     (state) => state.account.deleteAccountRes
   );
-  console.log(newPasswordRes);
+
   const [
     login,
     { isError: isError, isLoading: isLoading, isSuccess: isSuccess },
