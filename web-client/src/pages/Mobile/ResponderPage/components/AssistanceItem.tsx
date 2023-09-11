@@ -19,7 +19,7 @@ const AssistanceItem = ({ assistanceReq }: TProps) => {
     >
       <div className="icon w-16 h-16  bg-secondary-500 rounded-full"></div>
       <div>
-        <Link to="/responder/map">
+        <Link to="/responder/emergency-reports">
           <div className="text-xl font-bold text-secondary-500">
             {assistanceReq?.category}
           </div>

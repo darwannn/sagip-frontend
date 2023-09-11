@@ -147,7 +147,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <ResponderPage /> },
           {
-            path: "map",
+            path: "emergency-reports",
             element: <ResponderMap />,
           },
         ],
