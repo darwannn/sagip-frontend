@@ -17,13 +17,18 @@ type PROPS = {
 const DataTable = ({ table, columnLength }: PROPS) => {
   return (
     <ShadTable>
-      <TableHeader>
+      <TableHeader className="bg-slate-100">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
-              const customStyle = header.column.columnDef.meta;
               return (
-                <TableHead key={header.id} style={customStyle ?? undefined}>
+                <TableHead
+                  key={header.id}
+                  style={{
+                    width:
+                      header.getSize() !== 150 ? header.getSize() : undefined,
+                  }}
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(

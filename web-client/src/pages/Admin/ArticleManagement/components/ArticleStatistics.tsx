@@ -1,44 +1,42 @@
 // Services
 import { useGetStatisticsQuery } from "../../../../services/accountQuery";
 // Icons
-import { RiFileUploadFill } from "react-icons/ri";
-import { MdArticle } from "react-icons/md";
-
-import SingleData from "../../../../components/Statistics/SingleData";
+import { HiOutlineNewspaper } from "react-icons/hi";
+import { TbUpload } from "react-icons/tb";
+import { BiLoaderAlt } from "react-icons/bi";
 
 const ArticleStatistics = () => {
   const {
     data: statisticsData,
-    /* isLoading: statisticsLoading, */
+    isLoading: statisticsLoading,
     error: statisticsError,
   } = useGetStatisticsQuery();
 
   if (statisticsError) return <div>Something went wrong</div>;
 
-  return (
-    <>
-      <div className="statistics flex flex-row h-52 m-5 gap-4">
-        <SingleData
-          title="Total Articles"
-          value={statisticsData?.articles}
-          icon={<MdArticle />}
-          isPrimary={true}
-          isThisMonth={false}
-          navigateTo="/"
-          style="article"
-        />
+  const loader = <BiLoaderAlt className="animate-spin" />;
 
-        <SingleData
-          title="Published Articles"
-          value={statisticsData?.publishedArticles}
-          icon={<RiFileUploadFill />}
-          isPrimary={false}
-          isThisMonth={false}
-          navigateTo="/"
-          style="article"
-        />
+  return (
+    <div className="mt-5 mb-10 flex flex-row gap-3">
+      <div className="flex flex-col gap-2 p-6 xl:w-[250px] bg-blue-100 rounded-md">
+        <div className="flex flex-row justify-between items-center">
+          <span className="text-sm">Total Articles</span>
+          <HiOutlineNewspaper className="text-lg" />
+        </div>
+        <h3 className="text-2xl font-bold">
+          {statisticsLoading ? loader : statisticsData?.articles}
+        </h3>
       </div>
-    </>
+      <div className="flex flex-col gap-2 border p-6 xl:w-[250px] bg-gray-100 rounded-md">
+        <div className="flex flex-row justify-between items-center">
+          <span className="text-sm">Published Articles</span>
+          <TbUpload className="text-lg" />
+        </div>
+        <h3 className="text-2xl font-bold">
+          {statisticsLoading ? loader : statisticsData?.publishedArticles}
+        </h3>
+      </div>
+    </div>
   );
 };
 

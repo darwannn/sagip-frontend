@@ -1,5 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { useDeleteArticleMutation } from "../../../../services/articleQuery";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+// Icons
+import { LuTrash2 } from "react-icons/lu";
+import { GoKebabHorizontal } from "react-icons/go";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "../../../../components/ui/DropdownMenu";
+
+// Icon
+import { TbPencil } from "react-icons/tb";
+import { MdOutlinePreview } from "react-icons/md";
+
 type TRowAction = {
   rowId: string;
 };
@@ -10,7 +28,11 @@ const ArticleRowAction = ({ rowId }: TRowAction) => {
     useDeleteArticleMutation();
 
   const onViewHandler = () => {
-    navigate(`/admin/manage-articles/${rowId}?mode=view`);
+    navigate(`/preview/article/${rowId}`);
+  };
+
+  const onEditHandler = () => {
+    navigate(`edit/${rowId}`);
   };
 
   const onDeleteHandler = async () => {
@@ -29,22 +51,33 @@ const ArticleRowAction = ({ rowId }: TRowAction) => {
   };
 
   return (
-    <div>
-      <button
-        type="button"
-        className="bg-indigo-500 rounded px-3 py-1 text-white"
-        onClick={onViewHandler}
-      >
-        View
-      </button>
-      <button
-        type="button"
-        className="bg-red-500 rounded px-3 py-1 text-white"
-        onClick={onDeleteHandler}
-      >
-        {isLoading ? "Loading..." : "Delete"}
-      </button>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger className="p-1.5 rounded hover:bg-slate-200">
+        <GoKebabHorizontal className="text-lg" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-48">
+        <DropdownMenuLabel className="font-semibold text-gray-700 py-1 px-2">
+          Actions
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="flex gap-2" onClick={onViewHandler}>
+          <MdOutlinePreview className="text-xl" />
+          <span>View</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-2" onClick={onEditHandler}>
+          <TbPencil className="text-lg" />
+          <span>Edit</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="flex gap-2 text-red-500"
+          onClick={onDeleteHandler}
+          disabled={isLoading}
+        >
+          <LuTrash2 className="" />
+          <span>Delete</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

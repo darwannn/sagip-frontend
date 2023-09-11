@@ -2,7 +2,6 @@
 
 // Redux
 // Services
-import { Link } from "react-router-dom";
 import { useGetArticlesQuery } from "../../../services/articleQuery";
 import ArticleTable from "./components/ArticleTable";
 import ArticleStatistics from "./components/ArticleStatistics";
@@ -21,17 +20,14 @@ const ManageArticlesPage = () => {
   );
 
   return (
-    <div>
-      <h1>Manage Articles Page</h1>
-      <ArticleStatistics />
-      <div className="mx-5">
-        <Link
-          className="bg-indigo-500 px-2 py-1 rounded text-white hover:bg-indigo-600"
-          to={"create"}
-        >
-          Create Article
-        </Link>
+    <div className="p-10 min-h-screen flex flex-col">
+      {/* PAGE HEADER */}
+      <div className="mb-5">
+        <h1 className="text-2xl font-bold text-primary-500">Manage Articles</h1>
+        <p>Manage create and post contents.</p>
       </div>
+      <hr />
+      <ArticleStatistics />
       {isLoading ? <p>Getting articles....</p> : tableComponent}
     </div>
   );

@@ -19,10 +19,17 @@ export const FileDropzone = ({ onChange }: TProps) => {
   });
 
   const file = (
-    <div className="flex flex-row justify-between items-center">
-      <span className="text-gray-500 text-[16px] w-1/2 truncate">
-        {acceptedFile?.name}
-      </span>
+    <div className="flex flex-row justify-between items-center mt-2">
+      <div className="flex flex-col">
+        <span className="text-gray-500 text-sm w-1/2 truncate">
+          {acceptedFile?.name}
+        </span>
+        {acceptedFile?.size && (
+          <span className="text-gray-500 text-sm">
+            {Math.round(acceptedFile.size / 1000)} KB
+          </span>
+        )}
+      </div>
       <button
         className="px-3 py-1 text-sm rounded-md border border-gray-300 border-dashed text-gray-800 hover:border-transparent hover:bg-red-300 hover:text-black transition-all duration-200"
         type="button"
@@ -41,7 +48,7 @@ export const FileDropzone = ({ onChange }: TProps) => {
       {acceptedFile && file}
       <div
         {...getRootProps({
-          className: `dropzone flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 ${
+          className: `dropzone flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 ${
             acceptedFile ? "hidden" : ""
           }`,
         })}

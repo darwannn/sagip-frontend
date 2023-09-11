@@ -5,7 +5,7 @@ type PROPS = {
 };
 
 const Tiptap = ({ editor }: PROPS) => {
-  return <EditorContent editor={editor} />;
+  return <EditorContent className="" editor={editor} />;
 };
 
 export default Tiptap;

@@ -1,0 +1,8 @@
+.preview-container li {
+  list-style: disc;
+  margin-left: 25px;
+}
+
+.preview-container ul {
+  margin-left: 25px;
+}

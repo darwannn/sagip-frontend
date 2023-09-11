@@ -15,6 +15,7 @@ import {
 import ArticleDetailsForm from "./ArticleDetails";
 import ArticleContentEditor from "./ArticleContentEditor";
 import { useNavigate } from "react-router-dom";
+import useUnsaveChangesWarning from "../../../../hooks/useUnsavedChangesWarning";
 
 type TProps = {
   articleData?: Article;
@@ -52,6 +53,8 @@ const ArticleForm = ({ articleData }: TProps) => {
       content: articleData?.content,
     },
   });
+
+  useUnsaveChangesWarning(isDirty);
 
   const SubmitArticleData = async (data: FieldValues, status: string) => {
     if (!isDirty) {
@@ -122,7 +125,7 @@ const ArticleForm = ({ articleData }: TProps) => {
   if (updateIsSuccess) console.log("Updated successfully");
 
   return (
-    <form>
+    <form className="mt-5">
       <ArticleDetailsForm
         control={control}
         register={register}
@@ -145,20 +148,23 @@ const ArticleForm = ({ articleData }: TProps) => {
           </>
         )}
       />
-      <button
-        className="bg-indigo-500 text-white px-5 py-1 my-2 rounded"
-        onClick={handleSubmit(onSaveDraft)}
-        disabled={addIsLoading || updateIsLoading}
-      >
-        Save as Draft
-      </button>
-      <button
-        className="bg-green-500 text-white px-5 py-1 my-2 rounded"
-        onClick={handleSubmit(onPublish)}
-        disabled={addIsLoading || updateIsLoading}
-      >
-        Publish
-      </button>
+      {/* FORM ACTIONS */}
+      <div className="flex flex-row items-end justify-end gap-5 mt-10">
+        <button
+          className="py-2 px-5 border border-green-500 rounded text-green-500 font-semibold text-sm hover:bg-green-500 hover:text-white disabled:border-gray-500 disabled:text-gray-500 disabled:hover:bg-transparent disabled:hover:text-gray-500"
+          onClick={handleSubmit(onPublish)}
+          disabled={addIsLoading || updateIsLoading || !isDirty}
+        >
+          Publish Article
+        </button>
+        <button
+          className="btn-primary"
+          onClick={handleSubmit(onSaveDraft)}
+          disabled={addIsLoading || updateIsLoading || !isDirty}
+        >
+          Save as Draft
+        </button>
+      </div>
     </form>
   );
 };
