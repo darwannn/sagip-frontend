@@ -79,20 +79,22 @@ const HazardReportsPage = () => {
         </div>
       </div>
       {selectedReport && <HazardDetails reportData={selectedReport} />}
-      <MapComponent onSetMapHandler={setMap}>
-        {/* Child components, such as markers, info windows, etc. */}
-        {!isReportsLoading &&
-          filteredReports?.map((report) => (
-            <MarkerF
-              key={report._id}
-              position={{
-                lat: report.latitude,
-                lng: report.longitude,
-              }}
-              onClick={() => onMarkerClick(report)}
-            />
-          ))}
-      </MapComponent>
+      <div className="absolute top-0 z-0 w-full">
+        <MapComponent onSetMapHandler={setMap}>
+          {/* Child components, such as markers, info windows, etc. */}
+          {!isReportsLoading &&
+            filteredReports?.map((report) => (
+              <MarkerF
+                key={report._id}
+                position={{
+                  lat: report.latitude,
+                  lng: report.longitude,
+                }}
+                onClick={() => onMarkerClick(report)}
+              />
+            ))}
+        </MapComponent>
+      </div>
     </div>
   );
 };
