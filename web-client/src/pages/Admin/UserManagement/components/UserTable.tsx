@@ -76,9 +76,8 @@ const UserTable = () => {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row justify-between items-center py-4 mx-5">
+      <div className="flex flex-col sm:flex-row justify-between items-center py-4">
         <div>
-          {" "}
           <select
             className="max-w-sm border rounded-sm px-1 py-1 mb-2 sm:mb-0 mr-3"
             value={searchOption}
@@ -122,9 +121,7 @@ const UserTable = () => {
           )}
         </Link>
       </div>
-
-      <div className="mx-5"></div>
-      <div className="rounded-md border mx-5">
+      <div className="rounded-md border mb-10">
         <DataTable table={table} columnLength={userColumn.length} />
       </div>
       {/* PAGINATION CONTROLS */}

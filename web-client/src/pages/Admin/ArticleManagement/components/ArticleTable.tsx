@@ -158,7 +158,7 @@ const ArticleTable = ({ articleData: data }: TProps) => {
           </Link>
         </div>
       </section>
-      <div className="rounded-md border">
+      <div className="rounded-md border mb-10">
         <DataTable table={table} columnLength={columns.length} />
       </div>
       <PaginationControls table={table} />

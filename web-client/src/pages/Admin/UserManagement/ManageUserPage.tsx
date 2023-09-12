@@ -36,28 +36,25 @@ const ManageUserPage = () => {
       </div>
       <hr />
       <UserStatistics />
-      <div className="border-gray-400 border-b-2 mx-5 mt-5">
+      <div className="flex flex-row gap-2 p-2 bg-gray-100 w-max rounded">
         <button
-          className={
-            isStaff
-              ? " text-gray-400  px-3 py-1 mx-1 rounded-sm"
-              : " text-indigo-500 border-indigo-500 border-b-2 px-3 py-1 mx-1 rounded-sm"
-          }
+          className={`py-1 px-3 rounded 
+        ${isStaff ? "text-gray-400" : "bg-primary-500 text-white"}
+        `}
           onClick={() => dispatch(setTableContent(false))}
         >
           Residents
         </button>
         <button
-          className={
-            isStaff
-              ? " text-indigo-500 border-indigo-500 border-b-2 px-3 py-1 mx-1 rounded-sm"
-              : " text-gray-400  px-3 py-1 mx-1 rounded-sm"
-          }
+          className={`py-1 px-5 rounded 
+        ${isStaff ? "bg-primary-500 text-white" : "text-gray-400"}
+        `}
           onClick={() => dispatch(setTableContent(true))}
         >
-          Staff Users
+          Staffs
         </button>
       </div>
+      <hr className="my-3" />
       {isLoading ? loadingElement : <UserTable />}
     </div>
   );
