@@ -6,7 +6,10 @@ export const usersApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsersData: builder.query<User[], void>({
       query: () => "account",
-      providesTags: ["User"],
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({ type: "User", id: _id }))
+          : ["User"],
     }),
     getUserById: builder.query<User, string | undefined>({
       query: (id) => `account/${id}`,
@@ -36,9 +39,13 @@ export const usersApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["User", "SelectedUser", "VerificationRequest"],
+      // invalidatesTags: ["User", "SelectedUser", "VerificationRequest"],
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "User", id },
+        "SelectedUser",
+        "VerificationRequest",
+      ],
     }),
-
     archiveUser: builder.mutation<void, { action: string | null; id: string }>({
       query: ({ action, id }) => ({
         url: `/account/${action}/${id}`,
@@ -47,7 +54,12 @@ export const usersApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["User", "SelectedUser", "VerificationRequest"],
+      // invalidatesTags: ["User", "SelectedUser", "VerificationRequest"],
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "User", id },
+        "SelectedUser",
+        "VerificationRequest",
+      ],
     }),
     /* verification request */
     getVerificationRequests: builder.query<User[], { token: string | null }>({
@@ -57,7 +69,10 @@ export const usersApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${token}`,
         },
       }),
-      providesTags: ["VerificationRequest"],
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({ type: "VerificationRequest", id: _id }))
+          : ["VerificationRequest"],
     }),
 
     updateVerificationRequest: builder.mutation<
@@ -76,7 +91,9 @@ export const usersApi = rootApi.injectEndpoints({
           "Content-Type": "application/json",
         },
       }),
-      invalidatesTags: ["VerificationRequest"],
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "VerificationRequest", id },
+      ],
     }),
   }),
 });
