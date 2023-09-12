@@ -23,7 +23,7 @@ const EmergencyHotline = () => {
             <Link to="/home">
               <BsArrowLeft className="text-2xl text-gray-500 mb-3 cursor-pointer" />
             </Link>
-            <h1 className="text-3xl font-bold text-[#293B95]">
+            <h1 className="text-3xl font-bold text-primary-600">
               Emergency Hotlines
             </h1>
           </div>

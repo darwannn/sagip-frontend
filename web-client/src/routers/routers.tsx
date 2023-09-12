@@ -54,6 +54,11 @@ import ArticlePreviewPage, {
   ArticlePreviewLoader,
 } from "../pages/Admin/ArticleManagement/ArticlePreviewPage";
 
+import MobileAccountSettingPage from "../pages/Mobile/AccountSettings/AccountSettingsPage";
+import ResponderPage from "../pages/Mobile/ResponderPage/ResponderPage";
+import ResponderMap from "../pages/Mobile/ResponderPage/components/ResponderMap";
+import HazardMap from "../pages/Mobile/HazardMap/HazardMap";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -135,6 +140,24 @@ export const router = createBrowserRouter([
             element: <ArticlesData />,
           },
         ],
+      },
+      {
+        path: "account-settings",
+        element: <MobileAccountSettingPage />,
+      },
+      {
+        path: "responder",
+        children: [
+          { index: true, element: <ResponderPage /> },
+          {
+            path: "emergency-reports",
+            element: <ResponderMap />,
+          },
+        ],
+      },
+      {
+        path: "hazard-map",
+        element: <HazardMap />,
       },
     ],
   },

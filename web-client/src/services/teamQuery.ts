@@ -1,8 +1,4 @@
-import type {
-  TResponders,
-  TTeam,
-  TTeamResponse,
-} from "../types/team";
+import type { TResponders, TTeam, TTeamResponse } from "../types/team";
 import { User } from "../types/user";
 import { rootApi } from "./rootApi";
 
@@ -136,6 +132,15 @@ export const teamQueryApi = rootApi.injectEndpoints({
         "Responders",
       ],
     }),
+
+    getMyTeam: builder.query<TTeam, void>({
+      query: () => ({
+        url: `team/myteam`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -150,4 +155,6 @@ export const {
   useAddTeamMemberMutation,
   useUnassignMemberMutation,
   useUnassignHeadMutation,
+
+  useGetMyTeamQuery,
 } = teamQueryApi;

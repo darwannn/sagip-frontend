@@ -48,10 +48,19 @@ export const checkAuth = () => {
 export const isLoggedIn = () => {
   const token = getAuthToken();
   if (token) {
+    const decodedToken = jwtDecode<Token>(token || "");
+    const target = decodedToken.target;
+    /* const userType = decodedToken.userType; */
     // TODO: REDIRECT DEPENDING ON USER TYPE
-
-    // TEMPORARY
-    return redirect("/admin");
+    if (target === "login") {
+      // TEMPORARY
+      /* if (
+        userType === "dispatcher" ||
+        userType === "admin" ||
+        userType === "super-admin"
+      ) */
+      return redirect("/admin");
+    }
   }
   return null;
 };

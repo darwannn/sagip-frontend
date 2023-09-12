@@ -1,7 +1,7 @@
-import { useCallback, useState } from "react";
+import { /* useCallback, */ useState } from "react";
 // Components
 import { MarkerF } from "@react-google-maps/api";
-import HazardMap from "./components/HazardMap";
+/* import HazardMap from "./components/HazardMap"; */
 import HazardReportsList from "./components/HazardReportsList";
 import HazardDetails from "./components/HazardDetails";
 import HazardFilters from "./components/HazardFilters";
@@ -13,6 +13,7 @@ import {
 } from "../../../store/slices/hazardReportSlice";
 import { useGetHazardReportsQuery } from "../../../services/hazardReportsQuery";
 import { THazardReport } from "../../../types/hazardReport";
+import MapComponent from "../FacilityManagement/components/MapComponent";
 
 const HazardReportsPage = () => {
   // Map State / Instance
@@ -30,10 +31,10 @@ const HazardReportsPage = () => {
   } = useGetHazardReportsQuery(undefined);
 
   // Set map state
-  const onMapLoad = useCallback((map: google.maps.Map) => {
+  /*  const onMapLoad = useCallback((map: google.maps.Map) => {
     setMap(map);
   }, []);
-
+ */
   const changeFilter = (filter: string) => {
     if (selectedReport) dispatch(setSelectedHazardReport(null));
     setSelectedFilter(filter);
@@ -78,7 +79,7 @@ const HazardReportsPage = () => {
         </div>
       </div>
       {selectedReport && <HazardDetails reportData={selectedReport} />}
-      <HazardMap onMapLoadHandler={onMapLoad}>
+      <MapComponent onSetMapHandler={setMap}>
         {/* Child components, such as markers, info windows, etc. */}
         {!isReportsLoading &&
           filteredReports?.map((report) => (
@@ -91,7 +92,7 @@ const HazardReportsPage = () => {
               onClick={() => onMarkerClick(report)}
             />
           ))}
-      </HazardMap>
+      </MapComponent>
     </div>
   );
 };
