@@ -5,10 +5,12 @@ import { THazardReport } from "../../types/hazardReport";
 
 type THazardReportState = {
   selectedHazardReport: THazardReport | null;
+  selectedHazard: string | null;
 };
 
 const initialState: THazardReportState = {
   selectedHazardReport: null,
+  selectedHazard: null,
 };
 
 const hazardReportSlice = createSlice({
@@ -21,10 +23,18 @@ const hazardReportSlice = createSlice({
     ) => {
       state.selectedHazardReport = action.payload;
     },
+    /* 
+    used on mobile,
+    determines which marker the user selected
+    */
+    setSelectedHazard: (state, action: PayloadAction<string | null>) => {
+      state.selectedHazard = action.payload;
+    },
   },
 });
 
-export const { setSelectedHazardReport } = hazardReportSlice.actions;
+export const { setSelectedHazardReport, setSelectedHazard } =
+  hazardReportSlice.actions;
 
 export default hazardReportSlice.reducer;
 

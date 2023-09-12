@@ -28,7 +28,6 @@ const Home = () => {
   const { data: articlesData } = useGetPublishedArticlesQuery();
   /* const { data: savedArticleData } = useGetSavedArticlesQuery(); */
   const { data: hazardReportData } = useGetOngoingHazardQuery();
-  console.log(userData);
 
   return (
     <>
