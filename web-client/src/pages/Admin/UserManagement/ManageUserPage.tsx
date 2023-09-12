@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import UserTable from "./components/UserTable";
 // Redux
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { setUsers, setTableContent } from "../../../store/slices/userManageSlice";
+import {
+  setUsers,
+  setTableContent,
+} from "../../../store/slices/userManageSlice";
 // Services
 import { useGetUsersDataQuery } from "../../../services/usersQuery";
 
@@ -26,7 +29,12 @@ const ManageUserPage = () => {
   const loadingElement = <p>Loading table ....</p>;
 
   return (
-    <>
+    <div className="p-10 min-h-screen flex flex-col">
+      <div className="mb-5">
+        <h1 className="text-2xl font-bold text-primary-500">Manage Users</h1>
+        <p>Manage user accounts, access levels, and verify resident accounts</p>
+      </div>
+      <hr />
       <UserStatistics />
       <div className="border-gray-400 border-b-2 mx-5 mt-5">
         <button
@@ -51,7 +59,7 @@ const ManageUserPage = () => {
         </button>
       </div>
       {isLoading ? loadingElement : <UserTable />}
-    </>
+    </div>
   );
 };
 
