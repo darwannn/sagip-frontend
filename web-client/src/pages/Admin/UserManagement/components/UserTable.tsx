@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 // Icons
 import { BsFillPersonFill } from "react-icons/bs";
 import { GiNotebook } from "react-icons/gi";
+import PaginationControls from "../../../../components/ui/PaginationControl";
 
 const UserTable = () => {
   // For filtering data
@@ -64,7 +65,7 @@ const UserTable = () => {
     initialState: {
       pagination: {
         pageIndex: 0,
-        pageSize: 5,
+        pageSize: 10,
       },
     },
   });
@@ -127,26 +128,7 @@ const UserTable = () => {
         <DataTable table={table} columnLength={userColumn.length} />
       </div>
       {/* PAGINATION CONTROLS */}
-      <div className="flex justify-between items-center px-5 py-3">
-        <button
-          className="border px-3 py-1 rounded"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </button>
-        <div>
-          <span className="text-sm">{`Page ${table.getState().pagination.pageIndex + 1
-            } of ${table.getPageCount()}`}</span>
-        </div>
-        <button
-          className="border px-3 py-1 rounded"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </button>
-      </div>
+      <PaginationControls table={table} />
     </>
   );
 };

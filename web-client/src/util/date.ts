@@ -23,3 +23,8 @@ export const formatDate = (dateString: string | null | undefined) => {
     return date.format("MMM D [at] h:mmA");
   }
 };
+
+export const formatDateToNum = (dateString: string | null | undefined) => {
+  if (!dateString) return "Unknown";
+  return moment(dateString).format("M/DD/YYYY");
+};

@@ -6,30 +6,22 @@ import { User } from "../../../../types/user";
 import { BASE_IMAGE_URL } from "../../../../api.config";
 
 import UserRowAction from "./UserRowAction";
+import { Badge } from "../../../../components/ui/Badge";
+import { formatDateToNum } from "../../../../util/date";
 
 export const userColumn: ColumnDef<User>[] = [
   {
     accessorKey: "_id",
     header: "ID",
-  },
-  {
-    accessorKey: "profilePicture",
-    header: "",
     cell: ({ row }) => {
-      const displayPictureName = row.original.profilePicture;
-      const imgUrl = `${BASE_IMAGE_URL}/user/${displayPictureName}`;
+      const data = row.original._id;
       return (
-        <img
-          src={imgUrl}
-          alt="profile"
-          className="w-10 h-10 rounded-full mx-auto"
-        />
+        <div className="w-[120px] truncate">
+          <span className=" text-sm text-gray-500">{data}</span>
+        </div>
       );
     },
-    meta: {
-      width: "80px",
-      minWidth: "80px",
-    },
+    size: 120,
   },
   /*  {
     accessorKey: "fullname",
@@ -54,16 +46,39 @@ export const userColumn: ColumnDef<User>[] = [
     ],
   }, */
   {
-    accessorKey: "firstname",
+    id: "profilePicture",
+    cell: ({ row }) => {
+      const imgUrl = `${BASE_IMAGE_URL}/user/${row.original.profilePicture}`;
+      return (
+        <img
+          src={imgUrl}
+          alt="profile"
+          className="w-8 h-8 rounded-full mx-auto"
+        />
+      );
+    },
+    size: 100,
+  },
+  {
+    accessorKey: "fullname",
     header: "Name",
     cell: ({ row }) => {
       const { firstname, middlename, lastname } = row.original;
-      return `${firstname} ${middlename} ${lastname}`;
+
+      return <span>{`${firstname} ${middlename} ${lastname}`}</span>;
     },
   },
   {
     accessorKey: "email",
     header: "Email",
+  },
+  {
+    accessorKey: "contactNumber",
+    header: "Contact Number",
+  },
+  {
+    accessorKey: "gender",
+    header: "Gender",
   },
   {
     accessorKey: "barangay",
@@ -75,6 +90,22 @@ export const userColumn: ColumnDef<User>[] = [
           Barangay
         </button>
       );
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date Added
+        </button>
+      );
+    },
+    cell: ({ row }) => {
+      const formattedDate = formatDateToNum(row.original.createdAt);
+      return formattedDate;
     },
   },
   {
@@ -89,12 +120,18 @@ export const userColumn: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => {
-      return row.original.status.toUpperCase();
+      const status = row.original.status;
+      let color = "bg-primary-300";
+      if (status === "unverified") {
+        color = "bg-gray-300";
+      } else if (status === "semi-verified") {
+        color = "bg-yellow-300";
+      }
+      return <Badge className={`text-xs capitalize ${color}`}>{status}</Badge>;
     },
   },
   {
     id: "action",
-    header: "Action",
     cell: ({ row }) => (
       <UserRowAction
         isArchived={row.original.isArchived}
@@ -106,37 +143,42 @@ export const userColumn: ColumnDef<User>[] = [
     },
   },
 ];
+
 export const staffColumn: ColumnDef<User>[] = [
   {
     accessorKey: "_id",
     header: "ID",
+    cell: ({ row }) => {
+      const data = row.original._id;
+      return (
+        <div className="w-[120px] truncate">
+          <span className=" text-sm text-gray-500">{data}</span>
+        </div>
+      );
+    },
+    size: 120,
   },
   {
-    accessorKey: "profilePicture",
-    header: "",
+    id: "profilePicture",
     cell: ({ row }) => {
-      const displayPictureName = row.original.profilePicture;
-      const imgUrl = `${BASE_IMAGE_URL}/user/${displayPictureName}`;
+      const imgUrl = `${BASE_IMAGE_URL}/user/${row.original.profilePicture}`;
       return (
         <img
           src={imgUrl}
           alt="profile"
-          className="w-10 h-10 rounded-full mx-auto"
+          className="w-8 h-8 rounded-full mx-auto"
         />
       );
     },
-    meta: {
-      width: "80px",
-      minWidth: "80px",
-    },
+    size: 100,
   },
-
   {
-    accessorKey: "firstname",
+    accessorKey: "fullname",
     header: "Name",
     cell: ({ row }) => {
       const { firstname, middlename, lastname } = row.original;
-      return `${firstname} ${middlename} ${lastname}`;
+
+      return <span>{`${firstname} ${middlename} ${lastname}`}</span>;
     },
   },
   {
@@ -144,16 +186,8 @@ export const staffColumn: ColumnDef<User>[] = [
     header: "Email",
   },
   {
-    accessorKey: "barangay",
-    header: ({ column }) => {
-      return (
-        <button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Barangay
-        </button>
-      );
-    },
+    accessorKey: "contactNumber",
+    header: "Contact Number",
   },
   {
     accessorKey: "userType",
@@ -167,12 +201,62 @@ export const staffColumn: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => {
-      return row.original.userType.toUpperCase();
+      const userType = row.original.userType;
+      let color;
+
+      if (userType === "super-admin") {
+        color = "bg-red-300";
+      } else if (userType === "admin") {
+        color = "bg-blue-300";
+      } else if (userType === "dispatcher") {
+        color = "bg-purple-300";
+      } else if (userType === "responder") {
+        color = "bg-yellow-300";
+      }
+
+      return (
+        <Badge
+          className={`text-xs capitalize text-gray-600 rounded-md ${color}`}
+        >
+          {userType}
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "gender",
+    header: "Gender",
+  },
+  // {
+  //   accessorKey: "barangay",
+  //   header: ({ column }) => {
+  //     return (
+  //       <button
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Barangay
+  //       </button>
+  //     );
+  //   },
+  // },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date Added
+        </button>
+      );
+    },
+    cell: ({ row }) => {
+      const formattedDate = formatDateToNum(row.original.createdAt);
+      return formattedDate;
     },
   },
   {
     id: "action",
-    header: "Action",
     cell: ({ row }) => (
       <UserRowAction
         isArchived={row.original.isArchived}
