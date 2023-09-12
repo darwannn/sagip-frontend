@@ -138,7 +138,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "saved",
-            element: <ArticlesData />,
+            element: <ArticlesPage />,
           },
         ],
       },

@@ -23,7 +23,7 @@ const ArticlesPage = () => {
   } = useGetArticlesQuery();
   const { data: savedArticleData, isLoading: savedIsLoading } =
     useGetSavedArticlesQuery();
-
+  console.log(savedArticleData);
   const filteredArticles = useMemo(() => {
     if (!articleData) return [];
     const articlesToFilter = isInSavedPage ? savedArticleData : articleData;
@@ -55,7 +55,7 @@ const ArticlesPage = () => {
     <>
       <div className="bg-gray-100 p-5">
         {isInSavedPage && (
-          <Link to="articles/">
+          <Link to="/articles">
             <BsArrowLeft className="text-2xl text-gray-500 mb-3 cursor-pointer" />
           </Link>
         )}
@@ -64,11 +64,13 @@ const ArticlesPage = () => {
             <div className="flex-1">
               {isInSavedPage ? "Saved Articles" : "Disaster Resources"}{" "}
             </div>{" "}
-            {savedArticleData != null && !isInSavedPage && search === "" && (
-              <Link to="/articles/saved">
-                <BiBookmarks />
-              </Link>
-            )}
+            {savedArticleData?.length != 0 &&
+              !isInSavedPage &&
+              search === "" && (
+                <Link to="/articles/saved">
+                  <BiBookmarks />
+                </Link>
+              )}
           </>
         </div>
         <div className=" min-h-screen">
@@ -94,7 +96,7 @@ const ArticlesPage = () => {
                 <CarouselArticleList articleData={savedArticleData} />
               </>
             )}
-          {!isInSavedPage && (
+          {
             <div className="flex my-3">
               {/* <div className="flex-1 font-bold text-gray-800 ">All:</div>
                */}
@@ -110,7 +112,7 @@ const ArticlesPage = () => {
                 ))}
               </select>
             </div>
-          )}
+          }
           {filteredArticles && <ArticleList articleData={filteredArticles} />}
         </div>
       </div>
