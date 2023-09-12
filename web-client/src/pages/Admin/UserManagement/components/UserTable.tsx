@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import {
   getCoreRowModel,
   useReactTable,
@@ -17,8 +17,10 @@ import DataTable from "../../../../components/ui/data-table";
 
 // Redux
 import { useAppSelector } from "../../../../store/hooks";
-import { useGetVerificationRequestsQuery } from "../../../../services/usersQuery";
-import { selectUserTableData } from "../../../../store/slices/userManageSlice";
+import {
+  useGetUsersDataQuery,
+  useGetVerificationRequestsQuery,
+} from "../../../../services/usersQuery";
 
 import { Link } from "react-router-dom";
 
@@ -26,8 +28,28 @@ import { Link } from "react-router-dom";
 import { BsFillPersonFill } from "react-icons/bs";
 import { GiNotebook } from "react-icons/gi";
 import PaginationControls from "../../../../components/ui/PaginationControl";
+import { User } from "../../../../types/user";
 
 const UserTable = () => {
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  // Service
+  const { data: users, isLoading, isError, isSuccess } = useGetUsersDataQuery();
+  const isStaff = useAppSelector((state) => state.userManage.isStaff);
+  // Get the data from redux
+
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      const filter = users?.filter((user) => {
+        if (isStaff) {
+          return user.userType !== "resident" && user.isArchived === false;
+        } else if (!isStaff) {
+          return user.userType === "resident" && user.isArchived === false;
+        }
+      });
+      setFilteredUsers(filter ?? []);
+    }
+  }, [users, isLoading, isSuccess, isStaff]);
+
   // For filtering data
   const [searchOption, setSearchOption] = useState<string>("firstname");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -36,10 +58,8 @@ const UserTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   /* used to determine what action button to show */
-  const isStaff = useAppSelector((state) => state.userManage.isStaff);
   const token = localStorage.getItem("token");
-  // Get the data from redux
-  const data = useAppSelector(selectUserTableData);
+  // const data = useAppSelector(selectUserTableData);
 
   const {
     data: verificationRequests,
@@ -47,7 +67,7 @@ const UserTable = () => {
   } = useGetVerificationRequestsQuery({ token });
 
   const table = useReactTable({
-    data,
+    data: filteredUsers ?? [],
     columns: isStaff ? staffColumn : userColumn,
     getCoreRowModel: getCoreRowModel(),
     // For filtering data
@@ -72,6 +92,15 @@ const UserTable = () => {
 
   if (isVerificationRequestsFetchError) {
     return <p>Something went wrong...</p>;
+  }
+
+  if (isError)
+    return (
+      <p className="text-center font-semibold">Oops! Something went wrong...</p>
+    );
+
+  if (isLoading) {
+    return <p className="text-center font-semibold">Loading table ....</p>;
   }
 
   return (

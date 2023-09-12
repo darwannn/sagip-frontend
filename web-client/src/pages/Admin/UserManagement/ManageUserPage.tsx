@@ -1,13 +1,7 @@
-import { useEffect } from "react";
 import UserTable from "./components/UserTable";
 // Redux
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import {
-  setUsers,
-  setTableContent,
-} from "../../../store/slices/userManageSlice";
-// Services
-import { useGetUsersDataQuery } from "../../../services/usersQuery";
+import { setTableContent } from "../../../store/slices/userManageSlice";
 
 import UserStatistics from "./components/UserStatistics";
 
@@ -15,18 +9,6 @@ const ManageUserPage = () => {
   // Redux
   const dispatch = useAppDispatch();
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
-
-  // Service
-  const { data: users, isLoading, error } = useGetUsersDataQuery(undefined);
-
-  // Store data to redux on page load
-  useEffect(() => {
-    if (users) dispatch(setUsers(users));
-  }, [users, dispatch]);
-
-  if (error) return <p>Oops! Something went wrong...</p>;
-
-  const loadingElement = <p>Loading table ....</p>;
 
   return (
     <div className="p-10 min-h-screen flex flex-col">
@@ -55,7 +37,7 @@ const ManageUserPage = () => {
         </button>
       </div>
       <hr className="my-3" />
-      {isLoading ? loadingElement : <UserTable />}
+      <UserTable />
     </div>
   );
 };

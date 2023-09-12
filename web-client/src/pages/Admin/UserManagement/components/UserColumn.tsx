@@ -61,6 +61,7 @@ export const userColumn: ColumnDef<User>[] = [
   },
   {
     accessorKey: "fullname",
+    id: "firstname",
     header: "Name",
     cell: ({ row }) => {
       const { firstname, middlename, lastname } = row.original;
@@ -174,6 +175,7 @@ export const staffColumn: ColumnDef<User>[] = [
   },
   {
     accessorKey: "fullname",
+    id: "firstname",
     header: "Name",
     cell: ({ row }) => {
       const { firstname, middlename, lastname } = row.original;
