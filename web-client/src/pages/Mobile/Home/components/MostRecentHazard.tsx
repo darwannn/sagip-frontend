@@ -28,6 +28,9 @@ const MostRecentHazard = ({ hazardReportData, userData }: TProps) => {
     <>
       {mostRecentHazardReport && filteredHazardReports?.length !== 0 && (
         <>
+          <div className="font-bold text-xl text-primary-600 mb-2">
+            Reported hazards in {userData?.street}
+          </div>
           <div className="bg-white  rounded-2xl p-5 border-2 border-[#FFD400] ">
             <div className="flex">
               <div className="h-[100px] w-[100px] mr-3">

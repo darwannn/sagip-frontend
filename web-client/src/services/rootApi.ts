@@ -39,6 +39,7 @@ export const rootApi = createApi({
     "SelectedArticle",
     "SavedArticle",
     "PublishedArticle",
+    "SelectedPublishedArticle",
     // SURVEY QUERY
     "WellnessSurvey",
     "SelectedSurvey",
