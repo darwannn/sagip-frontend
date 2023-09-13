@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 
 import type { Token } from "../../../../types/auth";
 
-import { useGetArticleByIdQuery } from "../../../../services/articleQuery";
+import { useGetPublishedArticlesByIdQuery } from "../../../../services/articleQuery";
 import { useSaveArticleMutation } from "../../../../services/articleQuery";
 
 import { BASE_IMAGE_URL } from "../../../../api.config";
@@ -23,7 +23,7 @@ const ArticlesData = () => {
     data: articleData,
     isLoading,
     error,
-  } = useGetArticleByIdQuery(articleId);
+  } = useGetPublishedArticlesByIdQuery(articleId);
 
   const [
     save,
@@ -127,12 +127,16 @@ const ArticlesData = () => {
               <div className=" text-2xl font-bold text-center">
                 {articleData.title}
               </div>
+              <div className=" text-sm  text-center mt-2">
+                Author: {articleData.authorId.firstname}{" "}
+                {articleData.authorId.lastname}
+              </div>
               <div className="text-sm  text-center">
                 {moment(articleData?.createdAt).format("MMMM DD, YYYY")}
               </div>
 
               <div
-                className="content mt-10 text-gray-600"
+                className="content mt-10 text-gray-600 text-justify"
                 dangerouslySetInnerHTML={createMarkup(articleData.content)}
               />
             </div>

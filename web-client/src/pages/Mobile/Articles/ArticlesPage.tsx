@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
-  useGetArticlesQuery,
+  useGetPublishedArticlesQuery,
   useGetSavedArticlesQuery,
 } from "../../../services/articleQuery";
 
@@ -20,7 +20,7 @@ const ArticlesPage = () => {
     data: articleData,
     isLoading: articleIsLoading,
     error: articleIsError,
-  } = useGetArticlesQuery();
+  } = useGetPublishedArticlesQuery();
   const { data: savedArticleData, isLoading: savedIsLoading } =
     useGetSavedArticlesQuery();
   console.log(savedArticleData);

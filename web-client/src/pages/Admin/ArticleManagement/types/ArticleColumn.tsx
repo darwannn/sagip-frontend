@@ -36,10 +36,24 @@ export const articleColumn: ColumnDef<Article>[] = [
     },
     size: 600,
   },
+
   {
     accessorKey: "category",
     header: "Category",
   },
+
+  /* {
+    accessorKey: "authorId",
+    header: "Author",
+    cell: ({ row }) => {
+      return (
+        <span>
+          {row.original.authorId.firstname} {row.original.authorId.lastname}
+        </span>
+      );
+    },
+  }, */
+
   {
     accessorKey: "updatedAt",
     header: "Last Updated",

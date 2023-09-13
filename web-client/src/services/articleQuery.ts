@@ -69,6 +69,14 @@ export const articleQueryApi = rootApi.injectEndpoints({
       query: () => "safety-tips/published",
       providesTags: ["SavedArticle"],
     }),
+    // Get specific article with id
+    getPublishedArticlesById: builder.query<Article, string | undefined>({
+      query: (id) => `safety-tips/${id}`,
+      providesTags: (result) =>
+        result
+          ? [{ type: "SelectedPublishedArticle", id: result._id }]
+          : ["SelectedPublishedArticle"],
+    }),
     /* Get saved article of specific user*/
     getSavedArticles: builder.query<Article[], void>({
       query: () => ({
@@ -92,6 +100,7 @@ export const articleQueryApi = rootApi.injectEndpoints({
         "SelectedArticle",
         "PublishedArticle",
         "SavedArticle",
+        "SelectedPublishedArticle",
       ],
     }),
   }),
@@ -105,6 +114,7 @@ export const {
   useDeleteArticleMutation,
 
   useGetPublishedArticlesQuery,
+  useGetPublishedArticlesByIdQuery,
   useGetSavedArticlesQuery,
   useSaveArticleMutation,
 } = articleQueryApi;
