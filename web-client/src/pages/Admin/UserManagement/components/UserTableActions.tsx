@@ -14,6 +14,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../../../components/ui/Popover";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
+} from "../../../../components/ui/Dialog";
+import UserForm from "./UserForm";
 interface UserTableActionsProps {
   table: Table<User>;
 }
@@ -62,9 +72,20 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({ table }) => {
             {verificationRequests?.length}
           </span>
         </Link>
-        <button className="btn-primary">
-          <BsFillPersonFill className="mr-2" /> Add Users
-        </button>
+        <Dialog>
+          <DialogTrigger className="btn-primary flex flex-row items-center">
+            <BsFillPersonFill /> Add Users
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add Users</DialogTitle>
+              <DialogDescription>
+                Fill up the form and add a new user.
+              </DialogDescription>
+            </DialogHeader>
+            <UserForm />
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );
