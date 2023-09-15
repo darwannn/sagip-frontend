@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   getCoreRowModel,
   useReactTable,
@@ -17,18 +17,12 @@ import DataTable from "../../../../components/ui/data-table";
 
 // Redux
 import { useAppSelector } from "../../../../store/hooks";
-import {
-  useGetUsersDataQuery,
-  useGetVerificationRequestsQuery,
-} from "../../../../services/usersQuery";
-
-import { Link } from "react-router-dom";
+import { useGetUsersDataQuery } from "../../../../services/usersQuery";
 
 // Icons
-import { BsFillPersonFill } from "react-icons/bs";
-import { GiNotebook } from "react-icons/gi";
 import PaginationControls from "../../../../components/ui/PaginationControl";
 import { User } from "../../../../types/user";
+import UserTableActions from "./UserTableActions";
 
 const UserTable = () => {
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
@@ -50,21 +44,12 @@ const UserTable = () => {
     }
   }, [users, isLoading, isSuccess, isStaff]);
 
-  // For filtering data
-  const [searchOption, setSearchOption] = useState<string>("firstname");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   // For sorting data
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  /* used to determine what action button to show */
-  const token = localStorage.getItem("token");
   // const data = useAppSelector(selectUserTableData);
-
-  const {
-    data: verificationRequests,
-    error: isVerificationRequestsFetchError,
-  } = useGetVerificationRequestsQuery({ token });
 
   const table = useReactTable({
     data: filteredUsers ?? [],
@@ -90,10 +75,6 @@ const UserTable = () => {
     },
   });
 
-  if (isVerificationRequestsFetchError) {
-    return <p>Something went wrong...</p>;
-  }
-
   if (isError)
     return (
       <p className="text-center font-semibold">Oops! Something went wrong...</p>
@@ -106,49 +87,8 @@ const UserTable = () => {
   return (
     <>
       <div className="flex flex-col sm:flex-row justify-between items-center py-4">
-        <div>
-          <select
-            className="max-w-sm border rounded-sm px-1 py-1 mb-2 sm:mb-0 mr-3"
-            value={searchOption}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-              setSearchOption(e.target.value);
-              setColumnFilters([]);
-            }}
-          >
-            <option value="firstname">Name</option>
-            <option value="barangay">Barangay</option>
-            <option value="email"> Email</option>
-          </select>
-          <input
-            placeholder={`Search by ${searchOption}`}
-            value={
-              (table.getColumn(searchOption)?.getFilterValue() as string) ?? ""
-            }
-            onChange={(e) => {
-              table.getColumn(searchOption)?.setFilterValue(e.target.value);
-            }}
-            className="max-w-sm border rounded-sm px-1 py-1 mb-2 sm:mb-0"
-            autoComplete="off"
-          />
-        </div>
-
-        <Link
-          className="inline-flex first-row items-center bg-gray-200 px-2 py-1 rounded border border-gray-300 text-gray-500 hover:bg-gray-300 hover:text-gray-600"
-          to={isStaff ? "create" : "verify-users"}
-        >
-          {isStaff ? (
-            <>
-              <BsFillPersonFill className="mr-2" /> Add Users
-            </>
-          ) : (
-            <>
-              <GiNotebook className="mr-2" /> Verification Request
-              <span className="bg-red-600 text-white rounded-md px-2 ml-2">
-                {verificationRequests?.length}
-              </span>
-            </>
-          )}
-        </Link>
+        {/* Table Actions */}
+        <UserTableActions table={table} />
       </div>
       <div className="rounded-md border mb-10">
         <DataTable table={table} columnLength={userColumn.length} />
