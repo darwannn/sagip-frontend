@@ -61,6 +61,20 @@ export const usersApi = rootApi.injectEndpoints({
         "VerificationRequest",
       ],
     }),
+    resetPassword: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/account/reset-password/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "User", id },
+        "SelectedUser",
+        "VerificationRequest",
+      ],
+    }),
     /* verification request */
     getVerificationRequests: builder.query<User[], { token: string | null }>({
       query: ({ token }) => ({
@@ -74,7 +88,6 @@ export const usersApi = rootApi.injectEndpoints({
           ? result.map(({ _id }) => ({ type: "VerificationRequest", id: _id }))
           : ["VerificationRequest"],
     }),
-
     updateVerificationRequest: builder.mutation<
       User,
       {
@@ -105,6 +118,7 @@ export const {
   useAddUserMutation,
   useUpdateUserMutation,
   useArchiveUserMutation,
+  useResetPasswordMutation,
   useGetVerificationRequestsQuery,
   useUpdateVerificationRequestMutation,
 } = usersApi;

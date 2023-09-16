@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import {
   useArchiveUserMutation,
   useGetUserByIdQuery,
+  useResetPasswordMutation,
   useUpdateUserMutation,
 } from "../../../../services/usersQuery";
 import { User } from "../../../../types/user";
@@ -19,6 +20,20 @@ const UserAccountOptions = () => {
     useUpdateUserMutation();
   const [archiveUser, { isError: isArchiveError, error: archiveErr }] =
     useArchiveUserMutation();
+  const [resetPassword, { isError: isResetError, error: resetErr }] =
+    useResetPasswordMutation();
+
+  const onResetPasswordHandler = async () => {
+    const confirm = window.confirm(
+      "Are you sure you want to reset this user's password?"
+    );
+    if (!confirm) return;
+    await toast.promise(resetPassword({ id: userId || "" }).unwrap, {
+      pending: "Resetting Password...",
+      success: "Password has been reset",
+      error: "Something went wrong",
+    });
+  };
 
   const onBanHandler = async () => {
     const body: Partial<User> = {
@@ -56,6 +71,10 @@ const UserAccountOptions = () => {
   if (isError) {
     console.log(error);
     return <p>Something went wrong</p>;
+  }
+
+  if (isResetError) {
+    console.log(resetErr);
   }
 
   if (isUpdateError) {
@@ -116,7 +135,10 @@ const UserAccountOptions = () => {
             Please make sure that this reset is authorized and communicated to
             the user.
           </p>
-          <button className="border border-orange-500 text-sm text-orange-500 font-semibold py-2 px-3 mt-3 rounded hover:bg-orange-500 hover:text-white duration-100 transition-all">
+          <button
+            className="border border-orange-500 text-sm text-orange-500 font-semibold py-2 px-3 mt-3 rounded hover:bg-orange-500 hover:text-white duration-100 transition-all"
+            onClick={onResetPasswordHandler}
+          >
             Reset Password
           </button>
         </div>
