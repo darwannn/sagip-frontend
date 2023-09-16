@@ -1,21 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
 // Types
 import { User, TUserResData } from "../../../../types/user";
 //Services
-import {
-  useAddUserMutation,
-  useUpdateUserMutation,
-} from "../../../../services/usersQuery";
+import { useAddUserMutation } from "../../../../services/usersQuery";
 import { BiCheckCircle } from "react-icons/bi";
+// import { toast } from "react-toastify";
 
-type TProps = {
-  userData?: User;
-};
-
-const UserForm = ({ userData }: TProps) => {
+const UserForm = () => {
   const [serverRes, setServerRes] = useState<TUserResData>();
   const [
     addUser,
@@ -26,47 +20,18 @@ const UserForm = ({ userData }: TProps) => {
       error: addErr,
     },
   ] = useAddUserMutation();
-  const [
-    updateUser,
-    {
-      isError: updateIsError,
-      isLoading: updateIsLoading,
-      // isSuccess: updateIsSuccess,
-    },
-  ] = useUpdateUserMutation();
 
   const navigate = useNavigate();
-
-  const [initialStatus, setInitialStatus] = useState<string>("");
-  useEffect(() => {
-    if (userData) {
-      setInitialStatus(userData.status);
-    }
-  }, [userData]);
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { isDirty, errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      contactNumber: userData?.contactNumber,
-      email: userData?.email,
-      status: userData?.status,
-      isBanned: userData?.isBanned,
-      userType: userData?.userType,
-      firstname: userData?.firstname,
-      middlename: userData?.middlename,
-      lastname: userData?.lastname,
-    },
-  });
+  } = useForm<FieldValues>();
 
-  const SubmitUserData = async (
-    data: FieldValues,
-    isBanned: boolean | undefined = false
-  ) => {
-    if (!isDirty && status === initialStatus) {
+  const SubmitUserData = async (data: FieldValues) => {
+    if (!isDirty) {
       console.log("No changes made");
       return;
     }
@@ -74,31 +39,23 @@ const UserForm = ({ userData }: TProps) => {
       contactNumber: data.contactNumber,
       email: data.email,
       status: data.status,
-      isBanned,
       userType: data.userType,
       firstname: data.firstname,
       middlename: data.middlename,
       lastname: data.lastname,
     };
 
-    console.log("data.region");
-    console.log(data.region);
-    console.log(data.userType);
+    // const res = await toast.promise(addUser(body).unwrap, {
+    //   pending: "Loading...",
+    //   success: "User has been added",
+    //   error: "Something went wrong",
+    // });
 
-    let res;
-    if (userData) {
-      console.log(data.email);
-      console.log(data.contactNumber);
+    // if(res && res.success) {
+    //   reset();
+    // }
 
-      res = await updateUser({
-        body,
-        id: userData._id,
-      });
-    } else {
-      res = await addUser(body);
-    }
-
-    console.log(res);
+    const res = await addUser(body);
 
     if ("data" in res) {
       setServerRes(res.data);
@@ -114,18 +71,8 @@ const UserForm = ({ userData }: TProps) => {
     }
   };
 
-  const onBan: SubmitHandler<FieldValues> = async (data) => {
-    if (
-      confirm(
-        `Are you sure you want to ${
-          userData?.isBanned === true ? "unban" : "ban"
-        } this user?`
-      )
-    )
-      SubmitUserData(data, userData?.isBanned === true ? false : true);
-  };
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    SubmitUserData(data, userData?.isBanned);
+    SubmitUserData(data);
   };
 
   // if (addIsLoading) console.log("Loading...");
@@ -134,8 +81,6 @@ const UserForm = ({ userData }: TProps) => {
       "data" in addErr ? (addErr.data as TUserResData) : null;
     }
   }
-
-  if (updateIsError) console.log("Error updating");
 
   return (
     <form className="flex flex-col gap-3 mt-2">
@@ -171,7 +116,7 @@ const UserForm = ({ userData }: TProps) => {
           id="middlename"
           className="form-input"
           placeholder="Middle Name"
-          disabled={addIsLoading || updateIsLoading}
+          disabled={addIsLoading}
           {...register("middlename", { required: true })}
         />
         {errors.middlename && (
@@ -188,7 +133,7 @@ const UserForm = ({ userData }: TProps) => {
           id="lastname"
           className="form-input"
           placeholder="Last Name"
-          disabled={addIsLoading || updateIsLoading}
+          disabled={addIsLoading}
           {...register("lastname", { required: true })}
         />
         {errors.lastname && (
@@ -207,7 +152,7 @@ const UserForm = ({ userData }: TProps) => {
           id="email"
           className="form-input"
           placeholder="Email"
-          disabled={addIsLoading || updateIsLoading}
+          disabled={addIsLoading}
           {...register("email", { required: true })}
         />
 
@@ -228,7 +173,7 @@ const UserForm = ({ userData }: TProps) => {
           className="form-input"
           placeholder="Contact Number"
           maxLength={11}
-          disabled={addIsLoading || updateIsLoading}
+          disabled={addIsLoading}
           {...register("contactNumber", { required: true })}
         />
         {(errors.contactNumber || !serverRes?.success) && (
@@ -248,7 +193,7 @@ const UserForm = ({ userData }: TProps) => {
         <select
           id="userType"
           className="border p-2 rounded"
-          disabled={addIsLoading || updateIsLoading}
+          disabled={addIsLoading}
           {...register("userType", { required: true })}
         >
           <option value="resident">Resident</option>
@@ -271,22 +216,12 @@ const UserForm = ({ userData }: TProps) => {
       </div> */}
 
       <div className="w-full mt-5">
-        {userData && (
-          <button
-            className="bg-red-500 text-white px-5 py-1 my-2 rounded"
-            onClick={handleSubmit(onBan)}
-            disabled={addIsLoading || updateIsLoading}
-          >
-            {userData?.isBanned === true ? "Unban User" : "Ban User"}
-          </button>
-        )}
-
         <button
           className="btn-primary float-right"
           onClick={handleSubmit(onSubmit)}
-          disabled={addIsLoading || updateIsLoading}
+          disabled={addIsLoading}
         >
-          {!userData ? "Add User" : "Update User"}
+          {"Add User"}
         </button>
       </div>
     </form>
