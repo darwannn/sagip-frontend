@@ -58,6 +58,7 @@ import MobileAccountSettingPage from "../pages/Mobile/AccountSettings/AccountSet
 import ResponderPage from "../pages/Mobile/ResponderPage/ResponderPage";
 import ResponderMap from "../pages/Mobile/ResponderPage/components/ResponderMap";
 import HazardMap from "../pages/Mobile/HazardMap/HazardMap";
+import UserInfoForm from "../pages/Admin/UserManagement/components/UserInfoForm";
 
 export const router = createBrowserRouter([
   {
@@ -174,7 +175,11 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <ManageUserPage /> },
           { path: "create", element: <CreateUserPage /> },
-          { path: ":userId", element: <ViewUserPage /> },
+          {
+            path: ":userId",
+            element: <ViewUserPage />,
+            children: [{ index: true, element: <UserInfoForm /> }],
+          },
           { path: "verify-users", element: <VerifyUserPage /> },
         ],
       },
