@@ -59,6 +59,7 @@ import ResponderPage from "../pages/Mobile/ResponderPage/ResponderPage";
 import ResponderMap from "../pages/Mobile/ResponderPage/components/ResponderMap";
 import HazardMap from "../pages/Mobile/HazardMap/HazardMap";
 import UserInfoForm from "../pages/Admin/UserManagement/components/UserInfoForm";
+import UserAccountOptions from "../pages/Admin/UserManagement/components/UserAccountOption";
 
 export const router = createBrowserRouter([
   {
@@ -178,7 +179,10 @@ export const router = createBrowserRouter([
           {
             path: ":userId",
             element: <ViewUserPage />,
-            children: [{ index: true, element: <UserInfoForm /> }],
+            children: [
+              { index: true, element: <UserInfoForm /> },
+              { path: "account-actions", element: <UserAccountOptions /> },
+            ],
           },
           { path: "verify-users", element: <VerifyUserPage /> },
         ],

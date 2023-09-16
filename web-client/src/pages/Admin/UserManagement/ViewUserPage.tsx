@@ -1,9 +1,10 @@
-import { useParams, Outlet, useNavigate } from "react-router-dom";
+import { useParams, Outlet, useNavigate, NavLink } from "react-router-dom";
 import { useGetUserByIdQuery } from "../../../services/usersQuery";
 import moment from "moment";
 import { BASE_IMAGE_URL } from "../../../api.config";
 import { Badge } from "../../../components/ui/Badge";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { PiGearSixBold, PiUserCircleBold } from "react-icons/pi";
 
 const ViewUserPage = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const ViewUserPage = () => {
       <div className="mb h-full flex gap-2">
         <button
           className="text-2xl p-1 text-gray-500 hover:bg-blue-100 rounded"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/users")}
         >
           <IoMdArrowRoundBack />
         </button>
@@ -86,6 +87,37 @@ const ViewUserPage = () => {
                 {userData?.emailStatus}
               </Badge>
             </div>
+          </div>
+          <hr className="my-5" />
+          <div className="flex flex-col gap-1">
+            <NavLink
+              className={({ isActive }) =>
+                `${
+                  isActive ? "child:bg-slate-200" : ""
+                } text-sm font-semibold text-gray-600`
+              }
+              to={""}
+              end
+            >
+              <div className="flex items-center p-2 hover:bg-blue-100 rounded">
+                <PiUserCircleBold className="text-lg mr-2" />
+                User Information
+              </div>
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `${
+                  isActive ? "child:bg-slate-200" : ""
+                } text-sm font-semibold text-gray-600`
+              }
+              to={"account-actions"}
+              end
+            >
+              <div className="flex items-center p-2 hover:bg-blue-100 rounded">
+                <PiGearSixBold className="text-lg mr-2" />
+                Account Action
+              </div>
+            </NavLink>
           </div>
         </div>
         <div className="flex-1">
