@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import {
+  useArchiveUserMutation,
   useGetUserByIdQuery,
   useUpdateUserMutation,
 } from "../../../../services/usersQuery";
@@ -14,9 +15,12 @@ const UserAccountOptions = () => {
     isError,
     error,
   } = useGetUserByIdQuery(userId);
-  const [updateUser] = useUpdateUserMutation();
+  const [updateUser, { isError: isUpdateError, error: updateErr }] =
+    useUpdateUserMutation();
+  const [archiveUser, { isError: isArchiveError, error: archiveErr }] =
+    useArchiveUserMutation();
 
-  const onBanHandler = () => {
+  const onBanHandler = async () => {
     const body: Partial<User> = {
       contactNumber: userData?.contactNumber,
       email: userData?.email,
@@ -54,12 +58,47 @@ const UserAccountOptions = () => {
     return <p>Something went wrong</p>;
   }
 
+  if (isUpdateError) {
+    console.log(updateErr);
+  }
+
+  if (isArchiveError) {
+    console.log(archiveErr);
+  }
+
+  const onArchiveHandler = async () => {
+    const confirm = window.confirm(
+      `Are you sure you want to ${
+        userData?.status === "archived" ? "unarchive" : "archive"
+      } this account?`
+    );
+    if (!confirm) return;
+
+    const action = userData?.isArchived ? "unarchive" : "archive";
+
+    await toast.promise(archiveUser({ action, id: userId || "" }).unwrap, {
+      pending: "Loading...",
+      success: `User has been ${
+        userData?.status === "archived" ? "unarchived" : "archived"
+      }`,
+      error: "Something went wrong",
+    });
+  };
+
   const banMsg = userData?.isBanned
     ? "Unbanning a user account will restore their access to the system. If their account was previously banned, this action will reverse the ban and allow them to use their account again."
     : "Banning a user account will immediately revoke their access to the system. This action is reversible, allowing you to lift the ban at a later time if necessary. However, it should only be used in cases of serious misconduct or policy violations.";
   const banWarn = userData?.isBanned
     ? "Please proceed with caution and ensure that the reason for the ban no longer applies or has been resolved before unbanning the user."
     : "Please ensure that banning this user is warranted and aligns with your organization's guidelines.";
+
+  const archiveMsg = userData?.isArchived
+    ? "Unarchiving a user account will restore their access to the system. If their account was previously archived, this action will reverse the archive and allow them to use their account again."
+    : "Archiving a user account will temporarily restrict access and disable the account. However, it can be unarchived later if needed.";
+
+  const archiveWarn = userData?.isArchived
+    ? "Please proceed with caution and ensure that the reason for the archive no longer applies or has been resolved before unarchiving the user."
+    : "Please ensure that archiving is necessary.";
 
   return (
     <div>
@@ -82,7 +121,9 @@ const UserAccountOptions = () => {
           </button>
         </div>
         <div className="text-sm">
-          <h3 className="text-orange-500 text-lg font-semibold">Ban User</h3>
+          <h3 className="text-orange-500 text-lg font-semibold">
+            {userData?.isBanned ? "Unban User" : "Ban User"}
+          </h3>
           <hr className="my-3" />
           <p className="">{banMsg}</p>
           <p className="text-orange-500">{banWarn}</p>
@@ -95,18 +136,16 @@ const UserAccountOptions = () => {
         </div>
         <div className="text-sm">
           <h3 className="text-orange-500 text-lg font-semibold">
-            Archive User
+            {userData?.isArchived ? "Unarchive User" : "Archive User"}
           </h3>
           <hr className="my-3" />
-          <p>
-            Archiving a user account will temporarily restrict access and
-            disable the account. However, it can be unarchived later if needed.
-          </p>
-          <p className="text-orange-500">
-            Please ensure that archiving is necessary.
-          </p>
-          <button className="border border-orange-500 text-sm text-orange-500 font-semibold py-2 px-3 mt-3 rounded hover:bg-orange-500 hover:text-white duration-100 transition-all">
-            Archive User
+          <p>{archiveMsg}</p>
+          <p className="text-orange-500">{archiveWarn}</p>
+          <button
+            className="border border-orange-500 text-sm text-orange-500 font-semibold py-2 px-3 mt-3 rounded hover:bg-orange-500 hover:text-white duration-100 transition-all"
+            onClick={onArchiveHandler}
+          >
+            {userData?.isArchived ? "Unarchive User" : "Archive User"}
           </button>
         </div>
       </section>

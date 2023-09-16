@@ -5,6 +5,11 @@ import { BASE_IMAGE_URL } from "../../../api.config";
 import { Badge } from "../../../components/ui/Badge";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { PiGearSixBold, PiUserCircleBold } from "react-icons/pi";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../../components/ui/Alert";
 
 const ViewUserPage = () => {
   const navigate = useNavigate();
@@ -35,6 +40,17 @@ const ViewUserPage = () => {
         </h1>
       </div>
       <hr className="my-5" />
+      {userData?.isArchived && (
+        <Alert className="border-yellow-500  text-yellow-500 my-5">
+          <AlertTitle>
+            This user is <span className="font-semibold">Archived</span>
+          </AlertTitle>
+          <AlertDescription>
+            This user is currently archived, which means it has been temporarily
+            disabled.
+          </AlertDescription>
+        </Alert>
+      )}
       <div className="flex flex-row gap-10">
         <div className="flex flex-col gap-5 w-56">
           {/* User Avatar */}
