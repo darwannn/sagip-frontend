@@ -26,9 +26,15 @@ import {
 import UserForm from "./UserForm";
 interface UserTableActionsProps {
   table: Table<User>;
+  globalFilterVal: string;
+  setGlobalFilterVal: (value: string) => void;
 }
 
-const UserTableActions: React.FC<UserTableActionsProps> = ({ table }) => {
+const UserTableActions: React.FC<UserTableActionsProps> = ({
+  // table,
+  globalFilterVal,
+  setGlobalFilterVal,
+}) => {
   /* used to determine what action button to show */
   const token = localStorage.getItem("token");
 
@@ -48,11 +54,9 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({ table }) => {
           <RiSearchLine className="text-lg text-gray-500" />
           <input
             className="flex-grow focus:outline-none"
-            placeholder="Search with ID"
-            value={(table.getColumn("_id")?.getFilterValue() as string) ?? ""}
-            onChange={(e) =>
-              table.getColumn("_id")?.setFilterValue(e.target.value)
-            }
+            placeholder="Search with ID, Name or Email"
+            value={globalFilterVal}
+            onChange={(e) => setGlobalFilterVal(e.target.value)}
           />
         </div>
         <Popover>

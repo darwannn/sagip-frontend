@@ -45,6 +45,11 @@ const UserTable = () => {
   }, [users, isLoading, isSuccess, isStaff]);
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [globalFltr, setGlobalFltr] = useState("");
+
+  const setGlobalFilterVal = (value: string) => {
+    setGlobalFltr(value);
+  };
 
   // For sorting data
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -58,12 +63,14 @@ const UserTable = () => {
     // For filtering data
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setGlobalFltr,
     // For pagination
     getPaginationRowModel: getPaginationRowModel(),
     //For sorting
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     state: {
+      globalFilter: globalFltr,
       columnFilters,
       sorting,
     },
@@ -88,7 +95,11 @@ const UserTable = () => {
     <>
       <div className="flex flex-col sm:flex-row justify-between items-center py-4">
         {/* Table Actions */}
-        <UserTableActions table={table} />
+        <UserTableActions
+          globalFilterVal={globalFltr}
+          setGlobalFilterVal={setGlobalFilterVal}
+          table={table}
+        />
       </div>
       <div className="rounded-md border mb-10">
         <DataTable table={table} columnLength={userColumn.length} />
