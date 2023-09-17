@@ -6,11 +6,13 @@ import { THazardReport } from "../../types/hazardReport";
 type THazardReportState = {
   selectedHazardReport: THazardReport | null;
   selectedHazard: string | null;
+  selectedHazardCategory: string | null;
 };
 
 const initialState: THazardReportState = {
   selectedHazardReport: null,
   selectedHazard: null,
+  selectedHazardCategory: null,
 };
 
 const hazardReportSlice = createSlice({
@@ -23,6 +25,12 @@ const hazardReportSlice = createSlice({
     ) => {
       state.selectedHazardReport = action.payload;
     },
+    setSelectedHazardCategory: (
+      state,
+      action: PayloadAction<string | null>
+    ) => {
+      state.selectedHazardCategory = action.payload;
+    },
     /* 
     used on mobile,
     determines which marker the user selected
@@ -33,8 +41,11 @@ const hazardReportSlice = createSlice({
   },
 });
 
-export const { setSelectedHazardReport, setSelectedHazard } =
-  hazardReportSlice.actions;
+export const {
+  setSelectedHazardReport,
+  setSelectedHazard,
+  setSelectedHazardCategory,
+} = hazardReportSlice.actions;
 
 export default hazardReportSlice.reducer;
 
