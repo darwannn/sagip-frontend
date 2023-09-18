@@ -5,7 +5,10 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
 
 import { BASE_IMAGE_URL, BASE_VIDEO_URL } from "../../../../api.config";
-import { THazardReport } from "../../../../types/hazardReport";
+import {
+  THazardReport,
+  THazardReportResData,
+} from "../../../../types/hazardReport";
 import {
   selectAddMode,
   selectTempMarkerPos,
@@ -37,6 +40,7 @@ const ToggleMarkers = () => {
   const [isVideoRequired, setIsVideoRequired] = useState<boolean>(true);
   const [proofType, setProofType] = useState<string>("");
   const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [serverRes, setServerRes] = useState<THazardReportResData>();
 
   const hazardData = useAppSelector(selectHazardReport);
   const tempMarkerPos = useAppSelector(selectTempMarkerPos);
@@ -166,6 +170,11 @@ const ToggleMarkers = () => {
       if (res.data.success) {
         navigate(`/hazard-reports`);
       }
+    } else {
+      if ("error" in res && "data" in res.error) {
+        const errData = res.error.data as THazardReportResData;
+        setServerRes(errData);
+      }
     }
   };
 
@@ -174,11 +183,7 @@ const ToggleMarkers = () => {
   };
 
   if (addIsLoading) console.log("Loading...");
-  if (addIsError) {
-    if (addErr && "status" in addErr) {
-      "data" in addErr ? (addErr.data as THazardReport) : null;
-    }
-  }
+  if (addIsError) console.log("Error Adding...");
 
   if (updateIsLoading) console.log("Updating...");
   if (updateIsError) console.log("Error updating");
@@ -229,9 +234,15 @@ const ToggleMarkers = () => {
             </div>
           </MapComponent>
         </div>
-        {(errors.latitude || errors.longitude) && (
-          <span className="text-red-500 -mt-5">Please mark the location</span>
+        {(errors.longitude || !serverRes?.success) && (
+          <span className="text-red-500 -mt-5">
+            {" "}
+            {errors.longitude
+              ? "Please mark the location"
+              : serverRes?.longitude}
+          </span>
         )}
+
         {/* hidden coordinates field */}
         <div className="hidden">
           <input
