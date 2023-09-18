@@ -10,7 +10,7 @@ export interface User {
   municipality: string;
   barangay: string;
   street: string;
-  gender: string;
+  gender: "Male" | "Female";
   birthdate: string;
   password: string;
   profilePicture: string;

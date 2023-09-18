@@ -23,26 +23,39 @@ import { useGetUsersDataQuery } from "../../../../services/usersQuery";
 import PaginationControls from "../../../../components/ui/PaginationControl";
 import { User } from "../../../../types/user";
 import UserTableActions from "./UserTableActions";
+import { selectUserFilters } from "../../../../store/slices/userManageSlice";
 
 const UserTable = () => {
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   // Service
   const { data: users, isLoading, isError, isSuccess } = useGetUsersDataQuery();
+  const tableFilters = useAppSelector(selectUserFilters);
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
   // Get the data from redux
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
+      const { isArchive, gender } = tableFilters;
       const filter = users?.filter((user) => {
-        if (isStaff) {
-          return user.userType !== "resident" && user.isArchived === false;
-        } else if (!isStaff) {
-          return user.userType === "resident" && user.isArchived === false;
+        if (!isStaff && user.userType !== "resident") {
+          return false;
         }
+        if (isStaff && user.userType === "resident") {
+          return false;
+        }
+
+        if (user.isArchived !== isArchive) {
+          return false;
+        }
+        // Gender
+        if (gender.length > 0 && !gender.includes(user.gender)) {
+          return false;
+        }
+        return true;
       });
       setFilteredUsers(filter ?? []);
     }
-  }, [users, isLoading, isSuccess, isStaff]);
+  }, [users, isLoading, isSuccess, isStaff, tableFilters]);
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFltr, setGlobalFltr] = useState("");
@@ -53,8 +66,6 @@ const UserTable = () => {
 
   // For sorting data
   const [sorting, setSorting] = useState<SortingState>([]);
-
-  // const data = useAppSelector(selectUserTableData);
 
   const table = useReactTable({
     data: filteredUsers ?? [],

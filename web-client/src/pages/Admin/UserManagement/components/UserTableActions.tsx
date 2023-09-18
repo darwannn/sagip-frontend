@@ -24,6 +24,12 @@ import {
   DialogDescription,
 } from "../../../../components/ui/Dialog";
 import UserForm from "./UserForm";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import {
+  selectUserFilters,
+  setFilterArchive,
+  setFilterGender,
+} from "../../../../store/slices/userManageSlice";
 interface UserTableActionsProps {
   table: Table<User>;
   globalFilterVal: string;
@@ -37,6 +43,9 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
 }) => {
   /* used to determine what action button to show */
   const token = localStorage.getItem("token");
+
+  const dispatch = useAppDispatch();
+  const { isArchive, gender } = useAppSelector(selectUserFilters);
 
   const {
     data: verificationRequests,
@@ -64,7 +73,47 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
             <BiFilter className="mr-2" />
             Filter
           </PopoverTrigger>
-          <PopoverContent>{/* Filter Options Here */}</PopoverContent>
+          <PopoverContent className="text-sm">
+            <div>
+              <p className="font-semibold mb-2">Gender</p>
+              <div className="flex flex-row gap-5">
+                <div className="flex flex-row gap-2">
+                  <input
+                    type="checkbox"
+                    id="male"
+                    checked={gender.includes("Male")}
+                    onChange={() => dispatch(setFilterGender("Male"))}
+                  />
+                  <label htmlFor="male">Male</label>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <input
+                    type="checkbox"
+                    id="female"
+                    checked={gender.includes("Female")}
+                    onChange={() => dispatch(setFilterGender("Female"))}
+                  />
+                  <label htmlFor="female">Female</label>
+                </div>
+              </div>
+            </div>
+            <hr className="my-2" />
+            <div>
+              <p className="font-semibold mb-2">Archive</p>
+              <div className="flex flex-row gap-2">
+                <input
+                  type="checkbox"
+                  id="archived"
+                  checked={isArchive}
+                  onChange={(e) => {
+                    if (e.target.checked) dispatch(setFilterArchive(true));
+                    else dispatch(setFilterArchive(false));
+                  }}
+                />
+                <label htmlFor="archived">Filter Archived Users</label>
+              </div>
+            </div>
+          </PopoverContent>
         </Popover>
       </div>
 
