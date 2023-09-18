@@ -6,7 +6,7 @@ import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
 
 import { BASE_IMAGE_URL, BASE_VIDEO_URL } from "../../../../api.config";
 import {
-  THazardReport,
+  /* THazardReport, */
   THazardReportResData,
 } from "../../../../types/hazardReport";
 import {
@@ -51,7 +51,7 @@ const ToggleMarkers = () => {
 
   const [
     addHazardReport,
-    { isError: addIsError, isLoading: addIsLoading, error: addErr },
+    { isError: addIsError, isLoading: addIsLoading /* , error: addErr */ },
   ] = useAddHazardReportMutation();
 
   const [
@@ -183,7 +183,7 @@ const ToggleMarkers = () => {
   };
 
   if (addIsLoading) console.log("Loading...");
-  if (addIsError) console.log("Error Adding...");
+  if (addIsError) console.log("Error Adding");
 
   if (updateIsLoading) console.log("Updating...");
   if (updateIsError) console.log("Error updating");
