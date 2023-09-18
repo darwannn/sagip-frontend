@@ -275,6 +275,9 @@ const ToggleMarkers = () => {
               <label
                 htmlFor="imageProof"
                 className=" flex items-center justify-center bg-primary-300 text-white gap-2 py-2 rounded-md"
+                onClick={() => {
+                  window.AndroidInterface?.setMediaChooser("camera");
+                }}
               >
                 <BsCameraVideo className="text-2xl" /> Photo
               </label>
@@ -295,6 +298,9 @@ const ToggleMarkers = () => {
               <label
                 htmlFor="videoProof"
                 className="flex items-center justify-center bg-primary-300 text-white gap-2 py-2 rounded-md"
+                onClick={() => {
+                  window.AndroidInterface?.setMediaChooser("camcorder");
+                }}
               >
                 <AiOutlineCamera className="text-2xl" /> Video
               </label>

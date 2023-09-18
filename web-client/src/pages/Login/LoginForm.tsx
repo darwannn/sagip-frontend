@@ -48,6 +48,7 @@ const LoginForm = () => {
       // TODO: REDIRECT DEPENDS ON USER ROLE
       if (resData.success) {
         navigate("/admin");
+        window.AndroidInterface?.updateFcmToken(data.identifier);
       }
       if (resData.message.includes("attempt")) {
         navigate("/login/contact-verification");

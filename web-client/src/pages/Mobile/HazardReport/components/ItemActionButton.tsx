@@ -22,8 +22,12 @@ const HazardItem = ({ hazardData }: TProps) => {
   const [deleteHazardReport, { isLoading: isDeleteLoading }] =
     useDeleteHazardReportMutation();
 
-  const decodedToken = jwtDecode<Token>(localStorage.getItem("token") || "");
-  const userId = decodedToken.id;
+  let userId = null;
+  const token = localStorage.getItem("token");
+  if (token) {
+    const decodedToken = jwtDecode<Token>(token);
+    userId = decodedToken.id;
+  }
   return (
     <>
       {userId === hazardData.userId._id &&

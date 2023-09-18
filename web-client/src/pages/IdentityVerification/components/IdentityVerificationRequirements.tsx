@@ -134,8 +134,7 @@ const RegistrationSuccessful = () => {
         onClick={() => {
           dispatch(setDisplayedVerificationPage("requirements"));
           fileInputRef.current?.click();
-          /* const androidInterface = (window as any).AndroidInterface;
-          androidInterface?.setMediaChooser("camera"); */
+          window.AndroidInterface?.setMediaChooser("camera");
         }}
       >
         Proceed
