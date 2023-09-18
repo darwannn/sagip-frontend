@@ -8,7 +8,6 @@ import {
 // Icons
 import { LuTrash2 } from "react-icons/lu";
 import { GoKebabHorizontal } from "react-icons/go";
-import { MdOutlinePreview } from "react-icons/md";
 import { TbPencil } from "react-icons/tb";
 import {
   DropdownMenuContent,
@@ -64,22 +63,15 @@ const UserRowAction = ({ rowId, isArchived }: PROPS) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="flex gap-2" onClick={onViewHandler}>
-          <MdOutlinePreview className="text-xl" />
-          <span>View</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="flex gap-2"
-          onClick={() => console.log("Edit")}
-        >
-          <TbPencil className="text-lg" />
-          <span>Edit</span>
+          <TbPencil className="text-md" />
+          <span>View and Edit</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           className="flex gap-2 text-red-500"
           onClick={onArchiveHandler}
           disabled={isLoading}
         >
-          <LuTrash2 className="" />
+          <LuTrash2 className="text-md" />
           <span>{`${isArchived ? "Unarchived" : "Archive"}`}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
