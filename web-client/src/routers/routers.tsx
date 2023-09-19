@@ -61,7 +61,6 @@ import HazardMap from "../pages/Mobile/HazardMap/HazardMap";
 import UserInfoForm from "../pages/Admin/UserManagement/components/UserInfoForm";
 import UserAccountOptions from "../pages/Admin/UserManagement/components/UserAccountOption";
 import VerifyUserData from "../pages/Admin/UserManagement/components/VerifyUserData";
-import HazardFeed from "../pages/Mobile/HazardReport/HazardFeed";
 
 import HazardReportPage from "../pages/Mobile/HazardReport/HazardReportPage";
 import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/SubmitHazardReportForm";
