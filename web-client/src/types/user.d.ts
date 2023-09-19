@@ -1,3 +1,9 @@
+export type Roles =
+  | "super-admin"
+  | "admin"
+  | "responder"
+  | "dispatcher"
+  | "resident";
 export interface User {
   _id: string;
   firstname: string;
@@ -17,7 +23,7 @@ export interface User {
   attempt: number;
   verificationCode: number;
   codeExpiration: string;
-  userType: string;
+  userType: Roles;
   isOnline: boolean;
   isBanned: boolean;
   isArchived: boolean;

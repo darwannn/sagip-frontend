@@ -4,6 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 // Types
 import { RootState } from "../store";
+import { Roles } from "../../types/user";
 
 export interface ManageUserState {
   isStaff: boolean;
@@ -11,6 +12,7 @@ export interface ManageUserState {
     isArchive: boolean;
     isBanned: boolean;
     gender: ["Male", "Female"];
+    roles: Roles[];
   };
 }
 
@@ -20,6 +22,7 @@ const initialState: ManageUserState = {
     isArchive: false,
     isBanned: false,
     gender: ["Male", "Female"],
+    roles: ["super-admin", "admin", "responder", "dispatcher"],
   },
 };
 
@@ -48,6 +51,16 @@ export const userManageSlice = createSlice({
         console.log("Something went wrong");
       }
     },
+    setFilterRoles: (state, action: PayloadAction<Roles>) => {
+      if (state.userFilters.roles.includes(action.payload)) {
+        const roleIndex = state.userFilters.roles.indexOf(action.payload);
+        state.userFilters.roles.splice(roleIndex, 1);
+      } else if (!state.userFilters.roles.includes(action.payload)) {
+        state.userFilters.roles.push(action.payload);
+      } else {
+        console.log("Something went wrong");
+      }
+    },
   },
 });
 
@@ -56,6 +69,7 @@ export const {
   setFilterArchive,
   setFilterBanned,
   setFilterGender,
+  setFilterRoles,
 } = userManageSlice.actions;
 export default userManageSlice.reducer;
 
