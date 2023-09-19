@@ -61,7 +61,7 @@ const VerifyUserPage = () => {
       {isVerificationRequestsLoading ? (
         <p> Fetching verification Requests </p>
       ) : (
-        <div className=" w-[500px] flex flex-col z-10 bg-white shadow-md  p-10 h-screen sticky top-0">
+        <div className=" w-[500px] flex flex-col z-10 bg-white shadow-md  py-10 px-7 h-screen sticky top-0">
           <div className="flex items-center gap-2">
             {/* temporary back button */}
             <Link
