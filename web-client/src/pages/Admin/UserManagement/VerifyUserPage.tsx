@@ -1,12 +1,8 @@
 import { useState } from "react";
 // Services / API
-import { useAppSelector } from "../../../store/hooks";
 import { useGetVerificationRequestsQuery } from "../../../services/usersQuery";
-import { selectionVerificationRequest } from "../../../store/slices/userManageSlice";
 
-import { Link } from "react-router-dom";
-
-import VerifyUserData from "./components/VerifyUserData";
+import { Link, Outlet } from "react-router-dom";
 
 import VerifyUserList from "./components/VerifyUserList";
 // Icons
@@ -16,9 +12,6 @@ import { RiSearchLine } from "react-icons/ri";
 const VerifyUserPage = () => {
   const token = localStorage.getItem("token");
   const [search, setSearch] = useState<string>("");
-  const selectedVerificationRequest = useAppSelector(
-    selectionVerificationRequest
-  );
 
   // Get all the verificationRequests
   const {
@@ -55,13 +48,13 @@ const VerifyUserPage = () => {
   }
 
   return (
-    <div className="flex flex-row  bg-indigo-50">
+    <div className="min-h-screen flex flex-row bg-indigo-50">
       {/* VerificationRequests List */}
 
       {isVerificationRequestsLoading ? (
         <p> Fetching verification Requests </p>
       ) : (
-        <div className=" w-[500px] flex flex-col z-10 bg-white shadow-md  py-10 px-7 h-screen sticky top-0">
+        <div className=" w-[400px] flex flex-col z-10 bg-white shadow-md  py-10 px-7 h-screen sticky top-0">
           <div className="flex items-center gap-2">
             {/* temporary back button */}
             <Link
@@ -90,11 +83,9 @@ const VerifyUserPage = () => {
           />
         </div>
       )}
-      {selectedVerificationRequest ? (
-        <VerifyUserData verificationRequest={selectedVerificationRequest} />
-      ) : (
-        <div className="m-auto">Select a request to verify</div>
-      )}
+      <div className="flex-1">
+        <Outlet />
+      </div>
     </div>
   );
 };

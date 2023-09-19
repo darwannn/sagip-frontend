@@ -3,12 +3,10 @@ import { createSelector } from "reselect";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 // Types
-import { User } from "../../types/user";
 import { RootState } from "../store";
 
 export interface ManageUserState {
   isStaff: boolean;
-  selectedVerificationRequest: User | null;
   userFilters: {
     isArchive: boolean;
     isBanned: boolean;
@@ -18,7 +16,6 @@ export interface ManageUserState {
 
 const initialState: ManageUserState = {
   isStaff: false,
-  selectedVerificationRequest: null,
   userFilters: {
     isArchive: false,
     isBanned: false,
@@ -32,13 +29,6 @@ export const userManageSlice = createSlice({
   reducers: {
     setTableContent: (state, action: PayloadAction<boolean>) => {
       state.isStaff = action.payload;
-    },
-    setSelectedVerificationRequest: (state, action: PayloadAction<User>) => {
-      state.selectedVerificationRequest = action.payload;
-      //  if (state.isVerifyMode) state.isVerifyMode = false;
-    },
-    unsetSelectedVerificationRequest: (state) => {
-      state.selectedVerificationRequest = null;
     },
     setFilterArchive: (state, action: PayloadAction<boolean>) => {
       state.userFilters.isArchive = action.payload;
@@ -63,20 +53,11 @@ export const userManageSlice = createSlice({
 
 export const {
   setTableContent,
-  setSelectedVerificationRequest,
-  unsetSelectedVerificationRequest,
   setFilterArchive,
   setFilterBanned,
   setFilterGender,
 } = userManageSlice.actions;
 export default userManageSlice.reducer;
-
-// SELECTORS
-
-export const selectionVerificationRequest = createSelector(
-  (state: RootState) => state.userManage.selectedVerificationRequest,
-  (selectedVerificationRequest: User | null) => selectedVerificationRequest
-);
 
 // Filters Selector
 export const selectUserFilters = createSelector(

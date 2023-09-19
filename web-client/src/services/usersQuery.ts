@@ -88,8 +88,22 @@ export const usersApi = rootApi.injectEndpoints({
           ? result.map(({ _id }) => ({ type: "VerificationRequest", id: _id }))
           : ["VerificationRequest"],
     }),
+    getVerificationRequestById: builder.query<User, { id: string | undefined }>(
+      {
+        query: ({ id }) => ({
+          url: `auth/verify-identity/${id}`,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }),
+        providesTags: (result) =>
+          result
+            ? [{ type: "SelectedVerificationRequest", id: result._id }]
+            : ["SelectedVerificationRequest"],
+      }
+    ),
     updateVerificationRequest: builder.mutation<
-      User,
+      { success: boolean; message: string },
       {
         token: string | null;
         action: string;
@@ -106,6 +120,7 @@ export const usersApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: (_result, _error, { id }) => [
         { type: "VerificationRequest", id },
+        { type: "SelectedVerificationRequest", id },
       ],
     }),
   }),
@@ -120,5 +135,6 @@ export const {
   useArchiveUserMutation,
   useResetPasswordMutation,
   useGetVerificationRequestsQuery,
+  useGetVerificationRequestByIdQuery,
   useUpdateVerificationRequestMutation,
 } = usersApi;
