@@ -22,28 +22,6 @@ export const userColumn: ColumnDef<User>[] = [
     },
     size: 100,
   },
-  /*  {
-    accessorKey: "fullname",
-    // header: () => {
-    //   // Centered text "Full Name"
-    //   return <h2 className="">Full Name</h2>;
-    // },
-    header: "Full Name",
-    columns: [
-      {
-        accessorKey: "firstname",
-        header: "First Name",
-      },
-      {
-        accessorKey: "middlename",
-        header: "Middle Name",
-      },
-      {
-        accessorKey: "lastname",
-        header: "Last Name",
-      },
-    ],
-  }, */
   {
     id: "profilePicture",
     cell: ({ row }) => {
