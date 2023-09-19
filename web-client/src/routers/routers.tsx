@@ -58,6 +58,9 @@ import MobileAccountSettingPage from "../pages/Mobile/AccountSettings/AccountSet
 import ResponderPage from "../pages/Mobile/ResponderPage/ResponderPage";
 import ResponderMap from "../pages/Mobile/ResponderPage/components/ResponderMap";
 import HazardMap from "../pages/Mobile/HazardMap/HazardMap";
+import UserInfoForm from "../pages/Admin/UserManagement/components/UserInfoForm";
+import UserAccountOptions from "../pages/Admin/UserManagement/components/UserAccountOption";
+import VerifyUserData from "../pages/Admin/UserManagement/components/VerifyUserData";
 
 import HazardReportPage from "../pages/Mobile/HazardReport/HazardReportPage";
 import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/SubmitHazardReportForm";
@@ -185,8 +188,19 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <ManageUserPage /> },
           { path: "create", element: <CreateUserPage /> },
-          { path: ":userId", element: <ViewUserPage /> },
-          { path: "verify-users", element: <VerifyUserPage /> },
+          {
+            path: ":userId",
+            element: <ViewUserPage />,
+            children: [
+              { index: true, element: <UserInfoForm /> },
+              { path: "account-actions", element: <UserAccountOptions /> },
+            ],
+          },
+          {
+            path: "verify-users",
+            element: <VerifyUserPage />,
+            children: [{ path: ":userId", element: <VerifyUserData /> }],
+          },
         ],
       },
       {

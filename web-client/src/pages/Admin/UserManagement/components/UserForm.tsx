@@ -1,65 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
 // Types
 import { User, TUserResData } from "../../../../types/user";
 //Services
-import {
-  useAddUserMutation,
-  useUpdateUserMutation,
-} from "../../../../services/usersQuery";
+import { useAddUserMutation } from "../../../../services/usersQuery";
+import { BiCheckCircle } from "react-icons/bi";
+// import { toast } from "react-toastify";
 
-type TProps = {
-  userData?: User;
-};
-
-const UserForm = ({ userData }: TProps) => {
+const UserForm = () => {
   const [serverRes, setServerRes] = useState<TUserResData>();
   const [
     addUser,
-    { isError: addIsError, isLoading: addIsLoading, error: addErr },
-  ] = useAddUserMutation();
-  const [
-    updateUser,
     {
-      isError: updateIsError,
-      isLoading: updateIsLoading,
-      isSuccess: updateIsSuccess,
+      isError: addIsError,
+      isLoading: addIsLoading,
+      isSuccess: addIsSuccess,
+      error: addErr,
     },
-  ] = useUpdateUserMutation();
+  ] = useAddUserMutation();
 
   const navigate = useNavigate();
-
-  const [initialStatus, setInitialStatus] = useState<string>("");
-  useEffect(() => {
-    if (userData) {
-      setInitialStatus(userData.status);
-    }
-  }, [userData]);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isDirty, errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      contactNumber: userData?.contactNumber,
-      email: userData?.email,
-      status: userData?.status,
-      isBanned: userData?.isBanned,
-      userType: userData?.userType,
-      firstname: userData?.firstname,
-      middlename: userData?.middlename,
-      lastname: userData?.lastname,
-    },
-  });
+  } = useForm<FieldValues>();
 
-  const SubmitUserData = async (
-    data: FieldValues,
-    isBanned: boolean | undefined = false
-  ) => {
-    if (!isDirty && status === initialStatus) {
+  const SubmitUserData = async (data: FieldValues) => {
+    if (!isDirty) {
       console.log("No changes made");
       return;
     }
@@ -67,37 +39,30 @@ const UserForm = ({ userData }: TProps) => {
       contactNumber: data.contactNumber,
       email: data.email,
       status: data.status,
-      isBanned,
       userType: data.userType,
       firstname: data.firstname,
       middlename: data.middlename,
       lastname: data.lastname,
     };
 
-    console.log("data.region");
-    console.log(data.region);
-    console.log(data.userType);
+    // const res = await toast.promise(addUser(body).unwrap, {
+    //   pending: "Loading...",
+    //   success: "User has been added",
+    //   error: "Something went wrong",
+    // });
 
-    let res;
-    if (userData) {
-      console.log(data.email);
-      console.log(data.contactNumber);
+    // if(res && res.success) {
+    //   reset();
+    // }
 
-      res = await updateUser({
-        body,
-        id: userData._id,
-      });
-    } else {
-      res = await addUser(body);
-    }
-
-    console.log(res);
+    const res = await addUser(body);
 
     if ("data" in res) {
       setServerRes(res.data);
       if (res.data.success) {
         navigate(`/admin/users`);
       }
+      reset();
     } else {
       if ("error" in res && "data" in res.error) {
         const errData = res.error.data as TUserResData;
@@ -106,39 +71,34 @@ const UserForm = ({ userData }: TProps) => {
     }
   };
 
-  const onBan: SubmitHandler<FieldValues> = async (data) => {
-    if (
-      confirm(
-        `Are you sure you want to ${
-          userData?.isBanned === true ? "unban" : "ban"
-        } this user?`
-      )
-    )
-      SubmitUserData(data, userData?.isBanned === true ? false : true);
-  };
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    SubmitUserData(data, userData?.isBanned);
+    SubmitUserData(data);
   };
 
-  if (addIsLoading) console.log("Loading...");
+  // if (addIsLoading) console.log("Loading...");
   if (addIsError) {
     if (addErr && "status" in addErr) {
       "data" in addErr ? (addErr.data as TUserResData) : null;
     }
   }
 
-  if (updateIsLoading) console.log("Updating...");
-  if (updateIsError) console.log("Error updating");
-  if (updateIsSuccess) console.log("Updated successfully");
-
   return (
-    <form className="flex flex-wrap -m-2">
-      <div className="flex flex-col mt-5 p-2 w-full sm:w-1/2 md:w-1/3">
-        <label htmlFor="firstname">First Name</label>
+    <form className="flex flex-col gap-3 mt-2">
+      {addIsSuccess && (
+        <div className="flex flex-row items-center bg-green-100 border-l-2 border-l-green-500 p-2 text-sm">
+          <BiCheckCircle className="text-green-500 mr-2" />
+          <p className="text-green-500">User added successfully</p>
+        </div>
+      )}
+
+      <div className="form-group text-sm">
+        <label htmlFor="firstname" className="form-label text-sm">
+          First Name
+        </label>
         <input
           type="text"
           id="firstname"
-          className="border p-1"
+          className="form-input"
           placeholder="First Name"
           {...register("firstname", { required: true })}
         />
@@ -147,13 +107,16 @@ const UserForm = ({ userData }: TProps) => {
         )}
       </div>
 
-      <div className="flex flex-col mt-5 p-2 w-full sm:w-1/2 md:w-1/3">
-        <label htmlFor="middlename">Middle Name</label>
+      <div className="form-group text-sm">
+        <label htmlFor="middlename" className="form-label text-sm">
+          Middle Name
+        </label>
         <input
           type="text"
           id="middlename"
-          className="border p-1"
+          className="form-input"
           placeholder="Middle Name"
+          disabled={addIsLoading}
           {...register("middlename", { required: true })}
         />
         {errors.middlename && (
@@ -161,13 +124,16 @@ const UserForm = ({ userData }: TProps) => {
         )}
       </div>
 
-      <div className="flex flex-col mt-5 p-2 w-full sm:w-1/2 md:w-1/3">
-        <label htmlFor="lastname">Last Name</label>
+      <div className="form-group text-sm">
+        <label htmlFor="lastname" className="form-label">
+          Last Name
+        </label>
         <input
           type="text"
           id="lastname"
-          className="border p-1"
+          className="form-input"
           placeholder="Last Name"
+          disabled={addIsLoading}
           {...register("lastname", { required: true })}
         />
         {errors.lastname && (
@@ -177,13 +143,16 @@ const UserForm = ({ userData }: TProps) => {
 
       {/* {!userData && (
      <> */}
-      <div className="flex flex-col mt-5 p-2 w-full sm:w-1/2 md:w-1/3">
-        <label htmlFor="email">Email</label>
+      <div className="form-group text-sm">
+        <label htmlFor="email" className="form-label">
+          Email
+        </label>
         <input
           type="email"
           id="email"
-          className="border p-1"
+          className="form-input"
           placeholder="Email"
+          disabled={addIsLoading}
           {...register("email", { required: true })}
         />
 
@@ -194,14 +163,17 @@ const UserForm = ({ userData }: TProps) => {
         )}
       </div>
 
-      <div className="flex flex-col mt-5 p-2 w-full sm:w-1/2 md:w-1/3">
-        <label htmlFor="contactNumber">Contact Number</label>
+      <div className="form-group text-sm">
+        <label htmlFor="contactNumber" className="form-label">
+          Contact Number
+        </label>
         <input
           type="text"
           id="contactNumber"
-          className="border p-1"
+          className="form-input"
           placeholder="Contact Number"
           maxLength={11}
+          disabled={addIsLoading}
           {...register("contactNumber", { required: true })}
         />
         {(errors.contactNumber || !serverRes?.success) && (
@@ -214,10 +186,16 @@ const UserForm = ({ userData }: TProps) => {
       </div>
 
       {/* {!(userData?.userType === "resident") && ( */}
-      <div className="flex flex-col mt-5 p-2 w-full sm:w-1/2 md:w-1/3">
-        <label htmlFor="userType">Role</label>
-        <select id="userType" {...register("userType", { required: true })}>
-          {/* uncomment if needed */}
+      <div className="form-group text-sm">
+        <label htmlFor="userType" className="form-label">
+          Role
+        </label>
+        <select
+          id="userType"
+          className="border p-2 rounded"
+          disabled={addIsLoading}
+          {...register("userType", { required: true })}
+        >
           <option value="resident">Resident</option>
           <option value="dispatcher">Dispatcher</option>
           <option value="responser">Responder</option>
@@ -238,22 +216,12 @@ const UserForm = ({ userData }: TProps) => {
       </div> */}
 
       <div className="w-full mt-5">
-        {userData && (
-          <button
-            className="bg-red-500 text-white px-5 py-1 my-2 rounded"
-            onClick={handleSubmit(onBan)}
-            disabled={addIsLoading || updateIsLoading}
-          >
-            {userData?.isBanned === true ? "Unban User" : "Ban User"}
-          </button>
-        )}
-
         <button
-          className="bg-green-500 text-white px-5 py-1 my-2 rounded disabled:bg-green-300"
+          className="btn-primary float-right"
           onClick={handleSubmit(onSubmit)}
-          disabled={addIsLoading || updateIsLoading}
+          disabled={addIsLoading}
         >
-          {!userData ? "Add User" : "Update User"}
+          {"Add User"}
         </button>
       </div>
     </form>

@@ -1,13 +1,11 @@
 // Services / API
-import { useAppDispatch } from "../../../../store/hooks";
-import { useUpdateVerificationRequestMutation } from "../../../../services/usersQuery";
-import { unsetSelectedVerificationRequest } from "../../../../store/slices/userManageSlice";
+import {
+  useGetVerificationRequestByIdQuery,
+  useUpdateVerificationRequestMutation,
+} from "../../../../services/usersQuery";
 
 // Types
-import type { User } from "../../../../types/user";
 import { BASE_IMAGE_URL } from "../../../../api.config";
-// Icons
-import { MdClose } from "react-icons/md";
 
 import moment from "moment";
 
@@ -21,97 +19,70 @@ import LightGallery from "lightgallery/react";
 
 /* override backdrop style  */
 import "../styles/lightgallery.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { formatDate } from "../../../../util/date";
+import { toast } from "react-toastify";
 
-type TProps = {
-  verificationRequest?: User;
-};
-
-const VerifyUserData = ({ verificationRequest }: TProps) => {
-  const dispatch = useAppDispatch();
+const VerifyUserData = () => {
+  const { userId } = useParams();
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  /* reset scroll position to top */
-  /*   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [verificationRequest]); */
+  // Get the selected verificationRequest
+  const { data, isFetching, isError, error } =
+    useGetVerificationRequestByIdQuery({ id: userId });
 
   const [updateVerificationRequest, updateVerificationRequestState] =
     useUpdateVerificationRequestMutation();
 
-  if (updateVerificationRequestState.isLoading) console.log("Loading...");
   if (updateVerificationRequestState.isError)
     console.log(updateVerificationRequestState.error);
 
   const onSubmitHandler = async (action: string) => {
-    updateVerificationRequest({
-      token,
-      action,
-      id: verificationRequest?._id ?? "",
-    });
-    dispatch(unsetSelectedVerificationRequest());
-    return;
+    const res = await toast.promise(
+      updateVerificationRequest({
+        token,
+        action,
+        id: userId ?? "",
+      }).unwrap(),
+      {
+        pending: "Loading...",
+        success: "User has been updated",
+        error: "Something went wrong",
+      }
+    );
+
+    if (res.success) {
+      navigate("/admin/users/verify-users");
+    }
   };
 
-  return (
-    <div className=" w-full flex flex-grow relative bg-white p-10 m-5 rounded-3xl">
-      <div className="w-full flex-col px-2">
-        <button
-          className="absolute top-8 right-8 hover:bg-gray-300 rounded  text-gray-500"
-          onClick={() => {
-            if (verificationRequest) {
-              dispatch(unsetSelectedVerificationRequest());
-            }
-          }}
-        >
-          <MdClose />
-        </button>
-        <div className="text-sm text-gray-500">#{verificationRequest?._id}</div>
-        <div className="font-semibold text-3xl">
-          {verificationRequest?.firstname} {verificationRequest?.middlename}{" "}
-          {verificationRequest?.lastname}
-        </div>
-        <div className="flex xl:flex-row flex-col mt-2">
-          <div className="text-md text-gray-500 xl:flex-grow">
-            Address: {verificationRequest?.street},{" "}
-            {verificationRequest?.barangay}, {verificationRequest?.municipality}
-            , {verificationRequest?.province}
-          </div>
-          <div className="text-md text-gray-500 ml-0 xl:ml-5">
-            Date of Birth:{" "}
-            {moment(verificationRequest?.birthdate).format("MMM DD, YYYY")}
-          </div>
-        </div>
+  if (isFetching) return <p className="text-center">Loading User Data ...</p>;
+  if (isError) {
+    console.log(error);
+    return <p className="text-center">Not Found</p>;
+  }
 
-        <div className="text-md text-gray-500">
-          Contact Number: {verificationRequest?.contactNumber}
+  return (
+    <div className="min-h-screen flex flex-col gap-5 p-10">
+      <div className="header flex flex-row justify-between items-center gap-3 bg-white p-5 rounded-md shadow">
+        <div className="grow flex flex-row items-center gap-5">
+          <div className="ml-1">
+            <img
+              className="w-16 h-16 rounded-full"
+              src={`${BASE_IMAGE_URL}/user/${data?.profilePicture}`}
+              alt="user avatar"
+            />
+          </div>
+          {/* Info Container */}
+          <div className="flex flex-col flex-1">
+            <p className="font-semibold">{`${data?.firstname} ${data?.middlename} ${data?.lastname}`}</p>
+            <p>{data?.email}</p>
+          </div>
         </div>
-        <div className="text-md text-gray-500">
-          Date Created:{" "}
-          {moment(verificationRequest?.createdAt).format(
-            "MMM DD, YYYY | hh:mm A"
-          )}
-        </div>
-        <div className="text-md text-gray-500">
-          Date Requested:{" "}
-          {moment(verificationRequest?.verificationRequestDate).format(
-            "MMM DD, YYYY | hh:mm A"
-          )}
-        </div>
-        <LightGallery speed={200} plugins={[lgZoom, lgRotate]}>
-          <a
-            href={`${BASE_IMAGE_URL}/verification-request/${verificationRequest?.verificationPicture[0]}`}
-          >
-            <div className=" mx-auto my-8 bg-gray-100   ">
-              <img
-                src={`${BASE_IMAGE_URL}/verification-request/${verificationRequest?.verificationPicture[0]}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </a>
-        </LightGallery>
-        <div className="text-right">
+        <div className="flex gap-2 items-start">
           <button
-            className="p-2 rounded text-white bg-indigo-500"
+            className="btn-secondary"
             onClick={() => onSubmitHandler("reject")}
           >
             {updateVerificationRequestState.isLoading
@@ -119,13 +90,83 @@ const VerifyUserData = ({ verificationRequest }: TProps) => {
               : "Reject Verification"}
           </button>
           <button
-            className="ml-5 p-2 rounded text-white bg-red-500"
+            className="btn-primary "
             onClick={() => onSubmitHandler("approve")}
           >
             {updateVerificationRequestState.isLoading
               ? "Verifying User ...."
               : "Verify User"}
           </button>
+        </div>
+      </div>
+      {/* User Details */}
+      <div className=" flex flex-col gap-5 bg-white p-5 rounded shadow">
+        <div className="flex flex-row flex-wrap gap-7">
+          <div>
+            <span className="form-label">Gender</span>
+            <p>{data?.gender}</p>
+          </div>
+          <div>
+            <span className="form-label">Birthdate</span>
+            <p>{moment(data?.birthdate).format("MMM DD, YYYY")}</p>
+          </div>
+          <div>
+            <span className="form-label">Contact Number</span>
+            <p>{data?.contactNumber}</p>
+          </div>
+        </div>
+        {/* Address */}
+        <div className="">
+          <span className="form-label">Address</span>
+          <div className="flex flex-row flex-wrap gap-10">
+            <div className=" w-max">
+              <span className="form-label text-sm text-gray-500">Street</span>
+              <p>{data?.street}</p>
+            </div>
+            <div className="w-max">
+              <span className="form-label text-sm text-gray-500">Barangay</span>
+              <p>{data?.barangay}</p>
+            </div>
+            <div className="w-max">
+              <span className="form-label text-sm text-gray-500">
+                Municipality
+              </span>
+              <p>{data?.municipality}</p>
+            </div>
+            <div className="w-max">
+              <span className="form-label text-sm text-gray-500">Province</span>
+              <p>{data?.province}</p>
+            </div>
+            <div className="w-max">
+              <span className="form-label text-sm text-gray-500">Province</span>
+              <p>{data?.region}</p>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-row flex-wrap gap-7">
+          <div>
+            <span className="form-label text-sm">Account created at</span>
+            <p>{moment(data?.createdAt).format("MMMM DD, YYYY")}</p>
+          </div>
+          <div>
+            <span className="form-label text-sm">Request made at</span>
+            <p>{formatDate(data?.verificationRequestDate)}</p>
+          </div>
+        </div>
+        <div>
+          <span className="form-label">Verification Picture</span>
+          <LightGallery speed={200} plugins={[lgZoom, lgRotate]}>
+            <a
+              href={`${BASE_IMAGE_URL}/verification-request/${data?.verificationPicture[0]}`}
+            >
+              <div className=" w-[500px] bg-gray-100">
+                <img
+                  src={`${BASE_IMAGE_URL}/verification-request/${data?.verificationPicture[0]}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </a>
+          </LightGallery>
         </div>
       </div>
     </div>

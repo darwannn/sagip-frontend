@@ -10,20 +10,18 @@ type TProps = {
 
 const VerifyUserList = memo(({ verificationRequests }: TProps) => {
   return (
-    <>
-      <div className="flex flex-col gap-3 h-full w-full overflow-y-auto">
-        {verificationRequests.length != 0 ? (
-          verificationRequests.map((verificationRequest) => (
-            <VerifyUserItem
-              key={verificationRequest._id}
-              verificationRequests={verificationRequest}
-            />
-          ))
-        ) : (
-          <p className="text-center">No Results</p>
-        )}
-      </div>
-    </>
+    <div className="flex flex-col gap-3 px-2 h-full w-full overflow-y-auto">
+      {verificationRequests.length != 0 ? (
+        verificationRequests.map((verificationRequest) => (
+          <VerifyUserItem
+            key={verificationRequest._id}
+            verificationRequests={verificationRequest}
+          />
+        ))
+      ) : (
+        <p className="text-center">No Results</p>
+      )}
+    </div>
   );
 });
 

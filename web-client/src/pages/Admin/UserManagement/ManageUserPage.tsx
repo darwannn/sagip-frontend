@@ -1,10 +1,7 @@
-import { useEffect } from "react";
 import UserTable from "./components/UserTable";
 // Redux
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { setUsers, setTableContent } from "../../../store/slices/userManageSlice";
-// Services
-import { useGetUsersDataQuery } from "../../../services/usersQuery";
+import { setTableContent } from "../../../store/slices/userManageSlice";
 
 import UserStatistics from "./components/UserStatistics";
 
@@ -13,45 +10,35 @@ const ManageUserPage = () => {
   const dispatch = useAppDispatch();
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
 
-  // Service
-  const { data: users, isLoading, error } = useGetUsersDataQuery(undefined);
-
-  // Store data to redux on page load
-  useEffect(() => {
-    if (users) dispatch(setUsers(users));
-  }, [users, dispatch]);
-
-  if (error) return <p>Oops! Something went wrong...</p>;
-
-  const loadingElement = <p>Loading table ....</p>;
-
   return (
-    <>
+    <div className="p-10 min-h-screen flex flex-col">
+      <div className="mb-5">
+        <h1 className="text-2xl font-bold text-primary-500">Manage Users</h1>
+        <p>Manage user accounts, access levels, and verify resident accounts</p>
+      </div>
+      <hr />
       <UserStatistics />
-      <div className="border-gray-400 border-b-2 mx-5 mt-5">
+      <div className="flex flex-row gap-2 p-2 bg-gray-100 w-max rounded">
         <button
-          className={
-            isStaff
-              ? " text-gray-400  px-3 py-1 mx-1 rounded-sm"
-              : " text-indigo-500 border-indigo-500 border-b-2 px-3 py-1 mx-1 rounded-sm"
-          }
+          className={`py-1 px-3 rounded 
+        ${isStaff ? "text-gray-400" : "bg-primary-500 text-white"}
+        `}
           onClick={() => dispatch(setTableContent(false))}
         >
           Residents
         </button>
         <button
-          className={
-            isStaff
-              ? " text-indigo-500 border-indigo-500 border-b-2 px-3 py-1 mx-1 rounded-sm"
-              : " text-gray-400  px-3 py-1 mx-1 rounded-sm"
-          }
+          className={`py-1 px-5 rounded 
+        ${isStaff ? "bg-primary-500 text-white" : "text-gray-400"}
+        `}
           onClick={() => dispatch(setTableContent(true))}
         >
-          Staff Users
+          Staffs
         </button>
       </div>
-      {isLoading ? loadingElement : <UserTable />}
-    </>
+      <hr className="my-3" />
+      <UserTable />
+    </div>
   );
 };
 
