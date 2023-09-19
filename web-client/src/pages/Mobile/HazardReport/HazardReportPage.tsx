@@ -10,6 +10,7 @@ import HazardList from "./components/HazardList";
 import SubmitAReportButton from "./components/SubmitAReportButton";
 
 const HazardReportPage = () => {
+  const token = localStorage.getItem("token");
   const { data: userData } = useGetUserByTokenQuery();
   const categories = ["All", `Within ${userData?.barangay}`, "My Report"];
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -55,7 +56,8 @@ const HazardReportPage = () => {
           <div className="font-bold text-xl text-primary-600  mb-2">
             Hazards in your area:
           </div>
-          <SubmitAReportButton />
+
+          {token && <SubmitAReportButton />}
 
           {/* unverified hazard report */}
           <div>
