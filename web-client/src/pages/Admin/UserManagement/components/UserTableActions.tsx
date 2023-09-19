@@ -29,6 +29,7 @@ import {
   selectUserFilters,
   setFilterArchive,
   setFilterGender,
+  setFilterRoles,
 } from "../../../../store/slices/userManageSlice";
 interface UserTableActionsProps {
   table: Table<User>;
@@ -45,7 +46,8 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
   const token = localStorage.getItem("token");
 
   const dispatch = useAppDispatch();
-  const { isArchive, gender } = useAppSelector(selectUserFilters);
+  const { isArchive, gender, roles } = useAppSelector(selectUserFilters);
+  const isStaff = useAppSelector((state) => state.userManage.isStaff);
 
   const {
     data: verificationRequests,
@@ -98,6 +100,52 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
               </div>
             </div>
             <hr className="my-2" />
+            {isStaff && (
+              <>
+                <div>
+                  <p className="font-semibold mb-2">Roles</p>
+                  <div className="flex flex-row flex-wrap gap-3">
+                    <div className="flex flex-row gap-2">
+                      <input
+                        type="checkbox"
+                        id="super-admin"
+                        checked={roles.includes("super-admin")}
+                        onChange={() => dispatch(setFilterRoles("super-admin"))}
+                      />
+                      <label htmlFor="super-admin">Super-Admin</label>
+                    </div>
+                    <div className="flex flex-row gap-2">
+                      <input
+                        type="checkbox"
+                        id="admin"
+                        checked={roles.includes("admin")}
+                        onChange={() => dispatch(setFilterRoles("admin"))}
+                      />
+                      <label htmlFor="admin">Admin</label>
+                    </div>
+                    <div className="flex flex-row gap-2">
+                      <input
+                        type="checkbox"
+                        id="responder"
+                        checked={roles.includes("responder")}
+                        onChange={() => dispatch(setFilterRoles("responder"))}
+                      />
+                      <label htmlFor="responder">Responder</label>
+                    </div>
+                    <div className="flex flex-row gap-2">
+                      <input
+                        type="checkbox"
+                        id="dispatcher"
+                        checked={roles.includes("dispatcher")}
+                        onChange={() => dispatch(setFilterRoles("dispatcher"))}
+                      />
+                      <label htmlFor="dispatcher">Dispatcher</label>
+                    </div>
+                  </div>
+                </div>
+                <hr className="my-2" />
+              </>
+            )}
             <div>
               <p className="font-semibold mb-2">Archive</p>
               <div className="flex flex-row gap-2">
