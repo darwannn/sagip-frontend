@@ -28,7 +28,6 @@ const Home = () => {
   const { data: articlesData } = useGetPublishedArticlesQuery();
   /* const { data: savedArticleData } = useGetSavedArticlesQuery(); */
   const { data: hazardReportData } = useGetOngoingHazardQuery();
-  console.log(userData);
 
   return (
     <>
@@ -72,9 +71,6 @@ const Home = () => {
         <div className="mt-5">
           {userData && hazardReportData && userData && (
             <>
-              <div className="font-bold text-xl text-primary-600 mb-2">
-                Reported hazards in {userData?.street}
-              </div>
               <MostRecentHazard
                 hazardReportData={hazardReportData}
                 userData={userData}

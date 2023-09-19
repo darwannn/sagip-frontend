@@ -1,3 +1,4 @@
+import { User } from "./user";
 export type Article = {
   _id: string;
   userId: string;
@@ -8,6 +9,7 @@ export type Article = {
   views: number;
   saves: string[];
   status: string;
+  authorId: User;
   createdAt: string;
   updatedAt: string;
   __v: number;

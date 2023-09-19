@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { selectAssistanceReq } from "../../../store/slices/assistanceReqSlice";
-import { selectionFacility } from "../../../store/slices/facilitySlice";
-import { selectHazardReport } from "../../../store/slices/hazardReportSlice";
+
 import { setSelectedHazardReport } from "../../../store/slices/hazardReportSlice";
 import { setSelectedFacility } from "../../../store/slices/facilitySlice";
 
@@ -20,7 +19,6 @@ import fire_station_icon from "../../../assets/img/fire_station_icon.png";
 import hazard_icon from "../../../assets/img/hazard_icon.png";
 
 import { MarkerF } from "@react-google-maps/api";
-import Sheet, { SheetRef } from "react-modal-sheet";
 
 import MapComponent from "../../Admin/FacilityManagement/components/MapComponent";
 import AssistanceDetails from "../ResponderPage/components/AssistanceDetails";
@@ -29,14 +27,15 @@ import FacilityDetails from "./components/FacilityDetails";
 import SearchLocation from "./components/SearchLocation";
 import CurrentLocation from "./components/CurrentLocation";
 import ToggleFacilities from "./components/ToggleFacilities";
+import BottomSheet from "../../../components/BottomSheet/BottomSheet";
 /* import ToggleMarkers from "./components/ToggleMarkers"; */
 
 const EmergencyReportsPage = () => {
   const dispatch = useAppDispatch();
-  const [isOpen, setOpen] = useState(false);
-
-  const sheetRef = useRef<SheetRef>();
-  /* const snapTo = (i: number) => sheetRef.current?.snapTo(i); */
+  const selectedHazard = useAppSelector(
+    (state) => state.hazardReports.selectedHazard
+  );
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   /* const [markerVisibility, setMarkerVisibility] = useState({
     assistance: true,
@@ -50,11 +49,11 @@ const EmergencyReportsPage = () => {
     hospital: true,
   });
 
-  const [selectedIcon, setSelectedIcon] = useState<string>("");
+  const [selectedMarker, setselectedMarker] = useState<string>("");
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const selectedAssistance = useAppSelector(selectAssistanceReq);
-  const selectedFacility = useAppSelector(selectionFacility);
-  const selectedHazard = useAppSelector(selectHazardReport);
+  /* const selectedFacility = useAppSelector(selectionFacility);
+  const selectedHazard = useAppSelector(selectHazardReport); */
   /* const {
     data: requestData,
     isError: requestIsError,
@@ -72,6 +71,14 @@ const EmergencyReportsPage = () => {
   } = useGetFacilitiesQuery();
 
   useEffect(() => {
+    if (selectedHazard) {
+      /* display selected hazard report from hazard feed */
+      setShowBottomSheet(true);
+      setselectedMarker(selectedHazard);
+    }
+  }, [selectedHazard]);
+
+  useEffect(() => {
     if (selectedAssistance) {
       const { latitude, longitude } = selectedAssistance;
       map?.panTo({ lat: latitude, lng: longitude });
@@ -85,57 +92,41 @@ const EmergencyReportsPage = () => {
 
   return (
     <div className="relative h-screen">
-      {(selectedAssistance || selectedFacility || selectedHazard) && (
-        <>
-          <Sheet
-            ref={sheetRef}
-            isOpen={isOpen}
-            onClose={() => setOpen(false)}
-            snapPoints={
-              selectedIcon === "assistance"
-                ? [355, 240, 0]
-                : selectedIcon === "hazard"
-                ? [390, 0]
-                : selectedIcon === "facility"
-                ? [410, 0]
-                : [0]
-            }
-            initialSnap={0}
-            onSnap={(snapIndex: number) =>
-              console.log("> Current snap point index:", snapIndex)
-            }
-          >
-            <Sheet.Container
-              style={{
-                borderTopLeftRadius: "30px",
-                borderTopRightRadius: "30px",
-              }}
-            >
-              {selectedIcon === "assistance" && (
-                <Sheet.Header className="bg-primary-50 rounded-t-3xl" />
-              )}
-              {selectedIcon === "hazard" && (
-                <Sheet.Header className="bg-white rounded-t-3xl" />
-              )}
-              {selectedIcon === "facility" && (
-                <Sheet.Header className="bg-white rounded-t-3xl" />
-              )}
-              <Sheet.Content
-                className={`${
-                  selectedIcon === "assistance" ? "bg-primary-50" : "bg-white"
-                }`}
-              >
-                {selectedIcon === "assistance" && selectedAssistance && (
-                  <AssistanceDetails />
-                )}
-                {selectedIcon === "hazard" && <HazardDetails />}
-                {selectedIcon === "facility" && <FacilityDetails />}
-              </Sheet.Content>
-            </Sheet.Container>
-            {/* <Sheet.Backdrop /> */}
-          </Sheet>
-        </>
-      )}
+      <BottomSheet
+        showBottomSheet={showBottomSheet}
+        setShowBottomSheet={setShowBottomSheet}
+        snapPoints={
+          selectedMarker === "assistance"
+            ? [355, 240, 0]
+            : selectedMarker === "hazard"
+            ? [390, 0]
+            : selectedMarker === "facility"
+            ? [410, 0]
+            : [0]
+        }
+        headerStyle={
+          selectedMarker === "assistance"
+            ? "bg-primary-50 rounded-t-3xl"
+            : selectedMarker === "hazard"
+            ? "bg-white rounded-t-3xl"
+            : selectedMarker === "facility"
+            ? "bg-white rounded-t-3xl"
+            : ""
+        }
+        contentStyle={
+          selectedMarker === "assistance" ? "bg-primary-50" : "bg-white"
+        }
+        component={
+          <>
+            {selectedMarker === "assistance" && selectedAssistance && (
+              <AssistanceDetails />
+            )}
+            {selectedMarker === "hazard" && <HazardDetails />}
+            {selectedMarker === "facility" && <FacilityDetails />}
+          </>
+        }
+        isBackdropShown={false}
+      />
 
       <div className="absolute top-0 z-0 w-full">
         <MapComponent onSetMapHandler={setMap}>
@@ -171,8 +162,8 @@ const EmergencyReportsPage = () => {
                     }}
                     onClick={() => {
                       dispatch(setSelectedAssistanceRequest(assistance));
-                      setSelectedIcon("assistance");
-                      setOpen(true);
+                      setselectedMarker("assistance");
+                      setShowBottomSheet(true);
                     }}
                   />
                 )
@@ -192,8 +183,8 @@ const EmergencyReportsPage = () => {
                 }}
                 onClick={() => {
                   dispatch(setSelectedHazardReport(hazard));
-                  setSelectedIcon("hazard");
-                  setOpen(true);
+                  setselectedMarker("hazard");
+                  setShowBottomSheet(true);
                 }}
               />
             ))}
@@ -237,8 +228,8 @@ const EmergencyReportsPage = () => {
                     }}
                     onClick={() => {
                       dispatch(setSelectedFacility(facility));
-                      setSelectedIcon("facility");
-                      setOpen(true);
+                      setselectedMarker("facility");
+                      setShowBottomSheet(true);
                     }}
                   />
                 )

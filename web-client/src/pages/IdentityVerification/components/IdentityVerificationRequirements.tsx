@@ -55,7 +55,7 @@ const RegistrationSuccessful = () => {
         if (registrationSuccessful) {
           navigate("/register?success=success");
         } else {
-          navigate("/identity-verification");
+          navigate(0);
         }
       }
     }

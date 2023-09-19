@@ -61,6 +61,7 @@ import HazardMap from "../pages/Mobile/HazardMap/HazardMap";
 import UserInfoForm from "../pages/Admin/UserManagement/components/UserInfoForm";
 import UserAccountOptions from "../pages/Admin/UserManagement/components/UserAccountOption";
 import VerifyUserData from "../pages/Admin/UserManagement/components/VerifyUserData";
+import HazardFeed from "../pages/Mobile/HazardReport/HazardFeed";
 
 export const router = createBrowserRouter([
   {
@@ -140,7 +141,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "saved",
-            element: <ArticlesData />,
+            element: <ArticlesPage />,
           },
         ],
       },
@@ -161,6 +162,10 @@ export const router = createBrowserRouter([
       {
         path: "hazard-map",
         element: <HazardMap />,
+      },
+      {
+        path: "hazard-reports",
+        element: <HazardFeed />,
       },
     ],
   },
