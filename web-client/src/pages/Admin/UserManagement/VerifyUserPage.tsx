@@ -9,8 +9,10 @@ import { Link } from "react-router-dom";
 import VerifyUserData from "./components/VerifyUserData";
 
 import VerifyUserList from "./components/VerifyUserList";
+// Icons
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { RiSearchLine } from "react-icons/ri";
 
-import { MdChevronLeft } from "react-icons/md";
 const VerifyUserPage = () => {
   const token = localStorage.getItem("token");
   const [search, setSearch] = useState<string>("");
@@ -59,35 +61,34 @@ const VerifyUserPage = () => {
       {isVerificationRequestsLoading ? (
         <p> Fetching verification Requests </p>
       ) : (
-        <>
-          <div className=" w-[350px] flex flex-col z-10 bg-white shadow-md rounded-r-xl p-4 h-screen sticky top-0">
-            <div className="flex items-center">
-              {/* temporary back button */}
-              <Link className="text-3xl" to={"/admin/users"}>
-                <MdChevronLeft />
-              </Link>
-              <h1 className="font-bold text-2xl text-sky-900 mt-3">
-                Verification
-                <br />
-                Requests
-              </h1>
-            </div>
-            <div className="mt-8 mb-1">To review:</div>
-            <hr className="border border-gray-300 bg-gray-300 " />
-
+        <div className=" w-[500px] flex flex-col z-10 bg-white shadow-md  p-10 h-screen sticky top-0">
+          <div className="flex items-center gap-2">
+            {/* temporary back button */}
+            <Link
+              className="text-2xl p-1 text-gray-500 hover:bg-blue-100 rounded"
+              to={"/admin/users"}
+            >
+              <IoMdArrowRoundBack />
+            </Link>
+            <h1 className="font-bold text-xl text-primary-500 mt-white3">
+              Verification Requests
+            </h1>
+          </div>
+          <hr className="my-5" />
+          {/* Search Bar */}
+          <div className="flex flex-row gap-2 items-center border p-2 rounded mb-5">
+            <RiSearchLine className="text-lg text-gray-500" />
             <input
-              type="text"
-              placeholder="Search by name"
-              className="w-full p-2 my-5 border border-gray-300 rounded-md"
+              className="flex-grow focus:outline-none"
+              placeholder="Search with ID, Name or Email"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-
-            <VerifyUserList
-              verificationRequests={filterdVerificationRequests() || []}
-            />
           </div>
-        </>
+          <VerifyUserList
+            verificationRequests={filterdVerificationRequests() || []}
+          />
+        </div>
       )}
       {selectedVerificationRequest ? (
         <VerifyUserData verificationRequest={selectedVerificationRequest} />
