@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 
-import { userColumn, staffColumn } from "./UserColumn";
+import { userColumn } from "./UserColumn";
 import DataTable from "../../../../components/ui/data-table";
 
 // Redux
@@ -69,7 +69,7 @@ const UserTable = () => {
 
   const table = useReactTable({
     data: filteredUsers ?? [],
-    columns: isStaff ? staffColumn : userColumn,
+    columns: userColumn,
     getCoreRowModel: getCoreRowModel(),
     // For filtering data
     onColumnFiltersChange: setColumnFilters,

@@ -28,6 +28,7 @@ const DataTable = ({ table, columnLength }: PROPS) => {
                     width:
                       header.getSize() !== 150 ? header.getSize() : undefined,
                   }}
+                  colSpan={header.colSpan}
                 >
                   {header.isPlaceholder
                     ? null
