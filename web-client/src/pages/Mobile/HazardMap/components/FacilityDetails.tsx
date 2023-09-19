@@ -21,7 +21,15 @@ const AssistanceDetails = () => {
         {facility?.name}
       </div>
       <div className="flex my-3 gap-2">
-        <button className=" flex gap-2 items-center border bg-primary-300 text-white px-3 rounded-md hover:bg-primary-600">
+        <button
+          className=" flex gap-2 items-center border bg-primary-300 text-white px-3 rounded-md hover:bg-primary-600"
+          onClick={() => {
+            window.AndroidInterface?.routeTo(
+              facility?.latitude || 0,
+              facility?.longitude || 0
+            );
+          }}
+        >
           {/* <IoNavigate/> */}
           <FaDirections />
           Navigate
