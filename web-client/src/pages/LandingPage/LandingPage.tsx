@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
+
+import { isMobile } from "react-device-detect";
+
 import SAGIP_Logo from "../../assets/img/SAGIP_Logo.png";
 import Malolos_City_Hall from "../../assets/img/Malolos_City_Hall.jpg";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const isMobileDevice = /Mobi|iPhone|Android/i.test(navigator.userAgent);
 
   return (
     <div
@@ -25,7 +27,7 @@ const LandingPage = () => {
         Integration Program
       </div>
       <div className="mt-4 text-center px-0 sm:w-96 w-full">
-        {isMobileDevice && (
+        {isMobile && (
           <button
             className="visisble md:hidden bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-2 my-2 rounded-lg w-full"
             onClick={() => navigate("/register")}
@@ -36,7 +38,7 @@ const LandingPage = () => {
 
         <button
           className={`${
-            isMobileDevice
+            isMobile
               ? "bg-white hover:bg-gray-300 text-black"
               : "bg-indigo-500 hover:bg-indigo-600 text-white"
           } backdrop:px-5 py-2 my-2 rounded-lg w-full`}
@@ -44,7 +46,7 @@ const LandingPage = () => {
         >
           Login
         </button>
-        {isMobileDevice && (
+        {isMobile && (
           <button
             className="visisble md:hidden underline mt-10"
             onClick={() => navigate("/home")}

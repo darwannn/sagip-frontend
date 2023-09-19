@@ -1,4 +1,4 @@
-import { THazardReport } from "../types/hazardReport";
+import { THazardReport, THazardReportResData } from "../types/hazardReport";
 import { rootApi } from "./rootApi";
 
 export const hazardReportsQueryApi = rootApi.injectEndpoints({
@@ -45,14 +45,17 @@ export const hazardReportsQueryApi = rootApi.injectEndpoints({
     // Delete a hazard report
     deleteHazardReport: builder.mutation<void, string>({
       query: (id) => ({
-        url: `hazard-report/delete/${id}`,
-        method: "DELETE",
+        url: `hazard-report/archive/${id}`,
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
       invalidatesTags: (_result, _error, id) => {
-        return [{ type: "HazardReports", id }];
+        return [
+          { type: "HazardReports", id },
+          { type: "MyHazardReports", id },
+        ];
       },
     }),
 
@@ -60,6 +63,49 @@ export const hazardReportsQueryApi = rootApi.injectEndpoints({
     getOngoingHazard: builder.query<THazardReport[], void>({
       query: () => "hazard-report/ongoing",
       providesTags: ["OngoingHazardReports"],
+    }),
+    // Get  unverified hazard report of current logged-in user
+    getMyHazardReport: builder.query<THazardReport[], void>({
+      query: () => ({
+        url: "hazard-report/myreport",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: (result) =>
+        result
+          ? result.map(({ _id }) => ({ type: "MyHazardReports", id: _id }))
+          : ["MyHazardReports"],
+    }),
+
+    addHazardReport: builder.mutation<THazardReportResData, FormData>({
+      query: (body) => ({
+        url: `hazard-report/add/`,
+        method: "POST",
+        body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["MyHazardReports"],
+    }),
+
+    updateHazardReport: builder.mutation<
+      THazardReportResData,
+      { body: FormData; id: string }
+    >({
+      query: ({ body, id }) => ({
+        url: `hazard-report/update/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      /* invalidatesTags: (_result, _error, { id }) => [
+        { type: "MyHazardReports", id },
+      ], */
+      invalidatesTags: ["MyHazardReports"],
     }),
   }),
 });
@@ -70,6 +116,8 @@ export const {
   useVerifyHazardReportMutation,
   useResolveHazardReportMutation,
   useDeleteHazardReportMutation,
-
   useGetOngoingHazardQuery,
+  useGetMyHazardReportQuery,
+  useAddHazardReportMutation,
+  useUpdateHazardReportMutation,
 } = hazardReportsQueryApi;

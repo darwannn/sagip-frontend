@@ -11,7 +11,7 @@ const AssistanceDetails = () => {
   const facility = useAppSelector(selectionFacility);
 
   return (
-    <div className="px-5">
+    <div className="px-5 pb-5">
       <div className="flex text-md text-gray-500">
         <div className="flex-1">{facility?.category}</div>
         {/*  <div>250m away</div> */}
@@ -21,7 +21,15 @@ const AssistanceDetails = () => {
         {facility?.name}
       </div>
       <div className="flex my-3 gap-2">
-        <button className=" flex gap-2 items-center border bg-primary-300 text-white px-3 rounded-md hover:bg-primary-600">
+        <button
+          className=" flex gap-2 items-center border bg-primary-300 text-white px-3 rounded-md hover:bg-primary-600"
+          onClick={() => {
+            window.AndroidInterface?.routeTo(
+              facility?.latitude || 0,
+              facility?.longitude || 0
+            );
+          }}
+        >
           {/* <IoNavigate/> */}
           <FaDirections />
           Navigate

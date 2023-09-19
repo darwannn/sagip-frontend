@@ -35,7 +35,7 @@ const EmergencyReportsPage = () => {
   const selectedHazard = useAppSelector(
     (state) => state.hazardReports.selectedHazard
   );
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
 
   /* const [markerVisibility, setMarkerVisibility] = useState({
     assistance: true,
@@ -96,25 +96,26 @@ const EmergencyReportsPage = () => {
         showBottomSheet={showBottomSheet}
         setShowBottomSheet={setShowBottomSheet}
         snapPoints={
-          selectedMarker === "assistance"
+          [1000]
+          /* selectedMarker === "assistance"
             ? [355, 240, 0]
             : selectedMarker === "hazard"
             ? [390, 0]
             : selectedMarker === "facility"
             ? [410, 0]
-            : [0]
+            : [0] */
         }
         headerStyle={
-          selectedMarker === "assistance"
+          /* selectedMarker === "assistance"
             ? "bg-primary-50 rounded-t-3xl"
-            : selectedMarker === "hazard"
+            : */ selectedMarker === "hazard"
             ? "bg-white rounded-t-3xl"
             : selectedMarker === "facility"
             ? "bg-white rounded-t-3xl"
             : ""
         }
         contentStyle={
-          selectedMarker === "assistance" ? "bg-primary-50" : "bg-white"
+          /* selectedMarker === "assistance" ? "bg-primary-50" : */ "bg-white"
         }
         component={
           <>

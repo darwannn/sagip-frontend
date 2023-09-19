@@ -12,11 +12,10 @@ import AssistanceList from "./components/AssistanceList";
 import { MdChevronLeft } from "react-icons/md";
 
 const ResponderPage = () => {
-  const { data: team, error } = useGetMyTeamQuery();
+  const { data: team /* error  */ } = useGetMyTeamQuery();
   const { data: assistanceRequest /* isLoading, error */ } =
     useGetToRespondAssistanceRequestsQuery();
-  console.log(team);
-  console.log(error);
+
   return (
     <>
       <div
