@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../../../../store/hooks";
@@ -10,20 +10,19 @@ import { useGetOngoingAssistanceRequestsQuery } from "../../../../services/assis
 import my_location_icon from "../../../../assets/img/my_location_icon.png";
 
 import { MarkerF } from "@react-google-maps/api";
-import Sheet, { SheetRef } from "react-modal-sheet";
 
 import MapComponent from "../../../Admin/FacilityManagement/components/MapComponent";
 import AssistanceDetails from "./AssistanceDetails";
 import SearchLocation from "../../HazardMap/components/SearchLocation";
 import CurrentLocation from "../../HazardMap/components/CurrentLocation";
+import BottomSheet from "../../../../components/BottomSheet/BottomSheet";
 
 import { BsArrowLeft } from "react-icons/bs";
 
 const EmergencyReportsPage = () => {
   const dispatch = useAppDispatch();
-  const [isOpen, setOpen] = useState(false);
+  const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
 
-  const sheetRef = useRef<SheetRef>();
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const selectedAssistance = useAppSelector(selectAssistanceReq);
   const {
@@ -38,7 +37,7 @@ const EmergencyReportsPage = () => {
       map?.panTo({ lat: latitude, lng: longitude });
       console.log("selectedAssistance");
       console.log(selectedAssistance);
-      setOpen(true);
+      setShowBottomSheet(true);
     }
   }, [selectedAssistance, map]);
 
@@ -49,30 +48,15 @@ const EmergencyReportsPage = () => {
     <div className="relative h-screen">
       {selectedAssistance && (
         <>
-          <Sheet
-            ref={sheetRef}
-            isOpen={isOpen}
-            onClose={() => setOpen(false)}
-            snapPoints={[360, 240, 0]}
-            initialSnap={0}
-            onSnap={(snapIndex: number) =>
-              console.log("> Current snap point index:", snapIndex)
-            }
-          >
-            <Sheet.Container
-              style={{
-                borderTopLeftRadius: "30px",
-                borderTopRightRadius: "30px",
-              }}
-            >
-              <Sheet.Header className="bg-primary-50 rounded-t-3xl" />
-
-              <Sheet.Content className="bg-primary-50">
-                {selectedAssistance && <AssistanceDetails />}
-              </Sheet.Content>
-            </Sheet.Container>
-            {/* <Sheet.Backdrop /> */}
-          </Sheet>
+          <BottomSheet
+            showBottomSheet={showBottomSheet}
+            setShowBottomSheet={setShowBottomSheet}
+            snapPoints={[1000, 240, 0]}
+            headerStyle={"bg-primary-50 rounded-t-3xl"}
+            contentStyle={"bg-primary-50"}
+            component={<>{selectedAssistance && <AssistanceDetails />}</>}
+            isBackdropShown={false}
+          />
         </>
       )}
 
@@ -104,9 +88,7 @@ const EmergencyReportsPage = () => {
                 onClick={() => {
                   dispatch(setSelectedAssistanceRequest(assistance));
                   console.log("assistance");
-
-                  setOpen(true);
-                  //snapTo(2);
+                  setShowBottomSheet(true);
                 }}
               />
             ))}

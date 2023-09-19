@@ -30,6 +30,7 @@ export const rootApi = createApi({
     "HazardReports",
     "SelectedHazardReport",
     "OngoingHazardReports",
+    "MyHazardReports",
     // ALERT QUERY
     "Alert",
     "SelectedAlert",

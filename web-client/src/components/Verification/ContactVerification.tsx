@@ -14,7 +14,10 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { setcontactVerificationRes,setRegistrationSuccessful } from "../../store/slices/authSlice";
+import {
+  setcontactVerificationRes,
+  setRegistrationSuccessful,
+} from "../../store/slices/authSlice";
 
 import {
   useContactVerificationMutation,
@@ -100,8 +103,9 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
         } else {
           dispatch(setcontactVerificationRes(res.data));
         }
-        if(action === "register") {
+        if (action === "register") {
           dispatch(setRegistrationSuccessful(true));
+          window.AndroidInterface?.updateFcmToken(identifier);
         }
       }
     } else {

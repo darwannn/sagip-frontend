@@ -63,6 +63,9 @@ import UserAccountOptions from "../pages/Admin/UserManagement/components/UserAcc
 import VerifyUserData from "../pages/Admin/UserManagement/components/VerifyUserData";
 import HazardFeed from "../pages/Mobile/HazardReport/HazardFeed";
 
+import HazardReportPage from "../pages/Mobile/HazardReport/HazardReportPage";
+import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/SubmitHazardReportForm";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -165,7 +168,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "hazard-reports",
-        element: <HazardFeed />,
+        children: [
+          { index: true, element: <HazardReportPage /> },
+          { path: "create", element: <SubmitHazardReportForm /> },
+          { path: "edit/:hazardId", element: <SubmitHazardReportForm /> },
+        ],
       },
     ],
   },

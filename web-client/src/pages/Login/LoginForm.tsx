@@ -7,6 +7,7 @@ import { AuthResponse } from "../../types/auth";
 import { useLoginMutation } from "../../services/authQuery";
 
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { isMobile } from "react-device-detect";
 import { TUserResData } from "../../types/user";
 
 import PasswordField from "../../components/PasswordField/PasswordField";
@@ -14,7 +15,6 @@ import PasswordField from "../../components/PasswordField/PasswordField";
 const LoginForm = () => {
   const navigate = useNavigate();
   const [serverRes, setServerRes] = useState<TUserResData>();
-  const isMobileDevice = /Mobi|iPhone|Android/i.test(navigator.userAgent);
 
   const newPasswordRes = useAppSelector((state) => state.auth.newPasswordRes);
   const deleteAccountRes = useAppSelector(
@@ -48,6 +48,7 @@ const LoginForm = () => {
       // TODO: REDIRECT DEPENDS ON USER ROLE
       if (resData.success) {
         navigate("/admin");
+        window.AndroidInterface?.updateFcmToken(data.identifier);
       }
       if (resData.message.includes("attempt")) {
         navigate("/login/contact-verification");
@@ -140,7 +141,7 @@ const LoginForm = () => {
       >
         {isLoading ? "Loading..." : "Login"}
       </button>
-      {isMobileDevice && (
+      {isMobile && (
         <Link
           to={"/register"}
           className="block text-md text-center text-gray-500 underline hover:text-gray-700 my-2"

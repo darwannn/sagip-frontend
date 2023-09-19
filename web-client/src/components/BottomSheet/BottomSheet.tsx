@@ -31,6 +31,7 @@ const BottomSheet = ({
         snapPoints={snapPoints}
         initialSnap={0}
         onSnap={(snapIndex: number) => console.log(snapIndex)}
+        detent="content-height"
       >
         <Sheet.Container
           style={{

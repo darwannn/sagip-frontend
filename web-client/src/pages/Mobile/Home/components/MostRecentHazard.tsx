@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { BASE_IMAGE_URL } from "../../../../api.config";
+/* import { BASE_IMAGE_URL } from "../../../../api.config"; */
 import { BsArrowRight } from "react-icons/bs";
 
 import moment from "moment";
 
 import { THazardReport } from "../../../../types/hazardReport";
 import { User } from "../../../../types/user";
+import HazardItem from "../../HazardReport/components/HazardItem";
 
 type TProps = {
   hazardReportData: THazardReport[];
@@ -31,30 +32,14 @@ const MostRecentHazard = ({ hazardReportData, userData }: TProps) => {
           <div className="font-bold text-xl text-primary-600 mb-2">
             Reported hazards in {userData?.street}
           </div>
-          <div className="bg-white  rounded-2xl p-5 border-2 border-[#FFD400] ">
-            <div className="flex">
-              <div className="h-[100px] w-[100px] mr-3">
-                <img
-                  src={`${BASE_IMAGE_URL}/hazard-report/${mostRecentHazardReport?.proof}`}
-                  className="rounded-3xl w-full h-full object-cover"
-                />
-              </div>
 
-              <div className="flex flex-col justify-center">
-                <div className="font-bold text-gray-800">
-                  {mostRecentHazardReport?.category} on{" "}
-                  {mostRecentHazardReport?.street}
-                </div>
-                <div className=" text-gray-600">
-                  as of{" "}
-                  {moment(mostRecentHazardReport.updatedAt).format(
-                    " MMM DD, YYYY | hh:mm A"
-                  )}
-                </div>
-              </div>
-            </div>
+          <div className="rounded-2xl border-2 border-[#FFD400] ">
+            <HazardItem
+              hazardData={mostRecentHazardReport}
+              isMyReport={false}
+            />
           </div>
-          <Link to="/hazard">
+          <Link to="/hazard-reports">
             <div className="flex text-gray-600 mt-1">
               <div className="flex-1">See more in your area</div>
               <BsArrowRight />

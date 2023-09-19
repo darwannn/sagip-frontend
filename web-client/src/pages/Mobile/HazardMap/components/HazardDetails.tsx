@@ -1,4 +1,4 @@
-import { BASE_IMAGE_URL } from "../../../../api.config";
+import { BASE_IMAGE_URL, BASE_VIDEO_URL } from "../../../../api.config";
 
 import { useAppSelector } from "../../../../store/hooks";
 
@@ -12,7 +12,7 @@ const AssistanceDetails = () => {
   const hazardReport = useAppSelector(selectHazardReport);
 
   return (
-    <div className="flex flex-col gap-2 px-5">
+    <div className="flex flex-col gap-2 px-5  pb-5">
       <div className="flex gap-2">
         <IoMdWarning className="text-6xl text-[#FFD400]" />
         <div className="text-2xl">
@@ -32,10 +32,20 @@ const AssistanceDetails = () => {
       </div>
 
       <div className="rounded-xl h-[200px] ">
-        <img
-          src={`${BASE_IMAGE_URL}/hazard-report/${hazardReport?.proof}`}
-          className="w-full h-full object-cover  rounded-xl"
-        />
+        {["jpeg", "jpg", "png"].some(
+          (extension) => hazardReport?.proof.includes(extension)
+        ) ? (
+          <img
+            src={`${BASE_IMAGE_URL}/hazard-report/${hazardReport?.proof}`}
+            className="w-full h-full object-cover  rounded-xl"
+          />
+        ) : (
+          <video
+            src={`${BASE_VIDEO_URL}/hazard-report/${hazardReport?.proof}`}
+            className="w-full h-full object-cover  rounded-xl"
+            controls
+          />
+        )}
       </div>
     </div>
   );

@@ -1,53 +1,76 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../store/hooks";
 
+import { BASE_IMAGE_URL, BASE_VIDEO_URL } from "../../../../api.config";
 import {
   setSelectedHazardReport,
   setSelectedHazard,
 } from "../../../../store/slices/hazardReportSlice";
 import type { THazardReport } from "../../../../types/hazardReport";
 
-import { BASE_IMAGE_URL } from "../../../../api.config";
-
 import moment from "moment";
 
+import ItemActionButton from "./ItemActionButton";
+
 type TProps = {
-  hazard: THazardReport;
+  hazardData: THazardReport;
+  isMyReport: boolean;
 };
 
-const HazardItem = ({ hazard }: TProps) => {
+const HazardItem = ({ hazardData, isMyReport }: TProps) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <>
-      <Link
-        to="/hazard-map"
-        onClick={() => {
-          dispatch(setSelectedHazardReport(hazard));
-          dispatch(setSelectedHazard("hazard"));
-        }}
-      >
-        <div className="bg-white  rounded-2xl p-3 shadow-md">
-          <div className="flex">
-            <div className="h-[100px] w-[100px] mr-3">
+      <div className="bg-white  rounded-2xl p-3 shadow-md relative">
+        <ItemActionButton hazardData={hazardData} />
+        <div className="flex">
+          <div className="h-[100px] w-[100px] mr-3">
+            {["jpeg", "jpg", "png"].some((extension) =>
+              hazardData.proof.includes(extension)
+            ) ? (
               <img
-                src={`${BASE_IMAGE_URL}/hazard-report/${hazard?.proof}`}
+                src={`${BASE_IMAGE_URL}/hazard-report/${hazardData?.proof}`}
                 className="rounded-2xl w-full h-full object-cover"
               />
-            </div>
+            ) : (
+              <video
+                src={`${BASE_VIDEO_URL}/hazard-report/${hazardData?.proof}`}
+                className="rounded-2xl w-full h-full object-cover"
+              />
+            )}
+          </div>
 
-            <div className="my-auto">
-              <span>{hazard?.category} on </span>
-              <span className="font-bold text-gray-800">
-                {hazard?.street} {hazard?.street !== "" && "Street"}
-              </span>
-              <div className=" text-gray-600">
-                {/* as of{" "} */}
-                {moment(hazard.updatedAt).format(" MMM DD, YYYY | hh:mm A")}
-              </div>
+          <div className="my-auto">
+            <div
+              className="hover:text-primary-600 hover:cursor-pointer"
+              onClick={() => {
+                dispatch(setSelectedHazardReport(hazardData));
+                if (isMyReport) {
+                  navigate(`/hazard-reports/edit/${hazardData._id}`);
+                } else {
+                  navigate("/hazard-map");
+                  dispatch(setSelectedHazard("hazard"));
+                }
+              }}
+            >
+              <span>{hazardData?.category} </span>
+              {hazardData?.street !== "" && (
+                <>
+                  <span>on </span>
+
+                  <span className="font-semibold ">
+                    {hazardData?.street} Street
+                  </span>
+                </>
+              )}
+            </div>
+            <div className=" text-gray-600">
+              {moment(hazardData.updatedAt).format(" MMM DD, YYYY | hh:mm A")}
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     </>
   );
 };
