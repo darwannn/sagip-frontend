@@ -8,6 +8,7 @@ export const surveyColumn: ColumnDef<TSurvey>[] = [
   {
     accessorKey: "_id",
     header: "ID",
+    size: 100,
   },
   {
     accessorKey: "title",
@@ -22,6 +23,14 @@ export const surveyColumn: ColumnDef<TSurvey>[] = [
     header: "Date Published",
     cell: ({ row }) => {
       const data = moment(row.original.startDate).format("MMM DD, YYYY");
+      return <span>{data}</span>;
+    },
+  },
+  {
+    accessorKey: "endDate",
+    header: "Date Closed",
+    cell: ({ row }) => {
+      const data = moment(row.original.endDate).format("MMM DD, YYYY");
       return <span>{data}</span>;
     },
   },
@@ -50,7 +59,6 @@ export const surveyColumn: ColumnDef<TSurvey>[] = [
   // },
   {
     id: "actions",
-    header: "Actions",
     cell: ({ row }) => <SurveyTableRowAction rowId={row.getValue("_id")} />,
   },
 ];
