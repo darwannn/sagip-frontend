@@ -20,7 +20,17 @@ export const surveyColumn: ColumnDef<TSurvey>[] = [
   },
   {
     accessorKey: "startDate",
-    header: "Date Published",
+    id: "startDate",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date Published
+        </button>
+      );
+    },
+    sortingFn: "datetime",
     cell: ({ row }) => {
       const data = moment(row.original.startDate).format("MMM DD, YYYY");
       return <span>{data}</span>;
@@ -28,7 +38,16 @@ export const surveyColumn: ColumnDef<TSurvey>[] = [
   },
   {
     accessorKey: "endDate",
-    header: "Date Closed",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date Ended
+        </button>
+      );
+    },
+    sortingFn: "datetime",
     cell: ({ row }) => {
       const data = moment(row.original.endDate).format("MMM DD, YYYY");
       return <span>{data}</span>;

@@ -6,6 +6,8 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
   getPaginationRowModel,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import DataTable from "../../../../components/ui/data-table";
 import { surveyColumn as columns } from "../types/SurveyColumn";
@@ -21,6 +23,7 @@ const SurveyTable = () => {
     error,
   } = useGetSurveyQuery(undefined);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // For filtering data
+  const [sorting, setSorting] = useState<SortingState>([]);
   // Initialiaze table configuration
   const table = useReactTable({
     data: surveyData ?? [],
@@ -31,8 +34,12 @@ const SurveyTable = () => {
     getFilteredRowModel: getFilteredRowModel(),
     // For pagination
     getPaginationRowModel: getPaginationRowModel(),
+    // For sorting
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     state: {
       columnFilters,
+      sorting,
     },
     initialState: {
       pagination: {
