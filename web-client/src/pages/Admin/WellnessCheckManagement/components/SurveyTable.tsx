@@ -10,16 +10,18 @@ import DataTable from "../../../../components/ui/data-table";
 import { surveyColumn as columns } from "../types/SurveyColumn";
 // Redux
 import PaginationControls from "../../../../components/ui/PaginationControl";
-import { TSurvey } from "../../../../types/survey";
-type TProps = {
-  alertData: TSurvey[];
-};
-
-const SurveyTable = ({ alertData: data }: TProps) => {
+import { useGetSurveyQuery } from "../../../../services/surveyQuery";
+const SurveyTable = () => {
+  const {
+    data: surveyData,
+    isLoading,
+    isError,
+    error,
+  } = useGetSurveyQuery(undefined);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // For filtering data
   // Initialiaze table configuration
   const table = useReactTable({
-    data,
+    data: surveyData ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     // For filtering data
@@ -38,8 +40,19 @@ const SurveyTable = ({ alertData: data }: TProps) => {
     },
   });
 
+  if (isError) {
+    console.log(error);
+    return (
+      <p className="text-center font-semibold">Oops! Something went wrong...</p>
+    );
+  }
+
+  if (isLoading) {
+    return <p className="text-center font-semibold">Loading table ....</p>;
+  }
+
   return (
-    <div className="">
+    <>
       <div className="my-2">
         {/* Search table by title  */}
         <input
@@ -68,11 +81,11 @@ const SurveyTable = ({ alertData: data }: TProps) => {
           <option value="Flood">Flood</option>
         </select>
       </div>
-      <div className="rounded-md border ">
+      <div className="rounded-md border mb-10">
         <DataTable table={table} columnLength={columns.length} />
       </div>
       <PaginationControls table={table} />
-    </div>
+    </>
   );
 };
 
