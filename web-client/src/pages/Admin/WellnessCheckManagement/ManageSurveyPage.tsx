@@ -17,20 +17,24 @@ const ManageSurveyPage = () => {
   );
 
   return (
-    <div className="flex lg:flex-row flex-col">
+    <div className="p-10 min-h-screen flex flex-col">
       {/* <div className=" lg:w-1/4 w-full m-5">
         <h1 className=" font-bold">Send Alerts</h1>
         <SMSAlertForm />
       </div> */}
+      <div className="">
+        <h1 className="text-2xl font-bold text-primary-500">
+          Wellness Check Survey
+        </h1>
+        <p>
+          Monitor the well being of the community. Create, deploy, and oversee
+          wellness check surveys for users.{" "}
+        </p>
+        <hr className="my-5" />
+      </div>
 
       <div className="  w-full m-5">
-        <h1 className=" font-bold">Wellness Check Survey</h1>
-        <div className="mx-5"></div>
-
-        <Link
-          className="bg-indigo-500 px-2 py-1 rounded text-white hover:bg-indigo-600 float-right"
-          to={"create"}
-        >
+        <Link className="btn-primary float-right" to={"create"}>
           New Survey
         </Link>
         <ActiveSurvey />
