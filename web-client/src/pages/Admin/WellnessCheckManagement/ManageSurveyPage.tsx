@@ -1,4 +1,3 @@
-// import { Link } from "react-router-dom";
 import SurveyTable from "./components/SurveyTable";
 
 import ActiveSurvey from "./components/ActiveSurvey";
@@ -17,9 +16,6 @@ const ManageSurveyPage = () => {
         <hr className="my-5" />
       </div>
 
-      {/* <Link className="btn-primary w-max float-right" to={"create"}>
-        New Survey
-      </Link> */}
       <ActiveSurvey />
       <SurveyTable />
     </div>
