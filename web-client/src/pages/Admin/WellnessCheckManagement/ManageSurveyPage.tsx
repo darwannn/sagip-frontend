@@ -5,7 +5,7 @@ import ActiveSurvey from "./components/ActiveSurvey";
 
 const ManageSurveyPage = () => {
   return (
-    <div className="p-10 min-h-screen flex flex-col">
+    <div className="bg-gray-50 p-10 min-h-screen flex flex-col">
       <div className="">
         <h1 className="text-2xl font-bold text-primary-500">
           Wellness Check Survey
@@ -17,9 +17,9 @@ const ManageSurveyPage = () => {
         <hr className="my-5" />
       </div>
 
-      <Link className="btn-primary w-max float-right" to={"create"}>
+      {/* <Link className="btn-primary w-max float-right" to={"create"}>
         New Survey
-      </Link>
+      </Link> */}
       <ActiveSurvey />
       <SurveyTable />
     </div>

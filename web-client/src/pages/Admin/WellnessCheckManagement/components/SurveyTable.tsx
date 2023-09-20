@@ -81,7 +81,7 @@ const SurveyTable = () => {
           <option value="Flood">Flood</option>
         </select>
       </div>
-      <div className="rounded-md border mb-10">
+      <div className="rounded bg-white border  shadow mb-10">
         <DataTable table={table} columnLength={columns.length} />
       </div>
       <PaginationControls table={table} />

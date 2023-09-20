@@ -1,8 +1,12 @@
 import moment from "moment";
 import { useGetActiveSurveyQuery } from "../../../../services/surveyQuery";
+import { TbProgress, TbInputCheck } from "react-icons/tb";
 
 const ActiveSurvey = () => {
   const { data: surveyData, isLoading, error } = useGetActiveSurveyQuery();
+
+  const totalResponse =
+    surveyData && surveyData.affected.length + surveyData.unaffected.length;
 
   if (isLoading) {
     return <p>Loading active alert...</p>;
@@ -13,8 +17,42 @@ const ActiveSurvey = () => {
   }
 
   return (
-    <div className="my-8">
-      {surveyData?._id && (
+    <div className=" p-5 bg-white rounded-md shadow-md">
+      <div className="flex flex-row gap-10">
+        <div className="flex flex-row items-start gap-3 text-sm">
+          <div className="bg-blue-100 p-2 rounded-md">
+            <span>
+              <TbProgress className="text-lg text-blue-400" />
+            </span>
+          </div>
+          <div>
+            <div>
+              <p className=" text-gray-500">Ongoing Survey</p>
+              <p className="text-xl font-bold">{surveyData?.title}</p>
+            </div>
+            <div>
+              <span className="text-gray-500">Posted: </span>
+              <span className="">
+                {moment(surveyData?.startDate).format("MMM DD, YYYY")}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-row items-start gap-3 text-sm">
+          <div className="bg-blue-100 p-2 rounded-md">
+            <span>
+              <TbInputCheck className="text-lg text-blue-400" />
+            </span>
+          </div>
+          <div>
+            <div>
+              <p className=" text-gray-500">Ongoing Survey</p>
+              <p className="text-xl font-bold">{surveyData?.title}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* {surveyData?._id && (
         <>
           <div className="">Active Survey: </div>
           <div className="flex flex-wrap xl:justify-between lg:justify-between md:justify-between gap-5 p-7 bg-yellow-200 rounded-xl">
@@ -45,7 +83,7 @@ const ActiveSurvey = () => {
             </div>
           </div>
         </>
-      )}
+      )} */}
     </div>
   );
 };
