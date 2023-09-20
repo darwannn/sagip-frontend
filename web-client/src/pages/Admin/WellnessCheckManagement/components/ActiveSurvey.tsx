@@ -17,7 +17,7 @@ const ActiveSurvey = () => {
   }
 
   return (
-    <div className=" p-5 bg-white rounded-md shadow-md">
+    <div className="w-max p-5  bg-white rounded-md shadow-md">
       <div className="flex flex-row gap-10">
         <div className="flex flex-row items-start gap-3 text-sm">
           <div className="bg-blue-100 p-2 rounded-md">
@@ -28,9 +28,11 @@ const ActiveSurvey = () => {
           <div>
             <div>
               <p className=" text-gray-500">Ongoing Survey</p>
-              <p className="text-xl font-bold">{surveyData?.title}</p>
+              <p className="text-lg text-blue-500 font-bold">
+                {surveyData?.title}
+              </p>
             </div>
-            <div>
+            <div className="text-xs">
               <span className="text-gray-500">Posted: </span>
               <span className="">
                 {moment(surveyData?.startDate).format("MMM DD, YYYY")}
@@ -39,15 +41,15 @@ const ActiveSurvey = () => {
           </div>
         </div>
         <div className="flex flex-row items-start gap-3 text-sm">
-          <div className="bg-blue-100 p-2 rounded-md">
+          <div className="bg-green-100 p-2 rounded-md">
             <span>
-              <TbInputCheck className="text-lg text-blue-400" />
+              <TbInputCheck className="text-lg text-green-400" />
             </span>
           </div>
           <div>
             <div>
-              <p className=" text-gray-500">Ongoing Survey</p>
-              <p className="text-xl font-bold">{surveyData?.title}</p>
+              <p className=" text-gray-500">Responses</p>
+              <p className="text-xl font-bold">{totalResponse}</p>
             </div>
           </div>
         </div>
