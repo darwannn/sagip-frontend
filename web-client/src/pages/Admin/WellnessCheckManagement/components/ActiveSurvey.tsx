@@ -1,6 +1,7 @@
 import moment from "moment";
 import { useGetActiveSurveyQuery } from "../../../../services/surveyQuery";
 import { TbInputCheck } from "react-icons/tb";
+import { LoaderSpin } from "../../../../components/Loader/Loader";
 
 const ActiveSurvey = () => {
   const { data: surveyData, isLoading, error } = useGetActiveSurveyQuery();
@@ -9,7 +10,12 @@ const ActiveSurvey = () => {
     surveyData && surveyData.affected.length + surveyData.unaffected.length;
 
   if (isLoading) {
-    return <p>Loading active alert...</p>;
+    return (
+      <div className="flex flex-row items-center gap-3 bg-gray-200 shadow p-6 rounded-md animate-pulse">
+        <LoaderSpin className="text-xl" />
+        <p className="text-sm text-gray-500">Checking for active alert ...</p>
+      </div>
+    );
   }
 
   if (error) {
