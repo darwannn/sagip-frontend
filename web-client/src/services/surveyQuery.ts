@@ -6,6 +6,12 @@ export const surveyQueryApi = rootApi.injectEndpoints({
     getSurvey: builder.query<TSurvey[], void>({
       query: () => "wellness-survey",
       providesTags: ["WellnessSurvey"],
+      transformResponse: (res: TSurvey[]) => {
+        // Sort by endDate
+        return res.sort((a, b) => {
+          return new Date(b.endDate).getTime() - new Date(a.endDate).getTime();
+        });
+      },
     }),
     // Get specific article with id
     getSurveyById: builder.query<TSurvey, string | undefined>({
@@ -31,7 +37,7 @@ export const surveyQueryApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: ["WellnessSurvey", "ActiveSurvey"],
     }),
-        // Update article
+    // Update article
     updateSurvey: builder.mutation<
       TSurveyResData,
       { body: Partial<TSurvey>; id: string }
