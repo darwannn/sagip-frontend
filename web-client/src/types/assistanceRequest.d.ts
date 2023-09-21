@@ -17,6 +17,7 @@ type TAssistanceRequest = {
   status: string;
   street: string;
   userId: User;
+  isBeingResponded?: boolean;
 };
 
 type TAssistanceReqResponse = {

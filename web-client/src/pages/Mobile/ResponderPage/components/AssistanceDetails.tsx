@@ -32,6 +32,15 @@ const AssistanceDetails = () => {
   } = useGetActiveTeamsQuery();
 
   const dispatch = useAppDispatch();
+  const respond = async () => {
+    /* const res = */ await update({
+      action: "respond",
+      id: assistanceReq?._id || "",
+    });
+    /* if ("data" in res) {
+      
+    } */
+  };
   const resolve = async () => {
     const res = await update({
       action: "resolve",
@@ -53,7 +62,15 @@ const AssistanceDetails = () => {
     <>
       <div className=" bg-primary-50  px-5 pb-3 ">
         {/* should open google maps using android intent on click */}
-        <FaDirections className="text-2xl absolute right-8 top-0 text-primary-600 cursor-pointer" />
+        <FaDirections
+          className="text-2xl absolute right-8 top-0 text-primary-600 cursor-pointer"
+          onClick={() => {
+            window.AndroidInterface?.routeTo(
+              assistanceReq?.latitude || 0,
+              assistanceReq?.longitude || 0
+            );
+          }}
+        />
         <div className="flex flex-row items-center gap-5">
           <div className="icon w-16 h-16  bg-secondary-500 rounded-full"></div>
 
@@ -86,9 +103,15 @@ const AssistanceDetails = () => {
 
         <button
           className="bg-primary-400 text-white  py-2 my-3 rounded-md w-full"
-          onClick={resolve}
+          onClick={() => {
+            assistanceReq && assistanceReq.isBeingResponded
+              ? resolve()
+              : respond();
+          }}
         >
-          Resolve
+          {assistanceReq && assistanceReq.isBeingResponded
+            ? "Resolve"
+            : "Respond"}
         </button>
       </div>
 
