@@ -8,6 +8,12 @@ import {
   useUpdateSurveyMutation,
 } from "../../../../services/surveyQuery";
 
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../../../components/ui/Alert";
+
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
@@ -106,61 +112,78 @@ const SurveyForm = ({ surveyData }: TProps) => {
 
   return (
     <form>
-      {surveyData?._id !== activeAlert?._id && activeAlert?.success === true && (
-        <div className="bg-red-400 text-white px-5 py-3 my-5 rounded">
-          There is already an active alert. Please unpublish it before
-          publishing a new one.
+      {surveyData?._id !== activeAlert?._id &&
+        activeAlert?.success === true && (
+          <Alert className="bg-yellow-100 border-none mb-5">
+            {/* There is already an active alert. Please unpublish it before
+            publishing a new one. */}
+            <AlertTitle>There is already an active wellness check.</AlertTitle>
+            <AlertDescription>
+              Please unpublish it before publishing a new one.
+            </AlertDescription>
+          </Alert>
+        )}
+      <div className="flex flex-col gap-5">
+        <div className="form-group">
+          <label htmlFor="title" className="form-label">
+            Title
+          </label>
+          <input
+            type="text-area"
+            id="title"
+            className="form-input "
+            placeholder="Title"
+            {...register("title", { required: true })}
+          />
+          {errors.title && (
+            <span className="text-red-500">Title is required</span>
+          )}
         </div>
-      )}
-      <div className="flex flex-col mt-5">
-        <label htmlFor="title">Title</label>
-        <input
-          type="text-area"
-          id="title"
-          className="border p-1 "
-          placeholder="Title"
-          {...register("title", { required: true })}
-        />
-        {errors.title && (
-          <span className="text-red-500">Title is required</span>
-        )}
-      </div>
-      <div className="flex flex-col mt-5">
-        <label htmlFor="endDate">End Date</label>
-        <input
-          type="date"
-          id="endDate"
-          className="border p-1 "
-          placeholder="End Date"
-          {...register("endDate", { required: true })}
-        />
-        {errors.endDate && (
-          <span className="text-red-500">Date is required</span>
-        )}
-      </div>
-      <div className="flex flex-col mt-5">
-        <label htmlFor="category">Category</label>
-        <select id="category" {...register("category")}>
-          <option value="Earthquake">Earthquake</option>
-          <option value="Flood">Flood</option>
-        </select>
+        <div className="form-group">
+          <label htmlFor="endDate" className="form-label">
+            End Date
+          </label>
+          <input
+            type="date"
+            id="endDate"
+            className="form-input"
+            placeholder="End Date"
+            {...register("endDate", { required: true })}
+          />
+          {errors.endDate && (
+            <span className="text-red-500">Date is required</span>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="category" className="form-label">
+            Category
+          </label>
+          <select
+            id="category"
+            className="p-2 border rounded"
+            {...register("category")}
+          >
+            <option value="Earthquake">Earthquake</option>
+            <option value="Flood">Flood</option>
+          </select>
+        </div>
       </div>
 
       <div className="mt-5">
         <button
-          className="bg-green-500 text-white px-5 py-1 m-2 rounded disabled:bg-green-300"
+          className="btn-primary float-right"
           onClick={handleSubmit(onPublish)}
           disabled={
             addIsLoading ||
             updateIsLoading ||
-            (activeAlert?.success  && surveyData?._id !== activeAlert?._id)
+            (activeAlert?.success && surveyData?._id !== activeAlert?._id)
           }
         >
           {!surveyData
             ? "Publish"
             : surveyData?.status === "active"
-              ? "Update"
-              : "Publish"}
+            ? "Update"
+            : "Publish"}
         </button>
 
         {surveyData && (
