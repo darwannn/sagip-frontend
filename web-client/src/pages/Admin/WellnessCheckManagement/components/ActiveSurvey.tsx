@@ -1,6 +1,6 @@
 import moment from "moment";
 import { useGetActiveSurveyQuery } from "../../../../services/surveyQuery";
-import { TbProgress, TbInputCheck } from "react-icons/tb";
+import { TbInputCheck } from "react-icons/tb";
 
 const ActiveSurvey = () => {
   const { data: surveyData, isLoading, error } = useGetActiveSurveyQuery();
@@ -17,18 +17,18 @@ const ActiveSurvey = () => {
   }
 
   return (
-    <div className="w-max p-5  bg-white rounded-md shadow-md">
+    <div className="w-max p-6 border-2 border-green-500  bg-white rounded-md shadow-md">
       <div className="flex flex-row gap-10">
         <div className="flex flex-row items-start gap-3 text-sm">
-          <div className="bg-blue-100 p-2 rounded-md">
+          {/* <div className="bg-blue-100 p-2 rounded-md">
             <span>
               <TbProgress className="text-lg text-blue-400" />
             </span>
-          </div>
+          </div> */}
           <div>
             <div>
               <p className=" text-gray-500">Ongoing Survey</p>
-              <p className="text-lg text-blue-500 font-bold">
+              <p className="text-lg text-green-500 font-bold">
                 {surveyData?.title}
               </p>
             </div>
