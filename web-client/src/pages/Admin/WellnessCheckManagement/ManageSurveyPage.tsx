@@ -1,6 +1,6 @@
 import SurveyTable from "./components/SurveyTable";
 
-import ActiveSurvey from "./components/ActiveSurvey";
+import SurveyAnalytics from "./SurveyAnalytics";
 
 const ManageSurveyPage = () => {
   return (
@@ -15,8 +15,7 @@ const ManageSurveyPage = () => {
         </p>
         <hr className="my-5" />
       </div>
-
-      <ActiveSurvey />
+      <SurveyAnalytics />
       <SurveyTable />
     </div>
   );
