@@ -1,8 +1,9 @@
 import moment from "moment";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { TSurvey } from "../../../../types/survey";
+import { TResponse, TSurvey } from "../../../../types/survey";
 import SurveyTableRowAction from "../components/SurveyTableRowAction";
+import { Badge } from "../../../../components/ui/Badge";
 
 export const surveyColumn: ColumnDef<TSurvey>[] = [
   {
@@ -79,5 +80,54 @@ export const surveyColumn: ColumnDef<TSurvey>[] = [
   {
     id: "actions",
     cell: ({ row }) => <SurveyTableRowAction rowId={row.getValue("_id")} />,
+  },
+];
+
+export const responseColumn: ColumnDef<TResponse>[] = [
+  {
+    id: "userInfo",
+    header: () => <p className="text-center">User Information</p>,
+    columns: [
+      {
+        accessorKey: "user._id",
+        header: "ID",
+      },
+      {
+        id: "fullName",
+        header: "Full Name",
+        cell: ({ row }) => {
+          return (
+            <span>{`${row.original.user.firstname} ${row.original.user.firstname}`}</span>
+          );
+        },
+      },
+      {
+        accessorKey: "user.barangay",
+        header: "Barangay",
+      },
+    ],
+  },
+  {
+    accessorKey: "response",
+    id: "response",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Response
+        </button>
+      );
+    },
+    cell: ({ row }) => {
+      const response = row.original.response;
+      if (response === "Affected") {
+        return <Badge className="bg-red-500 min-w-max">{response}</Badge>;
+      } else if (response === "Unaffected") {
+        return <Badge className="bg-green-500 min-w-max">{response}</Badge>;
+      } else {
+        return <Badge className="bg-gray-500 min-w-max">Invalid</Badge>;
+      }
+    },
   },
 ];
