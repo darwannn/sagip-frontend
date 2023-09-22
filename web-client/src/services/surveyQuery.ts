@@ -17,6 +17,19 @@ export const surveyQueryApi = rootApi.injectEndpoints({
     getSurveyById: builder.query<TSurvey, string | undefined>({
       query: (id) => `wellness-survey/${id}`,
       providesTags: ["SelectedSurvey"],
+      transformResponse: (res: TSurvey) => {
+        // Combine unaffected and affected to new array
+        const responses = res.unaffected
+          .map((user) => {
+            return { user, response: "Unaffected" };
+          })
+          .concat(
+            res.affected.map((user) => {
+              return { user, response: "Affected" };
+            })
+          );
+        return { ...res, responses };
+      },
     }),
     getActiveSurvey: builder.query<TActiveSurvey, void>({
       query: () => `wellness-survey/active`,
