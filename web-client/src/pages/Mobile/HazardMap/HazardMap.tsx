@@ -28,6 +28,8 @@ import SearchLocation from "./components/SearchLocation";
 import CurrentLocation from "./components/CurrentLocation";
 import ToggleFacilities from "./components/ToggleFacilities";
 import BottomSheet from "../../../components/BottomSheet/BottomSheet";
+/* import { receiveEvent } from "../../../util/socketIO";
+import { getRoute } from "../../../util/route"; */
 /* import ToggleMarkers from "./components/ToggleMarkers"; */
 
 const EmergencyReportsPage = () => {
@@ -90,6 +92,17 @@ const EmergencyReportsPage = () => {
   if (/* requestIsError || */ hazardIsError || facilityIsError)
     console.log("Error");
 
+  /* receiveEvent("location", async (data) => {
+    console.log("lcoation");
+    console.log(data);
+    if (data.content) {
+      const responderLocation = await getRoute(
+        `${data.content.latitude},${data.content.longitude}`,
+        `14.847181109982058, 120.80829156110384`
+      );
+      console.log(responderLocation.distance);
+    }
+  }); */
   return (
     <div className="relative h-screen">
       <BottomSheet

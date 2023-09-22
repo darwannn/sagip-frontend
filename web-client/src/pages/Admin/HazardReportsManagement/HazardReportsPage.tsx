@@ -14,6 +14,7 @@ import {
 import { useGetHazardReportsQuery } from "../../../services/hazardReportsQuery";
 import { THazardReport } from "../../../types/hazardReport";
 import MapComponent from "../FacilityManagement/components/MapComponent";
+import { receiveEvent } from "../../../util/socketIO";
 
 const HazardReportsPage = () => {
   // Map State / Instance
@@ -28,8 +29,15 @@ const HazardReportsPage = () => {
     isLoading: isReportsLoading,
     isError: isReportsError,
     error,
+    refetch: refetchReportsData,
   } = useGetHazardReportsQuery(undefined);
 
+  if (reportsData) {
+    receiveEvent("hazard-report", () => {
+      console.log("refetch");
+      refetchReportsData();
+    });
+  }
   // Set map state
   /*  const onMapLoad = useCallback((map: google.maps.Map) => {
     setMap(map);
