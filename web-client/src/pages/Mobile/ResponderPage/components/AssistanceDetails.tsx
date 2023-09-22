@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BASE_IMAGE_URL } from "../../../../api.config";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 
@@ -14,7 +15,7 @@ import { FaDirections } from "react-icons/fa";
 
 const AssistanceDetails = () => {
   const assistanceReq = useAppSelector(selectAssistanceReq);
-
+  const [isBeingResponded, setIsBeingResponded] = useState<boolean>(false);
   const [
     update,
     {
@@ -33,13 +34,13 @@ const AssistanceDetails = () => {
 
   const dispatch = useAppDispatch();
   const respond = async () => {
-    /* const res = */ await update({
+    const res = await update({
       action: "respond",
       id: assistanceReq?._id || "",
     });
-    /* if ("data" in res) {
-      
-    } */
+    if ("data" in res) {
+      setIsBeingResponded(true);
+    }
   };
   const resolve = async () => {
     const res = await update({
@@ -104,12 +105,13 @@ const AssistanceDetails = () => {
         <button
           className="bg-primary-400 text-white  py-2 my-3 rounded-md w-full"
           onClick={() => {
-            assistanceReq && assistanceReq.isBeingResponded
+            (assistanceReq && assistanceReq.isBeingResponded) ||
+            isBeingResponded
               ? resolve()
               : respond();
           }}
         >
-          {assistanceReq && assistanceReq.isBeingResponded
+          {(assistanceReq && assistanceReq.isBeingResponded) || isBeingResponded
             ? "Resolve"
             : "Respond"}
         </button>

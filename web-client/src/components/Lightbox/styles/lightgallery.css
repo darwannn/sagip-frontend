@@ -1,0 +1,4 @@
+
+.lg-outer { z-index: 99999999; }
+
+.lg-backdrop { z-index: 99999999; opacity: 0.8 !important; }
