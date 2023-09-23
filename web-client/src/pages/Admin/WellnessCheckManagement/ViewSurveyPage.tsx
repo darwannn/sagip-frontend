@@ -6,6 +6,9 @@ import { Badge } from "../../../components/ui/Badge";
 import { BiSolidCalendarAlt, BiSolidCalendarCheck } from "react-icons/bi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import ResponseTable from "./components/ResponseTable";
+import { LoaderSpin } from "../../../components/Loader/Loader";
+import Doughnut from "../../../components/Charts/Doughnut";
+import { TbInputCheck } from "react-icons/tb";
 
 const ViewSurveyPage = () => {
   const navigate = useNavigate();
@@ -37,7 +40,7 @@ const ViewSurveyPage = () => {
   console.log(surveyData);
 
   return (
-    <div className="bg-slate-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* <SurveyForm surveyData={alertData} /> */}
       <div className="bg-white pt-10 pb-5 px-10 shadow">
         <div>
@@ -72,7 +75,66 @@ const ViewSurveyPage = () => {
           </div>
         </div>
       </div>
-      <div className="p-10">
+
+      <div className="grow p-10 flex flex-col gap-5">
+        <div className="flex flex-row gap-5">
+          <div className="flex flex-row flex-wrap gap-4 mb-8">
+            <div className="flex flex-row justify-between items-start p-6 xl:w-[250px] bg-white rounded-md shadow">
+              <div className="flex flex-col gap-2">
+                <span className="text-sm text-gray-500">Total Responses</span>
+                <h3 className="text-2xl font-bold">
+                  {isLoading ? <LoaderSpin /> : surveyData?.responses?.length}
+                </h3>
+              </div>
+              <div className="bg-blue-100 p-2 rounded">
+                <TbInputCheck className="text-blue-500 text-lg " />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-row items-center justify-center gap-5 p-6 xl:w-[350px] bg-white shadow rounded-md">
+            <div className="w-32 h-max">
+              {isLoading ? (
+                <LoaderSpin />
+              ) : (
+                <Doughnut
+                  data={[
+                    {
+                      title: "Affected",
+                      value: surveyData?.affected.length || 0,
+                      color: "rgba(99, 102, 241,1)",
+                    },
+                    {
+                      title: "Unaffected",
+                      value: surveyData?.unaffected.length || 0,
+                      color: "rgba(212, 85, 85, 1)",
+                    },
+                  ]}
+                />
+              )}
+            </div>
+            <div className="flex-1 flex flex-col gap-3 text-sm">
+              <div>
+                <div className="flex flex-row items-center gap-2">
+                  <span className="w-2 h-2 mr-1 rounded-full bg-red-500"></span>
+                  <span className="text-sm">Affected</span>
+                </div>
+                <p className="pl-6 text-xl font-bold">
+                  {surveyData?.affected.length}
+                </p>
+              </div>
+              <div>
+                <div className="flex flex-row items-center gap-2">
+                  <span className="w-2 h-2 mr-1 rounded-full bg-red-500"></span>
+                  <span className="text-sm">Unaffected</span>
+                </div>
+                <p className="pl-6 text-xl font-bold">
+                  {surveyData?.unaffected.length}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2 className="font-semibold mb-5 text-xl">Responses:</h2>
         {surveyData && <ResponseTable surveyData={surveyData} />}
       </div>
     </div>
