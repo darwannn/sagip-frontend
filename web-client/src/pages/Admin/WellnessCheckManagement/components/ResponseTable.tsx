@@ -105,7 +105,10 @@ const ResponseTable: React.FC<ResponseTableProps> = memo(({ surveyData }) => {
         </div>
       </div>
       <div className="rounded bg-white border  shadow mb-10">
-        <DataTable table={table} columnLength={columns.length} />
+        <DataTable
+          table={table}
+          columnLength={table.getAllFlatColumns().length}
+        />
       </div>
       <PaginationControls table={table} />
     </>

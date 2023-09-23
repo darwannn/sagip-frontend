@@ -91,48 +91,52 @@ const ViewSurveyPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-center gap-5 p-6 xl:w-[350px] bg-white shadow rounded-md">
-            <div className="w-32 h-max">
-              {isLoading ? (
-                <LoaderSpin />
-              ) : (
-                <Doughnut
-                  data={[
-                    {
-                      title: "Affected",
-                      value: surveyData?.affected.length || 0,
-                      color: "rgba(99, 102, 241,1)",
-                    },
-                    {
-                      title: "Unaffected",
-                      value: surveyData?.unaffected.length || 0,
-                      color: "rgba(212, 85, 85, 1)",
-                    },
-                  ]}
-                />
-              )}
-            </div>
-            <div className="flex-1 flex flex-col gap-3 text-sm">
-              <div>
-                <div className="flex flex-row items-center gap-2">
-                  <span className="w-2 h-2 mr-1 rounded-full bg-red-500"></span>
-                  <span className="text-sm">Affected</span>
-                </div>
-                <p className="pl-6 text-xl font-bold">
-                  {surveyData?.affected.length}
-                </p>
+          {surveyData?.responses && surveyData?.responses?.length > 0 ? (
+            <div className="flex flex-row items-center justify-center gap-5 p-6 xl:w-[350px] bg-white shadow rounded-md">
+              <div className="w-32 h-max">
+                {isLoading ? (
+                  <LoaderSpin />
+                ) : (
+                  <Doughnut
+                    data={[
+                      {
+                        title: "Affected",
+                        value: surveyData?.affected.length || 0,
+                        color: "rgba(99, 102, 241,1)",
+                      },
+                      {
+                        title: "Unaffected",
+                        value: surveyData?.unaffected.length || 0,
+                        color: "rgba(212, 85, 85, 1)",
+                      },
+                    ]}
+                  />
+                )}
               </div>
-              <div>
-                <div className="flex flex-row items-center gap-2">
-                  <span className="w-2 h-2 mr-1 rounded-full bg-red-500"></span>
-                  <span className="text-sm">Unaffected</span>
+              <div className="flex-1 flex flex-col gap-3 text-sm">
+                <div>
+                  <div className="flex flex-row items-center gap-2">
+                    <span className="w-2 h-2 mr-1 rounded-full bg-red-500"></span>
+                    <span className="text-sm">Affected</span>
+                  </div>
+                  <p className="pl-6 text-xl font-bold">
+                    {surveyData?.affected.length}
+                  </p>
                 </div>
-                <p className="pl-6 text-xl font-bold">
-                  {surveyData?.unaffected.length}
-                </p>
+                <div>
+                  <div className="flex flex-row items-center gap-2">
+                    <span className="w-2 h-2 mr-1 rounded-full bg-red-500"></span>
+                    <span className="text-sm">Unaffected</span>
+                  </div>
+                  <p className="pl-6 text-xl font-bold">
+                    {surveyData?.unaffected.length}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <></>
+          )}
         </div>
         <h2 className="font-semibold text-xl">Responses:</h2>
         {surveyData && <ResponseTable surveyData={surveyData} />}
