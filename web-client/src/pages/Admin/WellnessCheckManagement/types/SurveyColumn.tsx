@@ -93,13 +93,25 @@ export const responseColumn: ColumnDef<TResponse>[] = [
         header: "ID",
       },
       {
-        id: "fullName",
+        accessorKey: "user",
+        // id: "fullName",
+        accessorFn: ({ user }) => {
+          return `${user.firstname} ${user.lastname}`;
+        },
         header: "Full Name",
         cell: ({ row }) => {
           return (
-            <span>{`${row.original.user.firstname} ${row.original.user.firstname}`}</span>
+            <span>{`${row.original.user.firstname} ${row.original.user.lastname}`}</span>
           );
         },
+      },
+      {
+        accessorKey: "user.email",
+        header: "Email",
+      },
+      {
+        accessorKey: "user.contactNumber",
+        header: "Contact Number",
       },
       {
         accessorKey: "user.barangay",
