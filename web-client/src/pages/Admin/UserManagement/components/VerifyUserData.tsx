@@ -9,8 +9,6 @@ import { BASE_IMAGE_URL } from "../../../../api.config";
 
 import moment from "moment";
 
-/* override backdrop style  */
-import "../styles/lightgallery.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate } from "../../../../util/date";
 import { toast } from "react-toastify";

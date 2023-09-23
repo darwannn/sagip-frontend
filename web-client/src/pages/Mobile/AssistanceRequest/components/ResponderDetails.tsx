@@ -31,13 +31,13 @@ const ResponderDetails = ({
             {responderDistance} | {estimatedTime}
           </div>
         </div>
-        <div
+        {/* <div
           className="text-xl"
-          /* onClick={() => {
+          onClick={() => {
             setIsFollowingResponder(!isFollowingResponder);
-          }} */
+          }}
         >
-          {/* {isFollowingResponder ? (
+          {isFollowingResponder ? (
             <div className="text-white bg-primary-600 p-2 rounded-md">
               <BsFillEyeFill />
             </div>
@@ -45,8 +45,8 @@ const ResponderDetails = ({
             <div className="text-white bg-primary-300 p-2 rounded-md">
               <BsFillEyeSlashFill />
             </div>
-          )} */}
-        </div>
+          )}
+        </div> */}
       </div>
     </>
   );

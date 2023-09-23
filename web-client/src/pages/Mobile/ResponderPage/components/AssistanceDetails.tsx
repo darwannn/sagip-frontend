@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { BASE_IMAGE_URL } from "../../../../api.config";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-
+import type { Token } from "../../../../types/auth";
 import {
   selectAssistanceReq,
   setSelectedAssistanceRequest,
 } from "../../../../store/slices/assistanceReqSlice";
-
 import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
 import { useUpdateAssistanceRequestMutation } from "../../../../services/assistanceRequestQuery";
 
+import jwtDecode from "jwt-decode";
 import { BiSolidNotepad } from "react-icons/bi";
 import { FaDirections } from "react-icons/fa";
 
@@ -33,6 +33,8 @@ const AssistanceDetails = () => {
   } = useGetActiveTeamsQuery();
 
   const dispatch = useAppDispatch();
+  const token = localStorage.getItem("token");
+  const decodedToken = jwtDecode<Token>(token || "");
   const respond = async () => {
     const res = await update({
       action: "respond",
@@ -40,6 +42,12 @@ const AssistanceDetails = () => {
     });
     if ("data" in res) {
       setIsBeingResponded(true);
+      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
+        window.AndroidInterface?.startSharingLocation(
+          token,
+          assistanceReq.userId._id
+        );
+      }
     }
   };
   const resolve = async () => {
@@ -49,6 +57,9 @@ const AssistanceDetails = () => {
     });
     if ("data" in res) {
       dispatch(setSelectedAssistanceRequest(null));
+      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
+        window.AndroidInterface?.stopSharingLocation();
+      }
     }
   };
   if (isLoading) console.log("Loading...");
