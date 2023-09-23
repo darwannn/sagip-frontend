@@ -134,7 +134,7 @@ const ViewSurveyPage = () => {
             </div>
           </div>
         </div>
-        <h2 className="font-semibold mb-5 text-xl">Responses:</h2>
+        <h2 className="font-semibold text-xl">Responses:</h2>
         {surveyData && <ResponseTable surveyData={surveyData} />}
       </div>
     </div>

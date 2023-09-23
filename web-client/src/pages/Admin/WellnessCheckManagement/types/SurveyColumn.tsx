@@ -121,7 +121,7 @@ export const responseColumn: ColumnDef<TResponse>[] = [
   },
   {
     accessorKey: "response",
-    id: "response",
+    // id: "response",
     header: ({ column }) => {
       return (
         <button
@@ -131,6 +131,7 @@ export const responseColumn: ColumnDef<TResponse>[] = [
         </button>
       );
     },
+    filterFn: "equalsString",
     cell: ({ row }) => {
       const response = row.original.response;
       if (response === "Affected") {
