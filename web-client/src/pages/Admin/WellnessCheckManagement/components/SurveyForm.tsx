@@ -15,7 +15,7 @@ import {
 } from "../../../../components/ui/Alert";
 
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type TProps = {
   surveyData?: TSurvey;
@@ -28,16 +28,8 @@ const SurveyForm = ({ surveyData }: TProps) => {
     addAlert,
     { isError: addIsError, isLoading: addIsLoading, error: addErr },
   ] = useAddSurveyMutation();
-  const [
-    updateAlert,
-    {
-      isError: updateIsError,
-      isLoading: updateIsLoading,
-      isSuccess: updateIsSuccess,
-    },
-  ] = useUpdateSurveyMutation();
-
-  const navigate = useNavigate();
+  const [updateAlert, { isError: updateIsError, isLoading: updateIsLoading }] =
+    useUpdateSurveyMutation();
 
   /* allows status to be updated without changing the value of other fields */
   const [initialStatus, setInitialStatus] = useState<string>("");
@@ -73,29 +65,29 @@ const SurveyForm = ({ surveyData }: TProps) => {
       endDate: data.endDate,
     };
 
-    let res;
     if (surveyData) {
-      res = await updateAlert({
-        body,
-        id: surveyData._id,
-      });
+      toast.promise(
+        updateAlert({
+          body,
+          id: surveyData._id,
+        }).unwrap,
+        {
+          pending: "Updating survey...",
+          success: "Survey updated!",
+          error: "Something went wrong",
+        }
+      );
     } else {
-      res = await addAlert(body);
-    }
-    console.log(res);
-    if (res && "data" in res) {
-      if (res.data.success) {
-        navigate(`/admin/wellness-check`);
-      }
+      toast.promise(addAlert(body).unwrap, {
+        pending: "Publishing survey...",
+        success: "Survey published!",
+        error: "Something went wrong",
+      });
     }
   };
 
   const onPublish: SubmitHandler<FieldValues> = async (data) => {
     SubmitAlertData(data, "active");
-  };
-
-  const onUnpublish: SubmitHandler<FieldValues> = async (data) => {
-    SubmitAlertData(data, "inactive");
   };
 
   if (addIsLoading) console.log("Loading...");
@@ -106,9 +98,7 @@ const SurveyForm = ({ surveyData }: TProps) => {
     }
   }
 
-  if (updateIsLoading) console.log("Updating...");
   if (updateIsError) console.log("Error updating");
-  if (updateIsSuccess) console.log("Updated successfully");
 
   return (
     <form>
@@ -185,16 +175,6 @@ const SurveyForm = ({ surveyData }: TProps) => {
             ? "Update"
             : "Publish"}
         </button>
-
-        {surveyData && (
-          <button
-            className="bg-red-500 text-white px-5 py-1 m-2 rounded"
-            onClick={handleSubmit(onUnpublish)}
-            disabled={addIsLoading || updateIsLoading}
-          >
-            {surveyData?.status === "active" ? "Unpublish" : "Update"}
-          </button>
-        )}
       </div>
     </form>
   );

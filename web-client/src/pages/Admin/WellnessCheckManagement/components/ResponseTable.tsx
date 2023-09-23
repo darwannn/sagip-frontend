@@ -23,7 +23,6 @@ type ResponseTableProps = {
 };
 
 const ResponseTable: React.FC<ResponseTableProps> = memo(({ surveyData }) => {
-  console.log(surveyData);
   // For filtering data
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFltr, setGlobalFltr] = useState<string>("");
