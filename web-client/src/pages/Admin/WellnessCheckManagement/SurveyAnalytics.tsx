@@ -1,4 +1,7 @@
-import { useGetSurveyQuery } from "../../../services/surveyQuery";
+import {
+  useGetActiveSurveyQuery,
+  useGetSurveyQuery,
+} from "../../../services/surveyQuery";
 import ActiveSurvey from "./components/ActiveSurvey";
 import { LoaderSpin } from "../../../components/Loader/Loader";
 import { useEffect, useState } from "react";
@@ -14,6 +17,12 @@ const SurveyAnalytics = () => {
     // error,
   } = useGetSurveyQuery(undefined);
 
+  const {
+    data: activeSurveyData,
+    isSuccess: activeSuccess,
+    isError: activeError,
+  } = useGetActiveSurveyQuery();
+
   const [averageResponse, setAverageResponse] = useState<number>(0);
 
   useEffect(() => {
@@ -27,9 +36,24 @@ const SurveyAnalytics = () => {
     }
   }, [surveyData]);
 
+  if (activeError) {
+    console.log("Error fetching active survey data");
+  }
+
+  // const activeLoadingComp = (
+  //   <div className="flex flex-row items-center gap-3 bg-gray-200 shadow p-6 rounded-md animate-pulse">
+  //     <LoaderSpin className="text-xl" />
+  //     <p className="text-sm text-gray-500">Checking for active alert ...</p>
+  //   </div>
+  // );
+
   return (
     <div className="flex flex-row flex-wrap gap-4 mb-8">
-      <ActiveSurvey />
+      {activeSuccess && activeSurveyData?.success ? (
+        <ActiveSurvey surveyData={activeSurveyData} />
+      ) : (
+        <></>
+      )}
       <div className="flex flex-row justify-between items-start p-6 xl:w-[250px] bg-white rounded-md shadow">
         <div className="flex flex-col gap-2">
           <span className="text-sm text-gray-500">Survey Created</span>

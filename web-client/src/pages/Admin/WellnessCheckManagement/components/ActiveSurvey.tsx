@@ -1,29 +1,22 @@
 import moment from "moment";
-import { useGetActiveSurveyQuery } from "../../../../services/surveyQuery";
 import { TbInputCheck } from "react-icons/tb";
-import { LoaderSpin } from "../../../../components/Loader/Loader";
+import { TActiveSurvey } from "../../../../types/survey";
+import { useNavigate } from "react-router-dom";
 
-const ActiveSurvey = () => {
-  const { data: surveyData, isLoading, error } = useGetActiveSurveyQuery();
+type ActiveSurveyProps = {
+  surveyData: TActiveSurvey | undefined;
+};
 
+const ActiveSurvey: React.FC<ActiveSurveyProps> = ({ surveyData }) => {
+  const navigate = useNavigate();
   const totalResponse =
     surveyData && surveyData.affected.length + surveyData.unaffected.length;
 
-  if (isLoading) {
-    return (
-      <div className="flex flex-row items-center gap-3 bg-gray-200 shadow p-6 rounded-md animate-pulse">
-        <LoaderSpin className="text-xl" />
-        <p className="text-sm text-gray-500">Checking for active alert ...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <p>Something went wrong...</p>;
-  }
-
   return (
-    <div className="w-max p-6 border-2 border-green-500  bg-white rounded-md shadow-md">
+    <div
+      className="w-max p-6 border-2 border-green-500  bg-white rounded-md shadow-md cursor-pointer"
+      onClick={() => navigate(`${surveyData?._id}`)}
+    >
       <div className="flex flex-row gap-10">
         <div className="flex flex-row items-start gap-3 text-sm">
           {/* <div className="bg-blue-100 p-2 rounded-md">
