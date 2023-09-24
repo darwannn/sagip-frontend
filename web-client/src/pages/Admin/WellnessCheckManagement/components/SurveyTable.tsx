@@ -5,21 +5,30 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
   getPaginationRowModel,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
+
 import DataTable from "../../../../components/ui/data-table";
 import { surveyColumn as columns } from "../types/SurveyColumn";
 // Redux
 import PaginationControls from "../../../../components/ui/PaginationControl";
-import { TSurvey } from "../../../../types/survey";
-type TProps = {
-  alertData: TSurvey[];
-};
+import { useGetSurveyQuery } from "../../../../services/surveyQuery";
 
-const SurveyTable = ({ alertData: data }: TProps) => {
+import SurveyTableActions from "./SurveyTableActions";
+
+const SurveyTable = () => {
+  const {
+    data: surveyData,
+    isLoading,
+    isError,
+    error,
+  } = useGetSurveyQuery(undefined);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // For filtering data
+  const [sorting, setSorting] = useState<SortingState>([]);
   // Initialiaze table configuration
   const table = useReactTable({
-    data,
+    data: surveyData ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     // For filtering data
@@ -27,8 +36,12 @@ const SurveyTable = ({ alertData: data }: TProps) => {
     getFilteredRowModel: getFilteredRowModel(),
     // For pagination
     getPaginationRowModel: getPaginationRowModel(),
+    // For sorting
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     state: {
       columnFilters,
+      sorting,
     },
     initialState: {
       pagination: {
@@ -38,41 +51,25 @@ const SurveyTable = ({ alertData: data }: TProps) => {
     },
   });
 
+  if (isError) {
+    console.log(error);
+    return (
+      <p className="text-center font-semibold">Oops! Something went wrong...</p>
+    );
+  }
+
+  if (isLoading) {
+    return <p className="text-center font-semibold">Loading table ....</p>;
+  }
+
   return (
-    <div className="">
-      <div className="my-2">
-        {/* Search table by title  */}
-        <input
-          className="p-1"
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(e) =>
-            table.getColumn("title")?.setFilterValue(e.target.value)
-          }
-          placeholder="Search by title"
-        />
-        {/* Filter the table by category */}
-        <select
-          id="category"
-          className="p-1 ml-2 border rounded-md float-right"
-          value={
-            (table.getColumn("category")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(e) =>
-            table.getColumn("category")?.setFilterValue(e.target.value)
-          }
-        >
-          <option value="" disabled>
-            Filter by category
-          </option>
-          <option value="Earthquake">Earthquake</option>
-          <option value="Flood">Flood</option>
-        </select>
-      </div>
-      <div className="rounded-md border ">
+    <>
+      <SurveyTableActions table={table} />
+      <div className="rounded bg-white border  shadow mb-10">
         <DataTable table={table} columnLength={columns.length} />
       </div>
       <PaginationControls table={table} />
-    </div>
+    </>
   );
 };
 

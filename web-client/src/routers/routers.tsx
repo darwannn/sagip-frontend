@@ -14,7 +14,6 @@ import TeamDetails from "../pages/Admin/TeamManagement/components/TeamDetails";
 import ManageRespondersPage from "../pages/Admin/TeamManagement/ManageRespondersPage";
 
 import ManageSurveyPage from "../pages/Admin/WellnessCheckManagement/ManageSurveyPage";
-import CreateSurveyPage from "../pages/Admin/WellnessCheckManagement/CreateSurveyPage";
 import ViewSurveyPage from "../pages/Admin/WellnessCheckManagement/ViewSurveyPage";
 import SurveyReport from "../pages/Admin/WellnessCheckManagement/components/SurveyReport";
 
@@ -227,8 +226,7 @@ export const router = createBrowserRouter([
         path: "wellness-check",
         children: [
           { index: true, element: <ManageSurveyPage /> },
-          { path: "create", element: <CreateSurveyPage /> },
-          { path: ":alertId", element: <ViewSurveyPage /> },
+          { path: ":surveyId", element: <ViewSurveyPage /> },
           /* { path: "report/:alertId", element: <AlertReport /> }, */
         ],
       },

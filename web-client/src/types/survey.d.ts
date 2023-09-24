@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export type SMS = {
   alertTitle: string;
   // alertMessage: string;
@@ -8,8 +10,9 @@ export type TSurvey = {
   _id: string;
   title: string;
   category: string;
-  unaffected: string[];
-  affected: string[];
+  unaffected: User[];
+  affected: User[];
+  responses?: TResponse[];
   status: string;
   isArchived: boolean;
   startDate: string;
@@ -62,6 +65,11 @@ export type TSurveyResData = {
   category?: string;
   unaffected?: string[];
   affected?: string[];
+};
+
+type TResponse = {
+  user: User;
+  response: string;
 };
 
 export const AlertTypes = ["Flood", "Earthquake"];
