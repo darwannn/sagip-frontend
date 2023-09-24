@@ -19,11 +19,6 @@ const ActiveSurvey: React.FC<ActiveSurveyProps> = ({ surveyData }) => {
     >
       <div className="flex flex-row gap-10">
         <div className="flex flex-row items-start gap-3 text-sm">
-          {/* <div className="bg-blue-100 p-2 rounded-md">
-            <span>
-              <TbProgress className="text-lg text-blue-400" />
-            </span>
-          </div> */}
           <div>
             <div>
               <p className=" text-gray-500">Ongoing Survey</p>
@@ -53,38 +48,6 @@ const ActiveSurvey: React.FC<ActiveSurveyProps> = ({ surveyData }) => {
           </div>
         </div>
       </div>
-      {/* {surveyData?._id && (
-        <>
-          <div className="">Active Survey: </div>
-          <div className="flex flex-wrap xl:justify-between lg:justify-between md:justify-between gap-5 p-7 bg-yellow-200 rounded-xl">
-            <div className="">
-              <div className="text-sm text-gray-500">Survey ID</div>
-              <div className="">{surveyData?.title}</div>
-            </div>
-            <div className="">
-              <div className="text-sm text-gray-500">Date Published</div>
-              <div className="">
-                {moment(surveyData?.startDate).format("MMM DD, YYYY")} to{" "}
-                {moment(surveyData?.endDate).format("MMM DD, YYYY")}
-              </div>
-            </div>
-            <div className=" ">
-              <div className="text-sm text-gray-500">Responses</div>
-              <div className="">
-                {surveyData?.affected.length + surveyData?.unaffected.length}
-              </div>
-            </div>
-            <div className=" ">
-              <div className="text-sm text-gray-500">Affected</div>
-              <div className="">{surveyData?.affected.length}</div>
-            </div>
-            <div className="">
-              <div className="text-sm text-gray-500">Unaffected</div>
-              <div className="">{surveyData?.unaffected.length}</div>
-            </div>
-          </div>
-        </>
-      )} */}
     </div>
   );
 };

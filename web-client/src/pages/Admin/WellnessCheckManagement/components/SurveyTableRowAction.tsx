@@ -76,29 +76,6 @@ const SurveyTableRowAction = ({ rowId }: TRowAction) => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-    // <div className="flex flex-col">
-    //   <button
-    //     type="button"
-    //     className="bg-indigo-500 rounded px-3 py-1 text-white"
-    //     onClick={onViewHandler}
-    //   >
-    //     View
-    //   </button>
-    //   <button
-    //     type="button"
-    //     className="bg-red-500 rounded px-3 py-1 text-white my-1"
-    //     onClick={onDeleteHandler}
-    //   >
-    //     {isLoading ? "Loading..." : "Delete"}
-    //   </button>
-    //   <button
-    //     type="button"
-    //     className="bg-indigo-500 rounded px-3 py-1 text-white"
-    //     onClick={onGenerateReportHandler}
-    //   >
-    //     {isLoading ? "Loading..." : "Report"}
-    //   </button>
-    // </div>
   );
 };
 
