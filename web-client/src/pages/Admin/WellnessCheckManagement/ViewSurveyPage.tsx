@@ -22,19 +22,19 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import ResponseTable from "./components/ResponseTable";
 import { LoaderSpin } from "../../../components/Loader/Loader";
 import Doughnut from "../../../components/Charts/Doughnut";
-import { TbEdit, TbInputCheck } from "react-icons/tb";
+import { TbEdit, TbInputCheck, TbReport } from "react-icons/tb";
 import SurveyForm from "./components/SurveyForm";
 import { toast } from "react-toastify";
 
 const ViewSurveyPage = () => {
   const navigate = useNavigate();
-  const { alertId } = useParams();
+  const { surveyId } = useParams();
   const {
     data: surveyData,
     isLoading,
     isFetching,
     error,
-  } = useGetSurveyByIdQuery(alertId);
+  } = useGetSurveyByIdQuery(surveyId);
 
   const [
     updateAlert,
@@ -57,7 +57,7 @@ const ViewSurveyPage = () => {
           status: "inactive",
           endDate: new Date().toISOString(),
         },
-        id: alertId || "",
+        id: surveyId || "",
       }).unwrap,
       {
         pending: "Unpublishing survey...",
@@ -78,7 +78,7 @@ const ViewSurveyPage = () => {
     return <p>Loading...</p>;
   }
   if (error) {
-    console.log(alertId);
+    console.log(surveyId);
     console.log(error);
 
     return <p>Something went wrong</p>;
@@ -120,6 +120,18 @@ const ViewSurveyPage = () => {
                 Finish
               </button>
             )}
+            <button
+              className="flex items-center gap-2 text-sm text-red-500 font-semibold border border-red-500 rounded-md py-2 px-3
+                hover:bg-red-500 hover:text-white transition-all duration-100
+                "
+              onClick={() =>
+                window.open(`/wellness-check/report/${surveyId}`, "_blank")
+              }
+            >
+              <TbReport className="text-lg" />
+              Generate Report
+            </button>
+
             <Dialog>
               <DialogTrigger className="btn-primary">
                 <TbEdit className="text-lg" />

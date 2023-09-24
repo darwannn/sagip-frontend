@@ -226,7 +226,7 @@ export const router = createBrowserRouter([
         path: "wellness-check",
         children: [
           { index: true, element: <ManageSurveyPage /> },
-          { path: ":alertId", element: <ViewSurveyPage /> },
+          { path: ":surveyId", element: <ViewSurveyPage /> },
           /* { path: "report/:alertId", element: <AlertReport /> }, */
         ],
       },
