@@ -108,7 +108,7 @@ const AssistanceMap = ({ myAssistanceRequest }: TProps) => {
                   }}
                   icon={{
                     url: responder_marker,
-                    scaledSize: new window.google.maps.Size(50, 50),
+                    scaledSize: new window.google.maps.Size(75, 75),
                   }}
                   onClick={() => setShowBottomSheet(true)}
                 />

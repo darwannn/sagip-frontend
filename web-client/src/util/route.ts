@@ -12,7 +12,7 @@ export const getRoute = async (
       travelMode: google.maps.TravelMode.DRIVING,
     });
 
-    // Calculate estimated time in hours and minutes
+    // calculate estimated time in hours and minutes
     const duration = results.routes[0].legs[0].duration;
     let estimatedTime = "Unknown duration";
 

@@ -11,12 +11,12 @@ import { useGetOngoingAssistanceRequestsQuery } from "../../../services/assistan
 import { useGetOngoingHazardQuery } from "../../../services/hazardReportsQuery";
 import { useGetFacilitiesQuery } from "../../../services/facilityQuery";
 
-import evacuation_icon from "../../../assets/img/evacuation_icon.png";
-import hospital_icon from "../../../assets/img/hospital_icon.png";
-import police_station_icon from "../../../assets/img/police_station_icon.png";
-import my_location_icon from "../../../assets/img/my_location_icon.png";
-import fire_station_icon from "../../../assets/img/fire_station_icon.png";
-import hazard_icon from "../../../assets/img/hazard_icon.png";
+import evacuation_icon from "../../../assets/img/markers/evacuation_area.png";
+import hospital_icon from "../../../assets/img/markers/hospital.png";
+import police_station_icon from "../../../assets/img/markers/police_station.png";
+import my_location_icon from "../../../assets/img/markers/my_location.png";
+import fire_station_icon from "../../../assets/img/markers/fire_station.png";
+import hazard_icon from "../../../assets/img/markers/hazard.png";
 
 import { MarkerF } from "@react-google-maps/api";
 
@@ -172,7 +172,7 @@ const EmergencyReportsPage = () => {
                     }}
                     icon={{
                       url: my_location_icon,
-                      scaledSize: new window.google.maps.Size(50, 50),
+                      scaledSize: new window.google.maps.Size(75, 75),
                     }}
                     onClick={() => {
                       dispatch(setSelectedAssistanceRequest(assistance));
@@ -193,7 +193,7 @@ const EmergencyReportsPage = () => {
                 }}
                 icon={{
                   url: hazard_icon,
-                  scaledSize: new window.google.maps.Size(50, 50),
+                  scaledSize: new window.google.maps.Size(75, 75),
                 }}
                 onClick={() => {
                   dispatch(setSelectedHazardReport(hazard));
@@ -238,7 +238,7 @@ const EmergencyReportsPage = () => {
                           : facility.category === "Hospital"
                           ? hospital_icon
                           : my_location_icon,
-                      scaledSize: new window.google.maps.Size(50, 50),
+                      scaledSize: new window.google.maps.Size(75, 75),
                     }}
                     onClick={() => {
                       dispatch(setSelectedFacility(facility));

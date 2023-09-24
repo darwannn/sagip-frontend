@@ -6,7 +6,7 @@ import ManageTeamPage from "../pages/Admin/TeamManagement/ManageTeamPage";
 import EmergencyReportsPage from "../pages/Admin/AssistanceRequestManagement/EmergencyReportsPage";
 import HazardReportsPage from "../pages/Admin/HazardReportsManagement/HazardReportsPage";
 import ManageFacilitiesPage from "../pages/Admin/FacilityManagement/ManageFacilitiesPage";
-import { checkAuth, isLoggedIn } from "../util/auth";
+import { allowedUserType, isLoggedIn, isInForgotPassword } from "../util/auth";
 import ManageArticlesPage from "../pages/Admin/ArticleManagement/ManageArticlesPage";
 import CreateArticlesPage from "../pages/Admin/ArticleManagement/CreateArticlesPage";
 import ViewArticlePage from "../pages/Admin/ArticleManagement/ViewArticlePage";
@@ -69,15 +69,18 @@ import AssistanceRequestPage from "../pages/Mobile/AssistanceRequest/AssistanceR
 export const router = createBrowserRouter([
   {
     path: "/",
+
     element: <TEMP_ROOT_PAGE />,
     children: [
       {
         index: true,
+        loader: () => isLoggedIn(["super-admin", "admin", "dispatcher"]),
         element: <LandingPage />,
       },
       {
         path: "login",
-        loader: isLoggedIn,
+        loader: () => isLoggedIn(["super-admin", "admin", "dispatcher"]),
+
         children: [
           {
             index: true,
@@ -92,50 +95,58 @@ export const router = createBrowserRouter([
 
       {
         path: "register",
-        /* loader: isLoggedIn, */
+        loader: () => isLoggedIn(["super-admin", "admin", "dispatcher"]),
         children: [
           { index: true, element: <RegistrationPage /> },
           {
             path: "contact-verification",
+            loader: () => allowedUserType(["resident"], true),
             element: <RegisterContactVerification />,
           },
           {
+            loader: () => allowedUserType(["resident"], true),
             path: "identity-verification",
+
             element: <RegistrationAlmostDone />,
           },
         ],
       },
       {
         path: "identity-verification",
+        loader: () => allowedUserType(["resident"], true),
         element: <IdentityVerificationPage />,
       },
       {
         path: "forgot-password",
-        /* loader: isLoggedIn, */
+
         children: [
           { index: true, element: <ForgotPasswordPage /> },
           {
             path: "contact-verification",
+            loader: () => isInForgotPassword("forgot-password"),
             element: <ForgotPasswordContactVerification />,
           },
         ],
       },
       {
-        path: "/new-password",
+        path: "new-password",
         element: <NewPasswordPage />,
-        /* loader: isLoggedIn, */
+        loader: () => isInForgotPassword("new-password"),
       },
       {
         path: "home",
+        loader: () => allowedUserType(["responder", "resident"], false),
         element: <Home />,
       },
       {
         path: "emergency-hotlines",
+        loader: () => allowedUserType(["responder", "resident"], false),
         element: <EmergencyHotlinesPage />,
       },
       {
         path: "articles",
-        /* loader: isLoggedIn, */
+
+        loader: () => allowedUserType(["responder", "resident"], false),
         children: [
           { index: true, element: <ArticlesPage /> },
           {
@@ -150,10 +161,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "account-settings",
+        loader: () => allowedUserType(["responder", "resident"], true),
         element: <MobileAccountSettingPage />,
       },
       {
         path: "responder",
+        loader: () => allowedUserType(["responder"], true),
         children: [
           { index: true, element: <ResponderPage /> },
           {
@@ -164,18 +177,29 @@ export const router = createBrowserRouter([
       },
       {
         path: "hazard-map",
+        loader: () => allowedUserType(["responder", "resident"], false),
         element: <HazardMap />,
       },
       {
         path: "hazard-reports",
+        loader: () => allowedUserType(["responder", "resident"], false),
         children: [
           { index: true, element: <HazardReportPage /> },
-          { path: "create", element: <SubmitHazardReportForm /> },
-          { path: "edit/:hazardId", element: <SubmitHazardReportForm /> },
+          {
+            path: "create",
+            loader: () => allowedUserType(["responder", "resident"], true),
+            element: <SubmitHazardReportForm />,
+          },
+          {
+            path: "edit/:hazardId",
+            loader: () => allowedUserType(["responder", "resident"], true),
+            element: <SubmitHazardReportForm />,
+          },
         ],
       },
       {
         path: "emergency-reports",
+        loader: () => allowedUserType(["responder", "resident"], true),
         children: [{ index: true, element: <AssistanceRequestPage /> }],
       },
     ],
@@ -184,12 +208,19 @@ export const router = createBrowserRouter([
   {
     path: "admin",
     element: <AdminRootLayout />,
-    loader: checkAuth,
     children: [
-      { index: true, element: <Dashboard /> },
+      {
+        index: true,
+        loader: () =>
+          allowedUserType(
+            ["super-admin", "admin", "dispatcher", "responder"],
+            true
+          ),
+        element: <Dashboard />,
+      },
       {
         path: "users",
-        // loader:
+        loader: () => allowedUserType(["super-admin"], true),
         children: [
           { index: true, element: <ManageUserPage /> },
           { path: "create", element: <CreateUserPage /> },
@@ -210,6 +241,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "teams",
+        loader: () =>
+          allowedUserType(["super-admin", "admin", "dispatcher"], true),
         element: <ManageTeamPage />,
         children: [
           { index: true, element: <ManageRespondersPage /> },
@@ -218,18 +251,25 @@ export const router = createBrowserRouter([
       },
       {
         path: "emergency-reports",
+        loader: () =>
+          allowedUserType(["super-admin", "admin", "dispatcher"], true),
         element: <EmergencyReportsPage />,
       },
       {
         path: "hazard-reports",
+        loader: () =>
+          allowedUserType(["super-admin", "admin", "dispatcher"], true),
         element: <HazardReportsPage />,
       },
       {
         path: "facility-map",
+        loader: () =>
+          allowedUserType(["super-admin", "admin", "dispatcher"], true),
         element: <ManageFacilitiesPage />,
       },
       {
         path: "wellness-check",
+        loader: () => allowedUserType(["super-admin", "admin"], true),
         children: [
           { index: true, element: <ManageSurveyPage /> },
           { path: "create", element: <CreateSurveyPage /> },
@@ -239,6 +279,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "manage-articles",
+        loader: () => allowedUserType(["super-admin", "admin"], true),
         children: [
           { index: true, element: <ManageArticlesPage /> },
           { path: "create", element: <CreateArticlesPage /> },
@@ -247,10 +288,14 @@ export const router = createBrowserRouter([
       },
       {
         path: "alert-management",
+        loader: () =>
+          allowedUserType(["super-admin", "admin", "dispatcher"], true),
         element: <AlertPage />,
       },
       {
         path: "account-settings",
+        loader: () =>
+          allowedUserType(["super-admin", "admin", "dispatcher"], true),
         element: <ManageAccountPage />,
         children: [
           { index: true, element: <AccountSettingsPage /> },
@@ -269,10 +314,10 @@ export const router = createBrowserRouter([
     loader: ArticlePreviewLoader,
     // children: [{ path: ":id", element: <ArticlePreviewPage /> }],
   },
-  /* temporary, so the report will open in new tab (without side navigation menu) */
+
   {
     path: "/wellness-check/report/:surveyId",
+    loader: () => allowedUserType(["super-admin", "admin"], true),
     element: <SurveyReport />,
-    loader: checkAuth,
   },
 ]);
