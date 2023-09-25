@@ -25,15 +25,19 @@ const EmergencyReportsPage = () => {
   if (isError) console.log(error);
 
   return (
-    <div className="relative h-screen">
-      <div className="flex flex-col p-2">
-        <div className="relative z-[5] flex flex-col w-max items-start bg-white p-3 max-h-[70vh] min-w-[350px] shadow border rounded-md ">
-          <AssistanceFilters />
-          <AssistanceList />
+    <div className="relative flex flex-row bg-white-100">
+      <div className="flex flex-col gap-5 py-10 px-5 w-[400px] border-r bg-gray-50">
+        {/* Header */}
+        <div className="">
+          <h1 className="text-xl font-bold">Emergency Reports</h1>
         </div>
+        <AssistanceFilters />
+        <AssistanceList />
+        {/* <div className="relative z-[5] flex flex-col w-max items-start bg-white p-3 max-h-[70vh] min-w-[350px] shadow border rounded-md ">
+        </div> */}
       </div>
       {selectedAssistance && <AssistanceDetails />}
-      <div className="absolute top-0 z-0 w-full">
+      <div className="flex-1">
         <MapComponent onSetMapHandler={setMap}>
           {/* Child components, such as markers, info windows, etc. */}
           {!isLoading &&
