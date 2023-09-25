@@ -12,7 +12,7 @@ const AssistanceList = memo(() => {
   );
 
   return (
-    <div className="flex-grow flex flex-col gap-2 w-full overflow-x-auto">
+    <div className="flex-grow flex flex-col gap-5 px-1 w-full overflow-y-auto">
       {filteredAssistance?.map((assistance) => (
         <AssistanceItem key={assistance._id} assistance={assistance} />
       ))}
