@@ -30,37 +30,63 @@ export const getAuthToken = () => {
   return token;
 };
 
-// Checks if the user is logged in, if not, redirect to login page
-export const checkAuth = () => {
-  // We get the token from local storage
-  const token = getAuthToken();
-
-  // If there is no token, we redirect to the login page
-  if (!token) {
-    console.log("No token found in local storage");
-    return redirect("/login");
-  }
-  // TODO: set a different error message for expired token
-  return null;
-};
-
-// Checks if the user is logged in, if so, redirect to home page
-export const isLoggedIn = () => {
+// Checks if the user is logged in. If so, redirect to their respective page depending on userType.
+// TODO: Refactor/combine isLoggedIn and allowedUserType functions.
+export const isLoggedIn = (allowedUserTypes: string[]) => {
   const token = getAuthToken();
   if (token) {
     const decodedToken = jwtDecode<Token>(token || "");
-    const target = decodedToken.target;
-    /* const userType = decodedToken.userType; */
-    // TODO: REDIRECT DEPENDING ON USER TYPE
-    if (target === "login") {
-      // TEMPORARY
-      /* if (
-        userType === "dispatcher" ||
-        userType === "admin" ||
-        userType === "super-admin"
-      ) */
-      return redirect("/admin");
+    const tokenTarget = decodedToken.target;
+    const userType = decodedToken.userType;
+
+    console.log(decodedToken);
+
+    if (tokenTarget === "login") {
+      if (allowedUserTypes.includes(userType)) {
+        return redirect("/admin");
+      } else {
+        return redirect("/home");
+      }
     }
+  }
+  return null;
+};
+
+// Checks if the user is allowed on the page based on their userType. If not, they will be redirected to the login page.
+
+export const allowedUserType = (
+  allowedUserType: string[],
+  isTokenRequired: boolean
+) => {
+  console.log(allowedUserType);
+  console.log(isTokenRequired);
+  // TODO: Uncomment once all the system functionality are integrated
+  /* const token = getAuthToken();
+  if (token) {
+    const decodedToken = jwtDecode<Token>(token || "");
+    const userType = decodedToken.userType;
+    if (decodedToken.target === "login") {
+      if (!allowedUserType.includes(userType)) {
+        return redirect("/login");
+      }
+    }
+  } else {
+    if (isTokenRequired) {
+      return redirect("/login");
+    }
+  } */
+  return null;
+};
+
+export const isInForgotPassword = (target: string) => {
+  const token = getAuthToken();
+  if (token) {
+    const decodedToken = jwtDecode<Token>(token || "");
+    if (decodedToken.target !== target) {
+      return redirect("/forgot-password");
+    }
+  } else {
+    return redirect("/forgot-password");
   }
   return null;
 };

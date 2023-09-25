@@ -47,7 +47,16 @@ const LoginForm = () => {
       });
       // TODO: REDIRECT DEPENDS ON USER ROLE
       if (resData.success) {
-        navigate("/admin");
+        console.log("resData.userType");
+        console.log(resData.userType);
+        if (
+          resData.userType === "responder" ||
+          resData.userType === "resident"
+        ) {
+          navigate("/home");
+        } else {
+          navigate("/admin");
+        }
         window.AndroidInterface?.updateFcmToken(data.identifier);
       }
       if (resData.message.includes("attempt")) {
@@ -73,28 +82,38 @@ const LoginForm = () => {
   if (isLoading) console.log("Submitting...");
   if (isError) console.log("Error Login");
   if (isSuccess) console.log("Login successfully");
+
+  console.log(
+    newPasswordRes?.success ||
+      deleteAccountRes?.success ||
+      (serverRes && !serverRes.message.includes("input error") && "print me")
+  );
+  console.log("faske");
+  console.log(newPasswordRes?.success);
+  console.log(newPasswordRes);
   return (
     <>
-      {/* display success message from newPassword or account deletion */}
-      {newPasswordRes?.success ||
-        deleteAccountRes?.success ||
-        (serverRes && !serverRes.message.includes("input error") && (
-          <div
-            className={`mt-3 p-2 rounded-md text-center ${
-              newPasswordRes?.success || deleteAccountRes?.success
-                ? "bg-green-500 text-white"
-                : "bg-red-500 text-white"
-            }`}
-          >
-            {newPasswordRes?.success &&
-              "Password changed successfully. You can now login with your new password."}
-            {deleteAccountRes?.success &&
-              "Account deleted. You have 30 days to login and recover your account."}
-            {serverRes?.message}
-          </div>
-        ))}
-
       <div className="mb-10 flex-1 sm:flex-grow-0">
+        {/* display success message from newPassword or account deletion */}
+        {(newPasswordRes?.success ||
+          deleteAccountRes?.success ||
+          (serverRes && !serverRes.message.includes("input error"))) && (
+          <>
+            <div
+              className={`mt-3 p-2 rounded-md text-center ${
+                newPasswordRes?.success || deleteAccountRes?.success
+                  ? "bg-green-500 text-white"
+                  : "bg-red-500 text-white"
+              }`}
+            >
+              {newPasswordRes?.success &&
+                "Password changed successfully. You can now login with your new password."}
+              {deleteAccountRes?.success &&
+                "Account deleted. You have 30 days to login and recover your account."}
+              {serverRes?.message}
+            </div>
+          </>
+        )}
         <div className="my-3">
           <label htmlFor="identifier" className=" text-md  text-gray-500">
             Email Address or Contact Number:

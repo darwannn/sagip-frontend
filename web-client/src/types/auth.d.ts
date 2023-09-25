@@ -29,7 +29,7 @@ export type AuthResponse = {
   success: boolean;
   message: string;
   token?: string;
-
+  userType?: string;
   identifier?: string;
   password?: string;
 };

@@ -51,6 +51,17 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
       },
     }),
 
+    /* Return only one current assistance request from the user with an unverified or ongoing status */
+    getMyAssistanceRequest: builder.query<TAssistanceRequest, void>({
+      query: () => ({
+        url: "assistance-request/myrequest",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: ["MyAssistanceRequest"],
+    }),
+
     getOngoingAssistanceRequests: builder.query<TAssistanceRequest[], void>({
       query: () => ({
         url: `assistance-request/ongoing`,
@@ -105,6 +116,7 @@ export const {
   useGetAssistanceRequestByIdQuery,
   useDismissAssistanceRequestMutation,
 
+  useGetMyAssistanceRequestQuery,
   useGetOngoingAssistanceRequestsQuery,
   useGetToRespondAssistanceRequestsQuery,
 

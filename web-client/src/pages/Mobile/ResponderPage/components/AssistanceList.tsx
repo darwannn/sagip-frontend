@@ -14,7 +14,9 @@ const VerifyUserList = ({ assistanceReq }: TProps) => {
             <AssistanceItem key={index} assistanceReq={article} />
           ))
         ) : (
-          <p className="text-center">No Results</p>
+          <p className="text-center">
+            There is currently no assistance request assigned to your team.
+          </p>
         )}
       </div>
     </>

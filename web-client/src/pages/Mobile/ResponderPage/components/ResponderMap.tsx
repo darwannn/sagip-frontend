@@ -7,7 +7,7 @@ import { setSelectedAssistanceRequest } from "../../../../store/slices/assistanc
 
 import { useGetOngoingAssistanceRequestsQuery } from "../../../../services/assistanceRequestQuery";
 
-import my_location_icon from "../../../../assets/img/my_location_icon.png";
+import my_location_icon from "../../../../assets/img/markers/my_location.png";
 
 import { MarkerF } from "@react-google-maps/api";
 
@@ -83,7 +83,7 @@ const EmergencyReportsPage = () => {
                 }}
                 icon={{
                   url: my_location_icon,
-                  scaledSize: new window.google.maps.Size(50, 50),
+                  scaledSize: new window.google.maps.Size(75, 75),
                 }}
                 onClick={() => {
                   dispatch(setSelectedAssistanceRequest(assistance));
