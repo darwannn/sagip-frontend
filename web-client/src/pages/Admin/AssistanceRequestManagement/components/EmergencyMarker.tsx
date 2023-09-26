@@ -5,13 +5,13 @@ import { TAssistanceRequest } from "../../../../types/assistanceRequest";
 interface EmergenyMarkerProps {
   assistanceData: TAssistanceRequest;
 }
-
-// Custom Markers
-import fireMarker from "../../../../assets/img/markers/assistance_request/Fire.png";
 import { useAppSelector } from "../../../../store/hooks";
 import { selectAssistanceReq } from "../../../../store/slices/assistanceReqSlice";
 import { formatAsstReqDate } from "../../../../util/date";
-// import trappedMarker from "../../../../assets/img/markers/assistance_request/Trap.png";
+
+// Custom Markers
+// import fireMarker from "../../../../assets/img/markers/assistance_request/Fire.png";
+import trappedMarker from "../../../../assets/img/markers/assistance_request/Trap.png";
 // import medicalMarker from "../../../../assets/img/markers/assistance_request/Injury.png";
 
 const EmergenyMarker: React.FC<EmergenyMarkerProps> = memo(
@@ -26,7 +26,7 @@ const EmergenyMarker: React.FC<EmergenyMarkerProps> = memo(
           lng: assistanceData.longitude,
         }}
         icon={{
-          url: fireMarker,
+          url: trappedMarker,
           scaledSize: new google.maps.Size(50, 50),
         }}
       >
