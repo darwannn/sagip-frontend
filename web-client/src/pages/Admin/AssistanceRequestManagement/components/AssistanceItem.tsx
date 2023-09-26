@@ -17,6 +17,16 @@ const AssistanceItem: React.FC<AssistanceItemProps> = ({ assistance }) => {
     dispatch(setSelectedAssistanceRequest(assistance));
   };
 
+  let badgeColor = "bg-gray-500";
+  // New
+  if (assistance.status === "unverified") badgeColor = "bg-red-300";
+  // Ongoing
+  if (assistance.status === "ongoing") badgeColor = "bg-green-500";
+  // Done
+  if (assistance.status === "resolved") badgeColor = "bg-blue-500";
+
+  const status = assistance.status === "unverified" ? "New" : assistance.status;
+
   return (
     <div
       className="text-sm flex flex-col border rounded-md cursor-pointer bg-white hover:shadow-md hover:translate-x-1 transition-all duration-100 "
@@ -31,8 +41,8 @@ const AssistanceItem: React.FC<AssistanceItemProps> = ({ assistance }) => {
         <div className="flex flex-col gap-3">
           <div className="flex flex-col">
             <span className="text-xs text-gray-500">{assistance._id}</span>
-            <Badge className="w-max bg-gray-500 rounded-md capitalize">
-              {assistance.status}
+            <Badge className={`w-max rounded-md capitalize ${badgeColor}`}>
+              {status}
             </Badge>
           </div>
           <div className="">
