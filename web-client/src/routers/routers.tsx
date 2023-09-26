@@ -63,6 +63,7 @@ import VerifyUserData from "../pages/Admin/UserManagement/components/VerifyUserD
 
 import HazardReportPage from "../pages/Mobile/HazardReport/HazardReportPage";
 import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/SubmitHazardReportForm";
+import EmergencyPage from "../pages/Admin/AssistanceRequestManagement/EmergencyPage";
 
 export const router = createBrowserRouter([
   {
@@ -212,7 +213,10 @@ export const router = createBrowserRouter([
       },
       {
         path: "emergency-reports",
-        element: <EmergencyReportsPage />,
+        children: [
+          { index: true, element: <EmergencyReportsPage /> },
+          { path: ":id", element: <EmergencyPage /> },
+        ],
       },
       {
         path: "hazard-reports",

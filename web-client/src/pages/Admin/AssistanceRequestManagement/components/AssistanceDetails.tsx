@@ -13,8 +13,10 @@ import DismissAssistanceForm from "./DismissAssistanceForm";
 import { Badge } from "../../../../components/ui/Badge";
 import { TbFlagSearch } from "react-icons/tb";
 import { formatAsstReqDate } from "../../../../util/date";
+import { useNavigate } from "react-router";
 
 const AssistanceDetails = () => {
+  const navigate = useNavigate();
   const assistanceReq = useAppSelector(selectAssistanceReq);
   const [isDismiss, setIsDismiss] = useState(false);
   const {
@@ -148,7 +150,11 @@ const AssistanceDetails = () => {
           <button className="btn-secondary" onClick={() => setIsDismiss(true)}>
             Reject
           </button>
-          <button type="button" className="btn-primary">
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={() => navigate(`${assistanceReq?._id}`)}
+          >
             Accept Request
           </button>
         </div>
