@@ -32,7 +32,11 @@ const AssistanceItem: React.FC<AssistanceItemProps> = ({ assistance }) => {
       className="text-sm flex flex-col border rounded-md cursor-pointer bg-white hover:shadow-md hover:translate-x-1 transition-all duration-100 "
       onClick={() => handleOnClick()}
     >
-      <div className="border-b p-2 border-l-4 border-l-red-500 text-gray-700 font-semibold">
+      <div
+        className={`border-b p-2 border-l-4  text-gray-700 font-semibold ${
+          status === "New" ? "border-l-red-500" : ""
+        }`}
+      >
         {/* <span className="text-gray-500 text-xs">{assistance._id}</span> */}
         <TbFlagSearch className="inline  text-lg mr-1" />
         <span className="text-sm">Trapped</span>
