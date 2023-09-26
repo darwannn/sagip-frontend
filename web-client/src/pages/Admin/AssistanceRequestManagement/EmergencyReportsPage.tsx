@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import MapComponent from "../FacilityManagement/components/MapComponent";
 import { useGetAllAssistanceRequestsQuery } from "../../../services/assistanceRequestQuery";
 import AssistanceList from "./components/AssistanceList";
-import { InfoWindowF, MarkerF } from "@react-google-maps/api";
 import AssistanceDetails from "./components/AssistanceDetails";
 import { useAppSelector } from "../../../store/hooks";
 import { selectAssistanceReq } from "../../../store/slices/assistanceReqSlice";
 import AssistanceFilters from "./components/AssistanceFilter";
 import { TAssistanceRequest } from "../../../types/assistanceRequest";
 import { useSearchParams } from "react-router-dom";
-import { formatAsstReqDate } from "../../../util/date";
+import EmergencyMarker from "./components/EmergencyMarker";
+
 const EmergencyReportsPage = () => {
   // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -39,6 +39,7 @@ const EmergencyReportsPage = () => {
     if (selectedAssistance) {
       const { latitude, longitude } = selectedAssistance;
       map?.panTo({ lat: latitude, lng: longitude });
+      map?.panBy(300, 0);
     }
   }, [selectedAssistance, map]);
 
@@ -62,36 +63,12 @@ const EmergencyReportsPage = () => {
         <MapComponent onSetMapHandler={setMap}>
           {/* Child components, such as markers, info windows, etc. */}
           {!isLoading &&
+            window.google &&
             filtered?.map((assistance) => (
-              <MarkerF
+              <EmergencyMarker
                 key={assistance._id}
-                position={{
-                  lat: assistance.latitude,
-                  lng: assistance.longitude,
-                }}
-              >
-                <InfoWindowF
-                  position={{
-                    lat: assistance.latitude,
-                    lng: assistance.longitude,
-                  }}
-                >
-                  {filter === "" ? (
-                    <div className="m-2">
-                      <p className="font-semibold">{assistance._id}</p>
-                    </div>
-                  ) : (
-                    <div className="p-2">
-                      <div>
-                        <span className="text-gray-500">{assistance._id}</span>
-                      </div>
-                      <div className="text-sm font-semibold">
-                        <p>{formatAsstReqDate(assistance.createdAt)}</p>
-                      </div>
-                    </div>
-                  )}
-                </InfoWindowF>
-              </MarkerF>
+                assistanceData={assistance}
+              />
             ))}
         </MapComponent>
       </div>
