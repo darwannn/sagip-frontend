@@ -9,6 +9,7 @@ import { selectAssistanceReq } from "../../../store/slices/assistanceReqSlice";
 import AssistanceFilters from "./components/AssistanceFilter";
 import { TAssistanceRequest } from "../../../types/assistanceRequest";
 import { useSearchParams } from "react-router-dom";
+import { formatAsstReqDate } from "../../../util/date";
 const EmergencyReportsPage = () => {
   // Map State / Instance
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -75,9 +76,20 @@ const EmergencyReportsPage = () => {
                     lng: assistance.longitude,
                   }}
                 >
-                  <div className="m-2">
-                    <p className="font-semibold">{assistance._id}</p>
-                  </div>
+                  {filter === "" ? (
+                    <div className="m-2">
+                      <p className="font-semibold">{assistance._id}</p>
+                    </div>
+                  ) : (
+                    <div className="p-2">
+                      <div>
+                        <span className="text-gray-500">{assistance._id}</span>
+                      </div>
+                      <div className="text-sm font-semibold">
+                        <p>{formatAsstReqDate(assistance.createdAt)}</p>
+                      </div>
+                    </div>
+                  )}
                 </InfoWindowF>
               </MarkerF>
             ))}
