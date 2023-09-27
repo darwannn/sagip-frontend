@@ -19,6 +19,7 @@ type TProps = {
   children: React.ReactNode;
   onSetMapHandler: (map: google.maps.Map) => void;
   containerStyle?: React.CSSProperties;
+  customCenter?: { lat: number; lng: number };
 };
 
 const libraries: (
@@ -30,11 +31,12 @@ const libraries: (
 )[] = ["places"];
 
 const MapComponent = memo(
-  ({ children, onSetMapHandler, containerStyle }: TProps) => {
+  ({ children, onSetMapHandler, containerStyle, customCenter }: TProps) => {
     const mapContainerStyle = containerStyle || {
       width: "100%",
       height: "100vh",
     };
+    const mapCenter = customCenter || center;
     const { isLoaded: isMapLoaded } = useJsApiLoader({
       id: "google-map-script",
       googleMapsApiKey: GOOGLE_MAP_API_KEY,
@@ -57,7 +59,7 @@ const MapComponent = memo(
         {isMapLoaded && (
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
-            center={center}
+            center={mapCenter}
             zoom={15}
             options={{
               mapId: "ca99ebef66d0dc2e",
