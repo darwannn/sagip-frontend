@@ -22,10 +22,10 @@ const HazardItem = ({ hazardData, isMyReport }: TProps) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="bg-white  rounded-2xl p-3 shadow-md relative">
+      <div className="bg-white rounded-2xl p-3 shadow-md relative">
         <ItemActionButton hazardData={hazardData} />
         <div className="flex">
-          <div className="h-[100px] w-[100px] mr-3">
+          <div className="flex-shrink-0 w-[100px] h-[100px] mr-3">
             {["jpeg", "jpg", "png"].some((extension) =>
               hazardData.proof.includes(extension)
             ) ? (

@@ -6,7 +6,7 @@ export const facilityQueryApi = rootApi.injectEndpoints({
     // Get all facilities
     getFacilities: builder.query<TFacility[], void>({
       query: () => "emergency-facility",
-      providesTags: ["Facility"],
+      providesTags: ["Facility", "OperationalFacility"],
     }),
     // Add facility
     addFacility: builder.mutation<void, { body: FormData }>({
@@ -18,7 +18,7 @@ export const facilityQueryApi = rootApi.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["Facility"],
+      invalidatesTags: ["Facility", "OperationalFacility"],
     }),
     // Update facility
     updateFacility: builder.mutation<
@@ -33,7 +33,7 @@ export const facilityQueryApi = rootApi.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["Facility"],
+      invalidatesTags: ["Facility", "OperationalFacility"],
     }),
     // Delete facility
     deleteFacility: builder.mutation<void, { id: string | undefined }>({
@@ -44,7 +44,12 @@ export const facilityQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: ["Facility"],
+      invalidatesTags: ["Facility", "OperationalFacility"],
+    }),
+
+    getOperationalFacilities: builder.query<TFacility[], void>({
+      query: () => "emergency-facility/operational",
+      providesTags: ["OperationalFacility"],
     }),
   }),
 });
@@ -54,4 +59,5 @@ export const {
   useAddFacilityMutation,
   useUpdateFacilityMutation,
   useDeleteFacilityMutation,
+  useGetOperationalFacilitiesQuery,
 } = facilityQueryApi;

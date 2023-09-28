@@ -64,7 +64,7 @@ const Home = () => {
             signalAlertData={signalAlertData}
           />
         )}
-        {userData && wellnessSurveyData && (
+        {userData && userData.userType === "resident" && wellnessSurveyData && (
           <WellnessSurvey wellnessSurveyData={wellnessSurveyData} />
         )}
         <EmergencyHotlines />

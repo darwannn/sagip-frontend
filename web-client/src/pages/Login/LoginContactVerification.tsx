@@ -12,7 +12,7 @@ const LoginContactVerification = () => {
             buttonAction="navigate"
             action="/login"
           />
-          <ContactVerification action="login" navigateTo="/" />
+          <ContactVerification action="login" navigateTo="" />
         </>
       }
     />

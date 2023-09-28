@@ -7,6 +7,7 @@ const initialState: AuthState = {
   token: null,
 
   passwordVerificationRes: null,
+  verifyOwnershipRes: null,
   contactVerificationRes: null,
   identifier: null,
   newPasswordRes: null,
@@ -64,6 +65,12 @@ export const authSlice = createSlice({
     setRegistrationSuccessful: (state, action: PayloadAction<boolean>) => {
       state.registrationSuccessful = action.payload;
     },
+    setVerifyOwnershipRes: (
+      state,
+      action: PayloadAction<Partial<TUserResData>>
+    ) => {
+      state.verifyOwnershipRes = action.payload;
+    },
   },
 });
 
@@ -76,5 +83,6 @@ export const {
   setDisplayedRegisterPage,
   setDisplayedVerificationPage,
   setRegistrationSuccessful,
+  setVerifyOwnershipRes,
 } = authSlice.actions;
 export default authSlice.reducer;

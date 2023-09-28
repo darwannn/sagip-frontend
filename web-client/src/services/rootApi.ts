@@ -26,6 +26,7 @@ export const rootApi = createApi({
     "ToRespondAssistanceRequest",
     // FACILITY QUERY
     "Facility",
+    "OperationalFacility",
     "SelectedFacility",
     // HAZARD REPORT QUERY
     "HazardReports",

@@ -47,6 +47,10 @@ const WeatherAlert = ({ signalAlertData, weatherAlertData }: TProps) => {
                     </span>
                     weather condition
                   </div>
+                  <div className="text-[12px] mt-1">
+                    the informationon on the typhoon were obtained from
+                    pagasa.chlod.net
+                  </div>
                 </div>
               </div>
             </div>
