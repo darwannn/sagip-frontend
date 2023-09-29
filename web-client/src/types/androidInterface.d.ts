@@ -13,4 +13,5 @@ interface AndroidInterface {
   updateFcmToken: (userId: string | null | undefined) => void;
   removeFcmToken: () => void;
   vibrateOnHold: () => void;
+  isCameraEnabled: () => boolean;
 }

@@ -287,7 +287,12 @@ const ToggleMarkers = () => {
                 htmlFor="imageProof"
                 className=" flex items-center justify-center bg-primary-300 text-white gap-2 py-2 rounded-md"
                 onClick={() => {
-                  window.AndroidInterface?.setMediaChooser("camera");
+                  if (window.AndroidInterface?.isCameraEnabled()) {
+                    console.log("camera enabled");
+                    window.AndroidInterface?.setMediaChooser("camera");
+                  } else {
+                    console.log("camera not enabled");
+                  }
                 }}
               >
                 <BsCameraVideo className="text-2xl" /> Photo

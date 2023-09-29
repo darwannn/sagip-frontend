@@ -31,25 +31,25 @@ const EmergencyHotline = () => {
         <EmergencyHotlineList
           logo={Malolos_CDRRMO_Logo}
           title="Malolos Rescue"
-          contactNumber=""
+          contactNumber="09282269801"
           isPrimary={true}
         />
         <EmergencyHotlineList
           logo={fire_truck}
           title="City Fire Station"
-          contactNumber=""
+          contactNumber="09951860370"
           isPrimary={false}
         />
         <EmergencyHotlineList
           logo={police_car}
           title="City Police Station"
-          contactNumber=""
+          contactNumber="09985985383"
           isPrimary={false}
         />
         <EmergencyHotlineList
           logo={Red_Cross_Logo}
           title="Philippine Red Cross"
-          contactNumber=""
+          contactNumber="287902300"
           isPrimary={false}
         />
       </div>
