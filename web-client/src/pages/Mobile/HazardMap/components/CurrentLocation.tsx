@@ -11,8 +11,7 @@ const CurrentLocation = ({ map }: TProps) => {
   const [currentLocationMarker, setCurrentLocationMarker] =
     useState<google.maps.Marker | null>(null);
   const getCurrentLocation = () => {
-    window.AndroidInterface?.isLocationEnabled();
-    if (window.AndroidInterface?.isGeolocationEnabled()) {
+    if (window.AndroidInterface?.isLocationEnabled("resident")) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {

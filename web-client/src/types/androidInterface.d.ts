@@ -14,6 +14,5 @@ interface AndroidInterface {
   removeFcmToken: () => void;
   vibrateOnHold: () => void;
   isCameraEnabled: () => boolean;
-  isGeolocationEnabled: () => boolean;
-  isLocationEnabled: () => void;
+  isLocationEnabled: (userType: string) => boolean;
 }
