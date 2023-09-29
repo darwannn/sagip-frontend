@@ -288,12 +288,7 @@ const ToggleMarkers = () => {
                 className=" flex items-center justify-center bg-primary-300 text-white gap-2 py-2 rounded-md"
                 onClick={() => {
                   if (window.AndroidInterface?.isCameraEnabled()) {
-                    console.log("camera enabled");
-                    alert("camera enabled");
-                    /* window.AndroidInterface?.setMediaChooser("camera"); */
-                  } else {
-                    // console.log("camera not enabled");
-                    alert("camera not enabled");
+                    window.AndroidInterface?.setMediaChooser("camera");
                   }
                 }}
               >
@@ -317,7 +312,9 @@ const ToggleMarkers = () => {
                 htmlFor="videoProof"
                 className="flex items-center justify-center bg-primary-300 text-white gap-2 py-2 rounded-md"
                 onClick={() => {
-                  window.AndroidInterface?.setMediaChooser("camcorder");
+                  if (window.AndroidInterface?.isCameraEnabled()) {
+                    window.AndroidInterface?.setMediaChooser("camcorder");
+                  }
                 }}
               >
                 <AiOutlineCamera className="text-2xl" /> Video
