@@ -15,4 +15,5 @@ interface AndroidInterface {
   vibrateOnHold: () => void;
   isCameraEnabled: () => boolean;
   isGeolocationEnabled: () => boolean;
+  isLocationEnabled: () => void;
 }
