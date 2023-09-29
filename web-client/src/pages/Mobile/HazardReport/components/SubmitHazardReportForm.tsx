@@ -289,9 +289,11 @@ const ToggleMarkers = () => {
                 onClick={() => {
                   if (window.AndroidInterface?.isCameraEnabled()) {
                     console.log("camera enabled");
-                    window.AndroidInterface?.setMediaChooser("camera");
+                    alert("camera enabled");
+                    /* window.AndroidInterface?.setMediaChooser("camera"); */
                   } else {
-                    console.log("camera not enabled");
+                    // console.log("camera not enabled");
+                    alert("camera not enabled");
                   }
                 }}
               >
