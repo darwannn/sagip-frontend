@@ -287,9 +287,7 @@ const ToggleMarkers = () => {
                 htmlFor="imageProof"
                 className=" flex items-center justify-center bg-primary-300 text-white gap-2 py-2 rounded-md"
                 onClick={() => {
-                  if (window.AndroidInterface?.isCameraEnabled()) {
-                    window.AndroidInterface?.setMediaChooser("camera");
-                  }
+                  window.AndroidInterface?.setMediaChooser("camera");
                 }}
               >
                 <BsCameraVideo className="text-2xl" /> Photo
@@ -312,9 +310,7 @@ const ToggleMarkers = () => {
                 htmlFor="videoProof"
                 className="flex items-center justify-center bg-primary-300 text-white gap-2 py-2 rounded-md"
                 onClick={() => {
-                  if (window.AndroidInterface?.isCameraEnabled()) {
-                    window.AndroidInterface?.setMediaChooser("camcorder");
-                  }
+                  window.AndroidInterface?.setMediaChooser("camcorder");
                 }}
               >
                 <AiOutlineCamera className="text-2xl" /> Video
