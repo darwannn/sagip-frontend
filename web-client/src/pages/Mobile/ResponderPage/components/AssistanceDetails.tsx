@@ -51,14 +51,19 @@ const AssistanceDetails = () => {
     }
   };
   const resolve = async () => {
-    const res = await update({
-      action: "resolve",
-      id: assistanceReq?._id || "",
-    });
-    if ("data" in res) {
-      dispatch(setSelectedAssistanceRequest(null));
-      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
-        window.AndroidInterface?.stopSharingLocation();
+    if (window.AndroidInterface?.isLocationEnabled("resident")) {
+      const res = await update({
+        action: "resolve",
+        id: assistanceReq?._id || "",
+      });
+      if ("data" in res) {
+        dispatch(setSelectedAssistanceRequest(null));
+        if (
+          assistanceReq?.assignedTeam?.head._id === decodedToken.id &&
+          token
+        ) {
+          window.AndroidInterface?.stopSharingLocation();
+        }
       }
     }
   };
