@@ -36,34 +36,35 @@ const AssistanceDetails = () => {
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode<Token>(token || "");
   const respond = async () => {
-    const res = await update({
-      action: "respond",
-      id: assistanceReq?._id || "",
-    });
-    if ("data" in res) {
-      setIsBeingResponded(true);
-      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
-        window.AndroidInterface?.startSharingLocation(
-          token,
-          assistanceReq.userId._id
-        );
-      }
-    }
-  };
-  const resolve = async () => {
-    if (window.AndroidInterface?.isLocationEnabled("resident")) {
+    if (window.AndroidInterface?.isLocationEnabled("responder")) {
       const res = await update({
-        action: "resolve",
+        action: "respond",
         id: assistanceReq?._id || "",
       });
       if ("data" in res) {
-        dispatch(setSelectedAssistanceRequest(null));
+        setIsBeingResponded(true);
         if (
           assistanceReq?.assignedTeam?.head._id === decodedToken.id &&
           token
         ) {
-          window.AndroidInterface?.stopSharingLocation();
+          window.AndroidInterface?.startSharingLocation(
+            token,
+            assistanceReq.userId._id
+          );
         }
+      }
+    }
+    alert(window.AndroidInterface?.isLocationEnabled("responder"));
+  };
+  const resolve = async () => {
+    const res = await update({
+      action: "resolve",
+      id: assistanceReq?._id || "",
+    });
+    if ("data" in res) {
+      dispatch(setSelectedAssistanceRequest(null));
+      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
+        window.AndroidInterface?.stopSharingLocation();
       }
     }
   };
