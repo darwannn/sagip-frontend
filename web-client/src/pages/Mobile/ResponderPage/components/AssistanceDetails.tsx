@@ -36,7 +36,7 @@ const AssistanceDetails = () => {
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode<Token>(token || "");
   const respond = async () => {
-    if (window.AndroidInterface?.isGeolocationEnabled()) {
+    if (window.AndroidInterface?.isLocationEnabled("responder")) {
       const res = await update({
         action: "respond",
         id: assistanceReq?._id || "",
