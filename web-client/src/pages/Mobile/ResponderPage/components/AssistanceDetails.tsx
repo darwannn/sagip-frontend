@@ -54,7 +54,6 @@ const AssistanceDetails = () => {
         }
       }
     }
-    alert(window.AndroidInterface?.isLocationEnabled("responder"));
   };
   const resolve = async () => {
     const res = await update({

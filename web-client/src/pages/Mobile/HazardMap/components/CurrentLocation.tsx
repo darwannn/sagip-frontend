@@ -42,6 +42,7 @@ const CurrentLocation = ({ map }: TProps) => {
         console.error("Geolocation is not supported by this browser.");
       }
     }
+    alert(window.AndroidInterface?.isLocationEnabled("responder"));
   };
   return (
     <div
