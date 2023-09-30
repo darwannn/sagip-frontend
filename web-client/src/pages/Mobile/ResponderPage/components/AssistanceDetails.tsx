@@ -63,7 +63,6 @@ const AssistanceDetails = () => {
     if ("data" in res) {
       // if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
       window.AndroidInterface?.stopSharingLocation();
-      window.AndroidInterface?.stopSharingLocation();
       // }
       dispatch(setSelectedAssistanceRequest(null));
     }
