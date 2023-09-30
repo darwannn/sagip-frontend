@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useGetToRespondAssistanceRequestsQuery } from "../../../services/assistanceRequestQuery";
@@ -12,9 +13,14 @@ import AssistanceList from "./components/AssistanceList";
 import { MdChevronLeft } from "react-icons/md";
 
 const ResponderPage = () => {
-  const { data: team /* error  */ } = useGetMyTeamQuery();
-  const { data: assistanceRequest /* isLoading, error */ } =
+  const { data: team, refetch: refetchTeam } = useGetMyTeamQuery();
+  const { data: assistanceRequest, refetch: refetchAssistanceRequest } =
     useGetToRespondAssistanceRequestsQuery();
+
+  useEffect(() => {
+    refetchTeam();
+    refetchAssistanceRequest();
+  }, [refetchAssistanceRequest, refetchTeam]);
 
   return (
     <>

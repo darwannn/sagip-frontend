@@ -61,10 +61,10 @@ const AssistanceDetails = () => {
       id: assistanceReq?._id || "",
     });
     if ("data" in res) {
+      dispatch(setSelectedAssistanceRequest(null));
       // if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
       window.AndroidInterface?.stopSharingLocation();
       // }
-      dispatch(setSelectedAssistanceRequest(null));
     }
   };
   if (isLoading) console.log("Loading...");
@@ -128,7 +128,7 @@ const AssistanceDetails = () => {
           }}
         >
           {(assistanceReq && assistanceReq.isBeingResponded) || isBeingResponded
-            ? "Resolveeee"
+            ? "Resolve1"
             : "Respond"}
         </button>
       </div>
