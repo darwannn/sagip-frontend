@@ -1,4 +1,3 @@
-// TODO: fetch emergency / assistance data
 //       assign responder to emergency
 //       mark emergency as resolved?
 import { useNavigate, useParams } from "react-router";
@@ -8,13 +7,12 @@ import { Badge } from "../../../components/ui/Badge";
 import { useState } from "react";
 import MapComponent from "../FacilityManagement/components/MapComponent";
 import { MarkerF } from "@react-google-maps/api";
-import { useGetActiveTeamsQuery } from "../../../services/teamQuery";
-import Select from "react-select";
 import { TbClockPin } from "react-icons/tb";
 import { formatAsstReqDate } from "../../../util/date";
 import moment from "moment";
 import { RiGpsLine } from "react-icons/ri";
 import { BASE_IMAGE_URL } from "../../../api.config";
+import AssignResponderPanel from "./components/AssignResponder";
 
 const EmergencyPage = () => {
   // Map State / Instance
@@ -24,23 +22,6 @@ const EmergencyPage = () => {
   const { data, isLoading, isError } = useGetAssistanceRequestByIdQuery(
     id ?? ""
   );
-  const {
-    data: rescueTeam,
-    isSuccess,
-    isLoading: isTeamLoading,
-    isError: isTeamError,
-    error: teamError,
-  } = useGetActiveTeamsQuery();
-
-  // Get the names of the rescue team and put it in the select options
-  const rescueTeamNames = rescueTeam?.map((team) => ({
-    value: team._id,
-    label: team.name,
-  }));
-
-  if (isTeamLoading) console.log("Loading...");
-  if (isTeamError) console.log(teamError);
-  if (isSuccess) console.log(rescueTeam);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -54,7 +35,6 @@ const EmergencyPage = () => {
     <div className="w-full flex flex-col bg-gray-100 min-h-screen relative">
       {/* header */}
       <div className="px-10 pt-10 pb-5 bg-white shadow z-10">
-        {/* TODO: ASSISTANCE ID HERE */}
         <div className="text-sm">
           <button
             onClick={() => navigate("/admin/emergency-reports")}
@@ -230,17 +210,11 @@ const EmergencyPage = () => {
               ></MarkerF>
             </MapComponent>
           </div>
-          <div className="p-5 flex flex-col gap-5">
-            <div className="flex flex-row gap-2 text-gray-700">
-              <h3 className="text-md font-semibold">
-                Select Available Responders
-              </h3>
-            </div>
-            <div>
-              <Select options={rescueTeamNames} />
-              <button className="btn-primary mt-5">Send Responders</button>
-            </div>
-          </div>
+          {data?.assignedTeam !== null ? (
+            <>ASSIGNED TEAM DETAILS HERE</>
+          ) : (
+            <AssignResponderPanel />
+          )}
         </div>
       </div>
     </div>
