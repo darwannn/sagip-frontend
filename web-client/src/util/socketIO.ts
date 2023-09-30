@@ -6,6 +6,7 @@ type TEventData = {
   sender: string;
   receiver: string;
   content?: {
+    assistanceReqId?: string;
     latitude?: number;
     longitude?: number;
   };

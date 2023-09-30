@@ -34,13 +34,13 @@ const CarouselArticleList = ({ articleData }: TProps) => {
   };
 
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Slider {...slickSettings}>
         {articleData.map((article, index) => (
           <CarouselArticleItem key={index} articleData={article} />
         ))}
       </Slider>
-    </>
+    </div>
   );
 };
 

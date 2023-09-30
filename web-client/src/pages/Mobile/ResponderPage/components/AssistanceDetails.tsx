@@ -49,7 +49,8 @@ const AssistanceDetails = () => {
         ) {
           window.AndroidInterface?.startSharingLocation(
             token,
-            assistanceReq.userId._id
+            assistanceReq.userId._id,
+            assistanceReq._id
           );
         }
       }
@@ -128,7 +129,7 @@ const AssistanceDetails = () => {
           }}
         >
           {(assistanceReq && assistanceReq.isBeingResponded) || isBeingResponded
-            ? "Resolve1"
+            ? "Resolve"
             : "Respond"}
         </button>
       </div>
