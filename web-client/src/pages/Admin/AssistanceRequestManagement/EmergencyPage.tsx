@@ -1,7 +1,4 @@
 // TODO: fetch emergency / assistance data
-//       display user information
-//       display emergency information
-//       display emergency map
 //       assign responder to emergency
 //       mark emergency as resolved?
 import { useNavigate, useParams } from "react-router";
@@ -17,6 +14,7 @@ import { TbClockPin } from "react-icons/tb";
 import { formatAsstReqDate } from "../../../util/date";
 import moment from "moment";
 import { RiGpsLine } from "react-icons/ri";
+import { BASE_IMAGE_URL } from "../../../api.config";
 
 const EmergencyPage = () => {
   // Map State / Instance
@@ -82,7 +80,7 @@ const EmergencyPage = () => {
             </Badge>
           </div>
           {/* User Profile */}
-          <div className="flex items-center gap-5 p-2 bg-blue-100 rounded">
+          <div className="flex items-center gap-5 p-3 bg-slate-100 rounded-md">
             <div className="w-16 h-16 bg-gray-300 rounded-full">
               <img
                 alt="user profile"
@@ -90,24 +88,31 @@ const EmergencyPage = () => {
                 className="w-full h-full object-cover rounded-full"
               />
             </div>
-            <div>
-              <span className="text-sm">Reporter</span>
-              <p className="font-semibold">{`${data?.userId.firstname} ${data?.userId.lastname}`}</p>
+            <div className="text-sm">
+              <div>
+                <span className="font-semibold text-gray-500">Reporter</span>
+                <p className="">{`${data?.userId.firstname} ${data?.userId.lastname}`}</p>
+              </div>
+              <div>
+                <p>{data?.userId.email}</p>
+              </div>
             </div>
           </div>
           {/* Emergency Information */}
           <div className="flex-1 flex flex-col gap-2 mt-5">
-            {/* <div className="flex flex-col gap-1">
-              <span className="text-sm">Emergency Type</span>
-              <p className="font-semibold">{}</p>
-            </div> */}
             {/* Image container */}
-            <div className="grow w-full">
-              <img
-                src={`https://media.istockphoto.com/id/1162083787/photo/road-accident-with-injured-cyclist-and-car-driver.jpg?s=1024x1024&w=is&k=20&c=HIsF7QtzWR6uG6WjO3MCgeklo9mRD2VWnQ6jNEy93Pk=`}
-                alt="emergency image"
-                className="w-full h-full object-cover rounded"
-              />
+            <div className="grow p-2 border rounded-md">
+              {data?.proof ? (
+                <img
+                  src={`${BASE_IMAGE_URL}/assistance-request/${data.proof}`}
+                  alt="emergency image"
+                  className="w-full h-full object-cover rounded"
+                />
+              ) : (
+                <p className="font-semibold text-center text-gray-400">
+                  No Image Attached.
+                </p>
+              )}
             </div>
           </div>
         </div>
