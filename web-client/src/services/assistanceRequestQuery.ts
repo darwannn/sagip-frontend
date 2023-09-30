@@ -55,6 +55,23 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         return [{ type: "AssistanceRequest", id }];
       },
     }),
+    // Assign team to assistance request
+    assignTeamToAssistanceRequest: builder.mutation<
+      TAssistanceReqResponse,
+      { id: string; teamId: string }
+    >({
+      query: ({ id, teamId }) => ({
+        url: `assistance-request/update/verify/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: { teamId },
+      }),
+      invalidatesTags: (_result, _error, { id }) => {
+        return [{ type: "AssistanceRequest", id }];
+      },
+    }),
 
     getOngoingAssistanceRequests: builder.query<TAssistanceRequest[], void>({
       query: () => ({
@@ -109,7 +126,7 @@ export const {
   useGetAllAssistanceRequestsQuery,
   useGetAssistanceRequestByIdQuery,
   useDismissAssistanceRequestMutation,
-
+  useAssignTeamToAssistanceRequestMutation,
   useGetOngoingAssistanceRequestsQuery,
   useGetToRespondAssistanceRequestsQuery,
 
