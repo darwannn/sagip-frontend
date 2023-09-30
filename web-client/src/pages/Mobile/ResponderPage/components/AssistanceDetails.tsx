@@ -6,8 +6,12 @@ import {
   selectAssistanceReq,
   setSelectedAssistanceRequest,
 } from "../../../../store/slices/assistanceReqSlice";
+
 import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
-import { useUpdateAssistanceRequestMutation } from "../../../../services/assistanceRequestQuery";
+import {
+  useGetToRespondAssistanceRequestsQuery,
+  useUpdateAssistanceRequestMutation,
+} from "../../../../services/assistanceRequestQuery";
 
 import jwtDecode from "jwt-decode";
 import { BiSolidNotepad } from "react-icons/bi";
@@ -16,6 +20,8 @@ import { FaDirections } from "react-icons/fa";
 const AssistanceDetails = () => {
   const assistanceReq = useAppSelector(selectAssistanceReq);
   const [isBeingResponded, setIsBeingResponded] = useState<boolean>(false);
+
+  const { data: assistanceReqs } = useGetToRespondAssistanceRequestsQuery();
   const [
     update,
     {
@@ -35,6 +41,15 @@ const AssistanceDetails = () => {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode<Token>(token || "");
+
+  const beingRespondedCount =
+    assistanceReqs?.filter((request) => {
+      return (
+        request.isBeingResponded === true && request._id !== assistanceReq?._id
+      );
+    })?.length || 0;
+
+  console.log("beingRespondedCount", beingRespondedCount);
   const respond = async () => {
     if (window.AndroidInterface?.isLocationEnabled("responder")) {
       const res = await update({
@@ -120,7 +135,8 @@ const AssistanceDetails = () => {
         {/* RESOLVE*/}
 
         <button
-          className="bg-primary-400 text-white  py-2 my-3 rounded-md w-full"
+          className="bg-primary-400 text-white  py-2 my-3 rounded-md w-full disabled:bg-primary-300"
+          disabled={beingRespondedCount > 0 ? true : false}
           onClick={() => {
             (assistanceReq && assistanceReq.isBeingResponded) ||
             isBeingResponded

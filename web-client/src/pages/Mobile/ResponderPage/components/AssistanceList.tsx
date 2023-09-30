@@ -10,8 +10,8 @@ const VerifyUserList = ({ assistanceReq }: TProps) => {
     <>
       <div className="flex flex-col gap-3  mx-5">
         {assistanceReq?.length != 0 ? (
-          assistanceReq?.map((article, index) => (
-            <AssistanceItem key={index} assistanceReq={article} />
+          assistanceReq?.map((request, index) => (
+            <AssistanceItem key={index} assistanceReq={request} />
           ))
         ) : (
           <p className="text-center">
