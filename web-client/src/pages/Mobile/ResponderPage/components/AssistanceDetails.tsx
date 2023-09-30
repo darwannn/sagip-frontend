@@ -128,7 +128,7 @@ const AssistanceDetails = () => {
           }}
         >
           {(assistanceReq && assistanceReq.isBeingResponded) || isBeingResponded
-            ? "Resolve"
+            ? "Resolveeee"
             : "Respond"}
         </button>
       </div>
