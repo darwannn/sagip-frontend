@@ -33,11 +33,9 @@ export const formatAsstReqDate = (dateString: string | null | undefined) => {
     return date.fromNow() + " | " + date.format("h:mmA");
   } else {
     return (
-      date.fromNow() +
-      " | " +
-      date.format("MMM D, dddd") +
-      " | " +
-      date.format("h:mmA").toLowerCase()
+      // date.fromNow() +
+      // " | " +
+      date.format("MMM D, dddd") + " | " + date.format("h:mmA").toLowerCase()
     );
   }
 };
