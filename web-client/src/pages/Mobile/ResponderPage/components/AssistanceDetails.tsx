@@ -62,9 +62,9 @@ const AssistanceDetails = () => {
     });
     if ("data" in res) {
       dispatch(setSelectedAssistanceRequest(null));
-      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
+      // if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
         window.AndroidInterface?.stopSharingLocation();
-      }
+      // }
     }
   };
   if (isLoading) console.log("Loading...");
