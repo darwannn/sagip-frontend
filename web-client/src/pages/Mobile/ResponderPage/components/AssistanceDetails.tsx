@@ -61,10 +61,11 @@ const AssistanceDetails = () => {
       id: assistanceReq?._id || "",
     });
     if ("data" in res) {
-      dispatch(setSelectedAssistanceRequest(null));
       // if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
-        window.AndroidInterface?.stopSharingLocation();
+      window.AndroidInterface?.stopSharingLocation();
+      window.AndroidInterface?.stopSharingLocation();
       // }
+      dispatch(setSelectedAssistanceRequest(null));
     }
   };
   if (isLoading) console.log("Loading...");
