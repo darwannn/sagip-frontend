@@ -42,6 +42,7 @@ const AssistanceDetails = () => {
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode<Token>(token || "");
 
+  //will limit responder to address only one request at a time
   const beingRespondedCount =
     assistanceReqs?.filter((request) => {
       return (
