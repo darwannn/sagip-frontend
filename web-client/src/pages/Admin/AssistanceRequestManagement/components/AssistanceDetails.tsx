@@ -15,32 +15,18 @@ import { TbFlagSearch } from "react-icons/tb";
 import { formatAsstReqDate } from "../../../../util/date";
 import { useNavigate } from "react-router";
 import EmergencyStatusBadge from "../../../../components/Badges/EmergencyStatusBadge";
+import { Link } from "react-router-dom";
+import { BiMessageSquareDetail } from "react-icons/bi";
 
 const AssistanceDetails = () => {
   const navigate = useNavigate();
   const assistanceReq = useAppSelector(selectAssistanceReq);
   const [isDismiss, setIsDismiss] = useState(false);
   const dispatch = useAppDispatch();
-  // const {
-  //   data: rescueTeam,
-  //   isSuccess,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useGetActiveTeamsQuery();
-
-  // Get the names of the rescue team and put it in the select options
-  // const rescueTeamNames = rescueTeam?.map((team) => ({
-  //   value: team._id,
-  //   label: team.name,
-  // }));
-
-  // if (isLoading) console.log("Loading...");
-  // if (isError) console.log(error);
 
   return (
     <>
-      <div className="rounded-md shadow-md p-5 mx-2 h-[90vh] bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[400px] max-w-[500px]">
+      <div className="rounded-md shadow-md p-5 mx-2 max-h-[90vh] bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[400px] max-w-[500px]">
         <div className="flex flex-row justify-between">
           <span className="font-bold text-xl text-red-500">Review Request</span>
           <button
@@ -148,18 +134,30 @@ const AssistanceDetails = () => {
             </div>
           </div>
         </div>
-        <div className="w-full flex flex-row gap-3 mt-8 justify-end">
-          <button className="btn-secondary" onClick={() => setIsDismiss(true)}>
-            Reject
-          </button>
-          <button
-            type="button"
-            className="btn-primary"
-            onClick={() => navigate(`${assistanceReq?._id}`)}
-          >
-            Accept Request
-          </button>
-        </div>
+
+        {assistanceReq?.status === "unverified" ? (
+          <div className="w-full flex flex-row gap-3 mt-8 justify-end">
+            <button
+              className="btn-secondary"
+              onClick={() => setIsDismiss(true)}
+            >
+              Reject
+            </button>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => navigate(`${assistanceReq?._id}`)}
+            >
+              Accept Request
+            </button>
+          </div>
+        ) : (
+          <div className="mt-5">
+            <Link className="btn-primary" to={assistanceReq?._id ?? ""}>
+              <BiMessageSquareDetail /> Incident Details
+            </Link>
+          </div>
+        )}
       </div>
       <Modal
         modalShow={isDismiss}
