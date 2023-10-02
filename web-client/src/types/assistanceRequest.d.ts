@@ -14,7 +14,7 @@ type TAssistanceRequest = {
   longitude: number;
   municipality: string;
   proof: string;
-  status: string;
+  status: "unverified" | "ongoing" | "resolved";
   street: string;
   userId: User;
 };

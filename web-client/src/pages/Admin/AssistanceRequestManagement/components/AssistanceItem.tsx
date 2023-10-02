@@ -4,7 +4,7 @@ import { MdLocationOn } from "react-icons/md";
 import { useAppDispatch } from "../../../../store/hooks";
 import { setSelectedAssistanceRequest } from "../../../../store/slices/assistanceReqSlice";
 import { formatAsstReqDate } from "../../../../util/date";
-import { Badge } from "../../../../components/ui/Badge";
+import EmergencyStatusBadge from "../../../../components/Badges/EmergencyStatusBadge";
 
 type AssistanceItemProps = {
   assistance: TAssistanceRequest;
@@ -16,14 +16,6 @@ const AssistanceItem: React.FC<AssistanceItemProps> = ({ assistance }) => {
   const handleOnClick = () => {
     dispatch(setSelectedAssistanceRequest(assistance));
   };
-
-  let badgeColor = "bg-gray-500";
-  // New
-  if (assistance.status === "unverified") badgeColor = "bg-red-300";
-  // Ongoing
-  if (assistance.status === "ongoing") badgeColor = "bg-green-500";
-  // Done
-  if (assistance.status === "resolved") badgeColor = "bg-blue-500";
 
   const status = assistance.status === "unverified" ? "New" : assistance.status;
 
@@ -45,9 +37,9 @@ const AssistanceItem: React.FC<AssistanceItemProps> = ({ assistance }) => {
         <div className="flex flex-col gap-3">
           <div className="flex flex-col">
             <span className="text-xs text-gray-500">{assistance._id}</span>
-            <Badge className={`w-max rounded-md capitalize ${badgeColor}`}>
-              {status}
-            </Badge>
+            <EmergencyStatusBadge variant={assistance?.status}>
+              {assistance?.status}
+            </EmergencyStatusBadge>
           </div>
           <div className="">
             <p className="font-semibold text-gray-500">Time Reported</p>

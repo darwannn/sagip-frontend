@@ -14,6 +14,7 @@ import { Badge } from "../../../../components/ui/Badge";
 import { TbFlagSearch } from "react-icons/tb";
 import { formatAsstReqDate } from "../../../../util/date";
 import { useNavigate } from "react-router";
+import EmergencyStatusBadge from "../../../../components/Badges/EmergencyStatusBadge";
 
 const AssistanceDetails = () => {
   const navigate = useNavigate();
@@ -97,7 +98,10 @@ const AssistanceDetails = () => {
               </div>
             </div>
             <div>
-              <span className="text-xs">{assistanceReq?._id}</span>
+              {/* <span className="text-xs">{assistanceReq?._id}</span> */}
+              <EmergencyStatusBadge variant={assistanceReq?.status}>
+                {assistanceReq?.status}
+              </EmergencyStatusBadge>
             </div>
           </div>
           <div className="emergency-details grid grid-cols-2 gap-3">
