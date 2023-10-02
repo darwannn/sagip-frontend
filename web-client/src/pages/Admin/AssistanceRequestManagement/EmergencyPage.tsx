@@ -1,7 +1,7 @@
 //       assign responder to emergency
 //       mark emergency as resolved?
 import { useNavigate, useParams } from "react-router";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdOutlineModeOfTravel } from "react-icons/md";
 import { useGetAssistanceRequestByIdQuery } from "../../../services/assistanceRequestQuery";
 import { Badge } from "../../../components/ui/Badge";
 import { useState } from "react";
@@ -13,6 +13,13 @@ import moment from "moment";
 import { RiGpsLine } from "react-icons/ri";
 import { BASE_IMAGE_URL } from "../../../api.config";
 import AssignResponderPanel from "./components/AssignResponder";
+import { BiSolidAmbulance } from "react-icons/bi";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../../components/ui/Alert";
+import { GoShieldCheck } from "react-icons/go";
 
 const EmergencyPage = () => {
   // Map State / Instance
@@ -22,6 +29,8 @@ const EmergencyPage = () => {
   const { data, isLoading, isError } = useGetAssistanceRequestByIdQuery(
     id ?? ""
   );
+
+  console.log(data?.assignedTeam);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -221,7 +230,40 @@ const EmergencyPage = () => {
             </MapComponent>
           </div>
           {data?.assignedTeam !== null ? (
-            <>ASSIGNED TEAM DETAILS HERE</>
+            <div className="p-5">
+              <Alert
+                className={`mb-5 ${
+                  data?.status === "ongoing"
+                    ? "text-white bg-blue-500"
+                    : "text-white bg-gradient-to-br from-primary-500 to-secondary-500"
+                } `}
+              >
+                {data?.status === "ongoing" ? (
+                  <MdOutlineModeOfTravel color="white" className="text-xl" />
+                ) : (
+                  <GoShieldCheck color="white" className="text-xl" />
+                )}
+                <AlertTitle className="font-semibold text-white">
+                  {data?.status === "ongoing"
+                    ? "This emergency is ongoing"
+                    : "This emergency is now resolved"}
+                </AlertTitle>
+                <AlertDescription className="text-sm">
+                  {data?.status === "ongoing"
+                    ? "Emergency team was sent to the emergency location."
+                    : "This emergency was completed and resolved."}
+                </AlertDescription>
+              </Alert>
+              <div className="team-details flex flex-row gap-3 p-2 bg-slate-100 rounded-md">
+                <div className="bg-blue-200 p-2 rounded">
+                  <BiSolidAmbulance className="text-3xl text-blue-500" />
+                </div>
+                <div className="text-sm">
+                  <p className="font-bold">{data?.assignedTeam?.name}</p>
+                  <p>{`${data?.assignedTeam?.head.firstname} ${data?.assignedTeam?.head.lastname}`}</p>
+                </div>
+              </div>
+            </div>
           ) : (
             <AssignResponderPanel />
           )}

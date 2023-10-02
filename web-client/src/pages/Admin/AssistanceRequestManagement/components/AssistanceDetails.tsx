@@ -1,5 +1,5 @@
 import { BASE_IMAGE_URL } from "../../../../api.config";
-import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
+// import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   selectAssistanceReq,
@@ -19,13 +19,14 @@ const AssistanceDetails = () => {
   const navigate = useNavigate();
   const assistanceReq = useAppSelector(selectAssistanceReq);
   const [isDismiss, setIsDismiss] = useState(false);
-  const {
-    data: rescueTeam,
-    isSuccess,
-    isLoading,
-    isError,
-    error,
-  } = useGetActiveTeamsQuery();
+  const dispatch = useAppDispatch();
+  // const {
+  //   data: rescueTeam,
+  //   isSuccess,
+  //   isLoading,
+  //   isError,
+  //   error,
+  // } = useGetActiveTeamsQuery();
 
   // Get the names of the rescue team and put it in the select options
   // const rescueTeamNames = rescueTeam?.map((team) => ({
@@ -33,11 +34,8 @@ const AssistanceDetails = () => {
   //   label: team.name,
   // }));
 
-  const dispatch = useAppDispatch();
-
-  if (isLoading) console.log("Loading...");
-  if (isError) console.log(error);
-  if (isSuccess) console.log(rescueTeam);
+  // if (isLoading) console.log("Loading...");
+  // if (isError) console.log(error);
 
   return (
     <>
