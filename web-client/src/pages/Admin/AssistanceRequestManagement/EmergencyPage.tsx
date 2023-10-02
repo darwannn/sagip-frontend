@@ -31,7 +31,7 @@ const EmergencyPage = () => {
     id ?? ""
   );
 
-  console.log(data?.assignedTeam);
+  console.log(data);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -158,7 +158,9 @@ const EmergencyPage = () => {
                 <div>
                   <span className="font-semibold text-gray-500">Street</span>
                   <div className="p-2 border rounded">
-                    <p className="">{data?.street}</p>
+                    <p className="">
+                      {data?.street.trim() ? data?.street : "N/A"}
+                    </p>
                   </div>
                 </div>
                 <div>
@@ -192,12 +194,8 @@ const EmergencyPage = () => {
               <span className="font-semibold text-gray-500">
                 Emergency Description
               </span>
-              <div className="border p-5 rounded-md max-h-[350px] overflow-y-auto text-justify">
-                There was a car accident in the intersection of Robinson and
-                Fausta. The car was going northbound and the cyclist was going
-                eastbound. The car was going too fast and hit the cyclist. The
-                cyclist was thrown off the bike and hit the pavement. The
-                cyclist is bleeding and unconscious. The car driver is unharmed.
+              <div className="border p-5 rounded-md max-h-[200px] min-h-[150px] overflow-y-auto text-justify">
+                {data?.description}
               </div>
             </div>
           </div>
