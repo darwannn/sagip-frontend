@@ -31,6 +31,14 @@ const EmergencyPage = () => {
     return <div>Error...</div>;
   }
 
+  let badgeColor = "bg-gray-500";
+  // New
+  if (data?.status === "unverified") badgeColor = "bg-yellow-500";
+  // Ongoing
+  if (data?.status === "ongoing") badgeColor = "bg-green-500";
+  // Done
+  if (data?.status === "resolved") badgeColor = "bg-blue-500";
+
   return (
     <div className="w-full flex flex-col bg-gray-100 min-h-screen relative">
       {/* header */}
@@ -52,8 +60,10 @@ const EmergencyPage = () => {
       <div className="flex-1 grid grid-cols-3 bg-white">
         <div className="p-5 flex flex-col">
           <div className="flex flex-row gap-2 mb-5">
-            <Badge className="rounded bg-blue-500 text-white text-sm">
-              Ongoing
+            <Badge
+              className={`rounded text-white text-sm capitalize ${badgeColor}`}
+            >
+              {data?.status}
             </Badge>
             <Badge className="rounded bg-red-500 text-white text-sm">
               Injury
