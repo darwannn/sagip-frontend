@@ -22,12 +22,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const dispatch = useAppDispatch();
   const date = formatDate(notification?.createdAt);
   const notificaitonColor =
-    notification?.type === "error"
-      ? "[#C92A2A]"
-      : notification?.type === "info"
-      ? "[#364FC7]"
+    notification?.type === "info"
+      ? "primary-500"
       : notification?.type === "warning"
       ? "[#FFD400]"
+      : notification?.type === "error"
+      ? "secondary-500"
       : "green-500";
   return (
     <div

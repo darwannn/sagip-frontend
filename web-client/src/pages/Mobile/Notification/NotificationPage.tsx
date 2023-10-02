@@ -1,7 +1,7 @@
-import { /* useEffect, */ useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   useGetUserNotificationQuery,
-  /* useReadUserNotificationMutation, */
+  useReadUserNotificationMutation,
 } from "../../../services/notificationQuery";
 
 import NotificationItem from "./NotificationItem";
@@ -13,24 +13,36 @@ import moment from "moment";
 const NotificationPage = () => {
   const [filterUnread, setFilterUnread] = useState(false);
 
-  const { data, isError, isLoading, isSuccess, error } =
-    useGetUserNotificationQuery();
-  /*  const [readNotification] = useReadUserNotificationMutation(); */
+  const {
+    data: oNotificationData,
+    isError,
+    isLoading,
+    isSuccess,
+    error,
+  } = useGetUserNotificationQuery();
+  const [readNotification] = useReadUserNotificationMutation();
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
   const [page, setPage] = useState(1);
 
-  /*  useEffect(() => {
+  useEffect(() => {
+    readNotification();
+  }, [readNotification]);
 
-      readNotification()
-     
-    
-  }, []); */
+  /* 
+  holds the initial value from useGetUserNotificationQuery before invoking 
+  readNotification
+  
+  this is used so that unread notifications will be shown 
+  even if its status in the database is already marked as read
+*/
+  const notificationDataRef = useRef(oNotificationData);
+  const notificationData = notificationDataRef.current
+    ? [...notificationDataRef.current]
+    : [];
 
   const per_page = 7;
 
-  const copyData = data && [...data];
-
-  const sortedData = copyData
+  const sortedData = notificationData
     ?.filter((notification) => {
       if (filterUnread) return !notification.isRead;
       return notification;

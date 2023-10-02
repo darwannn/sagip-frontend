@@ -31,9 +31,9 @@ const Home = () => {
   const { data: hazardReportData } = useGetOngoingHazardQuery();
 
   const { data: notificationData } = useGetUserNotificationQuery();
-  const isReadFalseCount = notificationData?.filter(
-    (notification) => !notification.isRead
-  ).length;
+  const isReadFalseCount =
+    notificationData?.filter((notification) => !notification.isRead)?.length ??
+    0;
 
   return (
     <>
@@ -46,7 +46,7 @@ const Home = () => {
               <>
                 <Link to="/notification">
                   <div className="relative cursor-pointer m-2">
-                    {isReadFalseCount && isReadFalseCount > 0 && (
+                    {isReadFalseCount > 0 && (
                       <div className=" w-2 h-2 bg-secondary-500 rounded-full absolute right-1"></div>
                     )}
                     <IoNotificationsOutline className="text-2xl" />
