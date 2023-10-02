@@ -10,7 +10,6 @@ const AssignResponderPanel = () => {
   const [selectedTeam, setSelectedTeam] = useState<string>("");
   const {
     data: rescueTeam,
-    isSuccess,
     isLoading: isTeamLoading,
     isError: isTeamError,
     error: teamError,
@@ -41,7 +40,6 @@ const AssignResponderPanel = () => {
 
   if (isTeamLoading) console.log("Loading...");
   if (isTeamError) console.log(teamError);
-  if (isSuccess) console.log(rescueTeam);
   return (
     <div className="p-5 flex flex-col gap-5">
       <div className="flex flex-row gap-2 text-gray-700">
@@ -51,6 +49,7 @@ const AssignResponderPanel = () => {
         <Select
           options={rescueTeamNames}
           onChange={(e) => setSelectedTeam(e?.value ?? "")}
+          isDisabled={isTeamLoading}
         />
         <button
           className="btn-primary mt-5"

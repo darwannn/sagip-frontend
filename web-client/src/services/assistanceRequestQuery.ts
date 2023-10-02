@@ -37,6 +37,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
+      providesTags: ["SelectedAssistanceRequest"],
     }),
     // Dismiss an assistance request
     dismissAssistanceRequest: builder.mutation<
@@ -66,10 +67,10 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: { teamId },
+        body: { assignedTeam: teamId },
       }),
       invalidatesTags: (_result, _error, { id }) => {
-        return [{ type: "AssistanceRequest", id }];
+        return [{ type: "AssistanceRequest", id }, "SelectedAssistanceRequest"];
       },
     }),
 
