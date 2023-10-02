@@ -25,6 +25,12 @@ import {
 import { RiFileCloseFill } from "react-icons/ri";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../../../components/ui/Alert";
+import { PiWarningCircleFill } from "react-icons/pi";
 
 const AssistanceDetails = () => {
   const navigate = useNavigate();
@@ -32,9 +38,10 @@ const AssistanceDetails = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="rounded-md shadow-md p-5 mx-2 max-h-[90vh] bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[400px] max-w-[500px]">
+    <div className="rounded-md shadow-md p-5 mx-2 max-h-[90vh] bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] w-[500px] overflow-y-auto">
       <div className="flex flex-row justify-between">
-        <span className="font-bold text-xl text-red-500">Review Request</span>
+        <p className="font-bold text-xl text-red-500">Review Request</p>
+
         <button
           onClick={() => dispatch(setSelectedAssistanceRequest(null))}
           className="hover:bg-gray-200 p-1 rounded transition-all duration-100"
@@ -43,6 +50,16 @@ const AssistanceDetails = () => {
         </button>
       </div>
       <hr className="my-5" />
+      {assistanceReq?.municipality !== "Malolos" && (
+        <Alert className=" bg-yellow-500 text-white border-none shadow mb-5">
+          <PiWarningCircleFill color="white" className="text-lg" />
+          <AlertTitle className="">Outside of service area.</AlertTitle>
+          <AlertDescription>
+            This request might be outside of Malolos, based on the GPS Data sent
+            to the server.
+          </AlertDescription>
+        </Alert>
+      )}
       {/* User Information */}
       <p className="font-semibold">Reporter Information</p>
       <div className="flex flex-row items-center bg-slate-100 p-3 gap-5 rounded">
@@ -143,12 +160,6 @@ const AssistanceDetails = () => {
 
       {assistanceReq?.status !== "unverified" ? (
         <div className="w-full flex flex-row gap-3 mt-8 justify-end">
-          {/* <button
-              className="btn-secondary"
-              onClick={() => setIsDismiss(true)}
-            >
-              Reject
-            </button> */}
           <Dialog>
             <DialogTrigger className="btn-secondary">
               <RiFileCloseFill />
