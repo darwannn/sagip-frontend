@@ -59,7 +59,7 @@ const ArticlesPage = () => {
             <BsArrowLeft className="text-2xl text-gray-500 mb-3 cursor-pointer" />
           </Link>
         )}
-        <div className="flex items-center text-[#293B95] text-2xl font-bold ">
+        <div className="flex items-center text-primary-600 text-2xl font-bold ">
           <>
             <div className="flex-1">
               {isInSavedPage ? "Saved Articles" : "Disaster Resources"}{" "}

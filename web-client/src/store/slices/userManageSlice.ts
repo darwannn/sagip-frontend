@@ -5,7 +5,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 // Types
 import { RootState } from "../store";
 import { Roles } from "../../types/user";
-
+import { TUserNotification } from "../../types/notification";
 export interface ManageUserState {
   isStaff: boolean;
   userFilters: {
@@ -14,6 +14,7 @@ export interface ManageUserState {
     gender: ["Male", "Female"];
     roles: Roles[];
   };
+  selectedNotification: TUserNotification | null;
 }
 
 const initialState: ManageUserState = {
@@ -24,6 +25,7 @@ const initialState: ManageUserState = {
     gender: ["Male", "Female"],
     roles: ["super-admin", "admin", "responder", "dispatcher"],
   },
+  selectedNotification: null,
 };
 
 export const userManageSlice = createSlice({
@@ -61,6 +63,14 @@ export const userManageSlice = createSlice({
         console.log("Something went wrong");
       }
     },
+
+    /* used in mobile notification item */
+    setSelectedNotification: (
+      state,
+      action: PayloadAction<TUserNotification | null>
+    ) => {
+      state.selectedNotification = action.payload;
+    },
   },
 });
 
@@ -70,6 +80,8 @@ export const {
   setFilterBanned,
   setFilterGender,
   setFilterRoles,
+
+  setSelectedNotification,
 } = userManageSlice.actions;
 export default userManageSlice.reducer;
 

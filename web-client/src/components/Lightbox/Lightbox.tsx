@@ -30,6 +30,7 @@ const Lightbox: React.FC<TProp> = ({ mediaURL, isImage, children }) => {
       flipVertical={false}
       rotate={isImage}
       zoom={isImage}
+      counter={false}
     >
       <a
         href={isImage ? mediaURL : ""}

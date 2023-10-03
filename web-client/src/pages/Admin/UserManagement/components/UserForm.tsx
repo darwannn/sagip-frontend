@@ -198,7 +198,7 @@ const UserForm = () => {
         >
           <option value="resident">Resident</option>
           <option value="dispatcher">Dispatcher</option>
-          <option value="responser">Responder</option>
+          <option value="responder">Responder</option>
           <option value="admin">Admin</option>
           <option value="super-admin">Super-admin</option>
         </select>

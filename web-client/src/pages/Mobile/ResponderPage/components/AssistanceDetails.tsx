@@ -6,8 +6,12 @@ import {
   selectAssistanceReq,
   setSelectedAssistanceRequest,
 } from "../../../../store/slices/assistanceReqSlice";
+
 import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
-import { useUpdateAssistanceRequestMutation } from "../../../../services/assistanceRequestQuery";
+import {
+  useGetToRespondAssistanceRequestsQuery,
+  useUpdateAssistanceRequestMutation,
+} from "../../../../services/assistanceRequestQuery";
 
 import jwtDecode from "jwt-decode";
 import { BiSolidNotepad } from "react-icons/bi";
@@ -16,6 +20,8 @@ import { FaDirections } from "react-icons/fa";
 const AssistanceDetails = () => {
   const assistanceReq = useAppSelector(selectAssistanceReq);
   const [isBeingResponded, setIsBeingResponded] = useState<boolean>(false);
+
+  const { data: assistanceReqs } = useGetToRespondAssistanceRequestsQuery();
   const [
     update,
     {
@@ -35,18 +41,34 @@ const AssistanceDetails = () => {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode<Token>(token || "");
+
+  //will limit responder to address only one request at a time
+  const beingRespondedCount =
+    assistanceReqs?.filter((request) => {
+      return (
+        request.isBeingResponded === true && request._id !== assistanceReq?._id
+      );
+    })?.length || 0;
+
+  console.log("beingRespondedCount", beingRespondedCount);
   const respond = async () => {
-    const res = await update({
-      action: "respond",
-      id: assistanceReq?._id || "",
-    });
-    if ("data" in res) {
-      setIsBeingResponded(true);
-      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
-        window.AndroidInterface?.startSharingLocation(
-          token,
-          assistanceReq.userId._id
-        );
+    if (window.AndroidInterface?.isLocationEnabled("responder")) {
+      const res = await update({
+        action: "respond",
+        id: assistanceReq?._id || "",
+      });
+      if ("data" in res) {
+        setIsBeingResponded(true);
+        if (
+          assistanceReq?.assignedTeam?.head._id === decodedToken.id &&
+          token
+        ) {
+          window.AndroidInterface?.startSharingLocation(
+            token,
+            assistanceReq.userId._id,
+            assistanceReq._id
+          );
+        }
       }
     }
   };
@@ -57,9 +79,9 @@ const AssistanceDetails = () => {
     });
     if ("data" in res) {
       dispatch(setSelectedAssistanceRequest(null));
-      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
-        window.AndroidInterface?.stopSharingLocation();
-      }
+      // if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
+      window.AndroidInterface?.stopSharingLocation();
+      // }
     }
   };
   if (isLoading) console.log("Loading...");
@@ -114,7 +136,8 @@ const AssistanceDetails = () => {
         {/* RESOLVE*/}
 
         <button
-          className="bg-primary-400 text-white  py-2 my-3 rounded-md w-full"
+          className="bg-primary-400 text-white  py-2 my-3 rounded-md w-full disabled:bg-primary-300"
+          disabled={beingRespondedCount > 0 ? true : false}
           onClick={() => {
             (assistanceReq && assistanceReq.isBeingResponded) ||
             isBeingResponded

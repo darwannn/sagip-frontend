@@ -7,6 +7,7 @@ import { useGetPublishedArticlesQuery } from "../../../services/articleQuery";
 import { useGetCheckActiveSurveyQuery } from "../../../services/surveyQuery";
 import { useGetUserByTokenQuery } from "../../../services/accountQuery";
 import { useGetOngoingHazardQuery } from "../../../services/hazardReportsQuery";
+import { useGetUserNotificationQuery } from "../../../services/notificationQuery";
 
 import { BASE_IMAGE_URL } from "../../../api.config";
 import SAGIP_Logo from "../../../assets/img/SAGIP_Logo.png";
@@ -29,6 +30,11 @@ const Home = () => {
   /* const { data: savedArticleData } = useGetSavedArticlesQuery(); */
   const { data: hazardReportData } = useGetOngoingHazardQuery();
 
+  const { data: notificationData } = useGetUserNotificationQuery();
+  const isReadFalseCount =
+    notificationData?.filter((notification) => !notification.isRead)?.length ??
+    0;
+
   return (
     <>
       <MobileHeader
@@ -40,7 +46,7 @@ const Home = () => {
               <>
                 <Link to="/notification">
                   <div className="relative cursor-pointer m-2">
-                    {true && (
+                    {isReadFalseCount > 0 && (
                       <div className=" w-2 h-2 bg-secondary-500 rounded-full absolute right-1"></div>
                     )}
                     <IoNotificationsOutline className="text-2xl" />
@@ -64,7 +70,7 @@ const Home = () => {
             signalAlertData={signalAlertData}
           />
         )}
-        {userData && wellnessSurveyData && (
+        {userData && userData.userType === "resident" && wellnessSurveyData && (
           <WellnessSurvey wellnessSurveyData={wellnessSurveyData} />
         )}
         <EmergencyHotlines />

@@ -17,6 +17,7 @@ import {
 import {
   setcontactVerificationRes,
   setRegistrationSuccessful,
+  setVerifyOwnershipRes,
 } from "../../store/slices/authSlice";
 
 import {
@@ -106,6 +107,11 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
         if (action === "register") {
           dispatch(setRegistrationSuccessful(true));
           window.AndroidInterface?.updateFcmToken(identifier);
+        }
+        if (action === "login") {
+          dispatch(setVerifyOwnershipRes(res.data));
+          navigate("/login");
+          setAuthToken({ token: null });
         }
       }
     } else {

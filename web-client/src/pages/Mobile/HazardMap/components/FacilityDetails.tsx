@@ -19,8 +19,13 @@ const AssistanceDetails = () => {
         {/*  <div>250m away</div> */}
       </div>
 
-      <div className="text-2xl text-primary-600 font-bold">
-        {facility?.name}
+      <div className="flex items-center text-2xl text-primary-600 ">
+        <p className="font-bold"> {facility?.name}</p>
+        {facility?.status === "full" && (
+          <div className="text-sm bg-primary-600 text-white rounded-2xl px-4 py-1 ml-4">
+            <p className="">Full</p>
+          </div>
+        )}
       </div>
       <div className="flex my-3 gap-2">
         <button
@@ -36,12 +41,14 @@ const AssistanceDetails = () => {
           <FaDirections />
           Navigate
         </button>
-        <a
-          href={`tel:${facility?.contactNumber}`}
-          className="  flex gap-2 items-center border border-primary-100 text-primary-600 py-1 px-3 rounded-md hover:bg-primary-100"
-        >
-          <BsFillTelephoneFill /> Call
-        </a>
+        {facility?.contactNumber && (
+          <a
+            href={`tel:${facility?.contactNumber}`}
+            className="  flex gap-2 items-center border border-primary-100 text-primary-600 py-1 px-3 rounded-md hover:bg-primary-100"
+          >
+            <BsFillTelephoneFill /> Call
+          </a>
+        )}
       </div>
 
       <Lightbox

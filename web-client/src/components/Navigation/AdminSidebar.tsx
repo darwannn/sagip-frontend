@@ -24,6 +24,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
+    window.AndroidInterface?.removeFcmToken();
   };
 
   return (

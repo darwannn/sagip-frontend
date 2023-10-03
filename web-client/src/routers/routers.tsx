@@ -64,6 +64,7 @@ import VerifyUserData from "../pages/Admin/UserManagement/components/VerifyUserD
 import HazardReportPage from "../pages/Mobile/HazardReport/HazardReportPage";
 import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/SubmitHazardReportForm";
 import AssistanceRequestPage from "../pages/Mobile/AssistanceRequest/AssistanceRequestPage";
+import NotificationPage from "../pages/Mobile/Notification/NotificationPage";
 
 export const router = createBrowserRouter([
   {
@@ -162,6 +163,11 @@ export const router = createBrowserRouter([
         path: "account-settings",
         loader: () => allowedUserType(["responder", "resident"], true),
         element: <MobileAccountSettingPage />,
+      },
+      {
+        path: "notification",
+        loader: () => allowedUserType(["responder", "resident"], true),
+        element: <NotificationPage />,
       },
       {
         path: "responder",

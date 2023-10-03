@@ -17,6 +17,9 @@ const LoginForm = () => {
   const [serverRes, setServerRes] = useState<TUserResData>();
 
   const newPasswordRes = useAppSelector((state) => state.auth.newPasswordRes);
+  const verifyOwnershipRes = useAppSelector(
+    (state) => state.auth.verifyOwnershipRes
+  );
   const deleteAccountRes = useAppSelector(
     (state) => state.account.deleteAccountRes
   );
@@ -83,25 +86,20 @@ const LoginForm = () => {
   if (isError) console.log("Error Login");
   if (isSuccess) console.log("Login successfully");
 
-  console.log(
-    newPasswordRes?.success ||
-      deleteAccountRes?.success ||
-      (serverRes && !serverRes.message.includes("input error") && "print me")
-  );
-  console.log("faske");
-  console.log(newPasswordRes?.success);
-  console.log(newPasswordRes);
   return (
     <>
       <div className="mb-10 flex-1 sm:flex-grow-0">
         {/* display success message from newPassword or account deletion */}
         {(newPasswordRes?.success ||
           deleteAccountRes?.success ||
+          verifyOwnershipRes?.success ||
           (serverRes && !serverRes.message.includes("input error"))) && (
           <>
             <div
               className={`mt-3 p-2 rounded-md text-center ${
-                newPasswordRes?.success || deleteAccountRes?.success
+                newPasswordRes?.success ||
+                deleteAccountRes?.success ||
+                verifyOwnershipRes?.success
                   ? "bg-green-500 text-white"
                   : "bg-red-500 text-white"
               }`}
@@ -110,6 +108,8 @@ const LoginForm = () => {
                 "Password changed successfully. You can now login with your new password."}
               {deleteAccountRes?.success &&
                 "Account deleted. You have 30 days to login and recover your account."}
+              {verifyOwnershipRes?.success &&
+                "Verified successfully. You can now login with your account."}
               {serverRes?.message}
             </div>
           </>

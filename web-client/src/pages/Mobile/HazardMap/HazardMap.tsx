@@ -9,7 +9,7 @@ import { setSelectedFacility } from "../../../store/slices/facilitySlice";
 /* import { setSelectedAssistanceRequest } from "../../../store/slices/assistanceReqSlice";
 import { useGetOngoingAssistanceRequestsQuery } from "../../../services/assistanceRequestQuery"; */
 import { useGetOngoingHazardQuery } from "../../../services/hazardReportsQuery";
-import { useGetFacilitiesQuery } from "../../../services/facilityQuery";
+import { useGetOperationalFacilitiesQuery } from "../../../services/facilityQuery";
 
 import evacuation_icon from "../../../assets/img/markers/evacuation_area.png";
 import hospital_icon from "../../../assets/img/markers/hospital.png";
@@ -70,7 +70,7 @@ const EmergencyReportsPage = () => {
     data: facilityData,
     isError: facilityIsError,
     isLoading: facilityIsLoading,
-  } = useGetFacilitiesQuery();
+  } = useGetOperationalFacilitiesQuery();
 
   useEffect(() => {
     if (selectedHazard) {
@@ -210,7 +210,7 @@ const EmergencyReportsPage = () => {
                 (
                   facility.category === "Hospital"
                     ? facilityVisibility.hospital
-                    : facility.category === "Evacuation Area"
+                    : facility.category === "Evacuation Center"
                     ? facilityVisibility.evacuationArea
                     : facility.category === "Police Station"
                     ? facilityVisibility.policeStation
@@ -229,7 +229,7 @@ const EmergencyReportsPage = () => {
                     }}
                     icon={{
                       url:
-                        facility.category === "Evacuation Area"
+                        facility.category === "Evacuation Center"
                           ? evacuation_icon
                           : facility.category === "Police Station"
                           ? police_station_icon

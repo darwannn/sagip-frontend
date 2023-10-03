@@ -6,6 +6,7 @@ export type AuthType = {
   passwordVerificationRes?: Partial<TUserResData> | null;
   contactVerificationRes?: Partial<TUserResData> | null;
   identifier?: string | null;
+  verifyOwnershipRes?: Partial<TUserResData> | null;
   newPasswordRes?: Partial<TUserResData> | null;
   displayedRegisterPage?: string | null;
   displayedVerificationPage?: string | null;
