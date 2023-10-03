@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
   TAssistanceReqResponse,
   TAssistanceRequest,
@@ -23,6 +24,10 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         result
           ? result.map(({ _id }) => ({ type: "AssistanceRequest", id: _id }))
           : ["AssistanceRequest"],
+      transformResponse: (result: TAssistanceRequest[]) => {
+        // Sort by date and status
+        return result.sort(compareStatusAndDate);
+      },
     }),
     getAssistanceRequestById: builder.query<TAssistanceRequest, string>({
       query: (id) => ({
@@ -32,6 +37,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
+      providesTags: ["SelectedAssistanceRequest"],
     }),
     // Dismiss an assistance request
     dismissAssistanceRequest: builder.mutation<
@@ -48,6 +54,23 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: (_result, _error, { id }) => {
         return [{ type: "AssistanceRequest", id }];
+      },
+    }),
+    // Assign team to assistance request
+    assignTeamToAssistanceRequest: builder.mutation<
+      TAssistanceReqResponse,
+      { id: string; teamId: string }
+    >({
+      query: ({ id, teamId }) => ({
+        url: `assistance-request/update/verify/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: { assignedTeam: teamId },
+      }),
+      invalidatesTags: (_result, _error, { id }) => {
+        return [{ type: "AssistanceRequest", id }, "SelectedAssistanceRequest"];
       },
     }),
 
@@ -115,10 +138,32 @@ export const {
   useGetAllAssistanceRequestsQuery,
   useGetAssistanceRequestByIdQuery,
   useDismissAssistanceRequestMutation,
-
+  useAssignTeamToAssistanceRequestMutation,
   useGetMyAssistanceRequestQuery,
   useGetOngoingAssistanceRequestsQuery,
   useGetToRespondAssistanceRequestsQuery,
 
   useUpdateAssistanceRequestMutation,
 } = assistanceRequestQueryApi;
+
+const statusOrder = ["unverified", "ongoing", "resolved"];
+// Custom comparison function for sorting
+function compareStatusAndDate(a: TAssistanceRequest, b: TAssistanceRequest) {
+  const statusA = a.status;
+  const statusB = b.status;
+
+  // Find the index of each status in the desired order
+  const indexA = statusOrder.indexOf(statusA);
+  const indexB = statusOrder.indexOf(statusB);
+
+  // Compare the indices first
+  if (indexA !== indexB) {
+    return indexA - indexB;
+  }
+
+  // If statuses are the same, compare the "date" in descending order
+  const dateA = moment(a.createdAt);
+  const dateB = moment(b.createdAt);
+
+  return dateB.diff(dateA); // Sort in descending order of date
+}

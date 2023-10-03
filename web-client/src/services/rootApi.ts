@@ -24,6 +24,7 @@ export const rootApi = createApi({
     "MyAssistanceRequest",
     "OngoingAssistanceRequest",
     "ToRespondAssistanceRequest",
+    "SelectedAssistanceRequest",
     // FACILITY QUERY
     "Facility",
     "OperationalFacility",

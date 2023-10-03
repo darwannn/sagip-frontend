@@ -1,9 +1,10 @@
-import moment from "moment";
 import { TAssistanceRequest } from "../../../../types/assistanceRequest";
-import { TbTextCaption } from "react-icons/tb";
+import { TbFlagSearch } from "react-icons/tb";
 import { MdLocationOn } from "react-icons/md";
 import { useAppDispatch } from "../../../../store/hooks";
 import { setSelectedAssistanceRequest } from "../../../../store/slices/assistanceReqSlice";
+import { formatAsstReqDate } from "../../../../util/date";
+import EmergencyStatusBadge from "../../../../components/Badges/EmergencyStatusBadge";
 
 type AssistanceItemProps = {
   assistance: TAssistanceRequest;
@@ -16,33 +17,39 @@ const AssistanceItem: React.FC<AssistanceItemProps> = ({ assistance }) => {
     dispatch(setSelectedAssistanceRequest(assistance));
   };
 
+  const status = assistance.status === "unverified" ? "New" : assistance.status;
+
   return (
     <div
-      className="flex flex-col border rounded cursor-pointer hover:bg-gray-100"
+      className="text-sm flex flex-col border rounded-md cursor-pointer bg-white hover:shadow-md hover:translate-x-1 transition-all duration-100 "
       onClick={() => handleOnClick()}
     >
-      <div className="id-container border-b p-2">
-        <span className="text-gray-500 text-xs">{assistance._id}</span>
+      <div
+        className={`border-b p-2 border-l-4  text-gray-700 font-semibold ${
+          status === "New" ? "border-l-red-500" : ""
+        }`}
+      >
+        <TbFlagSearch className="inline  text-lg mr-1" />
+        <span className="text-sm">Trapped</span>
       </div>
-      <div className="emergency-info-container mt-2 p-2">
-        <div className="flex flex-col">
-          <span className="font-semibold text-md">Trapped</span>
-          {/* Extract the time */}
-          <span className="text-sm">
-            {moment(assistance.createdAt).format("llll")}
-          </span>
-        </div>
-        <div className="description mt-2">
-          <span className="">
-            <TbTextCaption className="inline text-gray-500 text-lg mr-1" />
-            {assistance.description}
-          </span>
+      <div className="emergency-info-container p-2">
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col">
+            <span className="text-xs text-gray-500">{assistance._id}</span>
+            <EmergencyStatusBadge variant={assistance?.status}>
+              {assistance?.status}
+            </EmergencyStatusBadge>
+          </div>
+          <div className="">
+            <p className="font-semibold text-gray-500">Time Reported</p>
+            <span className="">{formatAsstReqDate(assistance.createdAt)}</span>
+          </div>
         </div>
       </div>
       <div className="location-info-container p-2 border-t">
-        <span>
-          <MdLocationOn className="text-gray-500 inline" />
-          {assistance.street}
+        <span className="flex items-center">
+          <MdLocationOn className="text-gray-500 inline mr-1" />
+          {`${assistance.street}, ${assistance.municipality}`}
         </span>
       </div>
     </div>

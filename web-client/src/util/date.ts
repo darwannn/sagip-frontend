@@ -24,6 +24,22 @@ export const formatDate = (dateString: string | null | undefined) => {
   }
 };
 
+export const formatAsstReqDate = (dateString: string | null | undefined) => {
+  const now = moment();
+  const date = moment(dateString);
+  const diffHours = now.diff(date, "hours");
+
+  if (diffHours < 24) {
+    return date.fromNow() + " | " + date.format("h:mmA");
+  } else {
+    return (
+      // date.fromNow() +
+      // " | " +
+      date.format("MMM D, dddd") + " | " + date.format("h:mmA").toLowerCase()
+    );
+  }
+};
+
 export const formatDateToNum = (dateString: string | null | undefined) => {
   if (!dateString) return "Unknown";
   return moment(dateString).format("M/DD/YYYY");

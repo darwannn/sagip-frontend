@@ -63,6 +63,7 @@ import VerifyUserData from "../pages/Admin/UserManagement/components/VerifyUserD
 
 import HazardReportPage from "../pages/Mobile/HazardReport/HazardReportPage";
 import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/SubmitHazardReportForm";
+import EmergencyPage from "../pages/Admin/AssistanceRequestManagement/EmergencyPage";
 import AssistanceRequestPage from "../pages/Mobile/AssistanceRequest/AssistanceRequestPage";
 import NotificationPage from "../pages/Mobile/Notification/NotificationPage";
 
@@ -255,10 +256,13 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "emergency-reports",
+        path: "emergency-reports",     
         loader: () =>
           allowedUserType(["super-admin", "admin", "dispatcher"], true),
-        element: <EmergencyReportsPage />,
+        children: [
+          { index: true, element: <EmergencyReportsPage /> },
+          { path: ":id", element: <EmergencyPage /> },
+        ],
       },
       {
         path: "hazard-reports",

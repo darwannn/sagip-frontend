@@ -1,145 +1,198 @@
 import { BASE_IMAGE_URL } from "../../../../api.config";
-import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
+// import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   selectAssistanceReq,
   setSelectedAssistanceRequest,
 } from "../../../../store/slices/assistanceReqSlice";
-import Select from "react-select";
-import moment from "moment";
-import Modal from "../../../../components/Modal/Modal";
 // Icons
 import { MdClose } from "react-icons/md";
-import { useState } from "react";
 import DismissAssistanceForm from "./DismissAssistanceForm";
+import { Badge } from "../../../../components/ui/Badge";
+import { TbFlagSearch } from "react-icons/tb";
+import { formatAsstReqDate } from "../../../../util/date";
+import { useNavigate } from "react-router";
+import EmergencyStatusBadge from "../../../../components/Badges/EmergencyStatusBadge";
+import { Link } from "react-router-dom";
+import { BiMessageSquareDetail } from "react-icons/bi";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../../../components/ui/Dialog";
+import { RiFileCloseFill } from "react-icons/ri";
+import { IoShieldCheckmark } from "react-icons/io5";
+import { DialogDescription } from "@radix-ui/react-dialog";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../../../components/ui/Alert";
+import { PiWarningCircleFill } from "react-icons/pi";
 
 const AssistanceDetails = () => {
+  const navigate = useNavigate();
   const assistanceReq = useAppSelector(selectAssistanceReq);
-  const [isDismiss, setIsDismiss] = useState(false);
-  const {
-    data: rescueTeam,
-    isSuccess,
-    isLoading,
-    isError,
-    error,
-  } = useGetActiveTeamsQuery();
-
-  // Get the names of the rescue team and put it in the select options
-  const rescueTeamNames = rescueTeam?.map((team) => ({
-    value: team._id,
-    label: team.name,
-  }));
-
   const dispatch = useAppDispatch();
 
-  if (isLoading) console.log("Loading...");
-  if (isError) console.log(error);
-  if (isSuccess) console.log(rescueTeam);
-
   return (
-    <>
-      <div className="border rounded-md shadow-sm p-2 mx-2 h-[80vh]  bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] min-w-[500px]">
-        <div className="flex flex-col gap-2 h-full">
-          <div className="w-full flex flex-row justify-between">
-            <span>{assistanceReq?._id}</span>
-            <button
-              onClick={() => dispatch(setSelectedAssistanceRequest(null))}
-              className="hover:bg-gray-200 p-1 rounded transition-all duration-100"
-            >
-              <MdClose />
-            </button>
-          </div>
-          {/* USER DETAILS */}
-          <div className="user-info flex flex-row items-center gap-2 p-2">
-            <div className="pic-container">
-              <img
-                src={`${BASE_IMAGE_URL}/user/${assistanceReq?.userId.profilePicture}`}
-                alt="user"
-                className="rounded-full w-20 h-20"
-              />
+    <div className="rounded-md shadow-md p-5 mx-2 max-h-[90vh] bg-white z-10 fixed right-0 top-[50%] translate-y-[-50%] w-[500px] overflow-y-auto">
+      <div className="flex flex-row justify-between">
+        <p className="font-bold text-xl text-red-500">Review Request</p>
+
+        <button
+          onClick={() => dispatch(setSelectedAssistanceRequest(null))}
+          className="hover:bg-gray-200 p-1 rounded transition-all duration-100"
+        >
+          <MdClose />
+        </button>
+      </div>
+      <hr className="my-5" />
+      {assistanceReq?.municipality !== "Malolos" && (
+        <Alert className=" bg-yellow-500 text-white border-none shadow mb-5">
+          <PiWarningCircleFill color="white" className="text-lg" />
+          <AlertTitle className="">Outside of service area.</AlertTitle>
+          <AlertDescription>
+            This request might be outside of Malolos, based on the GPS Data sent
+            to the server.
+          </AlertDescription>
+        </Alert>
+      )}
+      {/* User Information */}
+      <p className="font-semibold">Reporter Information</p>
+      <div className="flex flex-row items-center bg-slate-100 p-3 gap-5 rounded">
+        <div className="pic-container">
+          <img
+            src={`${BASE_IMAGE_URL}/user/${assistanceReq?.userId.profilePicture}`}
+            alt="user"
+            className="rounded-full w-14 h-14"
+          />
+        </div>
+        <div className="flex-1">
+          <div className="flex flex-row flex-wrap gap-5">
+            <div>
+              <span className="text-xs font-semibold text-gray-500">
+                Full Name:
+              </span>
+              <p>
+                {`${assistanceReq?.userId.firstname} ${assistanceReq?.userId.lastname}`}
+              </p>
             </div>
-            <div className="user-details grid grid-cols-2 gap-2">
-              <div>
-                <span className="text-sm text-gray-500">Name:</span>
-                <p className="font-semibold">{`${assistanceReq?.userId.firstname} ${assistanceReq?.userId.lastname}`}</p>
-              </div>
-              <div>
-                <span className="text-sm text-gray-500">Phone:</span>
-                <p className="font-semibold">
-                  {assistanceReq?.userId.contactNumber}
-                </p>
-              </div>
-              <div className="col-span-2">
-                <span className="text-sm text-gray-500">Address:</span>
-                <p>{`${assistanceReq?.userId.street} ${assistanceReq?.street} ${assistanceReq?.userId.municipality} ${assistanceReq?.userId.province}`}</p>
-              </div>
-            </div>
-          </div>
-          {/* EMERGENCY / ASSISTANCE DETAILS */}
-          <div className="emergency-details bg-red-100 p-2 rounded-md">
-            <div className="flex flex-row items-center gap-3">
-              <div className="emergency-icon">
-                <div className="bg-red-300 w-20 h-20 rounded-full"></div>
-              </div>
-              <div className="emergency-details grid grid-cols-2 gap-3">
-                <div className="col-span-2">
-                  <h3 className="font-bold text-xl text-red-500">Trapped</h3>
-                </div>
-                <div className="">
-                  <span className="text-sm text-gray-500">Time Reported</span>
-                  <p className="font-bold">
-                    {moment(assistanceReq?.createdAt).format("HH:mm A")}
-                  </p>
-                </div>
-                <div className="">
-                  <span className="text-sm text-gray-500">Location</span>
-                  <p className="font-bold">{assistanceReq?.street}</p>
-                </div>
-              </div>
-              <div></div>
+            <div>
+              <span className="text-xs font-semibold text-gray-500">
+                Contact Number:
+              </span>
+              <p>{assistanceReq?.userId.contactNumber}</p>
             </div>
           </div>
-          {/* ADDITIONAL DETAILS */}
-          <div className="additional-details bg-blue-200 p-2 flex-grow rounded-md">
-            <span className="text-sm text-gray-500">Additional Details</span>
-            <div className="image-container max-h-[200px] overflow-hidden">
+          <div>
+            <Badge className="bg-blue-500 text-white capitalize rounded">
+              {assistanceReq?.userId.status}
+            </Badge>
+          </div>
+        </div>
+      </div>
+      {/* Emergency Details */}
+      <p className="font-semibold mt-5">Emergency Details</p>
+      <div className="emergency-details bg-slate-100 p-2 rounded-md">
+        <div className="flex flex-row justify-between">
+          <div className="emergency-icon flex items-center gap-2 mb-2">
+            <div className="bg-red-100 p-2 rounded flex items-center justify-center">
+              <TbFlagSearch className="text-red-500 text-md" />
+            </div>
+            <div className="">
+              <h3 className="font-semibold text-red-500">Trapped</h3>
+            </div>
+          </div>
+          <div>
+            {/* <span className="text-xs">{assistanceReq?._id}</span> */}
+            <EmergencyStatusBadge variant={assistanceReq?.status}>
+              {assistanceReq?.status}
+            </EmergencyStatusBadge>
+          </div>
+        </div>
+        <div className="emergency-details grid grid-cols-2 gap-3">
+          <div className="">
+            <span className="text-xs font-semibold text-gray-500">
+              Time Reported
+            </span>
+            <p className="text-sm">
+              {formatAsstReqDate(assistanceReq?.createdAt)}
+            </p>
+          </div>
+          <div className="">
+            <span className="text-xs font-semibold text-gray-500">
+              Location
+            </span>
+            <p className="text-sm">{assistanceReq?.street}</p>
+          </div>
+        </div>
+        <div className="mt-5 text-sm">
+          <div className="h-[200px] max-h-[250px] border-2 rounded">
+            {assistanceReq?.proof ? (
               <img
                 src={`${BASE_IMAGE_URL}/assistance-request/${assistanceReq?.proof}`}
-                alt="proof image"
-                className="w-[200px] object-cover"
+                alt="IMAGE"
+                className="w-full h-full object-cover"
               />
-            </div>
-            <p>{assistanceReq?.description}</p>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <p className="text-gray-500">No Image Attached</p>
+              </div>
+            )}
           </div>
-          {/* EMERGENCY ACTION */}
-          <div className="emergency-action p-2">
-            <span>Emergency Action</span>
-            <Select options={rescueTeamNames} />
-            <div className="flex flex-row justify-end mt-5 gap-2">
-              <button
-                className="bg-red-500 text-white px-3 py-2 rounded-md"
-                onClick={() => setIsDismiss(true)}
-              >
-                Dismiss
-              </button>
-              <button className="bg-green-500 text-white px-3 py-2 rounded-md">
-                Send Rescue
-              </button>
+          <div className="mt-2 flex flex-col gap-2">
+            <span className="text-sm font-semibold text-gray-500">
+              Additional Details
+            </span>
+            <div className="border-2 p-2 h-[100px] rounded">
+              {assistanceReq?.description ? (
+                <p>{assistanceReq?.description}</p>
+              ) : (
+                <p className="text-gray-500">No Description</p>
+              )}
             </div>
           </div>
         </div>
       </div>
-      <Modal
-        modalShow={isDismiss}
-        modalClose={() => setIsDismiss(false)}
-        modalTitle="Dismiss Report"
-      >
-        <DismissAssistanceForm
-          assistanceId={assistanceReq?._id || ""}
-          closeModal={() => setIsDismiss(false)}
-        />
-      </Modal>
-    </>
+
+      {assistanceReq?.status !== "unverified" ? (
+        <div className="w-full flex flex-row gap-3 mt-8 justify-end">
+          <Dialog>
+            <DialogTrigger className="btn-secondary">
+              <RiFileCloseFill />
+              Reject Request
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Reject Report</DialogTitle>
+                <DialogDescription className="text-sm">
+                  Rejecting an emergency assistance request is a critical action
+                  that should only be taken when absolutely necessary.
+                </DialogDescription>
+              </DialogHeader>
+              <DismissAssistanceForm assistanceId={assistanceReq?._id || ""} />
+            </DialogContent>
+          </Dialog>
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={() => navigate(`${assistanceReq?._id}`)}
+          >
+            <IoShieldCheckmark />
+            Accept Request
+          </button>
+        </div>
+      ) : (
+        <div className="mt-5">
+          <Link className="btn-primary" to={assistanceReq?._id ?? ""}>
+            <BiMessageSquareDetail /> Incident Details
+          </Link>
+        </div>
+      )}
+    </div>
   );
 };
 
