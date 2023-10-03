@@ -27,8 +27,8 @@ const MobileRootPage = () => {
       {/* MOBILE NAV */}
       <div className="fixed bottom-0 left-0 h-[80px] w-full">
         {/* Nav Items Container */}
-        <div className="bg-white h-full pt-[20px] rounded-t-3xl shadow-[0px_-1px_10px_0px_rgba(0,0,0,0.10)]">
-          <ul className="relative flex items-center justify-center gap-12 max-w-[350px] mx-auto">
+        <div className="bg-white h-full max-w-[450px] min-w-[350px] mx-auto pt-[20px] rounded-t-3xl shadow-[0px_-1px_10px_0px_rgba(0,0,0,0.10)]">
+          <ul className="relative flex items-center justify-center gap-12  mx-auto">
             <div className="indicator absolute w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full -translate-y-[20%] border-[8px] border-white"></div>
             <li className="z-10">
               <NavLink
@@ -51,6 +51,9 @@ const MobileRootPage = () => {
               </NavLink>
             </li>
             <li className="relative -translate-y-4">
+              {/*
+                TODO: LINK TO EMERGENCY REPORTS PAGE 
+               */}
               <NavLink to={"#"} className={`text-white`}>
                 <LuSiren className="z-10 text-[30px]" />
               </NavLink>
