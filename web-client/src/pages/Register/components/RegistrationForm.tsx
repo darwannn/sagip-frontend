@@ -16,7 +16,7 @@ import moment from "moment";
 
 import Modal from "../../../components/Modal/Modal";
 import AuthForm from "../../../components/Form/AuthForm";
-import TermsOfUse from "./TermsOfUse";
+import TermsAndCondition from "./TermsAndCondition";
 import PrivacyPolicy from "./PrivacyPolicy";
 
 import RegistrationEmail from "./RegistrationEmail";
@@ -30,7 +30,8 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const [serverRes, setServerRes] = useState<TUserResData>();
   const [showPrivacyPolicyModal, setShowPrivacyPolicyModal] = useState(false);
-  const [showTermsOfUseModal, setShowTermsOfUseModal] = useState(false);
+  const [showTermsAndConditionModal, setShowTermsAndConditionModal] =
+    useState(false);
 
   const {
     register,
@@ -243,18 +244,18 @@ const RegisterForm = () => {
               />
             )}
             <Modal
-              modalTitle={"Privacy Policy"}
+              modalTitle={""}
               modalShow={showPrivacyPolicyModal}
               modalClose={() => setShowPrivacyPolicyModal(false)}
             >
               <PrivacyPolicy />
             </Modal>
             <Modal
-              modalTitle={"Terms of Use"}
-              modalShow={showTermsOfUseModal}
-              modalClose={() => setShowTermsOfUseModal(false)}
+              modalTitle={""}
+              modalShow={showTermsAndConditionModal}
+              modalClose={() => setShowTermsAndConditionModal(false)}
             >
-              <TermsOfUse />
+              <TermsAndCondition />
             </Modal>
 
             <div className="text-center text-xs m-5">
@@ -262,9 +263,9 @@ const RegisterForm = () => {
               <Link
                 to="#"
                 className="underline font-semibold"
-                onClick={() => setShowTermsOfUseModal(true)}
+                onClick={() => setShowTermsAndConditionModal(true)}
               >
-                Terms of Use
+                Terms And Condition
               </Link>
               {" and "}
               <Link

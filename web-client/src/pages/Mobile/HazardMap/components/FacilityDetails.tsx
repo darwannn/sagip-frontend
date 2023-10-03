@@ -7,6 +7,8 @@ import { FaDirections } from "react-icons/fa";
 
 import { BsFillTelephoneFill } from "react-icons/bs";
 
+import Lightbox from "../../../../components/Lightbox/Lightbox";
+
 const AssistanceDetails = () => {
   const facility = useAppSelector(selectionFacility);
 
@@ -41,12 +43,18 @@ const AssistanceDetails = () => {
           <BsFillTelephoneFill /> Call
         </a>
       </div>
-      <div className="rounded-xl h-[200px] ">
-        <img
-          src={`${BASE_IMAGE_URL}/emergency-facility/${facility?.image}`}
-          className="w-full h-full object-cover  rounded-xl"
-        />
-      </div>
+
+      <Lightbox
+        mediaURL={`${BASE_IMAGE_URL}/emergency-facility/${facility?.image}`}
+        isImage={true}
+      >
+        <div className="rounded-xl h-[200px] ">
+          <img
+            src={`${BASE_IMAGE_URL}/emergency-facility/${facility?.image}`}
+            className="w-full h-full object-cover  rounded-xl"
+          />
+        </div>
+      </Lightbox>
     </div>
   );
 };

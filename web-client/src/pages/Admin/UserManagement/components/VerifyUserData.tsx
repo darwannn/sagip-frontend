@@ -9,19 +9,11 @@ import { BASE_IMAGE_URL } from "../../../../api.config";
 
 import moment from "moment";
 
-/* lightgallery */
-import "lightgallery/css/lightgallery.css";
-import "lightgallery/css/lg-zoom.css";
-import "lightgallery/css/lg-rotate.css";
-import lgZoom from "lightgallery/plugins/zoom";
-import lgRotate from "lightgallery/plugins/rotate";
-import LightGallery from "lightgallery/react";
-
-/* override backdrop style  */
-import "../styles/lightgallery.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate } from "../../../../util/date";
 import { toast } from "react-toastify";
+
+import Lightbox from "../../../../components/Lightbox/Lightbox";
 
 const VerifyUserData = () => {
   const { userId } = useParams();
@@ -155,18 +147,18 @@ const VerifyUserData = () => {
         </div>
         <div>
           <span className="form-label">Verification Picture</span>
-          <LightGallery speed={200} plugins={[lgZoom, lgRotate]}>
-            <a
-              href={`${BASE_IMAGE_URL}/verification-request/${data?.verificationPicture[0]}`}
-            >
-              <div className=" w-[500px] bg-gray-100">
-                <img
-                  src={`${BASE_IMAGE_URL}/verification-request/${data?.verificationPicture[0]}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </a>
-          </LightGallery>
+
+          <Lightbox
+            mediaURL={`${BASE_IMAGE_URL}/verification-request/${data?.verificationPicture[0]}`}
+            isImage={true}
+          >
+            <div className=" w-[500px] bg-gray-100">
+              <img
+                src={`${BASE_IMAGE_URL}/verification-request/${data?.verificationPicture[0]}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </Lightbox>
         </div>
       </div>
     </div>

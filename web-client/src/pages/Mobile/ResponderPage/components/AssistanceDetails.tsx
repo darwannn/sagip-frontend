@@ -1,20 +1,21 @@
+import { useState } from "react";
 import { BASE_IMAGE_URL } from "../../../../api.config";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-
+import type { Token } from "../../../../types/auth";
 import {
   selectAssistanceReq,
   setSelectedAssistanceRequest,
 } from "../../../../store/slices/assistanceReqSlice";
-
 import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
 import { useUpdateAssistanceRequestMutation } from "../../../../services/assistanceRequestQuery";
 
+import jwtDecode from "jwt-decode";
 import { BiSolidNotepad } from "react-icons/bi";
 import { FaDirections } from "react-icons/fa";
 
 const AssistanceDetails = () => {
   const assistanceReq = useAppSelector(selectAssistanceReq);
-
+  const [isBeingResponded, setIsBeingResponded] = useState<boolean>(false);
   const [
     update,
     {
@@ -32,6 +33,23 @@ const AssistanceDetails = () => {
   } = useGetActiveTeamsQuery();
 
   const dispatch = useAppDispatch();
+  const token = localStorage.getItem("token");
+  const decodedToken = jwtDecode<Token>(token || "");
+  const respond = async () => {
+    const res = await update({
+      action: "respond",
+      id: assistanceReq?._id || "",
+    });
+    if ("data" in res) {
+      setIsBeingResponded(true);
+      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
+        window.AndroidInterface?.startSharingLocation(
+          token,
+          assistanceReq.userId._id
+        );
+      }
+    }
+  };
   const resolve = async () => {
     const res = await update({
       action: "resolve",
@@ -39,6 +57,9 @@ const AssistanceDetails = () => {
     });
     if ("data" in res) {
       dispatch(setSelectedAssistanceRequest(null));
+      if (assistanceReq?.assignedTeam?.head._id === decodedToken.id && token) {
+        window.AndroidInterface?.stopSharingLocation();
+      }
     }
   };
   if (isLoading) console.log("Loading...");
@@ -53,7 +74,15 @@ const AssistanceDetails = () => {
     <>
       <div className=" bg-primary-50  px-5 pb-3 ">
         {/* should open google maps using android intent on click */}
-        <FaDirections className="text-2xl absolute right-8 top-0 text-primary-600 cursor-pointer" />
+        <FaDirections
+          className="text-2xl absolute right-8 top-0 text-primary-600 cursor-pointer"
+          onClick={() => {
+            window.AndroidInterface?.routeTo(
+              assistanceReq?.latitude || 0,
+              assistanceReq?.longitude || 0
+            );
+          }}
+        />
         <div className="flex flex-row items-center gap-5">
           <div className="icon w-16 h-16  bg-secondary-500 rounded-full"></div>
 
@@ -86,9 +115,16 @@ const AssistanceDetails = () => {
 
         <button
           className="bg-primary-400 text-white  py-2 my-3 rounded-md w-full"
-          onClick={resolve}
+          onClick={() => {
+            (assistanceReq && assistanceReq.isBeingResponded) ||
+            isBeingResponded
+              ? resolve()
+              : respond();
+          }}
         >
-          Resolve
+          {(assistanceReq && assistanceReq.isBeingResponded) || isBeingResponded
+            ? "Resolve"
+            : "Respond"}
         </button>
       </div>
 

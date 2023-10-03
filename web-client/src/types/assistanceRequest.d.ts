@@ -17,6 +17,7 @@ type TAssistanceRequest = {
   status: "unverified" | "ongoing" | "resolved";
   street: string;
   userId: User;
+  isBeingResponded?: boolean;
 };
 
 type TAssistanceReqResponse = {

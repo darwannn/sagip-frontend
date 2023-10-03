@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import my_location_icon from "../../../../assets/img/my_location_icon.png";
+import my_location_icon from "../../../../assets/img/markers/my_location.png";
 
 import { BiCurrentLocation } from "react-icons/bi";
 

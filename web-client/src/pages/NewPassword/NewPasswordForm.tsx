@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "../../store/hooks";
+
+import { setAuthToken } from "../../util/auth";
+
 import { setNewPasswordRes } from "../../store/slices/authSlice";
 import { useNewPasswordMutation } from "../../services/authQuery";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -37,6 +40,9 @@ const NewPasswordForm = () => {
       if (res.data.success) {
         dispatch(setNewPasswordRes(res.data));
         navigate("/login");
+        setAuthToken({
+          token: null,
+        });
       }
     } else {
       if ("error" in res && "data" in res.error) {

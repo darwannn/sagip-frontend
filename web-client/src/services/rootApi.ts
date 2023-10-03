@@ -21,6 +21,7 @@ export const rootApi = createApi({
     "Responders",
     // EMERGENCY QUERY
     "AssistanceRequest",
+    "MyAssistanceRequest",
     "OngoingAssistanceRequest",
     "ToRespondAssistanceRequest",
     "SelectedAssistanceRequest",
