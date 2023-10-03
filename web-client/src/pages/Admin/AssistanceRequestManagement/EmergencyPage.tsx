@@ -1,5 +1,3 @@
-//       assign responder to emergency
-//       mark emergency as resolved?
 import { useNavigate, useParams } from "react-router";
 import { MdArrowBack, MdOutlineModeOfTravel } from "react-icons/md";
 import { useGetAssistanceRequestByIdQuery } from "../../../services/assistanceRequestQuery";

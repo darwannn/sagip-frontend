@@ -29,7 +29,6 @@ const AssistanceItem: React.FC<AssistanceItemProps> = ({ assistance }) => {
           status === "New" ? "border-l-red-500" : ""
         }`}
       >
-        {/* <span className="text-gray-500 text-xs">{assistance._id}</span> */}
         <TbFlagSearch className="inline  text-lg mr-1" />
         <span className="text-sm">Trapped</span>
       </div>

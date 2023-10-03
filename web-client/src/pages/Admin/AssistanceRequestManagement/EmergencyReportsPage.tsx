@@ -55,8 +55,6 @@ const EmergencyReportsPage = () => {
         </div>
         <AssistanceFilters />
         <AssistanceList assistanceRequests={filtered} />
-        {/* <div className="relative z-[5] flex flex-col w-max items-start bg-white p-3 max-h-[70vh] min-w-[350px] shadow border rounded-md ">
-        </div> */}
       </div>
       {selectedAssistance && <AssistanceDetails />}
       <div className="flex-1">
