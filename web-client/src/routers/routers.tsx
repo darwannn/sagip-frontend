@@ -39,7 +39,7 @@ import AccountProfileForm from "../pages/Admin/AccountSettings/components/Accoun
 import AccountEmailForm from "../pages/Admin/AccountSettings/components/AccountEmailForm";
 import AccountContactNumberForm from "../pages/Admin/AccountSettings/components/AccountContactNumberForm";
 import AccountPasswordForm from "../pages/Admin/AccountSettings/components/AccountPasswordForm";
-import TEMP_ROOT_PAGE from "../pages/RootLayout/Temp_RootPage";
+import MobileRootPage from "../pages/RootLayout/MobileRootPage";
 import AlertPage from "../pages/Admin/AlertsManagement/AlertPage";
 
 import ArticlesPage from "../pages/Mobile/Articles/ArticlesPage";
@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
 
-    element: <TEMP_ROOT_PAGE />,
+    element: <MobileRootPage />,
     children: [
       {
         index: true,
@@ -256,7 +256,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "emergency-reports",     
+        path: "emergency-reports",
         loader: () =>
           allowedUserType(["super-admin", "admin", "dispatcher"], true),
         children: [

@@ -8,7 +8,7 @@ import {
   LuSiren,
 } from "react-icons/lu";
 
-const TEMP_ROOT_PAGE = () => {
+const MobileRootPage = () => {
   // THIS PAGE REDIRECTS TO THE ADMIN DASHBOARD
   const navigate = useNavigate();
   useEffect(() => {
@@ -79,4 +79,4 @@ const TEMP_ROOT_PAGE = () => {
   );
 };
 
-export default TEMP_ROOT_PAGE;
+export default MobileRootPage;
