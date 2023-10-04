@@ -33,7 +33,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
   };
 
   return (
-    <div className="min-w-[300px] z-10 border-r bg-white flex flex-col p-5 overflow-x-scroll">
+    <div className="min-w-[300px] z-10 border-r bg-white flex flex-col p-5 overflow-y-scroll ">
       <div className="nav-header pb-2 flex flex-row items-center gap-3">
         <div className="logo-container w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br from-primary-500 to-secondary-500">
           {/* <span className="font-bold text-white text-xl">S</span> */}

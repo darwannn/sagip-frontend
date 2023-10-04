@@ -7,7 +7,9 @@ import { setSelectedAssistanceRequest } from "../../../../store/slices/assistanc
 
 import { useGetOngoingAssistanceRequestsQuery } from "../../../../services/assistanceRequestQuery";
 
-import my_location_icon from "../../../../assets/img/markers/my_location.png";
+import fireMarker from "../../../../assets/img/markers/assistance_request/Fire.png";
+import trappedMarker from "../../../../assets/img/markers/assistance_request/Trap.png";
+import medicalMarker from "../../../../assets/img/markers/assistance_request/Injury.png";
 
 import { MarkerF } from "@react-google-maps/api";
 
@@ -82,7 +84,12 @@ const EmergencyReportsPage = () => {
                   lng: assistance.longitude,
                 }}
                 icon={{
-                  url: my_location_icon,
+                  url: assistance.category.toLowerCase().includes("injury")
+                    ? medicalMarker
+                    : assistance.category.toLowerCase().includes("trapped")
+                    ? trappedMarker
+                    : fireMarker,
+
                   scaledSize: new window.google.maps.Size(75, 75),
                 }}
                 onClick={() => {

@@ -42,6 +42,7 @@ const SurveyForm = ({ surveyData }: TProps) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { isDirty, errors },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -51,6 +52,7 @@ const SurveyForm = ({ surveyData }: TProps) => {
       endDate: moment(surveyData?.endDate).format("YYYY-MM-DD"),
     },
   });
+  const endDateValue = watch("endDate");
 
   const SubmitAlertData = async (data: FieldValues, status: string) => {
     if (!isDirty && status === initialStatus) {
@@ -166,14 +168,20 @@ const SurveyForm = ({ surveyData }: TProps) => {
           disabled={
             addIsLoading ||
             updateIsLoading ||
-            (activeAlert?.success && surveyData?._id !== activeAlert?._id)
+            (activeAlert?.success && surveyData?._id !== activeAlert?._id) ||
+            (!surveyData &&
+              !moment(endDateValue).isSameOrAfter(moment(), "day"))
           }
         >
           {!surveyData
             ? "Publish"
-            : surveyData?.status === "active"
+            : moment(endDateValue).isSameOrAfter(moment(), "day")
+            ? surveyData?._id !== activeAlert?._id
+              ? "Publish"
+              : "Update"
+            : surveyData?._id !== activeAlert?._id
             ? "Update"
-            : "Publish"}
+            : "Finish"}
         </button>
       </div>
     </form>
