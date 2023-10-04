@@ -66,6 +66,8 @@ import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/Subm
 import EmergencyPage from "../pages/Admin/AssistanceRequestManagement/EmergencyPage";
 import AssistanceRequestPage from "../pages/Mobile/AssistanceRequest/AssistanceRequestPage";
 import NotificationPage from "../pages/Mobile/Notification/NotificationPage";
+import EditProfileInformationPage from "../pages/Mobile/AccountSettings/EditProfileInformation";
+import MobileSettingsRootPage from "../pages/RootLayout/MobileSettingsRootPage";
 
 export const router = createBrowserRouter([
   {
@@ -163,7 +165,11 @@ export const router = createBrowserRouter([
       {
         path: "account-settings",
         loader: () => allowedUserType(["responder", "resident"], true),
-        element: <MobileAccountSettingPage />,
+        element: <MobileSettingsRootPage />,
+        children: [
+          { index: true, element: <MobileAccountSettingPage /> },
+          { path: "edit-profile", element: <EditProfileInformationPage /> },
+        ],
       },
       {
         path: "notification",
