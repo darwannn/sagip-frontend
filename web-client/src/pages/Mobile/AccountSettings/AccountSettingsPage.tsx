@@ -20,7 +20,7 @@ const AccountSettingsPage = () => {
             >
               <LuArrowLeft />
             </button>
-            <p className="font-semibold">Settings</p>
+            <h1 className="font-semibold">Settings</h1>
           </div>
           <div className="flex flex-row items-center justify-between w-full gap-2">
             <div className="text-sm">
