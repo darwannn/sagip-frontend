@@ -218,10 +218,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         loader: () =>
-          allowedUserType(
-            ["super-admin", "admin", "dispatcher", "responder"],
-            true
-          ),
+          allowedUserType(["super-admin", "admin", "dispatcher"], true),
         element: <Dashboard />,
       },
       {
@@ -247,8 +244,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "teams",
-        loader: () =>
-          allowedUserType(["super-admin", "admin", "dispatcher"], true),
+        loader: () => allowedUserType(["super-admin"], true),
         element: <ManageTeamPage />,
         children: [
           { index: true, element: <ManageRespondersPage /> },
@@ -296,8 +292,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "alert-management",
-        loader: () =>
-          allowedUserType(["super-admin", "admin", "dispatcher"], true),
+        loader: () => allowedUserType(["super-admin", "admin"], true),
         element: <AlertPage />,
       },
       {

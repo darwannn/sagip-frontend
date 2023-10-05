@@ -7,9 +7,17 @@ import {
   DialogTrigger,
 } from "../../../../components/ui/Dialog";
 import { TSurvey } from "../../../../types/survey";
-import { RiSearchLine } from "react-icons/ri";
+import { RiSearchLine, RiFilter2Line } from "react-icons/ri";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import SurveyForm from "./SurveyForm";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../../../components/ui/DropdownMenu";
+import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 
 interface SurveyTableProps {
   table: Table<TSurvey>;
@@ -31,23 +39,103 @@ const SurveyTable: React.FC<SurveyTableProps> = ({ table }) => {
             }
           />
         </div>
-        {/* Filter the table by category */}
-        <select
-          id="category"
-          className="p-2 border rounded"
-          value={
-            (table.getColumn("category")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(e) =>
-            table.getColumn("category")?.setFilterValue(e.target.value)
-          }
-        >
-          <option value="" disabled>
-            Filter by category
-          </option>
-          <option value="Earthquake">Earthquake</option>
-          <option value="Flood">Flood</option>
-        </select>
+        {/* Filter */}
+        <DropdownMenu>
+          <DropdownMenuTrigger className="p-3 bg-slate-100 rounded hover:bg-slate-200">
+            <RiFilter2Line className="text-lg text-gray-500" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel className="font-semibold text-gray-700 py-1 px-2">
+              Filter
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuCheckboxItem
+              checked={
+                (table.getColumn("category")?.getFilterValue() as string) ===
+                undefined
+              }
+              onCheckedChange={() => {
+                table.getColumn("category")?.setFilterValue("");
+              }}
+            >
+              All
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={
+                (table.getColumn("category")?.getFilterValue() as string) ===
+                "Flood"
+              }
+              onCheckedChange={() => {
+                table.getColumn("category")?.setFilterValue("Flood");
+              }}
+            >
+              Flood
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={
+                (table.getColumn("category")?.getFilterValue() as string) ===
+                "Typhoon"
+              }
+              onCheckedChange={() => {
+                table.getColumn("category")?.setFilterValue("Typhoon");
+              }}
+            >
+              Typhoon
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={
+                (table.getColumn("category")?.getFilterValue() as string) ===
+                "Earthquake"
+              }
+              onCheckedChange={(value) => {
+                table
+                  .getColumn("category")
+                  ?.setFilterValue(value ? "Earthquake" : "");
+              }}
+            >
+              Earthquake
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={
+                (table.getColumn("category")?.getFilterValue() as string) ===
+                "Air Pollution"
+              }
+              onCheckedChange={(value) => {
+                table
+                  .getColumn("category")
+                  ?.setFilterValue(value ? "Air Pollution" : "");
+              }}
+            >
+              Air Pollution
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={
+                (table.getColumn("category")?.getFilterValue() as string) ===
+                "Volcanic Eruption"
+              }
+              onCheckedChange={(value) => {
+                table
+                  .getColumn("category")
+                  ?.setFilterValue(value ? "Volcanic Eruption" : "");
+              }}
+            >
+              Volcanic Eruption
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={
+                (table.getColumn("category")?.getFilterValue() as string) ===
+                "Tornado"
+              }
+              onCheckedChange={(value) => {
+                table
+                  .getColumn("category")
+                  ?.setFilterValue(value ? "Tornado" : "");
+              }}
+            >
+              Tornado
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div>
         <Dialog>
