@@ -130,17 +130,6 @@ const EditProfileInformationPage = () => {
               {...register("lastname", { required: true })}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="birthdate" className="form-label">
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastname"
-              className="form-input shadow-none"
-              {...register("lastname", { required: true })}
-            />
-          </div>
         </div>
         <div className="form-group">
           <p className="form-label">Gender</p>
