@@ -10,6 +10,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import moment from "moment";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { LoaderSpin } from "../../../components/Loader/Loader";
 
 const EditProfileInformationPage = () => {
   const navigate = useNavigate();
@@ -27,11 +28,11 @@ const EditProfileInformationPage = () => {
 
   const [
     updateProfile,
-    // {
-    //   isError: updateIsError,
-    //   isLoading: updateIsLoading,
-    //   isSuccess: updateIsSuccess,
-    // },
+    {
+      isLoading: updateIsLoading,
+      // isSuccess: updateIsSuccess,
+      // isError: updateIsError,
+    },
   ] = useUpdateProfileMutation();
 
   useEffect(() => {
@@ -169,8 +170,18 @@ const EditProfileInformationPage = () => {
             }}
           />
         </div>
-        <button type="submit" className="btn-primary mt-5">
-          Update Profile
+        <button
+          type="submit"
+          className="btn-primary mt-5"
+          disabled={!isDirty || isLoading || updateIsLoading}
+        >
+          {updateIsLoading ? (
+            <>
+              <LoaderSpin className="text-lg" /> Updating Profile ....
+            </>
+          ) : (
+            "Update Profile"
+          )}
         </button>
       </form>
     </div>
