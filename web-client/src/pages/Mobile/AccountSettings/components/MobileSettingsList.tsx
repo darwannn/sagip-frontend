@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
 
 import type { Token } from "../../../../types/auth";
@@ -6,13 +6,22 @@ import jwtDecode from "jwt-decode";
 import { BsPersonBadge } from "react-icons/bs";
 import { RiUserSettingsLine } from "react-icons/ri";
 const MobileSettingsList = () => {
+  const navigate = useNavigate();
   const decodedToken = jwtDecode<Token>(localStorage.getItem("token") || "");
+
+  const onLogOutHandler = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+    window.AndroidInterface?.removeFcmToken();
+  };
+
   return (
     <div className="flex flex-col p-5">
-      {decodedToken.userType == "responder" && (
+      {decodedToken.userType != "responder" && (
         <Link to="/responder/">
           <div
-            className="flex items-center p-5  rounded-2xl  bg-gray-100 text-white"
+            className="flex items-center p-5 mb-5 rounded-md  bg-gray-100 text-white"
             style={{
               background: `linear-gradient(90deg, #972020 0%, #293B95 100%)`,
               backgroundSize: "cover",
@@ -45,7 +54,10 @@ const MobileSettingsList = () => {
         </div>
       </nav>
       <div className="mt-5">
-        <button className="bg-white w-full p-2 text-sm rounded-md shadow-sm text-red-500">
+        <button
+          className="bg-white w-full p-2 text-sm rounded-md shadow-sm text-red-500"
+          onClick={onLogOutHandler}
+        >
           Logout
         </button>
       </div>
