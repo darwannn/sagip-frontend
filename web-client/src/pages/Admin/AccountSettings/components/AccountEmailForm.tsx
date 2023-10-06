@@ -87,7 +87,9 @@ const AccountEmailForm = () => {
         setServerRes(res.data);
         if (res.data.success) {
           setShowModal(true);
-          dispatch(setIdentifier(action === "update" ? data.email : userData?.email));
+          dispatch(
+            setIdentifier(action === "update" ? data.email : userData?.email)
+          );
           /* setAuthToken({
             token: res.data.token || "",
           }); */
@@ -116,7 +118,7 @@ const AccountEmailForm = () => {
   if (sendIsSuccess) console.log("Sent successfully");
 
   return (
-    <div className="" ref={successMessageRef}>
+    <div className="lg:p-0" ref={successMessageRef}>
       {contactVerificationRes?.success && (
         <div className="w-full bg-green-500 text-white p-2 my-3 rounded-md text-center">
           {contactVerificationRes?.message}
@@ -125,16 +127,18 @@ const AccountEmailForm = () => {
       {
         /* !contactVerificationRes?.success && */
         userData?.emailStatus === "unverified" && (
-          <Alert className="border-yellow-500  text-yellow-500 my-5">
-            <PiWarningCircleBold className="text-lg" />
-            <AlertTitle>Unverified Email Address</AlertTitle>
-            <AlertDescription>
+          <Alert className="border-yellow-500  text-yellow-500 md:my-5 hidden md:block">
+            <PiWarningCircleBold className="text-bas" />
+            <AlertTitle className="text-sm md:text-base">
+              Unverified Email Address
+            </AlertTitle>
+            <AlertDescription className="text-xs md:text-sm">
               To ensure the security of your account and receive important
               updates, please verify your email address.
             </AlertDescription>
             <button
               onClick={handleSubmit(onVerify)}
-              className="font-bold text-sm underline disabled:text-yellow-400"
+              className="font-medium  text-sm underline disabled:text-yellow-400"
               disabled={sendIsLoading}
             >
               {sendIsLoading ? "Sending..." : "Send Verification Code"}
@@ -143,7 +147,7 @@ const AccountEmailForm = () => {
         )
       }
 
-      <div className="form-group text-sm w-full lg:w-1/2 xl:w-1/3">
+      <div className="form-group text-xs md:text-sm w-full lg:w-1/2 xl:w-1/3">
         <label htmlFor="email" className="form-label">
           Email
         </label>
@@ -164,7 +168,7 @@ const AccountEmailForm = () => {
 
       <div className="w-full mt-5">
         <button
-          className="btn-primary w-full lg:w-auto"
+          className="btn-primary w-full lg:w-auto text-xs md:text-sm"
           onClick={handleSubmit(onUpdate)}
           disabled={sendIsLoading || !isDirty}
         >
