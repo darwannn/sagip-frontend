@@ -191,17 +191,14 @@ const ToggleMarkers = () => {
 
   return (
     <div className="flex flex-col min-h-screen pb-5">
-      <MobileHeader
-        component={
-          <>
-            <Link to="/hazard-reports">
-              <MdChevronLeft className="text-4xl" />
-            </Link>
-            <div className="text-2xl font-bold">Submit Hazard Report</div>
-          </>
-        }
-      />
-
+      <MobileHeader>
+        <>
+          <Link to="/hazard-reports">
+            <MdChevronLeft className="text-xl mr-2" />
+          </Link>
+          <div className="font-semibold">Submit Hazard Report</div>
+        </>
+      </MobileHeader>
       <div className="flex flex-col flex-1 px-5 py-5  rounded-lg gap-5">
         {/* map container */}
         <div className=" h-[300px] relative">
