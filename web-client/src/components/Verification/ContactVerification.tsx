@@ -27,13 +27,15 @@ import {
 
 import VerificationInput from "react-verification-input";
 import { TUserResData } from "../../types/user";
+import { isMobile } from "react-device-detect";
 
 type TProps = {
   action: string;
   navigateTo: string;
+  mobileVerify?: () => void;
 };
 
-const ContactVerification = ({ action, navigateTo }: TProps) => {
+const ContactVerification = ({ action, navigateTo, mobileVerify }: TProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -113,6 +115,11 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
           navigate("/login");
           setAuthToken({ token: null });
         }
+
+        // - Close verify modal sheet for mobiles
+        if (isMobile && mobileVerify) {
+          mobileVerify();
+        }
       }
     } else {
       if ("error" in res && "data" in res.error) {
@@ -171,10 +178,11 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
     <>
       <form>
         <div className="mt-6">
-          <div className="text-gray-500  mb-10">
-            Enter the 6-digit verification code we sent to {identifier}{" "}
+          <div className="text-gray-500  mb-10 text-sm md:text-base">
+            Enter the 6-digit verification code we sent to{" "}
+            <span className="font-medium">{identifier}</span>{" "}
           </div>
-          <div className="flex flex-col items-center ">
+          <div className="flex flex-col items-center">
             <Controller
               name="code"
               control={control}
@@ -191,7 +199,7 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
                     classNames={{
                       container: "w-64 md:w-[21vw] ",
                       character:
-                        "text-gray-500 bg-gray-200 border border-gray-300 p-1 rounded-md font-semibold flex items-center justify-center md:text-[20px]",
+                        "text-gray-500 bg-gray-200 border border-gray-300 p-1 rounded-md font-semibold flex items-center justify-center text-base md:text-[20px]",
                       characterInactive: "",
                       characterSelected:
                         "text-indigo-600 outline-indigo-600 outline-2 ",
@@ -209,7 +217,7 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
             />
           </div>
         </div>
-        <div className="mt-10">
+        <div className="mt-10 text-sm md:text-base">
           <span className="mr-1">
             {resendCountdown > 0
               ? `Resend Code in ${resendCountdown} ${
@@ -230,7 +238,7 @@ const ContactVerification = ({ action, navigateTo }: TProps) => {
         </div>
         <div className="w-full mt-5">
           <button
-            className="w-full bg-indigo-500 text-white  px-5 py-1 my-2 rounded disabled:bg-indigo-300"
+            className="w-full btn-primary text-sm"
             onClick={handleSubmit(onSubmit)}
             disabled={verifyIsLoading}
           >
