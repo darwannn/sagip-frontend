@@ -27,7 +27,7 @@ const AccountInformationSettings = () => {
       </Link>
       <hr />
       <Link
-        to={"#"}
+        to={"edit-contact"}
         className="flex items-center justify-between p-3 text-gray-700"
       >
         <div className="flex items-center gap-2">

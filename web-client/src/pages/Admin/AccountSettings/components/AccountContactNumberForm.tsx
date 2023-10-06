@@ -104,7 +104,7 @@ const AccountContactNumberForm = () => {
           {contactVerificationRes?.message}
         </div>
       )}
-      <div className="form-group w-full lg:w-1/2 xl:w-1/3 text-sm">
+      <div className="form-group text-xs md:text-sm w-full lg:w-1/2 xl:w-1/3">
         <label htmlFor="contactNumber" className="form-label">
           Contact Number
         </label>
@@ -127,7 +127,7 @@ const AccountContactNumberForm = () => {
 
       <div className="w-full mt-5 ">
         <button
-          className="btn-primary w-full lg:w-auto"
+          className="btn-primary text-xs md:text-sm w-full lg:w-auto"
           onClick={handleSubmit(onSubmit)}
           disabled={sendIsLoading || !isDirty}
         >
