@@ -116,6 +116,7 @@ const ContactVerification = ({ action, navigateTo, mobileVerify }: TProps) => {
           setAuthToken({ token: null });
         }
 
+        // ! TEST THIS
         // - Close verify modal sheet for mobiles
         if (isMobile && mobileVerify) {
           mobileVerify();

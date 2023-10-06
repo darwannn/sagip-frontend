@@ -20,8 +20,15 @@ import {
 } from "../../../../components/ui/Alert";
 
 import { PiWarningCircleBold } from "react-icons/pi";
+import { isMobile } from "react-device-detect";
 
-const AccountEmailForm = () => {
+type TAccountEmailFormProps = {
+  mobileVerify?: () => void;
+};
+
+const AccountEmailForm: React.FC<TAccountEmailFormProps> = ({
+  mobileVerify,
+}) => {
   const dispatch = useAppDispatch();
   const { data: userData } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
@@ -86,7 +93,11 @@ const AccountEmailForm = () => {
       if ("data" in res) {
         setServerRes(res.data);
         if (res.data.success) {
-          setShowModal(true);
+          if (isMobile) {
+            mobileVerify && mobileVerify();
+          } else {
+            setShowModal(true);
+          }
           dispatch(
             setIdentifier(action === "update" ? data.email : userData?.email)
           );
