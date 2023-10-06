@@ -72,6 +72,7 @@ import AccountInformationSettings from "../pages/Mobile/AccountSettings/AccountI
 import AccountInformationRoot from "../pages/Mobile/AccountSettings/AccountInformationRoot";
 import EditEmailSetting from "../pages/Mobile/AccountSettings/components/EditEmailSetting";
 import EditContactNumberSetting from "../pages/Mobile/AccountSettings/components/EditContactNumberSetting";
+import EditPasswordSetting from "../pages/Mobile/AccountSettings/components/EditPasswordSetting";
 
 export const router = createBrowserRouter([
   {
@@ -180,6 +181,7 @@ export const router = createBrowserRouter([
               { index: true, element: <AccountInformationSettings /> },
               { path: "edit-email", element: <EditEmailSetting /> },
               { path: "edit-contact", element: <EditContactNumberSetting /> },
+              { path: "edit-password", element: <EditPasswordSetting /> },
             ],
           },
         ],

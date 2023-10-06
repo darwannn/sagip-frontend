@@ -45,7 +45,7 @@ const AccountInformationSettings = () => {
       </Link>
       <hr />
       <Link
-        to={"#"}
+        to={"edit-password"}
         className="flex items-center justify-between px-3 py-5 text-gray-700"
       >
         <div className="flex items-center gap-2">
