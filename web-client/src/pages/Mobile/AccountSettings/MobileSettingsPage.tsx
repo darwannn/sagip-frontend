@@ -2,7 +2,7 @@ import { useGetUserByTokenQuery } from "../../../services/accountQuery";
 import { BASE_IMAGE_URL } from "../../../api.config";
 
 import MobileHeader from "../../../components/MobileHeader/MobileHeader";
-import AccountSettingsList from "../../Mobile/AccountSettings/components/AccountSettingsList";
+import MobileSettingsList from "./components/MobileSettingsList";
 import { LuArrowLeft } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
@@ -36,9 +36,27 @@ const AccountSettingsPage = () => {
           </div>
         </div>
       </MobileHeader>
-      <AccountSettingsList />
+      <MobileSettingsList />
     </div>
   );
 };
 
 export default AccountSettingsPage;
+
+// const loadUser = async () => {
+//   const dispatch = store.dispatch;
+//   const res = await dispatch(
+//     accountQueryApi.endpoints.getUserByToken.initiate()
+//   );
+
+//   if (res.isError) {
+//     console.log("Error in fetching the user.", res.error);
+//     throw json(res.error);
+//   } else if (res.isSuccess) {
+//     return res.data;
+//   }
+// };
+
+// export const userInfoLoader = async () => {
+//   return defer({ user: loadUser });
+// };

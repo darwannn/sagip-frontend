@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { MdAlternateEmail, MdChevronRight, MdPassword } from "react-icons/md";
+import { MdChevronRight } from "react-icons/md";
 
 import type { Token } from "../../../../types/auth";
 import jwtDecode from "jwt-decode";
 import { BsPersonBadge } from "react-icons/bs";
-import { LuPhone } from "react-icons/lu";
-const AccountSettingsList = () => {
+import { RiUserSettingsLine } from "react-icons/ri";
+const MobileSettingsList = () => {
   const decodedToken = jwtDecode<Token>(localStorage.getItem("token") || "");
   return (
     <div className="flex flex-col p-5">
@@ -26,47 +26,31 @@ const AccountSettingsList = () => {
         </Link>
       )}
       <nav>
-        <div className="mb-2">
-          <h2 className="font-semibold text-base">Profile</h2>
-        </div>
         <div className="bg-white text-sm rounded-md mb-5 shadow">
           <Link
             to={"edit-profile"}
             className="flex items-center gap-3 p-3 text-gray-700"
           >
             <BsPersonBadge className="text-lg" />
-            Edit Profile Information
+            Profile Information
           </Link>
-        </div>
-        <div className="mb-2">
-          <h2 className="font-semibold text-base">Account Settings</h2>
-        </div>
-        <div className="bg-white text-sm rounded-md shadow">
+          <hr />
           <Link
-            to={"edit-email"}
-            className="flex items-center gap-3 p-3 text-gray-700 border-b"
-          >
-            <MdAlternateEmail className="text-lg" />
-            Edit Email
-          </Link>
-          <Link
-            to={"edit-contact"}
-            className="flex items-center gap-3 p-3 text-gray-700 border-b"
-          >
-            <LuPhone className="text-lg" />
-            Edit Contact Number
-          </Link>
-          <Link
-            to={"edit-password"}
+            to={"account-information"}
             className="flex items-center gap-3 p-3 text-gray-700"
           >
-            <MdPassword className="text-lg" />
-            Change Password
+            <RiUserSettingsLine className="text-lg" />
+            Account Information
           </Link>
         </div>
       </nav>
+      <div className="mt-5">
+        <button className="bg-white w-full p-2 text-sm rounded-md shadow-sm text-red-500">
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
 
-export default AccountSettingsList;
+export default MobileSettingsList;

@@ -53,7 +53,7 @@ import ArticlePreviewPage, {
   ArticlePreviewLoader,
 } from "../pages/Admin/ArticleManagement/ArticlePreviewPage";
 
-import MobileAccountSettingPage from "../pages/Mobile/AccountSettings/AccountSettingsPage";
+import MobileAccountSettingPage from "../pages/Mobile/AccountSettings/MobileSettingsPage";
 import ResponderPage from "../pages/Mobile/ResponderPage/ResponderPage";
 import ResponderMap from "../pages/Mobile/ResponderPage/components/ResponderMap";
 import HazardMap from "../pages/Mobile/HazardMap/HazardMap";
@@ -68,6 +68,9 @@ import AssistanceRequestPage from "../pages/Mobile/AssistanceRequest/AssistanceR
 import NotificationPage from "../pages/Mobile/Notification/NotificationPage";
 import EditProfileInformationPage from "../pages/Mobile/AccountSettings/EditProfileInformation";
 import MobileSettingsRootPage from "../pages/RootLayout/MobileSettingsRootPage";
+import AccountInformationSettings from "../pages/Mobile/AccountSettings/AccountInformationSettings";
+import AccountInformationRoot from "../pages/Mobile/AccountSettings/AccountInformationRoot";
+import EditEmailPage from "../pages/Mobile/AccountSettings/components/EditEmailPage";
 
 export const router = createBrowserRouter([
   {
@@ -169,6 +172,15 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <MobileAccountSettingPage /> },
           { path: "edit-profile", element: <EditProfileInformationPage /> },
+          {
+            path: "account-information",
+            element: <AccountInformationRoot />,
+            children: [
+              { index: true, element: <AccountInformationSettings /> },
+              { path: "edit-email", element: <EditEmailPage /> },
+              // { path: "edit-email", element: <AccountEmailForm /> },
+            ],
+          },
         ],
       },
       {
