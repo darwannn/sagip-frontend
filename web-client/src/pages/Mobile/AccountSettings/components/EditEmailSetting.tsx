@@ -7,12 +7,66 @@ import AccountEmailForm from "../../../Admin/AccountSettings/components/AccountE
 import ContactVerification from "../../../../components/Verification/ContactVerification";
 import { useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
+import { useGetUserByTokenQuery } from "../../../../services/accountQuery";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../../../components/ui/Alert";
+import { useSendVerificationCodeMutation } from "../../../../services/authQuery";
+import { toast } from "react-toastify";
+import { useAppDispatch } from "../../../../store/hooks";
+import { setIdentifier } from "../../../../store/slices/authSlice";
 
 const EditEmailSetting = () => {
+  const { data: userData, isLoading } = useGetUserByTokenQuery();
+  const [sendVerificationCode, sendCodeState] =
+    useSendVerificationCodeMutation();
   const [isVerify, setIsVerify] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+
+  const onVerifyEmailHandler = async () => {
+    if (!userData) return;
+    const body = {
+      email: userData.email,
+    };
+    const res = await toast.promise(
+      sendVerificationCode({ body, action: "verify-email" }).unwrap,
+      {
+        pending: "Sending verification code...",
+        success: "Verification code sent",
+        error: "Error sending verification code",
+      },
+      {
+        position: "top-center",
+      }
+    );
+    if (res.success) {
+      setIsVerify(true);
+      dispatch(setIdentifier(userData.email));
+    }
+  };
+
+  if (isLoading) return <div>Loading User Data ....</div>;
 
   return (
     <div className="p-5">
+      {userData?.emailStatus === "unverified" && (
+        <Alert className="bg-yellow-500 border-none mb-5">
+          <AlertTitle className="text-sm">Email is not verified</AlertTitle>
+          <AlertDescription className="text-xs">
+            To ensure the security of your account and receive important
+            updates, please verify your email address.
+          </AlertDescription>
+          <button
+            onClick={onVerifyEmailHandler}
+            className="underline text-sm font-medium disabled:text-yellow-400"
+            disabled={sendCodeState.isLoading}
+          >
+            Verify now
+          </button>
+        </Alert>
+      )}
       <AccountEmailForm mobileVerify={() => setIsVerify(true)} />
       <Sheet
         isOpen={isVerify}
