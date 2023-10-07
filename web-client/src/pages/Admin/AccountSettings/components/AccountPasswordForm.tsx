@@ -86,7 +86,7 @@ const AccountPasswordForm = () => {
           {serverRes?.message}
         </div>
       )}
-      <form className="grid grid-cols-1 md:grid-cols-3 gap-5 text-sm">
+      <form className="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs md:text-sm">
         <PasswordField
           register={register}
           errors={errors}
@@ -117,9 +117,9 @@ const AccountPasswordForm = () => {
           style="account"
         />
 
-        <div className="w-full lg:w-auto text-xs md:text-sm">
+        <div className="w-full lg:w-auto">
           <button
-            className="btn-primary w-full"
+            className="btn-primary w-full text-xs md:text-sm"
             onClick={handleSubmit(onSubmit)}
             disabled={updateIsLoading || !isDirty}
           >

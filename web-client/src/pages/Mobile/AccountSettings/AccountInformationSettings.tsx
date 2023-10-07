@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { LuChevronRight, LuPhone } from "react-icons/lu";
 import { useGetUserByTokenQuery } from "../../../services/accountQuery";
 import { MdAlternateEmail, MdPassword } from "react-icons/md";
+import { RiErrorWarningFill } from "react-icons/ri";
 
 const AccountInformationSettings = () => {
   const { data: userData, isLoading } = useGetUserByTokenQuery();
@@ -17,8 +18,13 @@ const AccountInformationSettings = () => {
         <div className="flex items-center gap-2">
           <MdAlternateEmail className="text-base" />
           <div className="text-xs">
-            <p className=" text-gray-400">Email</p>
-            <p className=" font-medium text-gray-400">{userData?.email}</p>
+            <p className=" text-gray-400 flex items-center gap-1">
+              Email
+              {userData?.emailStatus === "unverified" && (
+                <RiErrorWarningFill className="text-yellow-500 text-sm" />
+              )}
+            </p>
+            <p className=" font-medium text-gray-500">{userData?.email}</p>
           </div>
         </div>
         <div className="">
@@ -34,7 +40,7 @@ const AccountInformationSettings = () => {
           <LuPhone className="text-base" />
           <div className="text-xs">
             <p className="text-gray-400">Contact Number</p>
-            <p className="font-medium text-gray-400">
+            <p className="font-medium text-gray-500">
               {userData?.contactNumber}
             </p>
           </div>
@@ -51,7 +57,7 @@ const AccountInformationSettings = () => {
         <div className="flex items-center gap-2">
           <MdPassword className="text-base" />
           <div className="text-xs">
-            <p className=" text-gray-400">Change Password</p>
+            <p className=" text-gray-500 font-medium">Change Password</p>
           </div>
         </div>
         <div className="">
