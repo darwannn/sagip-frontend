@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { getLocation } from "../../../../util/getLocation";
 import my_location_icon from "../../../../assets/img/markers/my_location.png";
