@@ -12,7 +12,7 @@ import { BsArrowLeft } from "react-icons/bs";
 const EmergencyHotline = () => {
   return (
     <>
-      <div className="flex flex-col gap-2 mx-5">
+      <div className="min-h-screen flex flex-col gap-2 mx-5">
         {/* <AuthFormHeader
           title="Emergency Hotlines"
           buttonAction="navigate"

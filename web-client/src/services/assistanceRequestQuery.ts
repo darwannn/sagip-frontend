@@ -114,7 +114,62 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
           : ["ToRespondAssistanceRequest"],
     }),
 
+    addAssistanceRequest: builder.mutation<
+      TAssistanceRequest,
+      { body: FormData; action: string }
+    >({
+      query: ({ body, action }) => ({
+        url: `assistance-request/${action}`,
+        method: "POST",
+        body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: [
+        "AssistanceRequest",
+        "MyAssistanceRequest",
+        "OngoingAssistanceRequest",
+      ],
+    }),
+    /*   autoSubmitAssistanceRequest: builder.mutation<TAssistanceRequest, FormData>(
+      {
+        query: (body) => ({
+          url: `assistance-request/auto-add/`,
+          method: "POST",
+          body,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }),
+        invalidatesTags: [
+          "AssistanceRequest",
+          "MyAssistanceRequest",
+          "OngoingAssistanceRequest",
+        ],
+      }
+    ), */
+
     updateAssistanceRequest: builder.mutation<
+      TAssistanceRequest,
+      { body: FormData; id: string }
+    >({
+      query: ({ body, id }) => ({
+        url: `assistance-request/update/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: [
+        "AssistanceRequest",
+        "MyAssistanceRequest",
+        "OngoingAssistanceRequest",
+        "ToRespondAssistanceRequest",
+      ],
+    }),
+    responderUpdateAssistanceRequest: builder.mutation<
       TAssistanceRequest,
       { action: string; id: string }
     >({
@@ -127,6 +182,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
       }),
       invalidatesTags: [
         "AssistanceRequest",
+        "MyAssistanceRequest",
         "OngoingAssistanceRequest",
         "ToRespondAssistanceRequest",
       ],
@@ -142,8 +198,9 @@ export const {
   useGetMyAssistanceRequestQuery,
   useGetOngoingAssistanceRequestsQuery,
   useGetToRespondAssistanceRequestsQuery,
-
+  useAddAssistanceRequestMutation,
   useUpdateAssistanceRequestMutation,
+  useResponderUpdateAssistanceRequestMutation,
 } = assistanceRequestQueryApi;
 
 const statusOrder = ["unverified", "ongoing", "resolved"];

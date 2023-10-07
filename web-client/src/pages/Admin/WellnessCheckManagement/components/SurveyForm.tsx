@@ -155,8 +155,12 @@ const SurveyForm = ({ surveyData }: TProps) => {
             className="p-2 border rounded"
             {...register("category")}
           >
-            <option value="Earthquake">Earthquake</option>
             <option value="Flood">Flood</option>
+            <option value="Typhoon">Typhoon</option>
+            <option value="Earthquake">Earthquake</option>
+            <option value="Air Pollution">Flood</option>
+            <option value="Volcanic Eruption">Earthquake</option>
+            <option value="Tornado">Flood</option>
           </select>
         </div>
       </div>

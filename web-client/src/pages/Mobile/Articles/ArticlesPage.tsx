@@ -53,7 +53,7 @@ const ArticlesPage = () => {
 
   return (
     <>
-      <div className="bg-gray-100 p-5">
+      <div className="bg-gray-100 p-5 min-h-screen">
         {isInSavedPage && (
           <Link to="/articles">
             <BsArrowLeft className="text-2xl text-gray-500 mb-3 cursor-pointer" />
@@ -73,7 +73,7 @@ const ArticlesPage = () => {
               )}
           </>
         </div>
-        <div className=" min-h-screen">
+        <div className="">
           <div className="relative w-full my-5">
             <input
               type="text"

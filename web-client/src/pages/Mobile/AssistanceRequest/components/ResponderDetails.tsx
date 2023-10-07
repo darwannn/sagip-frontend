@@ -4,14 +4,14 @@ import { FaHandsHelping } from "react-icons/fa";
 
 type TProps = {
   responderDistance: string;
-  myAssistanceRequest: TAssistanceRequest;
+  assistanceData: TAssistanceRequest;
   estimatedTime: string;
   /* isFollowingResponder: boolean;
   setIsFollowingResponder: React.Dispatch<React.SetStateAction<boolean>>; */
 };
 
 const ResponderDetails = ({
-  myAssistanceRequest,
+  assistanceData,
   responderDistance,
   estimatedTime /* isFollowingResponder,
   setIsFollowingResponder, */,
@@ -25,7 +25,7 @@ const ResponderDetails = ({
             <div className=" text-sm">Responders is on their way:</div>
           </div>
           <div className="text-2xl font-bold text-primary-600">
-            {myAssistanceRequest.assignedTeam?.name}
+            {assistanceData.assignedTeam?.name}
           </div>
           <div className="text-gray-500">
             {responderDistance} | {estimatedTime}

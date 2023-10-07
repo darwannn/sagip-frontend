@@ -206,7 +206,7 @@ export const router = createBrowserRouter([
       {
         path: "emergency-reports",
         loader: () => allowedUserType(["responder", "resident"], true),
-        children: [{ index: true, element: <AssistanceRequestPage /> }],
+        element: <AssistanceRequestPage />,
       },
     ],
   },

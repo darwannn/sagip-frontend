@@ -10,7 +10,7 @@ import {
 import { useGetActiveTeamsQuery } from "../../../../services/teamQuery";
 import {
   useGetToRespondAssistanceRequestsQuery,
-  useUpdateAssistanceRequestMutation,
+  useResponderUpdateAssistanceRequestMutation,
 } from "../../../../services/assistanceRequestQuery";
 
 import jwtDecode from "jwt-decode";
@@ -29,7 +29,7 @@ const AssistanceDetails = () => {
       isLoading: updateIsLoading,
       isSuccess: updateIsSuccess,
     },
-  ] = useUpdateAssistanceRequestMutation();
+  ] = useResponderUpdateAssistanceRequestMutation();
   const {
     data: rescueTeam,
     isSuccess,

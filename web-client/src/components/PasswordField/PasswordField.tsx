@@ -36,7 +36,7 @@ const PasswordField: React.FC<TProps> = ({
       value.length >= 8 && value.length <= 20,
       /[a-z]/.test(value) && /[A-Z]/.test(value),
       /\d/.test(value),
-      /[@.#$%^&,*]/.test(value),
+      /[@.#$%^&,*_]/.test(value),
     ];
 
     const allRequirementsMet = requirements.every((req) => req);

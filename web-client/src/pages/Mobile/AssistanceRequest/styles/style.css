@@ -1,0 +1,13 @@
+#helpMeButton{
+    animation: pulseAnimation 2s infinite;
+  }
+  
+  @keyframes pulseAnimation {
+    0% {
+      box-shadow: 0 0 0 0px rgba(201, 42, 42, .8);
+    }
+    100% {
+      box-shadow: 0 0 0 20px rgba(201, 42, 42, 0);
+    }
+  }
+

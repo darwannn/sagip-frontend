@@ -49,6 +49,7 @@ const EmergencyReportsPage = () => {
     policeStation: true,
     fireStation: true,
     hospital: true,
+    hazard: true,
   });
 
   const [selectedMarker, setselectedMarker] = useState<string>("");
@@ -183,6 +184,7 @@ const EmergencyReportsPage = () => {
                 )
             )} */}
           {!hazardIsLoading &&
+            facilityVisibility?.hazard &&
             window.google &&
             hazardData?.map((hazard) => (
               /*  markerVisibility.hazard && */ <MarkerF
