@@ -21,6 +21,7 @@ import {
 
 import { PiWarningCircleBold } from "react-icons/pi";
 import { isMobile } from "react-device-detect";
+import { LoaderSpin } from "../../../../components/Loader/Loader";
 
 type TAccountEmailFormProps = {
   mobileVerify?: () => void;
@@ -183,7 +184,13 @@ const AccountEmailForm: React.FC<TAccountEmailFormProps> = ({
           onClick={handleSubmit(onUpdate)}
           disabled={sendIsLoading || !isDirty}
         >
-          Update Email
+          {sendIsLoading ? (
+            <>
+              <LoaderSpin /> Updating...
+            </>
+          ) : (
+            "Update Email"
+          )}
         </button>
       </div>
 

@@ -13,6 +13,7 @@ import Modal from "../../../../components/Modal/Modal";
 import ContactVerification from "../../../../components/Verification/ContactVerification";
 import { useGetUserByTokenQuery } from "../../../../services/accountQuery";
 import { isMobile } from "react-device-detect";
+import { LoaderSpin } from "../../../../components/Loader/Loader";
 
 type AccountContactNumberFormProps = {
   mobileVerify?: () => void;
@@ -144,7 +145,13 @@ const AccountContactNumberForm: React.FC<AccountContactNumberFormProps> = ({
           onClick={handleSubmit(onSubmit)}
           disabled={sendIsLoading || !isDirty}
         >
-          Update Contact
+          {sendIsLoading ? (
+            <>
+              <LoaderSpin /> Updating...
+            </>
+          ) : (
+            "Update Contact"
+          )}
         </button>
       </div>
 

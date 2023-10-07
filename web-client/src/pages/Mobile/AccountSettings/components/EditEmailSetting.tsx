@@ -17,6 +17,7 @@ import { useSendVerificationCodeMutation } from "../../../../services/authQuery"
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../../store/hooks";
 import { setIdentifier } from "../../../../store/slices/authSlice";
+import { LuMailWarning } from "react-icons/lu";
 
 const EditEmailSetting = () => {
   const { data: userData, isLoading } = useGetUserByTokenQuery();
@@ -52,8 +53,10 @@ const EditEmailSetting = () => {
   return (
     <div className="p-5">
       {userData?.emailStatus === "unverified" && (
-        <Alert className="bg-yellow-500 border-none mb-5">
-          <AlertTitle className="text-sm">Email is not verified</AlertTitle>
+        <Alert className="bg-yellow-200 border-none mb-5">
+          <AlertTitle className="text-sm flex items-center gap-2">
+            <LuMailWarning /> Email is not verified
+          </AlertTitle>
           <AlertDescription className="text-xs">
             To ensure the security of your account and receive important
             updates, please verify your email address.

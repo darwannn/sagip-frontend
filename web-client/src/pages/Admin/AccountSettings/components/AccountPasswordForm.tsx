@@ -9,6 +9,7 @@ import {
 } from "../../../../services/accountQuery";
 
 import PasswordField from "../../../../components/PasswordField/PasswordField";
+import { LoaderSpin } from "../../../../components/Loader/Loader";
 
 const AccountPasswordForm = () => {
   const [serverRes, setServerRes] = useState<TUserResData>();
@@ -122,7 +123,13 @@ const AccountPasswordForm = () => {
             onClick={handleSubmit(onSubmit)}
             disabled={updateIsLoading || !isDirty}
           >
-            Update Password
+            {updateIsLoading ? (
+              <>
+                <LoaderSpin /> Updating Password
+              </>
+            ) : (
+              "Update Password"
+            )}
           </button>
         </div>
       </form>
