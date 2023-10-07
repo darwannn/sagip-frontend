@@ -93,8 +93,8 @@ const AccountEmailForm: React.FC<TAccountEmailFormProps> = ({
       if ("data" in res) {
         setServerRes(res.data);
         if (res.data.success) {
-          if (isMobile) {
-            mobileVerify && mobileVerify();
+          if (isMobile && mobileVerify) {
+            mobileVerify();
           } else {
             setShowModal(true);
           }

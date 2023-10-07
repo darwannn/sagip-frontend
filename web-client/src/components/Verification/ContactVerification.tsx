@@ -207,7 +207,7 @@ const ContactVerification = ({ action, navigateTo, mobileVerify }: TProps) => {
                     }}
                   />
                   {(errors.verificationCode || !serverRes?.success) && (
-                    <span className="text-red-500 mt-2">
+                    <span className="text-red-500 mt-2 text-sm md:text-base">
                       {errors.verificationCode
                         ? "Code is required"
                         : serverRes?.verificationCode}

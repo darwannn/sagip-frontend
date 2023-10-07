@@ -12,8 +12,15 @@ import { useSendVerificationCodeMutation } from "../../../../services/authQuery"
 import Modal from "../../../../components/Modal/Modal";
 import ContactVerification from "../../../../components/Verification/ContactVerification";
 import { useGetUserByTokenQuery } from "../../../../services/accountQuery";
+import { isMobile } from "react-device-detect";
 
-const AccountContactNumberForm = () => {
+type AccountContactNumberFormProps = {
+  mobileVerify?: () => void;
+};
+
+const AccountContactNumberForm: React.FC<AccountContactNumberFormProps> = ({
+  mobileVerify,
+}) => {
   const dispatch = useAppDispatch();
   const { data: userData } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
@@ -74,7 +81,13 @@ const AccountContactNumberForm = () => {
       if (res && "data" in res) {
         setServerRes(res.data);
         if (res.data.success) {
-          setShowModal(true);
+          // Check if using a mobile device
+          if (isMobile && mobileVerify) {
+            mobileVerify();
+          } else {
+            setShowModal(true);
+          }
+
           dispatch(setIdentifier(data.contactNumber));
           /* setAuthToken({
             token: res.data.token || "",
