@@ -11,6 +11,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { LoaderSpin } from "../../../components/Loader/Loader";
+import EditProfilePicture from "./components/EditProfilePicture";
 
 const EditProfileInformationPage = () => {
   const navigate = useNavigate();
@@ -93,6 +94,7 @@ const EditProfileInformationPage = () => {
           <h1 className="font-semibold">Profile Settings</h1>
         </div>
       </MobileHeder>
+      <EditProfilePicture userData={userData} />
       <form
         onSubmit={handleSubmit(onUpdateProfileHandler)}
         className="p-5 text-sm flex flex-col gap-3"
