@@ -113,7 +113,7 @@ const EditProfilePicture: React.FC<EditProfilePictureProps> = ({
       >
         <Sheet.Backdrop onTap={(e) => e.stopPropagation()}>
           <Sheet.Container>
-            <Sheet.Header className="py-2 relative border-b">
+            <Sheet.Header className="py-3 relative border-b">
               <>
                 <button
                   onClick={() => setCropMode(false)}
@@ -121,7 +121,9 @@ const EditProfilePicture: React.FC<EditProfilePictureProps> = ({
                 >
                   <MdOutlineClose />
                 </button>
-                <p className="text-sm font-semibold">Crop Photo</p>
+                <p className="text-base text-gray-700 font-semibold">
+                  Crop Photo
+                </p>
               </>
             </Sheet.Header>
             <Sheet.Content className="p-5">
@@ -129,9 +131,11 @@ const EditProfilePicture: React.FC<EditProfilePictureProps> = ({
                 <Cropper
                   ref={cropperRef}
                   src={selectedImage}
-                  style={{ height: "400", width: "100%" }}
+                  style={{ height: 300, width: "100%" }}
                   initialAspectRatio={1}
                   aspectRatio={1}
+                  zoomTo={0.5}
+                  dragMode="move"
                   guides={true}
                   background={false}
                   responsive={true}
