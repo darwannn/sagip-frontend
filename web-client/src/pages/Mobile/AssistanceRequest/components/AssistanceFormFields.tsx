@@ -283,7 +283,7 @@ const AssistanceFormFields = ({
             ) : (
               proofType === "video" && (
                 <video
-                  src={`${BASE_IMAGE_URL}/assistance-request/${assistanceData?.proof}`}
+                  src={`${BASE_VIDEO_URL}/assistance-request/${assistanceData?.proof}`}
                   controls
                 ></video>
               )
