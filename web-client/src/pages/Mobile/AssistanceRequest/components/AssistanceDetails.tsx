@@ -31,46 +31,38 @@ const AssistanceDetails = ({ assistanceData }: TProps) => {
   return (
     <>
       <div className="flex flex-col min-h-screen pb-5">
-        <MobileHeader
-          isAbsolute={true}
-          component={
-            <>
-              {/*  <Link to="/hazard-reports">
-                <MdChevronLeft className="text-4xl" />
-              </Link> */}
-              <div className="flex flex-col w-full gap-4">
-                <div className="text-2xl font-bold">Emergency Request </div>
-                <div className="flex bg-white rounded-xl py-2 ">
-                  <button
-                    className="w-1/2 font-semibold text-secondary-500 text-center"
-                    onClick={() => setView("info")}
-                  >
-                    <span
-                      className={`${
-                        view === "info" && "border-b-2 border-secondary-500"
-                      }`}
-                    >
-                      INFO
-                    </span>
-                  </button>
-                  <button
-                    className="w-1/2 font-semibold text-secondary-500 text-center disabled:text-gray-500"
-                    onClick={() => setView("map")}
-                    /* disabled={!assistanceData?.isBeingResponded} */
-                  >
-                    <span
-                      className={`${
-                        view === "map" && "border-b-2 border-secondary-500"
-                      }`}
-                    >
-                      MAP
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </>
-          }
-        />
+        <MobileHeader isAbsolute={true}>
+          <div className="flex flex-col w-full gap-4">
+            <div className="text-2xl font-bold">Emergency Request </div>
+            <div className="flex bg-white rounded-xl py-2 ">
+              <button
+                className="w-1/2 font-semibold text-secondary-500 text-center"
+                onClick={() => setView("info")}
+              >
+                <span
+                  className={`${
+                    view === "info" && "border-b-2 border-secondary-500"
+                  }`}
+                >
+                  INFO
+                </span>
+              </button>
+              <button
+                className="w-1/2 font-semibold text-secondary-500 text-center disabled:text-gray-500"
+                onClick={() => setView("map")}
+                /* disabled={!assistanceData?.isBeingResponded} */
+              >
+                <span
+                  className={`${
+                    view === "map" && "border-b-2 border-secondary-500"
+                  }`}
+                >
+                  MAP
+                </span>
+              </button>
+            </div>
+          </div>
+        </MobileHeader>
 
         {view === "info" ? (
           <div className="flex flex-col p-5 gap-3 h-full mt-36">

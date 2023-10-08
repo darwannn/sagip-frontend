@@ -95,23 +95,19 @@ const AssistanceFormFields = ({
   return (
     <>
       <div className="bg-white flex flex-col min-h-screen pb-5">
-        <MobileHeader
-          component={
-            <>
-              <div className="flex items-center  text-2xl text-white font-bold gap-2">
-                <div>
-                  <MdChevronLeft
-                    className="text-4xl"
-                    onClick={() => {
-                      dispatch(setDisplayedAssistancePage("questionThree"));
-                    }}
-                  />
-                </div>
-                <div>Emergency Request </div>
-              </div>
-            </>
-          }
-        />
+        <MobileHeader>
+          <div className="flex items-center  text-2xl text-white font-bold gap-2">
+            <div>
+              <MdChevronLeft
+                className="text-4xl"
+                onClick={() => {
+                  dispatch(setDisplayedAssistancePage("questionThree"));
+                }}
+              />
+            </div>
+            <div>Emergency Request </div>
+          </div>
+        </MobileHeader>
 
         <div className="flex flex-col flex-1 px-5 py-5  rounded-lg gap-5">
           {addMode && (
