@@ -252,7 +252,6 @@ const AssistanceForm = ({
     }
 
     if (!assistanceData?.success && timer === 0) {
-      console.log("hala");
       handleSubmit(onSubmit("auto-add"))();
       window.AndroidInterface?.playSOS();
       setShowModal(true);

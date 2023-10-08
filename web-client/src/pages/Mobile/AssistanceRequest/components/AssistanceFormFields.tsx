@@ -166,7 +166,7 @@ const AssistanceFormFields = ({
           )}
 
           {/* hidden coordinates field */}
-          <div className="hidden">
+          <div className="">
             <input
               type="text"
               id="lng"
@@ -276,10 +276,9 @@ const AssistanceFormFields = ({
             )}
 
             {uploadedVideo && proofType === "video" ? (
-              <video
-                src={URL.createObjectURL(uploadedVideo[0])}
-                controls
-              ></video>
+              <video controls>
+                <source src={URL.createObjectURL(uploadedVideo[0])} />
+              </video>
             ) : (
               proofType === "video" && (
                 <video
