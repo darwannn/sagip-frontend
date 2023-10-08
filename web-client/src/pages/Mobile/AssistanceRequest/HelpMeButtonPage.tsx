@@ -30,11 +30,8 @@ const HelpMeButtonPage = () => {
     if (isSuccess && assistanceData?._id) {
       navigate("/emergency-reports/request");
     }
-    /* if (assistanceData?._id) {
-        navigate("/emergency-reports/request");
-      } */
     console.log(assistanceData);
-  }, [dispatch, assistanceData, assistanceIsLoading, navigate]);
+  }, [dispatch, assistanceData, assistanceIsLoading, navigate, isSuccess]);
   if (assistanceIsLoading) return <div>Loading...</div>;
   if (assistanceIsError) console.log("Error");
 
