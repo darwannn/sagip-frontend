@@ -37,32 +37,30 @@ const Home = () => {
 
   return (
     <>
-      <MobileHeader
-        component={
-          <>
-            <img src={SAGIP_Logo} className="w-9 mr-3" />
-            <div className="font-bold text-4xl flex-1">SAGIP</div>
-            {userData && (
-              <>
-                <Link to="/notification">
-                  <div className="relative cursor-pointer m-2">
-                    {isReadFalseCount > 0 && (
-                      <div className=" w-2 h-2 bg-secondary-500 rounded-full absolute right-1"></div>
-                    )}
-                    <IoNotificationsOutline className="text-2xl" />
-                  </div>
-                </Link>
-                <Link to="/account-settings">
-                  <img
-                    src={`${BASE_IMAGE_URL}/user/${userData?.profilePicture}`}
-                    className="rounded-full w-10"
-                  />
-                </Link>
-              </>
-            )}
-          </>
-        }
-      />
+      <MobileHeader>
+        <>
+          <img src={SAGIP_Logo} className="w-9 mr-3" />
+          <div className="font-bold text-4xl flex-1">SAGIP</div>
+          {userData && (
+            <>
+              <Link to="/notification">
+                <div className="relative cursor-pointer m-2">
+                  {isReadFalseCount > 0 && (
+                    <div className=" w-2 h-2 bg-secondary-500 rounded-full absolute right-1"></div>
+                  )}
+                  <IoNotificationsOutline className="text-2xl" />
+                </div>
+              </Link>
+              <Link to="/account-settings">
+                <img
+                  src={`${BASE_IMAGE_URL}/user/${userData?.profilePicture}`}
+                  className="rounded-full w-10"
+                />
+              </Link>
+            </>
+          )}
+        </>
+      </MobileHeader>
       <div className="flex flex-col px-5 mt-2">
         {weatherAlertData && signalAlertData && (
           <WeatherAlert

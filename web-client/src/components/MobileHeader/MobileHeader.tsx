@@ -1,11 +1,12 @@
 import Malolos_City_Hall from "../../assets/img/Malolos_City_Hall.jpg";
 
 type TProp = {
-  component: JSX.Element;
+  component: ReactNode;
   isAbsolute?: boolean;
 };
 
 const MobileHeder = ({ component, isAbsolute }: TProp) => {
+
   return (
     <div
       className={`${
@@ -18,7 +19,7 @@ const MobileHeder = ({ component, isAbsolute }: TProp) => {
         backgroundPosition: "50% 50%",
       }}
     >
-      {component}
+      {children}
     </div>
   );
 };

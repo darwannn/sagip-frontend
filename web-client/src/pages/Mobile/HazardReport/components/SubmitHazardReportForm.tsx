@@ -190,17 +190,16 @@ const ToggleMarkers = () => {
   if (updateIsSuccess) console.log("Updated successfully");
 
   return (
+
     <div className="bg-white flex flex-col min-h-screen pb-5">
-      <MobileHeader
-        component={
-          <>
-            <Link to="/hazard-reports">
-              <MdChevronLeft className="text-4xl" />
-            </Link>
-            <div className="text-2xl font-bold">Submit Hazard Report</div>
-          </>
-        }
-      />
+      <MobileHeader>
+        <>
+          <Link to="/hazard-reports">
+            <MdChevronLeft className="text-xl mr-2" />
+          </Link>
+          <div className="font-semibold">Submit Hazard Report</div>
+        </>
+      </MobileHeader>
 
       <div className="flex flex-col flex-1 px-5 py-5  rounded-lg gap-5">
         {/* map container */}
