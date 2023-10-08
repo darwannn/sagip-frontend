@@ -1,10 +1,10 @@
 import Malolos_City_Hall from "../../assets/img/Malolos_City_Hall.jpg";
 
 type TProp = {
-  component: JSX.Element;
+  children: JSX.Element;
 };
 
-const MobileHeder = ({ component }: TProp) => {
+const MobileHeder = ({ children }: TProp) => {
   return (
     <div
       className="flex items-center px-5 pb-5 pt-10 rounded-b-2xl  bg-gray-100 text-white"
@@ -15,7 +15,7 @@ const MobileHeder = ({ component }: TProp) => {
         backgroundPosition: "50% 50%",
       }}
     >
-      {component}
+      {children}
     </div>
   );
 };

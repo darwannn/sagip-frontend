@@ -9,6 +9,7 @@ import {
 } from "../../../../services/accountQuery";
 
 import PasswordField from "../../../../components/PasswordField/PasswordField";
+import { LoaderSpin } from "../../../../components/Loader/Loader";
 
 const AccountPasswordForm = () => {
   const [serverRes, setServerRes] = useState<TUserResData>();
@@ -81,11 +82,11 @@ const AccountPasswordForm = () => {
   return (
     <div className="" ref={successMessageRef}>
       {serverRes?.success && (
-        <div className="w-full bg-green-500 text-white p-2 my-3 rounded-md text-center">
+        <div className="w-full text-xs md:text-sm bg-green-500 text-white p-2 my-3 rounded-md text-center">
           {serverRes?.message}
         </div>
       )}
-      <form className="grid grid-cols-3 gap-5 text-sm">
+      <form className="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs md:text-sm">
         <PasswordField
           register={register}
           errors={errors}
@@ -116,13 +117,19 @@ const AccountPasswordForm = () => {
           style="account"
         />
 
-        <div className="w-full mt-3 ">
+        <div className="w-full lg:w-auto">
           <button
-            className="btn-primary"
+            className="btn-primary w-full text-xs md:text-sm"
             onClick={handleSubmit(onSubmit)}
             disabled={updateIsLoading || !isDirty}
           >
-            Update Password
+            {updateIsLoading ? (
+              <>
+                <LoaderSpin /> Updating Password
+              </>
+            ) : (
+              "Update Password"
+            )}
           </button>
         </div>
       </form>
