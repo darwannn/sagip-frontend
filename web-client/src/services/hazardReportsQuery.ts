@@ -42,10 +42,13 @@ export const hazardReportsQueryApi = rootApi.injectEndpoints({
         return [{ type: "HazardReports", id }];
       },
     }),
-    // Delete a hazard report
+
+    //TODO, create a seperate query for archiving hazard report(will be used in management page)
+
+    // Delete a hazard report (used in mobile, when user want to cancel their report)
     deleteHazardReport: builder.mutation<void, string>({
       query: (id) => ({
-        url: `hazard-report/archive/${id}`,
+        url: `hazard-report/delete/${id}`,
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

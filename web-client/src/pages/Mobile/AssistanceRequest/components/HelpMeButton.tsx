@@ -32,7 +32,10 @@ const HelpMeButton = () => {
         </span>
         to request help, and assistance will reach you soon.
       </div>
-      <div className="mx-auto my-11">
+      <div
+        className="mx-auto my-11 "
+        style={{ WebkitTapHighlightColor: "transparent" }}
+      >
         <button
           className="font-bold text-3xl bg-secondary-500 text-white rounded-full cursor-pointer h-60 w-60"
           id="helpMeButton"

@@ -45,7 +45,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
       { id: string; body: DismissBody }
     >({
       query: ({ id, body }) => ({
-        url: `assistance-request/delete/${id}`,
+        url: `assistance-request/archive/${id}`,
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -56,6 +56,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         return [{ type: "AssistanceRequest", id }];
       },
     }),
+
     // Assign team to assistance request
     assignTeamToAssistanceRequest: builder.mutation<
       TAssistanceReqResponse,
@@ -132,23 +133,6 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         "OngoingAssistanceRequest",
       ],
     }),
-    /*   autoSubmitAssistanceRequest: builder.mutation<TAssistanceRequest, FormData>(
-      {
-        query: (body) => ({
-          url: `assistance-request/auto-add/`,
-          method: "POST",
-          body,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }),
-        invalidatesTags: [
-          "AssistanceRequest",
-          "MyAssistanceRequest",
-          "OngoingAssistanceRequest",
-        ],
-      }
-    ), */
 
     updateAssistanceRequest: builder.mutation<
       TAssistanceRequest,
@@ -187,6 +171,24 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         "ToRespondAssistanceRequest",
       ],
     }),
+
+    deleteAssistanceRequest: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `assistance-request/delete/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: (_result, _error, id) => {
+        return [
+          /* { type: "AssistanceRequest", id }, */
+          { type: "MyAssistanceRequest", id },
+          { type: "OngoingAssistanceRequest", id },
+          /* { type: "ToRespondAssistanceRequest", id }, */
+        ];
+      },
+    }),
   }),
 });
 
@@ -201,6 +203,7 @@ export const {
   useAddAssistanceRequestMutation,
   useUpdateAssistanceRequestMutation,
   useResponderUpdateAssistanceRequestMutation,
+  useDeleteAssistanceRequestMutation,
 } = assistanceRequestQueryApi;
 
 const statusOrder = ["unverified", "ongoing", "resolved"];

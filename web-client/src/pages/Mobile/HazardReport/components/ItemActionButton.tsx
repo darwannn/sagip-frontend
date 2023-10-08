@@ -44,14 +44,14 @@ const HazardItem = ({ hazardData }: TProps) => {
                   className="hover:bg-gray-100 text-base"
                   disabled={isDeleteLoading}
                   onClick={() =>
-                    confirm("DO you want to really delete this request") &&
+                    confirm("Do you really want to cancel your report?") &&
                     deleteHazardReport(hazardData._id)
                   }
                 >
                   <span className="mr-2 h-4 w-4">
                     <LuTrash2 />
                   </span>{" "}
-                  <span>Delete</span>
+                  <span>Cancel</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

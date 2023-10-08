@@ -163,7 +163,7 @@ const AssistanceFormFields = ({
           )}
 
           {/* hidden coordinates field */}
-          <div className="">
+          <div className="hidden">
             <input
               type="text"
               id="lng"

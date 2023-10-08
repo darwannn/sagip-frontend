@@ -10,6 +10,7 @@ import {
   setDisplayedAssistancePage,
 } from "../../../../store/slices/assistanceReqSlice";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import DetailsActionButton from "./DetailsActionButton";
 
 const AssistanceDetails = () => {
   const dispatch = useAppDispatch();
@@ -128,9 +129,12 @@ const AssistanceDetails = () => {
                 </span>
               </div>
             )}
-            <div className="flex flex-col  bg-primary-100 rounded-lg px-4 py-6 gap-5">
+            <div className="flex flex-col  bg-primary-100 rounded-lg px-4 py-6 gap-5 relative">
               {/*  {assistanceData.proof !== "" && (
                 <> */}
+              {/* {assistanceData && ( */}
+              <DetailsActionButton assistanceData={assistanceData} />
+              {/*  )} */}
               <div className="flex gap-2">
                 <BsFillChatRightDotsFill className="text-primary-600" />
                 <span className="text-gray-700 text-sm">

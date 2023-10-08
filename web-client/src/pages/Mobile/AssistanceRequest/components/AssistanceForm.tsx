@@ -33,6 +33,7 @@ import AssistanceQuestionThree from "./AssistanceQuestionThree";
 import UnfinishedReport from "./UnfinishedReport";
 import { getLocation } from "../../../../util/getLocation";
 import AssistanceDetails from "./AssistanceDetails";
+import TimerNotify from "./TimerNotify";
 
 const AssistanceForm = () => {
   const dispatch = useAppDispatch();
@@ -54,7 +55,7 @@ const AssistanceForm = () => {
     (state) => state.assistanceReq.assistanceQuestionThree
   );
 
-  const timeBeforeAutoSubmit = 60;
+  const timeBeforeAutoSubmit = 13;
   const [timer, setTimer] = useState<number>(timeBeforeAutoSubmit);
 
   const [editProof, setEditProof] = useState<boolean>(false);
@@ -303,6 +304,15 @@ const AssistanceForm = () => {
 
   return (
     <>
+      {timer < 11 && timer > 0 && (
+        <div className="fixed top-16 left-1/2 -translate-x-1/2  rounded shadow-md">
+          <TimerNotify
+            timer={timer}
+            setTimer={setTimer}
+            timeBeforeAutoSubmit={timeBeforeAutoSubmit}
+          />
+        </div>
+      )}
       {displayedAssistancePage === "questionOne" && <AssistanceQuestionOne />}
       {displayedAssistancePage === "questionTwo" && <AssistanceQuestionTwo />}
       {displayedAssistancePage === "questionThree" && (
