@@ -131,7 +131,7 @@ const EditProfilePicture: React.FC<EditProfilePictureProps> = ({
                 <Cropper
                   ref={cropperRef}
                   src={selectedImage}
-                  style={{ height: 300, width: "100%" }}
+                  style={{ height: 400, width: "100%" }}
                   initialAspectRatio={1}
                   aspectRatio={1}
                   zoomTo={0.5}
@@ -142,9 +142,10 @@ const EditProfilePicture: React.FC<EditProfilePictureProps> = ({
                   viewMode={1}
                   minCropBoxHeight={10}
                   minCropBoxWidth={10}
+                  autoCropArea={1}
                 />
               </div>
-              <button className="btn-primary" onClick={getCroppedImage}>
+              <button className="btn-primary mt-5" onClick={getCroppedImage}>
                 Crop
               </button>
             </Sheet.Content>
