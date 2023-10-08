@@ -1,12 +1,12 @@
+import { ReactNode } from "react";
 import Malolos_City_Hall from "../../assets/img/Malolos_City_Hall.jpg";
 
 type TProp = {
-  component: ReactNode;
+  children: ReactNode;
   isAbsolute?: boolean;
 };
 
-const MobileHeder = ({ component, isAbsolute }: TProp) => {
-
+const MobileHeader = ({ children, isAbsolute }: TProp) => {
   return (
     <div
       className={`${
@@ -24,4 +24,4 @@ const MobileHeder = ({ component, isAbsolute }: TProp) => {
   );
 };
 
-export default MobileHeder;
+export default MobileHeader;
