@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 
 import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
@@ -10,34 +11,34 @@ import {
   setTempMarkerPos,
   setAddMode,
 } from "../../../../store/slices/facilitySlice";
-import {
-  selectAssistanceReq,
-  setAssistanceQuestionThree,
-  setAssistanceQuestionTwo,
-} from "../../../../store/slices/assistanceReqSlice";
-import {
-  setAssistanceCategory,
-  setAssistanceQuestionOne,
-} from "../../../../store/slices/assistanceReqSlice";
 
 import {
   useAddAssistanceRequestMutation,
+  useGetMyAssistanceRequestQuery,
   useUpdateAssistanceRequestMutation,
 } from "../../../../services/assistanceRequestQuery";
 
 import AssistanceFormFields from "./AssistanceFormFields";
-import Modal from "../../../../components/Modal/Modal";
+
 import AssistanceQuestionOne from "./AssistanceQuestionOne";
 import AssistanceQuestionTwo from "./AssistanceQuestionTwo";
 import AssistanceQuestionThree from "./AssistanceQuestionThree";
-import UnfinishedReport from "./UnfinishedReport";
-import { getLocation } from "../../../../util/getLocation";
-import AssistanceDetails from "./AssistanceDetails";
-import TimerNotify from "./TimerNotify";
 
-const AssistanceForm = () => {
+import { getLocation } from "../../../../util/getLocation";
+
+import TimerToast from "./TimerToast";
+
+type TProps = {
+  /*  assistanceData: TAssistanceRequest | null; */
+  /*  showModal: boolean; */
+  setShowModal: (value: boolean) => void;
+};
+
+const AssistanceForm = ({
+  /* assistanceData */ /* showModal, */ setShowModal,
+}: TProps) => {
   const dispatch = useAppDispatch();
-  /* const navigate = useNavigate(); */
+  const navigate = useNavigate();
 
   const displayedAssistancePage = useAppSelector(
     (state) => state.assistanceReq.displayedAssistancePage
@@ -45,23 +46,15 @@ const AssistanceForm = () => {
   const assistanceCategory = useAppSelector(
     (state) => state.assistanceReq.assistanceCategory
   );
-  const assistanceQuestionOne = useAppSelector(
-    (state) => state.assistanceReq.assistanceQuestionOne
-  );
-  const assistanceQuestionTwo = useAppSelector(
-    (state) => state.assistanceReq.assistanceQuestionTwo
-  );
-  const assistanceQuestionThree = useAppSelector(
-    (state) => state.assistanceReq.assistanceQuestionThree
-  );
 
-  const timeBeforeAutoSubmit = 13;
+  /* 60 seconds */
+  const timeBeforeAutoSubmit = 60;
   const [timer, setTimer] = useState<number>(timeBeforeAutoSubmit);
 
   const [editProof, setEditProof] = useState<boolean>(false);
   const [proofType, setProofType] = useState<string>("");
   const [serverRes, setServerRes] = useState<TAssistanceRequest>();
-  const assistanceData = useAppSelector(selectAssistanceReq);
+  /* const assistanceData = useAppSelector(selectAssistanceReq); */
   const tempMarkerPos = useAppSelector(selectTempMarkerPos);
   const [isFieldRequired, setIsFieldRequired] = useState<boolean>(false);
 
@@ -73,10 +66,16 @@ const AssistanceForm = () => {
   const [myLatitude, setMyLatitude] = useState<number>(0);
   const [myLongitude, setMyLongitude] = useState<number>(0);
 
+  const {
+    data: assistanceData,
+    isError: assistanceIsError,
+    isLoading: assistanceIsLoading,
+    /*  refetch: refetchAssistanceData, */
+  } = useGetMyAssistanceRequestQuery();
+
   useEffect(() => {
     const getCurrentLocation = async () => {
       const { latitude, longitude } = await getLocation();
-      /* console.log(latitude, longitude); */
       setMyLatitude(latitude);
       setMyLongitude(longitude);
     };
@@ -120,10 +119,9 @@ const AssistanceForm = () => {
       dispatch(setAddMode(true));
       setEditProof(false);
 
-      dispatch(setAssistanceCategory(assistanceData.category));
-      dispatch(setAssistanceQuestionOne(assistanceData.answers[0]));
-      dispatch(setAssistanceQuestionTwo(assistanceData.answers[1]));
-      dispatch(setAssistanceQuestionThree(assistanceData.answers[2]));
+      setValue("questionOne", assistanceData.answers[0]);
+      setValue("questionTwo", assistanceData.answers[1]);
+      setValue("questionThree", assistanceData.answers[2]);
       setValue("category", assistanceData.category);
       setValue("latitude", assistanceData.latitude);
       setValue("longitude", assistanceData.longitude);
@@ -142,10 +140,8 @@ const AssistanceForm = () => {
           (extension) => assistanceData?.proof.includes(extension)
         )
       ) {
-        console.log("image");
         setProofType("image");
       } else {
-        console.log("video");
         setProofType("video");
       }
     }
@@ -159,10 +155,9 @@ const AssistanceForm = () => {
     } */
 
       const body = new FormData();
-      console.log("action");
-      console.log(action);
+
       body.append("description", data.description);
-      console.log(isUsingCurrentLocation);
+
       if (isUsingCurrentLocation) {
         body.append("latitude", myLatitude.toString());
         body.append("longitude", myLongitude.toString());
@@ -173,9 +168,9 @@ const AssistanceForm = () => {
       body.append("category", assistanceCategory || "");
 
       const answers = [
-        assistanceQuestionOne || [],
-        assistanceQuestionTwo || [],
-        assistanceQuestionThree || [],
+        data.questionOne || [],
+        data.questionTwo || [],
+        data.questionThree || [],
       ];
 
       const flattenedAnswers = answers.flat();
@@ -201,7 +196,7 @@ const AssistanceForm = () => {
             : data.video && data.video[0]
         );
       }
-      console.log(action);
+
       let res;
       if (assistanceData?._id) {
         res = await updateAssistanceRequest({
@@ -214,8 +209,8 @@ const AssistanceForm = () => {
       }
       console.log(res);
       if (res && "data" in res) {
-        if (res.data.success) {
-          //navigate(`/hazard-reports`);
+        if (action === "add" || assistanceData?._id) {
+          navigate(`/emergency-reports/request`);
         }
       } else {
         if ("error" in res && "data" in res.error) {
@@ -230,20 +225,18 @@ const AssistanceForm = () => {
       proofType,
       updateAssistanceRequest,
       assistanceCategory,
-      assistanceQuestionOne,
-      assistanceQuestionThree,
-      assistanceQuestionTwo,
+
       editProof,
       isUsingCurrentLocation,
       myLatitude,
       myLongitude,
+      navigate,
     ]
   );
 
   const onSubmit = (action: string): SubmitHandler<FieldValues> => {
     return async (data) => {
       console.log("submit");
-      console.log(action);
 
       SubmitHazardReportData(data, action);
     };
@@ -255,24 +248,24 @@ const AssistanceForm = () => {
     if (assistanceData?.success === false) {
       timerInterval = setInterval(() => {
         setTimer((prevCountdown) => prevCountdown - 1);
-        console.log(timer);
       }, 1000);
     }
 
     if (!assistanceData?.success && timer === 0) {
+      console.log("hala");
       handleSubmit(onSubmit("auto-add"))();
       window.AndroidInterface?.playSOS();
       setShowModal(true);
-      if (timerInterval) {
-        clearInterval(timerInterval);
-      }
+    }
+    if (timerInterval && timer === -1) {
+      clearInterval(timerInterval);
     }
     return () => {
       if (timerInterval) {
         clearInterval(timerInterval);
       }
     };
-  }, [timer, assistanceData, handleSubmit]);
+  }, [timer, assistanceData, handleSubmit, setShowModal]);
   /* adding onsubmit as dependency causes loop */
 
   const watchVideo = useWatch({ control, name: "video" });
@@ -280,6 +273,9 @@ const AssistanceForm = () => {
   const watchLatitude = useWatch({ control, name: "latitude" });
   const watchLongitude = useWatch({ control, name: "longitude" });
   const watchDescription = useWatch({ control, name: "description" });
+  const watchQuestionOne = useWatch({ control, name: "questionOne" });
+  const watchQuestionTwo = useWatch({ control, name: "questionTwo" });
+  const watchQuestionThree = useWatch({ control, name: "questionThree" });
 
   useEffect(() => {
     setTimer(timeBeforeAutoSubmit);
@@ -289,37 +285,53 @@ const AssistanceForm = () => {
     watchLatitude,
     watchLongitude,
     watchDescription,
-    assistanceQuestionOne,
-    assistanceQuestionTwo,
-    assistanceQuestionThree,
+    watchQuestionOne,
+    watchQuestionTwo,
+    watchQuestionThree,
   ]);
-  /*  console.log(assistanceData); */
+
   if (addIsLoading) console.log("Loading...");
   if (addIsError) console.log("Error Adding");
 
   if (updateIsLoading) console.log("Updating...");
   if (updateIsError) console.log("Error updating");
   if (updateIsSuccess) console.log("Updated successfully");
-  const [showModal, setShowModal] = useState<boolean>(false);
+
+  if (assistanceIsLoading) return <div>Loading...</div>;
+  if (assistanceIsError) console.log("Error");
 
   return (
     <>
       {timer < 11 && timer > 0 && (
-        <div className="fixed top-16 left-1/2 -translate-x-1/2  rounded shadow-md">
-          <TimerNotify
+        <div className="fixed  z-20 top-16 left-1/2 -translate-x-1/2">
+          <TimerToast
             timer={timer}
             setTimer={setTimer}
             timeBeforeAutoSubmit={timeBeforeAutoSubmit}
           />
         </div>
       )}
-      {displayedAssistancePage === "questionOne" && <AssistanceQuestionOne />}
-      {displayedAssistancePage === "questionTwo" && <AssistanceQuestionTwo />}
-      {displayedAssistancePage === "questionThree" && (
-        <AssistanceQuestionThree />
+
+      {assistanceData && displayedAssistancePage === "questionOne" && (
+        <AssistanceQuestionOne
+          assistanceData={assistanceData}
+          register={register}
+          isFieldRequired={isFieldRequired}
+        />
       )}
-      {(displayedAssistancePage === "form" ||
-        displayedAssistancePage === "edit-form") && (
+      {displayedAssistancePage === "questionTwo" && (
+        <AssistanceQuestionTwo
+          register={register}
+          isFieldRequired={isFieldRequired}
+        />
+      )}
+      {displayedAssistancePage === "questionThree" && (
+        <AssistanceQuestionThree
+          register={register}
+          isFieldRequired={isFieldRequired}
+        />
+      )}
+      {displayedAssistancePage === "form" && assistanceData && (
         <AssistanceFormFields
           assistanceData={assistanceData}
           isFieldRequired={isFieldRequired}
@@ -343,17 +355,6 @@ const AssistanceForm = () => {
           setIsUsingCurrentLocation={setIsUsingCurrentLocation}
         />
       )}
-      {assistanceData && displayedAssistancePage !== "edit-form" && (
-        <AssistanceDetails />
-      )}
-      <Modal
-        isMobile={true}
-        modalTitle={""}
-        modalShow={showModal}
-        modalClose={() => setShowModal(false)}
-      >
-        <UnfinishedReport setShowModal={setShowModal} />
-      </Modal>
     </>
   );
 };

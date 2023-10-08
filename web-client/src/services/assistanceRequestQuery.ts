@@ -127,11 +127,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: [
-        "AssistanceRequest",
-        "MyAssistanceRequest",
-        "OngoingAssistanceRequest",
-      ],
+      invalidatesTags: ["MyAssistanceRequest"],
     }),
 
     updateAssistanceRequest: builder.mutation<
@@ -146,12 +142,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: [
-        "AssistanceRequest",
-        "MyAssistanceRequest",
-        "OngoingAssistanceRequest",
-        "ToRespondAssistanceRequest",
-      ],
+      invalidatesTags: ["MyAssistanceRequest"],
     }),
     responderUpdateAssistanceRequest: builder.mutation<
       TAssistanceRequest,
@@ -165,8 +156,6 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         },
       }),
       invalidatesTags: [
-        "AssistanceRequest",
-        "MyAssistanceRequest",
         "OngoingAssistanceRequest",
         "ToRespondAssistanceRequest",
       ],
@@ -180,14 +169,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
-      invalidatesTags: (_result, _error, id) => {
-        return [
-          /* { type: "AssistanceRequest", id }, */
-          { type: "MyAssistanceRequest", id },
-          { type: "OngoingAssistanceRequest", id },
-          /* { type: "ToRespondAssistanceRequest", id }, */
-        ];
-      },
+      invalidatesTags: ["MyAssistanceRequest"],
     }),
   }),
 });

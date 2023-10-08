@@ -27,6 +27,8 @@ import CurrentLocation from "../../HazardMap/components/CurrentLocation";
 import { AiOutlineCamera } from "react-icons/ai";
 import { BsCameraVideo } from "react-icons/bs";
 import { IoLocationOutline } from "react-icons/io5";
+import { MdChevronLeft } from "react-icons/md";
+import { setDisplayedAssistancePage } from "../../../../store/slices/assistanceReqSlice";
 /* import { MdChevronLeft } from "react-icons/md"; */
 
 type TProps = {
@@ -92,20 +94,21 @@ const AssistanceFormFields = ({
 
   return (
     <>
-      {/* <form
-        onSubmit={() => {
-          setEndpoint("auto");
-          handleSubmit(onSubmit("param"))();
-        }}
-      > */}
-      <div className="flex flex-col min-h-screen pb-5">
+      <div className="bg-white flex flex-col min-h-screen pb-5">
         <MobileHeader
           component={
             <>
-              {/*  <Link to="/hazard-reports">
-                <MdChevronLeft className="text-4xl" />
-              </Link> */}
-              <div className="text-2xl font-bold">Emergency Request </div>
+              <div className="flex items-center  text-2xl text-white font-bold gap-2">
+                <div>
+                  <MdChevronLeft
+                    className="text-4xl"
+                    onClick={() => {
+                      dispatch(setDisplayedAssistancePage("questionThree"));
+                    }}
+                  />
+                </div>
+                <div>Emergency Request </div>
+              </div>
             </>
           }
         />
@@ -185,7 +188,7 @@ const AssistanceFormFields = ({
               Please provide additional information:
             </label>
             <textarea
-              className="bg-white p-3 rounded-md"
+              className="bg-gray-100 p-3 rounded-md"
               id="description"
               placeholder="What is happening?"
               rows={5}
@@ -297,7 +300,7 @@ const AssistanceFormFields = ({
             onClick={() => {
               console.log("click");
               setIsFieldRequired(true);
-              handleSubmit(onSubmit("param"))();
+              handleSubmit(onSubmit("add"))();
             }}
             disabled={addIsLoading || updateIsLoading}
           >
@@ -305,7 +308,6 @@ const AssistanceFormFields = ({
           </button>
         </div>
       </div>
-      {/* </form> */}
     </>
   );
 };

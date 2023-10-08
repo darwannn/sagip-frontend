@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   setDisplayedAssistancePage,
@@ -8,14 +8,16 @@ import { useGetMyAssistanceRequestQuery } from "../../../services/assistanceRequ
 
 import AssistanceDetails from "./components/AssistanceDetails";
 import AssistanceForm from "./components/AssistanceForm";
-import HelpMeButton from "./components/HelpMeButton";
-/* import AssistanceQuestionOne from "./components/AssistanceQuestionOne";
-import AssistanceQuestionTwo from "./components/AssistanceQuestionTwo";
-import AssistanceQuestionThree from "./components/AssistanceQuestionThree"; */
+import HelpMeButton from "./HelpMeButtonPage";
+import { useNavigate } from "react-router-dom";
+import UnfinishedReport from "./components/UnfinishedReport";
+import Modal from "../../../components/Modal/Modal";
 
 const AssistanceRequestPage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
+  const [showModal, setShowModal] = useState<boolean>(false);
   const displayedAssistancePage = useAppSelector(
     (state) => state.assistanceReq.displayedAssistancePage
   );
@@ -24,33 +26,53 @@ const AssistanceRequestPage = () => {
     data: assistanceData,
     isError: assistanceIsError,
     isLoading: assistanceIsLoading,
+    /*  refetch: refetchAssistanceData, */
   } = useGetMyAssistanceRequestQuery();
-  /*  console.log(assistanceData); */
+
+  /*   useEffect(() => {
+    refetchAssistanceData();
+  }, [refetchAssistanceData]); */
+
   useEffect(() => {
-    if (assistanceData) {
-      dispatch(setSelectedAssistanceRequest(assistanceData));
-    } else {
-      dispatch(setDisplayedAssistancePage("button"));
+    if (!assistanceIsLoading) {
+      if (assistanceData?._id) {
+        dispatch(setSelectedAssistanceRequest(assistanceData));
+        dispatch(setDisplayedAssistancePage("myrequest"));
+      } else {
+        dispatch(setDisplayedAssistancePage("questionOne"));
+      }
     }
-  }, [dispatch, assistanceData]);
+  }, [dispatch, assistanceData, assistanceIsLoading, navigate]);
 
   if (assistanceIsLoading) return <div>Loading...</div>;
   if (assistanceIsError) console.log("Error");
 
   return (
     <>
-      {assistanceData?.success ? (
-        <AssistanceDetails />
+      {/*  {assistanceData?._id && displayedAssistancePage !== "edit-form" ? (
+        <AssistanceDetails assistanceData={assistanceData} />
       ) : (
-        <>
-          {displayedAssistancePage === "button" &&
-          assistanceData?.success === false ? (
-            <HelpMeButton />
-          ) : (
-            <AssistanceForm />
-          )}
-        </>
+        <> */}
+
+      <AssistanceForm
+        /*  showModal={showModal} */
+        setShowModal={setShowModal} /* assistanceData={assistanceData} */
+      />
+
+      {assistanceData?._id && displayedAssistancePage === "myrequest" && (
+        <AssistanceDetails assistanceData={assistanceData} />
       )}
+      {/*  </>
+      )} */}
+
+      <Modal
+        isMobile={true}
+        modalTitle={""}
+        modalShow={showModal}
+        modalClose={() => setShowModal(false)}
+      >
+        <UnfinishedReport setShowModal={setShowModal} />
+      </Modal>
     </>
   );
 };

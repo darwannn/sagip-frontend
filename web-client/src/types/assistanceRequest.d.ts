@@ -32,9 +32,6 @@ type TAssistanceReqResponse = {
 type TAssistanceRequestState = {
   selectedAssistanceRequest: TAssistanceRequest | null;
   assistanceCategory: string | null;
-  assistanceQuestionOne: string | null;
-  assistanceQuestionTwo: string | null;
-  assistanceQuestionThree: string | null;
-  assistanceButtonClicked: boolean;
+
   displayedAssistancePage: string | null;
 };

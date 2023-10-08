@@ -4,18 +4,19 @@ import MobileHeader from "../../../../components/MobileHeader/MobileHeader";
 
 import AssistanceMap from "./AssistanceMap";
 import { BASE_IMAGE_URL, BASE_VIDEO_URL } from "../../../../api.config";
-import Lightbox from "../../../../components/Lightbox/Lightbox";
-import {
-  selectAssistanceReq,
-  setDisplayedAssistancePage,
-} from "../../../../store/slices/assistanceReqSlice";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { TAssistanceRequest } from "../../../../types/assistanceRequest";
+import { setDisplayedAssistancePage } from "../../../../store/slices/assistanceReqSlice";
+import { useAppDispatch } from "../../../../store/hooks";
 import DetailsActionButton from "./DetailsActionButton";
+import Lightbox from "../../../../components/Lightbox/Lightbox";
 
-const AssistanceDetails = () => {
+type TProps = {
+  assistanceData: TAssistanceRequest | null;
+};
+
+const AssistanceDetails = ({ assistanceData }: TProps) => {
   const dispatch = useAppDispatch();
   const [view, setView] = useState<string>("info");
-  const assistanceData = useAppSelector(selectAssistanceReq);
   let isImage = true;
   if (assistanceData?._id) {
     const extensions = ["jpeg", "jpg", "png"];
@@ -55,7 +56,7 @@ const AssistanceDetails = () => {
                   <button
                     className="w-1/2 font-semibold text-secondary-500 text-center disabled:text-gray-500"
                     onClick={() => setView("map")}
-                    /*  disabled={!assistanceData?.isBeingResponded} */
+                    /* disabled={!assistanceData?.isBeingResponded} */
                   >
                     <span
                       className={`${
@@ -130,11 +131,9 @@ const AssistanceDetails = () => {
               </div>
             )}
             <div className="flex flex-col  bg-primary-100 rounded-lg px-4 py-6 gap-5 relative">
-              {/*  {assistanceData.proof !== "" && (
-                <> */}
-              {/* {assistanceData && ( */}
+              {/* cancel button */}
               <DetailsActionButton assistanceData={assistanceData} />
-              {/*  )} */}
+
               <div className="flex gap-2">
                 <BsFillChatRightDotsFill className="text-primary-600" />
                 <span className="text-gray-700 text-sm">
@@ -151,7 +150,7 @@ const AssistanceDetails = () => {
                   "Kindly provide a photo or video to help us in assisting you."
                 ) : (
                   <Lightbox mediaURL={mediaURL} isImage={isImage}>
-                    <div className="rounded-xl h-[200px]">
+                    <div className="rounded-xl h-full">
                       {isImage ? (
                         <img
                           src={mediaURL}
@@ -168,27 +167,20 @@ const AssistanceDetails = () => {
                   </Lightbox>
                 )}
               </div>
-              {/* </>
-              )} */}
-              {/* <Link
-                to={`/emergency-reports/edit/${assistanceData?._id}`}
-                className="bg-primary-600 rounded-xl py-3 text-white text-center"
-              > */}
+
               <button
                 className="bg-primary-600 rounded-xl py-3 text-white text-center"
                 onClick={() => {
-                  dispatch(setDisplayedAssistancePage("edit-form"));
+                  dispatch(setDisplayedAssistancePage("questionOne"));
+                  /* navigate("/emergency-reports/edit"); */
                 }}
               >
                 Update Information
               </button>
-              {/*  </Link> */}
             </div>
           </div>
         ) : (
-          assistanceData && (
-            <AssistanceMap /* assistanceData={assistanceData} */ />
-          )
+          assistanceData && <AssistanceMap assistanceData={assistanceData} />
         )}
       </div>
     </>

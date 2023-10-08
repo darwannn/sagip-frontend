@@ -16,7 +16,7 @@ const MobileRootPage = () => {
   }, [navigate]);
 
   return (
-    <div className="relative min-h-screen pb-24">
+    <div className="relative min-h-screen">
       {/* 
         TODO: ADD BOTTOM PADDINGv
         - Some pages gets cut off because of bottom navbar 

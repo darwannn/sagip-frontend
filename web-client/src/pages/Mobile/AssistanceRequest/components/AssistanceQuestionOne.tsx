@@ -1,103 +1,204 @@
+import { useNavigate } from "react-router-dom";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 import { useAppDispatch } from "../../../../store/hooks";
 import {
   setAssistanceCategory,
-  setAssistanceQuestionOne,
   setDisplayedAssistancePage,
 } from "../../../../store/slices/assistanceReqSlice";
+import { TAssistanceRequest } from "../../../../types/assistanceRequest";
 
-const AssistanceQuestionOne = () => {
+import { MdChevronLeft } from "react-icons/md";
+import "../styles/style.css";
+type TProps = {
+  register: UseFormRegister<FieldValues>;
+  isFieldRequired: boolean;
+  assistanceData: TAssistanceRequest;
+};
+
+const AssistancequestionOne = ({
+  register,
+  isFieldRequired,
+  assistanceData,
+}: TProps) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleOnClick = (category: string, asnwer: string) => {
+  const handleDispatch = (category: string) => {
     dispatch(setAssistanceCategory(category));
-    dispatch(setAssistanceQuestionOne(asnwer));
     dispatch(setDisplayedAssistancePage("questionTwo"));
   };
-
   return (
     <>
-      <div className="flex flex-col h-screen px-5 gap-2 py-5">
-        <div className="font-bold text-2xl text-secondary-500 mb-4">
-          What’s the emergency ?
+      <div className="flex flex-col h-screen px-5 gap-2 py-5 pt-16">
+        <div className="flex items-center mb-4 text-2xl text-secondary-500 font-bold">
+          <MdChevronLeft
+            className="text-4xl"
+            onClick={() => {
+              if (assistanceData?._id) {
+                dispatch(setDisplayedAssistancePage("details"));
+              } else {
+                navigate("/emergency-reports");
+              }
+            }}
+          />
+          <div>What’s the emergency ?</div>
         </div>
-
-        <div className="text-xl font-semibold">Trapped</div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Trapped", "Trapped inside a building")}
-        >
-          Trapped inside a building
-        </div>
-
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Trapped", "Trapped inside a vehicle")}
-        >
-          Trapped inside a vehicle
-        </div>
-
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Trapped", "Trapped inside a debris")}
-        >
-          Trapped inside a debris
-        </div>
-
-        <div className="text-xl font-semibold mt-5">Fire</div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Fire", "There is a house fire")}
-        >
-          There is a house fire
-        </div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Fire", "There is a house fire")}
-        >
-          There is a car fire
-        </div>
-        <div className="text-xl font-semibold mt-5">Injury / Sickness</div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Injury / Sickness", "Heart Attack")}
-        >
-          Heart Attack
-        </div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Injury / Sickness", "Stroke")}
-        >
-          Stroke
-        </div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Injury / Sickness", "Stroke")}
-        >
-          Stroke
-        </div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() =>
-            handleOnClick("Injury / Sickness", "Allergic Reaction")
-          }
-        >
-          Allergic Reaction
-        </div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Injury / Sickness", "Seizure")}
-        >
-          Seizure
-        </div>
-        <div
-          className="flex items-center gap-5 bg-gray-200 rounded-xl px-10 py-4 cursor-pointer"
-          onClick={() => handleOnClick("Injury / Sickness", "Trauma")}
-        >
-          Trauma
+        <div id="questionOne">
+          <>
+            <div className="text-xl font-semibold mb-3">Trapped</div>
+            <input
+              type="radio"
+              id="questionOne_1"
+              value="Trapped inside a building"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Trapped")}
+            />
+            <label
+              htmlFor="questionOne_1"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              Trapped inside a building
+            </label>
+            <input
+              type="radio"
+              id="questionOne_2"
+              value="Trapped inside a vehicle"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Trapped")}
+            />
+            <label
+              htmlFor="questionOne_2"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              Trapped inside a vehicle
+            </label>
+            <input
+              type="radio"
+              id="questionOne_3"
+              value="Trapped inside a debris"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Trapped")}
+            />
+            <label
+              htmlFor="questionOne_3"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              Trapped inside a debris
+            </label>
+          </>
+          <>
+            <div className="text-xl font-semibold mt-8 mb-3">Fire</div>
+            <input
+              type="radio"
+              id="questionOne_4"
+              value="There is a house fire"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Fire")}
+            />
+            <label
+              htmlFor="questionOne_4"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              There is a house fire
+            </label>
+            <input
+              type="radio"
+              id="questionOne_5"
+              value="Trapped inside a vehicle"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Fire")}
+            />
+            <label
+              htmlFor="questionOne_5"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              There is a car fire
+            </label>
+          </>
+          <>
+            <div className="text-xl font-semibold mt-8 mb-3">
+              Injury / Sickness
+            </div>
+            <input
+              type="radio"
+              id="questionOne_6"
+              value="Heart Attack"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Injury / Sickness")}
+            />
+            <label
+              htmlFor="questionOne_6"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              Heart Attack
+            </label>
+            <input
+              type="radio"
+              id="questionOne_7"
+              value="Stroke"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Injury / Sickness")}
+            />
+            <label
+              htmlFor="questionOne_7"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              Stroke
+            </label>
+            <input
+              type="radio"
+              id="questionOne_8"
+              value="Allergic Reaction"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Injury / Sickness")}
+            />
+            <label
+              htmlFor="questionOne_8"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              Allergic Reaction
+            </label>
+            <input
+              type="radio"
+              id="questionOne_9"
+              value="Seizure"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Injury / Sickness")}
+            />
+            <label
+              htmlFor="questionOne_9"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              Seizure
+            </label>
+            <input
+              type="radio"
+              id="questionOne_10"
+              value="Trauma"
+              className="mr-2 hidden"
+              {...register("questionOne", { required: isFieldRequired })}
+              onInput={() => handleDispatch("Injury / Sickness")}
+            />
+            <label
+              htmlFor="questionOne_10"
+              className="flex items-center mb-2 font-semibold bg-gray-200 rounded-xl px-10 py-4 cursor-pointer checked:bg-secondary-600"
+            >
+              Trauma
+            </label>
+          </>
         </div>
       </div>
     </>
   );
 };
 
-export default AssistanceQuestionOne;
+export default AssistancequestionOne;

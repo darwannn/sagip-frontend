@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import type { TAssistanceRequest } from "../../../../types/assistanceRequest";
 import { useDeleteAssistanceRequestMutation } from "../../../../services/assistanceRequestQuery";
 
@@ -16,8 +18,18 @@ type TProps = {
 };
 
 const DetailsActionButton = ({ assistanceData }: TProps) => {
-  const [deleteHazardReport, { isLoading: isDeleteLoading, isError }] =
-    useDeleteAssistanceRequestMutation();
+  const navigate = useNavigate();
+  const [
+    deleteAssistanceRequest,
+    { isLoading: isDeleteLoading, isError, isSuccess },
+  ] = useDeleteAssistanceRequestMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/home");
+    }
+  }, [isSuccess, navigate]);
+
   if (isError) console.log(isError);
   return (
     <>
@@ -34,15 +46,15 @@ const DetailsActionButton = ({ assistanceData }: TProps) => {
               <DropdownMenuItem
                 className="hover:bg-gray-100 text-base"
                 disabled={isDeleteLoading}
-                onClick={() =>
+                onClick={() => {
                   confirm("Do you really want to cancel your request?") &&
-                  deleteHazardReport(assistanceData?._id)
-                }
+                    deleteAssistanceRequest(assistanceData?._id);
+                }}
               >
                 <span className="mr-2 h-4 w-4">
                   <LuTrash2 />
                 </span>{" "}
-                <span>Cancel</span>
+                <span>Cancel Request</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

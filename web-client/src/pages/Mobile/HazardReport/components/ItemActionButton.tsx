@@ -51,7 +51,7 @@ const HazardItem = ({ hazardData }: TProps) => {
                   <span className="mr-2 h-4 w-4">
                     <LuTrash2 />
                   </span>{" "}
-                  <span>Cancel</span>
+                  <span>Cancel Report</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

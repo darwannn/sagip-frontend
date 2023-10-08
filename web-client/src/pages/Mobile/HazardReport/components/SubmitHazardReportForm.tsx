@@ -190,7 +190,7 @@ const ToggleMarkers = () => {
   if (updateIsSuccess) console.log("Updated successfully");
 
   return (
-    <div className="flex flex-col min-h-screen pb-5">
+    <div className="bg-white flex flex-col min-h-screen pb-5">
       <MobileHeader
         component={
           <>

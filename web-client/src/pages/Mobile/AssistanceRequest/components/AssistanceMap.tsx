@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Token } from "../../../../types/auth";
 import { setAddMode } from "../../../../store/slices/facilitySlice";
-import { selectAssistanceReq } from "../../../../store/slices/assistanceReqSlice";
+/* import { selectAssistanceReq } from "../../../../store/slices/assistanceReqSlice"; */
 
 import { receiveEvent } from "../../../../util/socketIO";
 import { getRoute } from "../../../../util/route";
@@ -13,18 +13,18 @@ import jwtDecode from "jwt-decode";
 
 import MapComponent from "../../../Admin/FacilityManagement/components/MapComponent";
 import BottomSheet from "../../../../components/BottomSheet/BottomSheet";
-/* import { TAssistanceRequest } from "../../../../types/assistanceRequest"; */
+import { TAssistanceRequest } from "../../../../types/assistanceRequest";
 
 import responder_marker from "../../../../assets/img/markers/responder.png";
 import my_request_merker from "../../../../assets/img/markers/my_location.png";
 
 import { BiCurrentLocation } from "react-icons/bi";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { useAppDispatch } from "../../../../store/hooks";
 
-/* type TProps = {
+type TProps = {
   assistanceData: TAssistanceRequest;
-}; */
-const AssistanceMap = (/* { assistanceData }: TProps */) => {
+};
+const AssistanceMap = ({ assistanceData }: TProps) => {
   const dispatch = useAppDispatch();
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
   const [responderDistance, setResponderDistance] = useState<string>("");
@@ -36,7 +36,7 @@ const AssistanceMap = (/* { assistanceData }: TProps */) => {
     longitude: 0,
   });
 
-  const assistanceData = useAppSelector(selectAssistanceReq);
+  /* const assistanceData = useAppSelector(selectAssistanceReq); */
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
 

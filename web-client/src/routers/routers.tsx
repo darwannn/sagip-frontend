@@ -66,6 +66,7 @@ import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/Subm
 import EmergencyPage from "../pages/Admin/AssistanceRequestManagement/EmergencyPage";
 import AssistanceRequestPage from "../pages/Mobile/AssistanceRequest/AssistanceRequestPage";
 import NotificationPage from "../pages/Mobile/Notification/NotificationPage";
+import HelpMeButtonPage from "../pages/Mobile/AssistanceRequest/HelpMeButtonPage";
 
 export const router = createBrowserRouter([
   {
@@ -206,7 +207,14 @@ export const router = createBrowserRouter([
       {
         path: "emergency-reports",
         loader: () => allowedUserType(["responder", "resident"], true),
-        element: <AssistanceRequestPage />,
+        children: [
+          { index: true, element: <HelpMeButtonPage /> },
+          {
+            path: "request",
+            loader: () => allowedUserType(["responder", "resident"], true),
+            element: <AssistanceRequestPage />,
+          },
+        ],
       },
     ],
   },

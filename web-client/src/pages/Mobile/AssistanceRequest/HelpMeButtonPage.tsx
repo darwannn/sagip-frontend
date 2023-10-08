@@ -1,22 +1,42 @@
 import { useState, useEffect } from "react";
-import { useAppDispatch } from "../../../../store/hooks";
-import {
-  setAssistanceButtonClicked,
-  setDisplayedAssistancePage,
-} from "../../../../store/slices/assistanceReqSlice";
+import { useAppDispatch } from "../../../store/hooks";
 
-import "../styles/style.css";
+import { useNavigate } from "react-router-dom";
+import "./styles/style.css";
+import { useGetMyAssistanceRequestQuery } from "../../../services/assistanceRequestQuery";
 
-const HelpMeButton = () => {
+const HelpMeButtonPage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [clickCount, setClickCount] = useState<number>(3);
+  const {
+    data: assistanceData,
+    isError: assistanceIsError,
+    isLoading: assistanceIsLoading,
+    isSuccess,
+  } = useGetMyAssistanceRequestQuery();
+
+  useEffect(() => {
+    setClickCount(3);
+  }, []);
 
   useEffect(() => {
     if (clickCount === 0) {
-      dispatch(setAssistanceButtonClicked(true));
-      dispatch(setDisplayedAssistancePage("questionOne"));
+      navigate("/emergency-reports/request");
     }
-  }, [clickCount, dispatch]);
+  }, [clickCount, dispatch, navigate]);
+
+  useEffect(() => {
+    if (isSuccess && assistanceData?._id) {
+      navigate("/emergency-reports/request");
+    }
+    /* if (assistanceData?._id) {
+        navigate("/emergency-reports/request");
+      } */
+    console.log(assistanceData);
+  }, [dispatch, assistanceData, assistanceIsLoading, navigate]);
+  if (assistanceIsLoading) return <div>Loading...</div>;
+  if (assistanceIsError) console.log("Error");
 
   return (
     <div className="flex flex-col min-h-screen px-5 gap-3 pt-16">
@@ -57,4 +77,4 @@ const HelpMeButton = () => {
   );
 };
 
-export default HelpMeButton;
+export default HelpMeButtonPage;

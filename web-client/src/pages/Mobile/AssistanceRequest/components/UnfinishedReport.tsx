@@ -1,11 +1,8 @@
-import { useNavigate } from "react-router-dom";
-
 type TProps = {
   setShowModal: (value: boolean) => void;
 };
 
 const UnfinishedReport = ({ setShowModal }: TProps) => {
-  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-5 p-5">
       <div className="text-xl font-bold text-secondary-500">
@@ -62,15 +59,14 @@ const UnfinishedReport = ({ setShowModal }: TProps) => {
       <div>
         <span className="font-bold">Attention:</span> You have not completed the
         emergency report. For your safety and the safety of others, an alarm
-        will sound. If you think this is a mistake please click the button to
-        continue:
+        will sound. If you think this is a mistake you may cancel your emergency
+        request.
       </div>
       <button
         className="rounded-xl bg-secondary-200 py-4"
         onClick={() => {
           window.AndroidInterface?.stopSOS();
           setShowModal(false);
-          navigate(0);
         }}
       >
         Turn off and Proceed

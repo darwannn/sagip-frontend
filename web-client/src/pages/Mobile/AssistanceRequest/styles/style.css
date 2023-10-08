@@ -11,3 +11,12 @@
     }
   }
 
+    
+   #questionOne input[type="radio"]:checked+label, #questionTwo input[type="radio"]:checked+label, #questionThree input[type="radio"]:checked+label {
+    background-color: #C92A2A;;
+    color: white;
+  }
+
+/*   #questionTwo input[type="radio"]:checked+label span {
+    color: white;
+  } */
