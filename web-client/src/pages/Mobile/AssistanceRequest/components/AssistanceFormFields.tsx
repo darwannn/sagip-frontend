@@ -261,9 +261,7 @@ const AssistanceFormFields = ({
             )}
           </div>
           <div>
-            {uploadedImage &&
-            uploadedImage[0] instanceof File &&
-            proofType === "image" ? (
+            {uploadedImage && proofType === "image" && proofType === "image" ? (
               <img
                 src={URL.createObjectURL(uploadedImage[0])}
                 className="w-94 mx-auto my-5 rounded"
@@ -277,9 +275,7 @@ const AssistanceFormFields = ({
               )
             )}
 
-            {uploadedVideo &&
-            uploadedVideo[0] instanceof File &&
-            proofType === "video" ? (
+            {uploadedVideo && proofType === "video" ? (
               <video
                 src={URL.createObjectURL(uploadedVideo[0])}
                 controls
@@ -287,7 +283,7 @@ const AssistanceFormFields = ({
             ) : (
               proofType === "video" && (
                 <video
-                  src={`${BASE_VIDEO_URL}/assistance-request/${assistanceData?.proof}`}
+                  src={`${BASE_IMAGE_URL}/assistance-request/${assistanceData?.proof}`}
                   controls
                 ></video>
               )

@@ -21,7 +21,7 @@ const MobileRootPage = () => {
         TODO: ADD BOTTOM PADDINGv
         - Some pages gets cut off because of bottom navbar 
       */}
-      <div className="bg-gray-100">
+      <div className="bg-gray-100 pb-16">
         <Outlet />
       </div>
       {/* MOBILE NAV */}
