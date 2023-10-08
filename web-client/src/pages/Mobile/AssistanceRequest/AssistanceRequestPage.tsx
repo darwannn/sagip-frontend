@@ -8,7 +8,7 @@ import { useGetMyAssistanceRequestQuery } from "../../../services/assistanceRequ
 
 import AssistanceDetails from "./components/AssistanceDetails";
 import AssistanceForm from "./components/AssistanceForm";
-import HelpMeButton from "./HelpMeButtonPage";
+
 import { useNavigate } from "react-router-dom";
 import UnfinishedReport from "./components/UnfinishedReport";
 import Modal from "../../../components/Modal/Modal";
@@ -29,10 +29,6 @@ const AssistanceRequestPage = () => {
     /*  refetch: refetchAssistanceData, */
   } = useGetMyAssistanceRequestQuery();
 
-  /*   useEffect(() => {
-    refetchAssistanceData();
-  }, [refetchAssistanceData]); */
-
   useEffect(() => {
     if (!assistanceIsLoading) {
       if (assistanceData?._id) {
@@ -49,21 +45,10 @@ const AssistanceRequestPage = () => {
 
   return (
     <>
-      {/*  {assistanceData?._id && displayedAssistancePage !== "edit-form" ? (
-        <AssistanceDetails assistanceData={assistanceData} />
-      ) : (
-        <> */}
-
-      <AssistanceForm
-        /*  showModal={showModal} */
-        setShowModal={setShowModal} /* assistanceData={assistanceData} */
-      />
-
+      <AssistanceForm setShowModal={setShowModal} />
       {assistanceData?._id && displayedAssistancePage === "myrequest" && (
         <AssistanceDetails assistanceData={assistanceData} />
       )}
-      {/*  </>
-      )} */}
 
       <Modal
         isMobile={true}

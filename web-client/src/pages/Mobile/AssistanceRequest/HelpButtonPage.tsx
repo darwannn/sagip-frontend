@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles/style.css";
 import { useGetMyAssistanceRequestQuery } from "../../../services/assistanceRequestQuery";
 
-const HelpMeButtonPage = () => {
+const HelpButtonPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [clickCount, setClickCount] = useState<number>(3);
@@ -74,4 +74,4 @@ const HelpMeButtonPage = () => {
   );
 };
 
-export default HelpMeButtonPage;
+export default HelpButtonPage;
