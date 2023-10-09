@@ -77,12 +77,14 @@ import EditEmailSetting from "../pages/Mobile/AccountSettings/components/EditEma
 import EditContactNumberSetting from "../pages/Mobile/AccountSettings/components/EditContactNumberSetting";
 import EditPasswordSetting from "../pages/Mobile/AccountSettings/components/EditPasswordSetting";
 
-
 export const router = createBrowserRouter([
+  // ! General Routes and Mobile Interface Routes
+  // - Have the same `root` path and might cause conflict in the future
+  //   but for now it's working fine.
+
+  // General Routes
   {
     path: "/",
-
-    element: <MobileRootPage />,
     children: [
       {
         index: true,
@@ -145,6 +147,13 @@ export const router = createBrowserRouter([
         element: <NewPasswordPage />,
         loader: () => isInForgotPassword("new-password"),
       },
+    ],
+  },
+  // Mobile Interface Routes
+  {
+    path: "/",
+    element: <MobileRootPage />,
+    children: [
       {
         path: "home",
         loader: () => allowedUserType(["responder", "resident"], false),
@@ -157,7 +166,6 @@ export const router = createBrowserRouter([
       },
       {
         path: "articles",
-
         loader: () => allowedUserType(["responder", "resident"], false),
         children: [
           { index: true, element: <ArticlesPage /> },
