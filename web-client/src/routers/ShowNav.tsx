@@ -10,6 +10,7 @@ const ShowNav: FC<ShowNavProps> = ({ children }) => {
     "/account-settings",
     "/notification",
     "/emergency-hotlines",
+    "/emergency-reports",
     "/hazard-reports/",
     "/articles/",
   ];

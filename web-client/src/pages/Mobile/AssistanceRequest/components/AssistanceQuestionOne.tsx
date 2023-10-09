@@ -29,7 +29,7 @@ const AssistancequestionOne = ({
   };
   return (
     <>
-      <div className="flex flex-col h-screen px-5 gap-2 py-5 pt-16">
+      <div className="flex flex-col min-h-screen px-5 gap-2 py-5 pt-16">
         <div className="flex items-center mb-4 text-2xl text-secondary-500 font-bold">
           <MdChevronLeft
             className="text-4xl"
