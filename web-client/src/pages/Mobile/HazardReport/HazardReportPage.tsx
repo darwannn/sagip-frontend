@@ -51,7 +51,7 @@ const HazardReportPage = () => {
 
   return (
     <>
-      <div className="bg-gray-100 relative h-screen">
+      <div className="bg-gray-100 relative h-screen pb-20">
         <div className="flex flex-col p-5 gap-5">
           <div className="font-bold text-xl text-primary-600  mb-2">
             Hazards in your area:

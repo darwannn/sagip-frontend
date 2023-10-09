@@ -36,7 +36,7 @@ const Home = () => {
     0;
 
   return (
-    <>
+    <div className="min-h-screen pb-24">
       <MobileHeader>
         <>
           <img src={SAGIP_Logo} className="w-9 mr-3" />
@@ -90,7 +90,7 @@ const Home = () => {
           {articlesData && <SavedArticleList articleData={articlesData} />}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

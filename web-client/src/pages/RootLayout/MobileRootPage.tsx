@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  Outlet,
+  ScrollRestoration,
+  useNavigate,
+} from "react-router-dom";
 import {
   LuGalleryThumbnails,
   LuHome,
@@ -17,14 +22,13 @@ const MobileRootPage = () => {
   }, [navigate]);
 
   return (
-    <div className="relative min-h-screen">
-      {/* 
-        TODO: ADD BOTTOM PADDINGv
-        - Some pages gets cut off because of bottom navbar 
-      */}
-      <div className="bg-gray-100 pb-16">
-        <Outlet />
-      </div>
+    <div className="relative min-h-screen bg-gray-100">
+      {/* ScrollRestoration resets the scroll after moving to another page */}
+      <ScrollRestoration />
+      {/**
+       * * Added padding to each page to avoid the bottom nav from overlapping the content
+       */}
+      <Outlet />
       {/* MOBILE NAV */}
       <ShowNav>
         <div className="fixed bottom-0 left-0 h-[80px] w-full">
