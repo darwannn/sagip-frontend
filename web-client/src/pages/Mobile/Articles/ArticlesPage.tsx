@@ -53,7 +53,7 @@ const ArticlesPage = () => {
 
   return (
     <>
-      <div className="bg-gray-100 p-5 min-h-screen">
+      <div className="bg-gray-100 p-5 min-h-screen pb-32">
         {isInSavedPage && (
           <Link to="/articles">
             <BsArrowLeft className="text-2xl text-gray-500 mb-3 cursor-pointer" />

@@ -82,7 +82,7 @@ const EditProfileInformationPage = () => {
   }
 
   return (
-    <div className="min-h-screen w-full pb-28">
+    <div className="min-h-screen w-full pb-5">
       <MobileHeder>
         <div className="flex items-center gap-3">
           <button

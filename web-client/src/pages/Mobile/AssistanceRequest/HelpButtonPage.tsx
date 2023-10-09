@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import "./styles/style.css";
 import { useGetMyAssistanceRequestQuery } from "../../../services/assistanceRequestQuery";
+import { LuArrowLeft } from "react-icons/lu";
 
 const HelpButtonPage = () => {
   const dispatch = useAppDispatch();
@@ -36,9 +37,17 @@ const HelpButtonPage = () => {
   if (assistanceIsError) console.log("Error");
 
   return (
-    <div className="flex flex-col min-h-screen px-5 gap-3 pt-16">
-      <div className="font-bold text-2xl text-secondary-500">
-        Are you in an emergency?
+    <div className="flex flex-col min-h-screen px-5 gap-3 py-16">
+      <div className="flex items-center gap-1">
+        <button
+          className="p-1.5 text-gray-500 rounded-md text-lg"
+          onClick={() => navigate("/home")}
+        >
+          <LuArrowLeft />
+        </button>
+        <h3 className="text-secondary-500 text-xl font-bold">
+          Are you in a emergency ?
+        </h3>
       </div>
 
       <div>
