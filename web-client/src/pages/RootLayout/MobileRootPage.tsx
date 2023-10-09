@@ -7,6 +7,7 @@ import {
   LuShieldAlert,
   LuSiren,
 } from "react-icons/lu";
+import ShowNav from "../../routers/ShowNav";
 
 const MobileRootPage = () => {
   // THIS PAGE REDIRECTS TO THE ADMIN DASHBOARD
@@ -25,66 +26,68 @@ const MobileRootPage = () => {
         <Outlet />
       </div>
       {/* MOBILE NAV */}
-      <div className="fixed bottom-0 left-0 h-[80px] w-full">
-        {/* Nav Items Container */}
-        <div className="bg-white h-full max-w-[450px] min-w-[350px] mx-auto pt-[20px] rounded-t-3xl shadow-[0px_-1px_10px_0px_rgba(0,0,0,0.10)]">
-          <ul className="relative flex items-center justify-center gap-12  mx-auto">
-            <div className="indicator absolute w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full -translate-y-[20%] border-[8px] border-white"></div>
-            <li className="z-10">
-              <NavLink
-                to={"home"}
-                className={({ isActive }) =>
-                  `${isActive && "child:text-red-500"}`
-                }
-              >
-                <LuHome className="text-[24px] text-gray-400" />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={"hazard-map"}
-                className={({ isActive }) =>
-                  `${isActive && "child:text-red-500"}`
-                }
-              >
-                <LuMap className="text-[24px] text-gray-400" />
-              </NavLink>
-            </li>
-            <li className="relative -translate-y-4">
-              <NavLink
-                to={
-                  /*  window.AndroidInterface?.isLocationEnabled("resident")
+      <ShowNav>
+        <div className="fixed bottom-0 left-0 h-[80px] w-full">
+          {/* Nav Items Container */}
+          <div className="bg-white h-full max-w-[450px] min-w-[350px] mx-auto pt-[20px] rounded-t-3xl shadow-[0px_-1px_10px_0px_rgba(0,0,0,0.10)]">
+            <ul className="relative flex items-center justify-center gap-12  mx-auto">
+              <div className="indicator absolute w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full -translate-y-[20%] border-[8px] border-white"></div>
+              <li className="z-10">
+                <NavLink
+                  to={"home"}
+                  className={({ isActive }) =>
+                    `${isActive && "child:text-red-500"}`
+                  }
+                >
+                  <LuHome className="text-[24px] text-gray-400" />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"hazard-map"}
+                  className={({ isActive }) =>
+                    `${isActive && "child:text-red-500"}`
+                  }
+                >
+                  <LuMap className="text-[24px] text-gray-400" />
+                </NavLink>
+              </li>
+              <li className="relative -translate-y-4">
+                <NavLink
+                  to={
+                    /*  window.AndroidInterface?.isLocationEnabled("resident")
                     ?  */ "emergency-reports"
-                  /*  : "#" */
-                }
-                className={`text-white`}
-              >
-                <LuSiren className="z-10 text-[30px]" />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={"hazard-reports"}
-                className={({ isActive }) =>
-                  `${isActive && "child:text-red-500"}`
-                }
-              >
-                <LuShieldAlert className="text-[24px] text-gray-400" />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={"articles"}
-                className={({ isActive }) =>
-                  `${isActive && "child:text-red-500"}`
-                }
-              >
-                <LuGalleryThumbnails className="text-[24px] text-gray-400" />
-              </NavLink>
-            </li>
-          </ul>
+                    /*  : "#" */
+                  }
+                  className={`text-white`}
+                >
+                  <LuSiren className="z-10 text-[30px]" />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"hazard-reports"}
+                  className={({ isActive }) =>
+                    `${isActive && "child:text-red-500"}`
+                  }
+                >
+                  <LuShieldAlert className="text-[24px] text-gray-400" />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"articles"}
+                  className={({ isActive }) =>
+                    `${isActive && "child:text-red-500"}`
+                  }
+                >
+                  <LuGalleryThumbnails className="text-[24px] text-gray-400" />
+                </NavLink>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </ShowNav>
     </div>
   );
 };
