@@ -142,24 +142,24 @@ const EmergencyReportsPage = () => {
         }
         isBackdropShown={false}
       />
-      <div className="w-full p-5 relative z-10">
-        <div className="flex gap-2 items-center">
-          <SearchLocation map={map} />
-          <CurrentLocation map={map} />
-        </div>
-
-        {/* <ToggleMarkers
-              markerVisibility={markerVisibility}
-              setMarkerVisibility={setMarkerVisibility}
-            /> */}
-        <ToggleFacilities
-          setFacilityVisibility={setFacilityVisibility}
-          facilityVisibility={facilityVisibility}
-        />
-      </div>
 
       <div className="absolute top-0 z-0 w-full">
         <MapComponent onSetMapHandler={setMap}>
+          <div className="w-full p-5 relative z-10">
+            <div className="flex gap-2 items-center">
+              <SearchLocation map={map} />
+              <CurrentLocation map={map} />
+            </div>
+
+            {/* <ToggleMarkers
+              markerVisibility={markerVisibility}
+              setMarkerVisibility={setMarkerVisibility}
+            /> */}
+            <ToggleFacilities
+              setFacilityVisibility={setFacilityVisibility}
+              facilityVisibility={facilityVisibility}
+            />
+          </div>
           {/* {!requestIsLoading &&
             window.google &&
             requestData?.map(
