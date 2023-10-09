@@ -8,6 +8,7 @@ type ShowNavProps = {
 const ShowNav: FC<ShowNavProps> = ({ children }) => {
   const noNavPath = [
     "/account-settings",
+    "/notification",
     "/emergency-hotlines",
     "/hazard-reports/",
     "/articles/",

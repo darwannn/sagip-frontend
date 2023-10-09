@@ -10,7 +10,10 @@ import BottomSheet from "../../../components/BottomSheet/BottomSheet";
 import NotificationDetails from "./NotificationDetails";
 
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import { LuArrowLeft } from "react-icons/lu";
 const NotificationPage = () => {
+  const navigate = useNavigate();
   const [filterUnread, setFilterUnread] = useState(false);
 
   const {
@@ -92,11 +95,17 @@ const NotificationPage = () => {
 
   return (
     <>
-      <div className="notification-panel w-full min-h-screen bg-gray-200 px-5 py-5">
-        <div className="mb-5">
-          <h3 className="text-primary-600 text-2xl font-bold">Notification:</h3>
+      <div className="notification-panel w-full min-h-screen bg-gray-200 px-5 py-5 pt-10">
+        <div className="mb-5 flex items-center gap-1">
+          <button
+            className="p-1.5 text-gray-500 rounded-md text-lg"
+            onClick={() => navigate(-1)}
+          >
+            <LuArrowLeft />
+          </button>
+          <h3 className="text-primary-600 text-xl font-bold">Notifications</h3>
         </div>
-        <div className="flex flex-row gap-2 p-1 bg-gray-100 w-max mb-4 rounded ">
+        <div className="flex flex-row gap-2 p-1 bg-gray-100 w-max mb-4 rounded text-sm ">
           <button
             className={`py-1 px-3 rounded ${
               !filterUnread ? "bg-primary-500 text-white" : ""
