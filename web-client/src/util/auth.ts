@@ -17,9 +17,7 @@ export const getAuthToken = () => {
   }
 
   const decodedToken = jwtDecode<Token>(token || "");
-  console.log("====================================");
-  console.log(decodedToken);
-  console.log("====================================");
+
   const exp = decodedToken.exp;
   // If token is expired, return null
   if (now > exp) {
@@ -39,7 +37,7 @@ export const isLoggedIn = (allowedUserTypes: string[]) => {
     const tokenTarget = decodedToken.target;
     const userType = decodedToken.userType;
 
-    console.log(decodedToken);
+    /* console.log(decodedToken); */
 
     if (tokenTarget === "login") {
       if (allowedUserTypes.includes(userType)) {
@@ -58,8 +56,8 @@ export const allowedUserType = (
   allowedUserType: string[],
   isTokenRequired: boolean
 ) => {
-  console.log(allowedUserType);
-  console.log(isTokenRequired);
+  console.log(allowedUserType, isTokenRequired);
+
   // TODO: Uncomment once all the system functionality are integrated
   /* const token = getAuthToken();
   if (token) {

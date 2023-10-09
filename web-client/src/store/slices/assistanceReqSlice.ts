@@ -7,6 +7,9 @@ import { RootState } from "../store";
 
 const initialState: TAssistanceRequestState = {
   selectedAssistanceRequest: null,
+  assistanceCategory: null,
+
+  displayedAssistancePage: null,
 };
 
 export const assistanceReqSlice = createSlice({
@@ -19,10 +22,26 @@ export const assistanceReqSlice = createSlice({
     ) => {
       state.selectedAssistanceRequest = action.payload;
     },
+
+    setDisplayedAssistancePage: (
+      state,
+      action: PayloadAction<string | null>
+    ) => {
+      state.displayedAssistancePage = action.payload;
+    },
+    setAssistanceCategory: (state, action: PayloadAction<string | null>) => {
+      state.assistanceCategory = action.payload;
+    },
+   
   },
 });
 
-export const { setSelectedAssistanceRequest } = assistanceReqSlice.actions;
+export const {
+  setSelectedAssistanceRequest,
+  setDisplayedAssistancePage,
+  setAssistanceCategory,
+
+} = assistanceReqSlice.actions;
 export default assistanceReqSlice.reducer;
 
 // Selectors

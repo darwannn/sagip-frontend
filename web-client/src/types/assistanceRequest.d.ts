@@ -14,10 +14,11 @@ type TAssistanceRequest = {
   longitude: number;
   municipality: string;
   proof: string;
-  status: "unverified" | "ongoing" | "resolved";
+  status: "unverified" | "ongoing" | "resolved" | "incomplete";
   street: string;
   userId: User;
   isBeingResponded?: boolean;
+  success: ?boolean;
 };
 
 type TAssistanceReqResponse = {
@@ -30,4 +31,7 @@ type TAssistanceReqResponse = {
 
 type TAssistanceRequestState = {
   selectedAssistanceRequest: TAssistanceRequest | null;
+  assistanceCategory: string | null;
+
+  displayedAssistancePage: string | null;
 };

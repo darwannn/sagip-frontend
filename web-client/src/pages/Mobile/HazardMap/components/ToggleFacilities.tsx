@@ -4,6 +4,7 @@ type TProps = {
     policeStation: boolean;
     fireStation: boolean;
     hospital: boolean;
+    hazard: boolean;
   };
   setFacilityVisibility: React.Dispatch<
     React.SetStateAction<{
@@ -11,6 +12,7 @@ type TProps = {
       policeStation: boolean;
       fireStation: boolean;
       hospital: boolean;
+      hazard: boolean;
     }>
   >;
 };
@@ -21,6 +23,41 @@ const ToggleFacilities = ({
 }: TProps) => {
   return (
     <div className="w-full flex gap-1 mt-3 overflow-x-auto overflow-hidden">
+      <input
+        className="hidden"
+        id="hazardCheckbox"
+        type="checkbox"
+        checked={facilityVisibility.hazard}
+        onChange={() =>
+          setFacilityVisibility({
+            ...facilityVisibility,
+            hazard: !facilityVisibility.hazard,
+          })
+        }
+      />
+      <br />
+      <label
+        htmlFor="hazardCheckbox"
+        className={` px-4 py-1 rounded-3xl shadow-md cursor-pointer whitespace-nowrap ${
+          facilityVisibility.hazard
+            ? "bg-primary-500 text-white"
+            : "bg-white text-black"
+        }`}
+      >
+        <input
+          className="hidden"
+          id="hazardCheckbox"
+          type="checkbox"
+          checked={facilityVisibility.hazard}
+          onChange={() =>
+            setFacilityVisibility({
+              ...facilityVisibility,
+              hazard: !facilityVisibility.hazard,
+            })
+          }
+        />
+        Hazard
+      </label>
       <label
         htmlFor="evacuationAreaCheckbox"
         className={` px-4 py-1 rounded-3xl shadow-md cursor-pointer whitespace-nowrap ${

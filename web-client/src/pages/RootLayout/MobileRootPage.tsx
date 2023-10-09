@@ -18,10 +18,10 @@ const MobileRootPage = () => {
   return (
     <div className="relative min-h-screen">
       {/* 
-        TODO: ADD BOTTOM PADDING
+        TODO: ADD BOTTOM PADDINGv
         - Some pages gets cut off because of bottom navbar 
       */}
-      <div className="bg-gray-100">
+      <div className="bg-gray-100 pb-16">
         <Outlet />
       </div>
       {/* MOBILE NAV */}
@@ -51,10 +51,14 @@ const MobileRootPage = () => {
               </NavLink>
             </li>
             <li className="relative -translate-y-4">
-              {/*
-                TODO: LINK TO EMERGENCY REPORTS PAGE 
-               */}
-              <NavLink to={"#"} className={`text-white`}>
+              <NavLink
+                to={
+                  /*  window.AndroidInterface?.isLocationEnabled("resident")
+                    ?  */ "emergency-reports"
+                  /*  : "#" */
+                }
+                className={`text-white`}
+              >
                 <LuSiren className="z-10 text-[30px]" />
               </NavLink>
             </li>

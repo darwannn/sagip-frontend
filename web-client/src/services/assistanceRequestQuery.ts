@@ -45,7 +45,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
       { id: string; body: DismissBody }
     >({
       query: ({ id, body }) => ({
-        url: `assistance-request/delete/${id}`,
+        url: `assistance-request/archive/${id}`,
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -56,6 +56,7 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         return [{ type: "AssistanceRequest", id }];
       },
     }),
+
     // Assign team to assistance request
     assignTeamToAssistanceRequest: builder.mutation<
       TAssistanceReqResponse,
@@ -114,7 +115,36 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
           : ["ToRespondAssistanceRequest"],
     }),
 
+    addAssistanceRequest: builder.mutation<
+      TAssistanceRequest,
+      { body: FormData; action: string }
+    >({
+      query: ({ body, action }) => ({
+        url: `assistance-request/${action}`,
+        method: "POST",
+        body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["MyAssistanceRequest"],
+    }),
+
     updateAssistanceRequest: builder.mutation<
+      TAssistanceRequest,
+      { body: FormData; id: string }
+    >({
+      query: ({ body, id }) => ({
+        url: `assistance-request/update/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["MyAssistanceRequest"],
+    }),
+    responderUpdateAssistanceRequest: builder.mutation<
       TAssistanceRequest,
       { action: string; id: string }
     >({
@@ -126,10 +156,20 @@ export const assistanceRequestQueryApi = rootApi.injectEndpoints({
         },
       }),
       invalidatesTags: [
-        "AssistanceRequest",
         "OngoingAssistanceRequest",
         "ToRespondAssistanceRequest",
       ],
+    }),
+
+    deleteAssistanceRequest: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `assistance-request/delete/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["MyAssistanceRequest"],
     }),
   }),
 });
@@ -142,8 +182,10 @@ export const {
   useGetMyAssistanceRequestQuery,
   useGetOngoingAssistanceRequestsQuery,
   useGetToRespondAssistanceRequestsQuery,
-
+  useAddAssistanceRequestMutation,
   useUpdateAssistanceRequestMutation,
+  useResponderUpdateAssistanceRequestMutation,
+  useDeleteAssistanceRequestMutation,
 } = assistanceRequestQueryApi;
 
 const statusOrder = ["unverified", "ongoing", "resolved"];

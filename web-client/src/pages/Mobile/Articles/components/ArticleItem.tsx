@@ -69,7 +69,7 @@ const ArticleItem = ({ articleData }: TProps) => {
   return (
     <>
       <div className="flex bg-white  rounded-2xl shadow-md relative">
-        <div className="max-w-[130px] h-[130px] ">
+        <div className="max-w-[130px] min-w-[130px] min-h-[130px] ">
           <img
             src={`${BASE_IMAGE_URL}/safety-tips/${articleData.image}`}
             className="w-full h-full object-cover  rounded-2xl"
@@ -78,7 +78,7 @@ const ArticleItem = ({ articleData }: TProps) => {
         <div className="m-3">
           <div className="text-xs text-gray-500">{articleData.category}</div>
           <Link to={`/articles/${articleData._id}`}>
-            <div className="font-bold hover:text-[#364FC7] hover:cursor-pointer">
+            <div className="font-bold hover:text-[#364FC7] pb-7 hover:cursor-pointer">
               {articleData.title}
             </div>
           </Link>

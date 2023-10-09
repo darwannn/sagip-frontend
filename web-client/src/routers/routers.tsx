@@ -66,6 +66,9 @@ import SubmitHazardReportForm from "../pages/Mobile/HazardReport/components/Subm
 import EmergencyPage from "../pages/Admin/AssistanceRequestManagement/EmergencyPage";
 import AssistanceRequestPage from "../pages/Mobile/AssistanceRequest/AssistanceRequestPage";
 import NotificationPage from "../pages/Mobile/Notification/NotificationPage";
+
+import HelpButtonPage from "../pages/Mobile/AssistanceRequest/HelpButtonPage";
+
 import EditProfileInformationPage from "../pages/Mobile/AccountSettings/EditProfileInformation";
 import MobileSettingsRootPage from "../pages/RootLayout/MobileSettingsRootPage";
 import AccountInformationSettings from "../pages/Mobile/AccountSettings/AccountInformationSettings";
@@ -73,6 +76,7 @@ import AccountInformationRoot from "../pages/Mobile/AccountSettings/AccountInfor
 import EditEmailSetting from "../pages/Mobile/AccountSettings/components/EditEmailSetting";
 import EditContactNumberSetting from "../pages/Mobile/AccountSettings/components/EditContactNumberSetting";
 import EditPasswordSetting from "../pages/Mobile/AccountSettings/components/EditPasswordSetting";
+
 
 export const router = createBrowserRouter([
   {
@@ -227,7 +231,14 @@ export const router = createBrowserRouter([
       {
         path: "emergency-reports",
         loader: () => allowedUserType(["responder", "resident"], true),
-        children: [{ index: true, element: <AssistanceRequestPage /> }],
+        children: [
+          { index: true, element: <HelpButtonPage /> },
+          {
+            path: "request",
+            loader: () => allowedUserType(["responder", "resident"], true),
+            element: <AssistanceRequestPage />,
+          },
+        ],
       },
     ],
   },

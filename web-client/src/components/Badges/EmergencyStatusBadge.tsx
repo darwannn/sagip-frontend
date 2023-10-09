@@ -10,6 +10,7 @@ const badgeVariants = cva("capitalize text-white w-max", {
       unverified: "bg-orange-500",
       ongoing: "bg-green-500",
       resolved: "bg-blue-500",
+      incomplete: "bg-orange-500",
     },
   },
   defaultVariants: {
