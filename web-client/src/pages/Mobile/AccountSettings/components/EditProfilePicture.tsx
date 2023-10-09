@@ -108,8 +108,7 @@ const EditProfilePicture: React.FC<EditProfilePictureProps> = ({
         isOpen={isCropMode}
         onClose={() => setCropMode(false)}
         disableDrag
-        className="z-10"
-        mountPoint={document.getElementById("modal") as HTMLElement}
+        style={{ zIndex: 50 }}
       >
         <Sheet.Backdrop onTap={(e) => e.stopPropagation()}>
           <Sheet.Container>
