@@ -11,7 +11,7 @@ const ManageUserPage = () => {
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
 
   return (
-    <div className="p-10 min-h-screen flex flex-col">
+    <div className="p-10 bg-gray-50 min-h-screen flex flex-col">
       <div className="">
         <h1 className="text-2xl font-bold text-primary-500">Manage Users</h1>
         <p>Manage user accounts, access levels, and verify resident accounts</p>

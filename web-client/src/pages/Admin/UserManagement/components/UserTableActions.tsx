@@ -60,7 +60,7 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
     <section className="flex flex-row justify-between  items-center w-full">
       <div className="flex flex-row gap-2 items-center">
         {/* Search Bar */}
-        <div className="flex flex-row gap-2 items-center border xl:w-[350px] p-2 rounded">
+        <div className="flex flex-row gap-2 items-center border xl:w-[350px] p-2 rounded bg-white">
           <RiSearchLine className="text-lg text-gray-500" />
           <input
             className="flex-grow focus:outline-none"
@@ -70,7 +70,7 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
           />
         </div>
         <Popover>
-          <PopoverTrigger className="flex items-center py-2 px-3 text-gray-500 bg-slate-100 rounded">
+          <PopoverTrigger className="flex items-center py-2 px-3 text-gray-500 bg-white border rounded">
             <BiFilter className="mr-2" />
             Filter
           </PopoverTrigger>

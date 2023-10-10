@@ -23,7 +23,7 @@ const initialState: ManageUserState = {
     isArchive: false,
     isBanned: false,
     // gender: ["Male", "Female"],
-    roles: ["super-admin", "admin", "responder", "dispatcher"],
+    roles: [],
   },
   selectedNotification: null,
 };
