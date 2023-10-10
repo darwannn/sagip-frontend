@@ -35,7 +35,7 @@ const UserTable = () => {
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      const { isArchive, gender, roles } = tableFilters;
+      const { isArchive, roles, status } = tableFilters;
       const filter = users?.filter((user) => {
         // Staff
         if (!isStaff && user.userType !== "resident") {
@@ -52,10 +52,12 @@ const UserTable = () => {
         if (user.isArchived !== isArchive) {
           return false;
         }
-        // Gender
-        if (gender.length > 0 && !gender.includes(user.gender)) {
+
+        // Account Status
+        if (status.length > 0 && !status.includes(user.status)) {
           return false;
         }
+
         return true;
       });
       setFilteredUsers(filter ?? []);
@@ -80,6 +82,7 @@ const UserTable = () => {
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFltr,
+    globalFilterFn: "includesString",
     // For pagination
     getPaginationRowModel: getPaginationRowModel(),
     //For sorting
@@ -117,7 +120,7 @@ const UserTable = () => {
           table={table}
         />
       </div>
-      <div className="rounded-md border mb-10">
+      <div className="rounded-md border mb-10 bg-white">
         <DataTable table={table} columnLength={userColumn.length} />
       </div>
       {/* PAGINATION CONTROLS */}

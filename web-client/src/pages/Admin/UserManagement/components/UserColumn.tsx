@@ -37,60 +37,48 @@ export const userColumn: ColumnDef<User>[] = [
     size: 100,
   },
   {
-    id: "fullname",
-    header: () => {
-      return <p className="text-center">Name</p>;
+    accessorKey: "firstname",
+    accessorFn: (row) => `${row.firstname} ${row.middlename} ${row.lastname}`,
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          First Name
+        </button>
+      );
     },
-    columns: [
-      {
-        accessorKey: "firstname",
-        header: ({ column }) => {
-          return (
-            <button
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              First Name
-            </button>
-          );
-        },
-      },
-      {
-        accessorKey: "middlename",
-        header: ({ column }) => {
-          return (
-            <button
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              Middle Name
-            </button>
-          );
-        },
-      },
-      {
-        accessorKey: "lastname",
-        header: ({ column }) => {
-          return (
-            <button
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              Last Name
-            </button>
-          );
-        },
-      },
-    ],
-    // cell: ({ row }) => {
-    //   const { firstname, middlename, lastname } = row.original;
-
-    //   return <span>{`${firstname} ${middlename} ${lastname}`}</span>;
-    // },
+    cell: ({ row }) => row.original.firstname,
   },
+  {
+    accessorKey: "middlename",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Middle Name
+        </button>
+      );
+    },
+  },
+  {
+    accessorKey: "lastname",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Last Name
+        </button>
+      );
+    },
+  },
+  // cell: ({ row }) => {
+  //   const { firstname, middlename, lastname } = row.original;
+
+  //   return <span>{`${firstname} ${middlename} ${lastname}`}</span>;
+  // },
   {
     accessorKey: "email",
     header: "Email",

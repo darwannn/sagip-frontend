@@ -28,8 +28,8 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   selectUserFilters,
   setFilterArchive,
-  setFilterGender,
   setFilterRoles,
+  setFilterStatus,
 } from "../../../../store/slices/userManageSlice";
 interface UserTableActionsProps {
   table: Table<User>;
@@ -46,7 +46,7 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
   const token = localStorage.getItem("token");
 
   const dispatch = useAppDispatch();
-  const { isArchive, gender, roles } = useAppSelector(selectUserFilters);
+  const { isArchive, roles, status } = useAppSelector(selectUserFilters);
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
 
   const {
@@ -61,7 +61,7 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
     <section className="flex flex-row justify-between  items-center w-full">
       <div className="flex flex-row gap-2 items-center">
         {/* Search Bar */}
-        <div className="flex flex-row gap-2 items-center border xl:w-[350px] p-2 rounded">
+        <div className="flex flex-row gap-2 items-center border xl:w-[350px] p-2 rounded bg-white">
           <RiSearchLine className="text-lg text-gray-500" />
           <input
             className="flex-grow focus:outline-none"
@@ -71,35 +71,11 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
           />
         </div>
         <Popover>
-          <PopoverTrigger className="flex items-center py-2 px-3 text-gray-500 bg-slate-100 rounded">
+          <PopoverTrigger className="flex items-center py-2 px-3 text-gray-500 bg-white border rounded">
             <BiFilter className="mr-2" />
             Filter
           </PopoverTrigger>
           <PopoverContent className="text-sm">
-            <div>
-              <p className="font-semibold mb-2">Gender</p>
-              <div className="flex flex-row gap-5">
-                <div className="flex flex-row gap-2">
-                  <input
-                    type="checkbox"
-                    id="male"
-                    checked={gender.includes("Male")}
-                    onChange={() => dispatch(setFilterGender("Male"))}
-                  />
-                  <label htmlFor="male">Male</label>
-                </div>
-                <div className="flex flex-row gap-2">
-                  <input
-                    type="checkbox"
-                    id="female"
-                    checked={gender.includes("Female")}
-                    onChange={() => dispatch(setFilterGender("Female"))}
-                  />
-                  <label htmlFor="female">Female</label>
-                </div>
-              </div>
-            </div>
-            <hr className="my-2" />
             {isStaff && (
               <>
                 <div>
@@ -147,7 +123,40 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
               </>
             )}
             <div>
-              <p className="font-semibold mb-2">Archive</p>
+              <p className="font-semibold mb-2">Account Status</p>
+              <div className="flex flex-wrap gap-2">
+                <div className="flex flex-row gap-2">
+                  <input
+                    type="checkbox"
+                    id="verified"
+                    checked={status.includes("verified")}
+                    onChange={() => dispatch(setFilterStatus("verified"))}
+                  />
+                  <label htmlFor="verified">Verified</label>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <input
+                    type="checkbox"
+                    id="semi-verified"
+                    checked={status.includes("semi-verified")}
+                    onChange={() => dispatch(setFilterStatus("semi-verified"))}
+                  />
+                  <label htmlFor="semi-verified">Semi-Verified</label>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <input
+                    type="checkbox"
+                    id="unverified"
+                    checked={status.includes("unverified")}
+                    onChange={() => dispatch(setFilterStatus("unverified"))}
+                  />
+                  <label htmlFor="unverified">Unverified</label>
+                </div>
+              </div>
+            </div>
+            <hr className="my-2" />
+            <div>
+              <p className="font-semibold mb-2">Archived</p>
               <div className="flex flex-row gap-2">
                 <input
                   type="checkbox"
@@ -158,7 +167,7 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
                     else dispatch(setFilterArchive(false));
                   }}
                 />
-                <label htmlFor="archived">Filter Archived Users</label>
+                <label htmlFor="archived">Archived Users</label>
               </div>
             </div>
           </PopoverContent>

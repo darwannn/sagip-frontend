@@ -31,7 +31,7 @@ const AccountEmailForm: React.FC<TAccountEmailFormProps> = ({
   mobileVerify,
 }) => {
   const dispatch = useAppDispatch();
-  const { data: userData } = useGetUserByTokenQuery();
+  const { data: userData, isLoading, isSuccess } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes
@@ -39,6 +39,32 @@ const AccountEmailForm: React.FC<TAccountEmailFormProps> = ({
   const [serverRes, setServerRes] = useState<TUserResData>();
   const [showModal, setShowModal] = useState<boolean>(false);
   const { refetch: refetchUserData } = useGetUserByTokenQuery();
+
+  const [
+    sendVerificationCode,
+    {
+      isError: sendIsError,
+      isLoading: sendIsLoading,
+      isSuccess: sendIsSuccess,
+    },
+  ] = useSendVerificationCodeMutation();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { isDirty, errors },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      email: userData?.email,
+    },
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setValue("email", userData?.email);
+    }
+  });
 
   useEffect(() => {
     /* removes the contactVerificationRes message */
@@ -54,25 +80,6 @@ const AccountEmailForm: React.FC<TAccountEmailFormProps> = ({
       refetchUserData();
     }
   }, [contactVerificationRes, refetchUserData]);
-
-  const [
-    sendVerificationCode,
-    {
-      isError: sendIsError,
-      isLoading: sendIsLoading,
-      isSuccess: sendIsSuccess,
-    },
-  ] = useSendVerificationCodeMutation();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { isDirty, errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      email: userData?.email,
-    },
-  });
 
   const SubmitSendCode = async (data: FieldValues, action: string) => {
     if (action === "update") {
@@ -128,6 +135,14 @@ const AccountEmailForm: React.FC<TAccountEmailFormProps> = ({
   if (sendIsLoading) console.log("Sending...");
   if (sendIsError) console.log("Error Sending");
   if (sendIsSuccess) console.log("Sent successfully");
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center gap-2 text-gray-400">
+        <LoaderSpin className="text-xl" />
+        <p>Fetching Email Information....</p>
+      </div>
+    );
 
   return (
     <div className="lg:p-0" ref={successMessageRef}>

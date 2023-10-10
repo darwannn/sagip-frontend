@@ -23,27 +23,13 @@ const AccountContactNumberForm: React.FC<AccountContactNumberFormProps> = ({
   mobileVerify,
 }) => {
   const dispatch = useAppDispatch();
-  const { data: userData } = useGetUserByTokenQuery();
+  const { data: userData, isLoading, isSuccess } = useGetUserByTokenQuery();
   const successMessageRef = useRef<HTMLDivElement | null>(null);
   const contactVerificationRes = useAppSelector(
     (state) => state.auth.contactVerificationRes
   );
   const [serverRes, setServerRes] = useState<TUserResData>();
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  useEffect(() => {
-    /* removes the contactVerificationRes message */
-    dispatch(setcontactVerificationRes(null));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (contactVerificationRes) {
-      setShowModal(false);
-      successMessageRef.current?.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  }, [contactVerificationRes]);
 
   const [
     sendVerificationCode,
@@ -58,11 +44,32 @@ const AccountContactNumberForm: React.FC<AccountContactNumberFormProps> = ({
     register,
     handleSubmit,
     formState: { isDirty, errors },
+    setValue,
   } = useForm<FieldValues>({
     defaultValues: {
       contactNumber: userData?.contactNumber,
     },
   });
+
+  useEffect(() => {
+    /* removes the contactVerificationRes message */
+    dispatch(setcontactVerificationRes(null));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setValue("contactNumber", userData?.contactNumber);
+    }
+  }, [isSuccess, setValue, userData]);
+
+  useEffect(() => {
+    if (contactVerificationRes) {
+      setShowModal(false);
+      successMessageRef.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [contactVerificationRes]);
 
   const SubmitSendCode = async (data: FieldValues) => {
     if (!isDirty) {
@@ -102,6 +109,14 @@ const AccountContactNumberForm: React.FC<AccountContactNumberFormProps> = ({
       }
     }
   };
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center gap-2 text-gray-400">
+        <LoaderSpin className="text-xl" />
+        <p>Fetching Contact Information....</p>
+      </div>
+    );
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     SubmitSendCode(data);
