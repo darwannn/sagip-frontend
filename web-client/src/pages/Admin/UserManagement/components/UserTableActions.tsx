@@ -28,7 +28,6 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   selectUserFilters,
   setFilterArchive,
-  setFilterGender,
   setFilterRoles,
 } from "../../../../store/slices/userManageSlice";
 interface UserTableActionsProps {
@@ -46,7 +45,7 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
   const token = localStorage.getItem("token");
 
   const dispatch = useAppDispatch();
-  const { isArchive, gender, roles } = useAppSelector(selectUserFilters);
+  const { isArchive, roles } = useAppSelector(selectUserFilters);
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
 
   const {
@@ -76,30 +75,6 @@ const UserTableActions: React.FC<UserTableActionsProps> = ({
             Filter
           </PopoverTrigger>
           <PopoverContent className="text-sm">
-            <div>
-              <p className="font-semibold mb-2">Gender</p>
-              <div className="flex flex-row gap-5">
-                <div className="flex flex-row gap-2">
-                  <input
-                    type="checkbox"
-                    id="male"
-                    checked={gender.includes("Male")}
-                    onChange={() => dispatch(setFilterGender("Male"))}
-                  />
-                  <label htmlFor="male">Male</label>
-                </div>
-                <div className="flex flex-row gap-2">
-                  <input
-                    type="checkbox"
-                    id="female"
-                    checked={gender.includes("Female")}
-                    onChange={() => dispatch(setFilterGender("Female"))}
-                  />
-                  <label htmlFor="female">Female</label>
-                </div>
-              </div>
-            </div>
-            <hr className="my-2" />
             {isStaff && (
               <>
                 <div>

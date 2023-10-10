@@ -35,7 +35,7 @@ const UserTable = () => {
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      const { isArchive, gender, roles } = tableFilters;
+      const { isArchive, roles } = tableFilters;
       const filter = users?.filter((user) => {
         // Staff
         if (!isStaff && user.userType !== "resident") {
@@ -50,10 +50,6 @@ const UserTable = () => {
         }
         // Archive
         if (user.isArchived !== isArchive) {
-          return false;
-        }
-        // Gender
-        if (gender.length > 0 && !gender.includes(user.gender)) {
           return false;
         }
         return true;

@@ -11,7 +11,7 @@ export interface ManageUserState {
   userFilters: {
     isArchive: boolean;
     isBanned: boolean;
-    gender: ["Male", "Female"];
+    // gender: ["Male", "Female"];
     roles: Roles[];
   };
   selectedNotification: TUserNotification | null;
@@ -22,7 +22,7 @@ const initialState: ManageUserState = {
   userFilters: {
     isArchive: false,
     isBanned: false,
-    gender: ["Male", "Female"],
+    // gender: ["Male", "Female"],
     roles: ["super-admin", "admin", "responder", "dispatcher"],
   },
   selectedNotification: null,
@@ -41,18 +41,18 @@ export const userManageSlice = createSlice({
     setFilterBanned: (state, action: PayloadAction<boolean>) => {
       state.userFilters.isBanned = action.payload;
     },
-    setFilterGender: (state, action: PayloadAction<"Male" | "Female">) => {
-      // Check if there is male in gender array
-      if (state.userFilters.gender.includes(action.payload)) {
-        const genderIndex = state.userFilters.gender.indexOf(action.payload);
-        // Remove from the array
-        state.userFilters.gender.splice(genderIndex, 1);
-      } else if (!state.userFilters.gender.includes(action.payload)) {
-        state.userFilters.gender.push(action.payload);
-      } else {
-        console.log("Something went wrong");
-      }
-    },
+    // setFilterGender: (state, action: PayloadAction<"Male" | "Female">) => {
+    //   // Check if there is male in gender array
+    //   if (state.userFilters.gender.includes(action.payload)) {
+    //     const genderIndex = state.userFilters.gender.indexOf(action.payload);
+    //     // Remove from the array
+    //     state.userFilters.gender.splice(genderIndex, 1);
+    //   } else if (!state.userFilters.gender.includes(action.payload)) {
+    //     state.userFilters.gender.push(action.payload);
+    //   } else {
+    //     console.log("Something went wrong");
+    //   }
+    // },
     setFilterRoles: (state, action: PayloadAction<Roles>) => {
       if (state.userFilters.roles.includes(action.payload)) {
         const roleIndex = state.userFilters.roles.indexOf(action.payload);
@@ -78,7 +78,7 @@ export const {
   setTableContent,
   setFilterArchive,
   setFilterBanned,
-  setFilterGender,
+  // setFilterGender,
   setFilterRoles,
 
   setSelectedNotification,
