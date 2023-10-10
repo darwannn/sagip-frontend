@@ -16,8 +16,8 @@ type PROPS = {
 
 const DataTable = ({ table, columnLength }: PROPS) => {
   return (
-    <ShadTable>
-      <TableHeader className="bg-slate-100">
+    <ShadTable className="">
+      <TableHeader className="bg-primary-100">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
@@ -29,6 +29,7 @@ const DataTable = ({ table, columnLength }: PROPS) => {
                       header.getSize() !== 150 ? header.getSize() : undefined,
                   }}
                   colSpan={header.colSpan}
+                  className="text-sm text-primary-500 font-medium"
                 >
                   {header.isPlaceholder
                     ? null

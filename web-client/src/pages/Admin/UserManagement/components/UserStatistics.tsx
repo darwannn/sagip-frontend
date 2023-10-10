@@ -8,7 +8,7 @@ import { FaUserPlus, FaUserCog } from "react-icons/fa";
 import { HiUserGroup, HiHome } from "react-icons/hi";
 
 import { BiLoaderAlt } from "react-icons/bi";
-import Doughnut from "../../../../components/Charts/Doughnut";
+// import Doughnut from "../../../../components/Charts/Doughnut";
 
 const UserStatistics = () => {
   const isStaff = useAppSelector((state) => state.userManage.isStaff);
@@ -25,18 +25,35 @@ const UserStatistics = () => {
   return (
     <>
       <div className="statistics flex flex-row my-5 gap-4">
+        <div className="flex flex-col gap-2 p-6 xl:w-[250px] min-h-[144px] bg-white rounded-md shadow">
+          <div className="flex flex-row justify-between items-start">
+            <span className="text-sm font-medium text-gray-400">
+              Total Users
+            </span>
+            <div className="bg-primary-100 p-2 rounded-md">
+              <HiUserGroup className="text-base text-primary-500 " />
+            </div>
+          </div>
+          <h3 className="text-2xl font-bold">
+            {statisticsLoading ? loader : statisticsData?.users}
+          </h3>
+        </div>
         {isStaff ? (
           <>
-            <div className="flex flex-col gap-2 p-6 xl:w-[250px] bg-blue-100 rounded-md">
-              <div className="flex flex-row justify-between items-center">
-                <span className="text-sm">Total Staffs</span>
-                <FaUserCog className="text-lg " />
+            <div className="flex flex-col gap-2 p-6 xl:w-[250px] min-h-[144px] bg-white shadow rounded-lg">
+              <div className="flex flex-row justify-between items-start">
+                <span className="text-sm font-medium text-gray-400">
+                  Total Staffs
+                </span>
+                <div className="bg-secondary-100 p-2 rounded-md">
+                  <FaUserCog className="text-base text-secondary-500 " />
+                </div>
               </div>
               <h3 className="text-2xl font-bold">
                 {statisticsLoading ? loader : statisticsData?.staffs}
               </h3>
             </div>
-            <div className="flex flex-row gap-6 p-6 bg-red-100 rounded-md text-sm">
+            {/* <div className="flex flex-row gap-6 p-6 bg-red-100 rounded-md text-sm">
               <div className="w-32">
                 <Doughnut
                   data={[
@@ -101,41 +118,38 @@ const UserStatistics = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </>
         ) : (
           <>
-            <div className="flex flex-col gap-2 p-6 xl:w-[250px] bg-blue-100 rounded-md">
-              <div className="flex flex-row justify-between items-center">
-                <span className="text-sm">Total Users</span>
-                <HiUserGroup className="text-lg " />
-              </div>
-              <h3 className="text-2xl font-bold">
-                {statisticsLoading ? loader : statisticsData?.users}
-              </h3>
-            </div>
-            <div className="flex flex-col gap-2 p-6 xl:w-[250px] bg-red-100 rounded-md">
-              <div className="flex flex-row justify-between items-center">
-                <span className="text-sm">Total Residents</span>
-                <HiHome className="text-lg" />
+            <div className="flex flex-col gap-2 p-6 xl:w-[250px] min-h-[144px] bg-white rounded-md shadow">
+              <div className="flex flex-row justify-between items-start">
+                <span className="text-sm font-medium text-gray-400">
+                  Total Residents
+                </span>
+                <div className="bg-secondary-100 p-2 rounded-md">
+                  <HiHome className="text-base text-secondary-500" />
+                </div>
               </div>
               <h3 className="text-2xl font-bold">
                 {statisticsLoading ? loader : statisticsData?.residents}
               </h3>
             </div>
-            <div className="flex flex-col gap-2 p-6 xl:w-[250px] bg-purple-100 rounded-md">
+            <div className="flex flex-col gap-2 p-6 xl:w-[250px] min-h-[144px] bg-white rounded-md shadow">
               <div className="flex flex-row justify-between items-start">
-                <p className="text-sm">New Users</p>
-                <FaUserPlus className="text-lg" />
+                <p className="text-sm font-medium text-gray-400">New Users</p>
+                <div className="bg-amber-100 p-2 rounded-md">
+                  <FaUserPlus className="text-base text-amber-500" />
+                </div>
               </div>
               <h3 className="text-2xl font-bold">
                 {statisticsLoading ? loader : statisticsData?.usersThisMonth}
               </h3>
-              <span className="text-xs text-black opacity-80 justify-self-end">
+              <span className="text-xs text-gray-500 opacity-80 justify-self-end">
                 This month
               </span>
             </div>
-            <div className="flex flex-row items-center justify-center gap-5 p-6 xl:w-[350px] bg-amber-100 rounded-md">
+            {/* <div className="flex flex-row items-center justify-center gap-5 p-6 xl:w-[350px] bg-amber-100 rounded-md">
               <div className="w-32 h-max">
                 {statisticsLoading ? (
                   loader
@@ -176,7 +190,7 @@ const UserStatistics = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* 
             <MultipleData
               data={[

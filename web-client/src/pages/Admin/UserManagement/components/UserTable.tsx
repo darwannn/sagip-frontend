@@ -113,7 +113,7 @@ const UserTable = () => {
           table={table}
         />
       </div>
-      <div className="rounded-md border mb-10">
+      <div className="rounded-md border mb-10 bg-white">
         <DataTable table={table} columnLength={userColumn.length} />
       </div>
       {/* PAGINATION CONTROLS */}
