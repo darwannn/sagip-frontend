@@ -12,12 +12,11 @@ const ManageUserPage = () => {
 
   return (
     <div className="p-10 min-h-screen flex flex-col">
-      <div className="mb-5">
+      <div className="">
         <h1 className="text-2xl font-bold text-primary-500">Manage Users</h1>
         <p>Manage user accounts, access levels, and verify resident accounts</p>
       </div>
-      <hr />
-      <UserStatistics />
+      <hr className="my-5" />
       <div className="flex flex-row gap-2 p-2 bg-gray-100 w-max rounded">
         <button
           className={`py-1 px-3 rounded 
@@ -36,7 +35,7 @@ const ManageUserPage = () => {
           Staffs
         </button>
       </div>
-      <hr className="my-3" />
+      <UserStatistics />
       <UserTable />
     </div>
   );
