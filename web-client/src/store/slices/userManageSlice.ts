@@ -13,6 +13,8 @@ export interface ManageUserState {
     isBanned: boolean;
     // gender: ["Male", "Female"];
     roles: Roles[];
+    // status: ["verified", "unverified", "semi-verified"];
+    status: string[];
   };
   selectedNotification: TUserNotification | null;
 }
@@ -24,6 +26,7 @@ const initialState: ManageUserState = {
     isBanned: false,
     // gender: ["Male", "Female"],
     roles: [],
+    status: [],
   },
   selectedNotification: null,
 };
@@ -63,6 +66,16 @@ export const userManageSlice = createSlice({
         console.log("Something went wrong");
       }
     },
+    setFilterStatus: (state, action: PayloadAction<string>) => {
+      if (state.userFilters.status.includes(action.payload)) {
+        const statusIndex = state.userFilters.status.indexOf(action.payload);
+        state.userFilters.status.splice(statusIndex, 1);
+      } else if (!state.userFilters.status.includes(action.payload)) {
+        state.userFilters.status.push(action.payload);
+      } else {
+        console.log("Something went wrong");
+      }
+    },
 
     /* used in mobile notification item */
     setSelectedNotification: (
@@ -80,7 +93,7 @@ export const {
   setFilterBanned,
   // setFilterGender,
   setFilterRoles,
-
+  setFilterStatus,
   setSelectedNotification,
 } = userManageSlice.actions;
 export default userManageSlice.reducer;

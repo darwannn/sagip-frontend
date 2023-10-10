@@ -35,7 +35,7 @@ const UserTable = () => {
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      const { isArchive, roles } = tableFilters;
+      const { isArchive, roles, status } = tableFilters;
       const filter = users?.filter((user) => {
         // Staff
         if (!isStaff && user.userType !== "resident") {
@@ -52,6 +52,12 @@ const UserTable = () => {
         if (user.isArchived !== isArchive) {
           return false;
         }
+
+        // Account Status
+        if (status.length > 0 && !status.includes(user.status)) {
+          return false;
+        }
+
         return true;
       });
       setFilteredUsers(filter ?? []);
