@@ -38,6 +38,7 @@ export const userColumn: ColumnDef<User>[] = [
   },
   {
     accessorKey: "firstname",
+    accessorFn: (row) => `${row.firstname} ${row.middlename} ${row.lastname}`,
     header: ({ column }) => {
       return (
         <button
@@ -47,6 +48,7 @@ export const userColumn: ColumnDef<User>[] = [
         </button>
       );
     },
+    cell: ({ row }) => row.original.firstname,
   },
   {
     accessorKey: "middlename",

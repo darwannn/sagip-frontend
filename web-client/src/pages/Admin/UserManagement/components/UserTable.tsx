@@ -82,6 +82,7 @@ const UserTable = () => {
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFltr,
+    globalFilterFn: "includesString",
     // For pagination
     getPaginationRowModel: getPaginationRowModel(),
     //For sorting
